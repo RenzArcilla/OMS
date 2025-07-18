@@ -1,27 +1,36 @@
 <?php
-    // PHP backend logic for handling login
+    // PHP backend logic for sign in
+
+    // Reteieve form data
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $username = isset($_POST['username']) ? trim($_POST['username']) : '';
-        $password = isset($_POST['password']) ? trim($_POST['password']) : '';
-        
-        // Basic validation
-        if (empty($username) || empty($password)) {
+        // 1. Sanitize input
+        $firstname = isset($_POST['firstname']) ? trim($_POST['firstname']) : Null;
+        $lastname = isset($_POST['lastname']) ? trim($_POST['lastname']) : Null;
+        $password = isset($_POST['password']) ? trim($_POST['password']) : Null;
+        $confirm_password = isset($_POST['confirm_password']) ? trim($_POST['password']) : Null;
+
+        // Check if fields are empty
+        if (empty($firstname) || empty($lastname) || empty($password) || empty($confirm_password)) {
             echo "<script>alert('Please fill in all fields.');</script>";
         } else {
-            // Here you would typically:
-            // 1. Sanitize input
-            // 2. Check against database
-            // 3. Hash password verification
-            // 4. Set session variables
-            // 5. Redirect to dashboard
+            //  Connect to the database
+            include '../includes/db.php'; 
             
-            // For demo purposes:
-            if ($username === 'admin' && $password === 'password') {
-                echo "<script>alert('Login successful! Redirecting to dashboard...');</script>";
-                // header('Location: dashboard.php');
-                // exit();
+            // Try to register the user
+            include_once '../models/CREATE_user.php';
+
+            $result = createUser($firstname, $lastname, $password, $confirm_password);
+            
+            // Check if user creation was successful
+            if ($result === true) {
+                echo "<script>alert('Registration successful!');</script>";
+                // Redirect to login page or home page
+                header("Location: ../templates/login.php");
+                exit();
+            } elseif (is_string($result)) {
+                echo $result; // Display error message from createUser function
             } else {
-                echo "<script>alert('Invalid credentials. Please try again.');</script>";
+                echo "<script>alert('Registration failed. Please try again.');</script>";
             }
         }
     }
