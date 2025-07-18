@@ -1,50 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HEPC - Log In</title>
-    <link rel="stylesheet" href="../assets/css/login.css">
-    <?php require "../controllers/log_in.php"; ?>
-</head>
-<body>
-    <div class="container">
-        <div class="left-section"><!-- Left section for logo and navigation -->
-            <?php include "../includes/header.php"; ?>
-    
+    <!-- Login Section -->
+    <section class="login-section" id="login">
+        <div class="container">
             <div class="login-container">
-                <h1 class="login-title">Log in</h1>
-                
-                <form method="POST" action="../controllers/log_in.php">
+                <h2 class="login-title">System Access</h2>
+                <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
                     <div class="form-group">
                         <input type="text" name="username" class="form-input" placeholder="Username" required>
+                    </div>
+                    <div class="form-group">
                         <input type="password" name="password" class="form-input" placeholder="Password" required>
                     </div>
-                    
-                    <button type="submit" class="login-btn">Log In</button>
-                </form>
-                
-                <p class="signup-link">or <a href="#">Sign up</a></p>
-                
-                <div class="admin-toggle">
-                    <div class="toggle-switch" id="adminToggle">
-                        <div class="toggle-slider"></div>
+                    <div class="form-group">
+                        <select name="role" class="form-input" required>
+                            <option value="">Select Role</option>
+                            <option value="operator">Viewer Access</option>
+                            <option value="admin">Tool Keeper</option>
+                        </select>
                     </div>
-                    <span class="toggle-label">Log in as Administrator</span>
-                </div>
+                    <button type="submit" class="login-btn">Access Dashboard</button>
+                </form>
             </div>
         </div>
-
-        <div class="right-section">
-            <div class="right-content">
-                <div class="right-text">
-                    <h2>Welcome Back</h2>
-                    <p>Access your HEPC account to manage your healthcare services and connect with our professional network.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    
-</body>
-</html>
+    </section>
