@@ -4,26 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Log In</title>
-    <link rel="stylesheet" href="app/assets/css/login.css">
-    <script src="app/assets/js/login.js"></script>
-    <?php include 'app/controllers/sign_in.php'; ?>
+    <link rel="stylesheet" href="../assets/css/login.css">
+    <?php require "../controllers/log_in.php"; ?>
 </head>
 <body>
     <div class="container">
-        <div class="left-section">
-            <div class="header">
-                <div class="logo">
-                    <div class="logo-icon">∞</div>
-                    <span>HEPC</span>
-                </div>
-                <nav class="nav">
-                    <a href="#" class="nav-link">HOME</a>
-                    <a href="#" class="nav-link">ABOUT US</a>
-                    <a href="#" class="nav-link">CONTACT</a>
-                    <a href="#" class="nav-link active">LOG IN</a>
-                </nav>
-            </div>
-
+        <div class="left-section"><!-- Left section for logo and navigation -->
+            <?php include "../includes/header.php"; ?>
+    
             <div class="login-container">
                 <h1 class="login-title">Log in</h1>
                 
@@ -62,6 +50,6 @@
 
     
 
-    
+    <script src="../assets/js/login.js"></script>
 </body>
 </html>

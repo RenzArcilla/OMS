@@ -8,7 +8,8 @@
 
   <h2>Registration</h2>
 
-  <form action="../controllers/register.php" method="post">
+  <form action="../controllers/sign_in.php" method="post">
+    <?php include "../includes/header.php"; ?>
     <label for="username">Username:</label><br>
     <input type="text" id="username" name="username" required><br><br>
 
