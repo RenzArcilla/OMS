@@ -15,12 +15,9 @@
             <div class="login-container">
                 <h1 class="login-title">Log in</h1>
                 
-                <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+                <form method="POST" action="../controllers/log_in.php">
                     <div class="form-group">
                         <input type="text" name="username" class="form-input" placeholder="Username" required>
-                    </div>
-                    
-                    <div class="form-group">
                         <input type="password" name="password" class="form-input" placeholder="Password" required>
                     </div>
                     
@@ -49,7 +46,5 @@
     </div>
 
     
-
-    <script src="../assets/js/login.js"></script>
 </body>
 </html>

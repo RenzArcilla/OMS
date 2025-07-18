@@ -9,7 +9,7 @@
 require_once __DIR__ . '/../includes/db.php'; 
 
 
-function createUser($first_name, $last_name, $password, $confirm_password) {
+function createUser($first_name, $last_name, $username, $password, $confirm_password) {
     global $pdo;
 
     /*
@@ -38,13 +38,14 @@ function createUser($first_name, $last_name, $password, $confirm_password) {
 
         // Prepare SQL insert query
         $stmt = $pdo->prepare("
-            INSERT INTO users (first_name, last_name, password, user_type)
-            VALUES (:first_name, :last_name, :password, 'Default')
+            INSERT INTO users (first_name, last_name, password, user_type, username)
+            VALUES (:first_name, :last_name, :password, 'Default', :user_name)
         ");
 
         // Bind user input values to placeholders
         $stmt->bindParam(':first_name', $first_name);
         $stmt->bindParam(':last_name', $last_name);
+        $stmt->bindParam(':user_name', $username);
         $stmt->bindParam(':password', $hashedPassword);
 
         // Execute the statement
