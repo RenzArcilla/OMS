@@ -10,11 +10,11 @@
 
   <form action="../controllers/sign_in.php" method="post">
     <?php include "../includes/header.php"; ?>
-    <label for="username">Username:</label><br>
-    <input type="text" id="username" name="username" required><br><br>
+    <label for="firstname">First Name:</label><br>
+    <input type="text" id="firstname" name="firstname" required><br><br>
 
-    <label for="email">Email:</label><br>
-    <input type="email" id="email" name="email" required><br><br>
+    <label for="lastname">Last Name:</label><br>
+    <input type="text" id="lastname" name="lastname" required><br><br>
 
     <label for="password">Password:</label><br>
     <input type="password" id="password" name="password" required><br><br>
