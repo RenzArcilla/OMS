@@ -1,4 +1,13 @@
 <?php
-// Simple router - just include the login page
-include '../templates/login.php';
+// Simple router - check which page to show
+$page = $_GET['page'] ?? 'login';
+
+switch ($page) {
+    case 'signup':
+        include '../templates/signin.php';
+        break;
+    default:
+        include '../templates/login.php';
+        break;
+}
 ?>
