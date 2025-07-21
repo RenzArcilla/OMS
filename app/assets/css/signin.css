@@ -77,12 +77,6 @@ body {
 .form-input {
     width: 100%;
     padding: 16px 20px 16px 50px;
-    /*
-       16px  -> top padding: space above the input content
-       20px  -> right padding: space to the right of the input content
-       16px  -> bottom padding: space below the input content
-       500px -> left padding: space to the left of the input content (very large, likely pushes text far right)
-    */
     border: 2px solid rgba(220, 20, 60, 0.3);
     border-radius: 12px;
     margin-right: 100px;
