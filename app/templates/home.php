@@ -4,7 +4,8 @@
     It includes a hero section with a brief description of the system and a call to action for accessing the dashboard or signing up.
 */
 
-session_start();
+// Start session and check if user is logged in
+session_start(); 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
