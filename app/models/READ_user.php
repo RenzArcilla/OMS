@@ -8,6 +8,7 @@
 // Include the database connection
 require_once __DIR__ . '/../includes/db.php';
 
+
 function loginUser($username, $password) {
     global $pdo;
 
