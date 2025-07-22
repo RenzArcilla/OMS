@@ -30,6 +30,15 @@ function createUser($first_name, $last_name, $username, $password, $confirm_pass
     // Password confirmation check
     if ($password !== $confirm_password) {
         return "<script>alert('Password Mismatch!.');</script>"; 
+    } 
+
+    // Check if username exists
+    $checkStmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = :username");
+    $checkStmt->bindParam(':username', $username);
+    $checkStmt->execute();
+    if ($checkStmt->fetchColumn() > 0) {
+        return "<script>alert('Username already taken.');</script>";
+
     }
 
     try {
@@ -38,8 +47,8 @@ function createUser($first_name, $last_name, $username, $password, $confirm_pass
 
         // Prepare SQL insert query
         $stmt = $pdo->prepare("
-            INSERT INTO users (first_name, last_name, password, user_type, username)
-            VALUES (:first_name, :last_name, :password, 'Default', :user_name)
+            INSERT INTO users (first_name, last_name, password, username)
+            VALUES (:first_name, :last_name, :password, :user_name)
         ");
 
         // Bind user input values to placeholders
@@ -51,10 +60,20 @@ function createUser($first_name, $last_name, $username, $password, $confirm_pass
         // Execute the statement
         $stmt->execute();
 
+        // Get the last inserted user ID
+        $userId = $pdo->lastInsertId();
+
+        // Fetch inserted user data
+        $stmt2 = $pdo->prepare("SELECT user_id, username, first_name, user_type FROM users WHERE user_id = :id");
+        $stmt2->bindParam(':id', $userId);
+        $stmt2->execute();
+        $user = $stmt2->fetch(PDO::FETCH_ASSOC);
+
         // Success
-        return true;
+        return $user;
     } catch (PDOException $e) {
         error_log("Database Error: " . $e->getMessage());
+        echo "Database error: " . $e->getMessage();
         return false;
     }   
 }
