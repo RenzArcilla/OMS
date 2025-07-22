@@ -24,7 +24,7 @@
                     <button type="submit" class="login-btn">Log In</button>
                 </form>
                 
-                <p class="signup-link">or <a href="#">Sign up</a></p>
+                <p class="signup-link">or <a href="signin.php">Sign up</a></p>
                 
                 <div class="admin-toggle">
                     <div class="toggle-switch" id="adminToggle">

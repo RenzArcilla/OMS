@@ -35,7 +35,7 @@ CREATE TABLE applicators (
     applicator_maker VARCHAR(50),
     serial_no VARCHAR(50) DEFAULT 'NO RECORD',
     invoice_no VARCHAR(50) DEFAULT 'NO RECORD',
-    last_encoded DATETIME DEFAULT NULL
+    last_encoded DATETIME DEFAULT NULL,
 
     -- Total tracking fields
     total_output INT DEFAULT 0,
@@ -52,6 +52,50 @@ CREATE TABLE applicators (
     INDEX idx_terminal_no (terminal_no),
     INDEX idx_terminal_maker (terminal_maker),
     INDEX idx_last_encoded (last_encoded)
+);
+
+
+-- Create the machines table
+-- This table stores information about machines including their specifications and status.
+CREATE TABLE machines (
+    machine_id INT PRIMARY KEY AUTO_INCREMENT,
+    control_no VARCHAR(50) UNIQUE,
+    description VARCHAR(50),
+    model VARCHAR(50),
+    maker VARCHAR(50),
+    serial_no VARCHAR(50) DEFAULT 'NO RECORD',
+    invoice_no VARCHAR(50) DEFAULT 'NO RECORD',
+    last_encoded DATETIME DEFAULT NULL,
+
+    INDEX idx_maker (maker),
+    INDEX idx_last_encoded (last_encoded)
+);
+
+
+-- Create the records table
+-- This table stores records of inspections, including details about the machine, applicator, and inspection
+CREATE TABLE records (
+    record_id INT PRIMARY KEY AUTO_INCREMENT,
+    parent_id INT DEFAULT NULL,
+    version INT NOT NULL DEFAULT 1,
+    shift ENUM('1st', '2nd', 'NIGHT'),
+    machine_id INT,
+    applicator_id INT,
+    created_by INT,
+    date_inspected DATE,
+    date_encoded DATETIME DEFAULT CURRENT_TIMESTAMP,
+    is_active BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (created_by) REFERENCES users(user_id),
+    FOREIGN KEY (machine_id) REFERENCES machines(machine_id),
+    FOREIGN KEY (applicator_id) REFERENCES applicators(applicator_id),
+    FOREIGN KEY (parent_id) REFERENCES records(record_id),
+
+    INDEX idx_machine_id (machine_id),
+    INDEX idx_applicator_id (applicator_id),
+    INDEX idx_created_by (created_by),
+    INDEX idx_date_encoded (date_encoded),
+    INDEX idx_is_active (is_active),
+    INDEX idx_applicator_active (applicator_id, is_active)
 );
 
 
@@ -84,23 +128,6 @@ CREATE TABLE record_applicator_outputs (
 );
 
 
--- Create the machines table
--- This table stores information about machines including their specifications and status.
-CREATE TABLE machines (
-    machine_id INT PRIMARY KEY AUTO_INCREMENT,
-    control_no VARCHAR(50) UNIQUE,
-    description VARCHAR(50),
-    model VARCHAR(50),
-    maker VARCHAR(50),
-    serial_no VARCHAR(50) DEFAULT 'NO RECORD',
-    invoice_no VARCHAR(50) DEFAULT 'NO RECORD',
-    last_encoded DATETIME DEFAULT NULL,
-
-    INDEX idx_maker (maker),
-    INDEX idx_last_encoded (last_encoded)
-);
-
-
 -- Create the record_machine_outputs table
 -- This table stores the outputs of machines for each record, including versioning and activity status
 CREATE TABLE record_machine_outputs (
@@ -118,31 +145,4 @@ CREATE TABLE record_machine_outputs (
 
     INDEX idx_record_id (record_id),
     INDEX idx_is_active (is_active)
-);
-
-
--- Create the records table
--- This table stores records of inspections, including details about the machine, applicator, and inspection
-CREATE TABLE records (
-    record_id INT PRIMARY KEY AUTO_INCREMENT,
-    parent_id INT DEFAULT NULL,
-    version INT NOT NULL DEFAULT 1,
-    shift ENUM('1st', '2nd', 'NIGHT'),
-    machine_id INT,
-    applicator_id INT,
-    created_by INT,
-    date_inspected DATE,
-    date_encoded DATETIME DEFAULT CURRENT_TIMESTAMP,
-    is_active BOOLEAN DEFAULT TRUE,
-    FOREIGN KEY (created_by) REFERENCES users(user_id),
-    FOREIGN KEY (machine_id) REFERENCES machines(machine_id),
-    FOREIGN KEY (applicator_id) REFERENCES applicators(applicator_id),
-    FOREIGN KEY (parent_id) REFERENCES records(record_id),
-
-    INDEX idx_machine_id (machine_id),
-    INDEX idx_applicator_id (applicator_id),
-    INDEX idx_created_by (created_by),
-    INDEX idx_date_encoded (date_encoded),
-    INDEX idx_is_active (is_active),
-    INDEX idx_applicator_active (applicator_id, is_active)
 );
