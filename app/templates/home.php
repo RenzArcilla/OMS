@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
 }
-
+*/
 
 include_once __DIR__ . '/../includes/header.php'; // Include the header file for the navigation and logo
 ?>

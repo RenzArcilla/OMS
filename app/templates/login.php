@@ -26,7 +26,7 @@
                 
                 <p class="signup-link">or <a href="signin.php">Sign up</a></p>
                 
-                <div class="admin-toggle">
+                <div class="toggle-container">
                     <div class="toggle-switch" id="adminToggle">
                         <div class="toggle-slider"></div>
                     </div>
