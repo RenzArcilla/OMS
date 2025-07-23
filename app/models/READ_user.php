@@ -46,7 +46,9 @@ function loginUser($username, $password) {
     } catch (PDOException $e) {
         // Log error and return false on failure
         error_log("Database Error: " . $e->getMessage());
-        return false;
+        return "<script>
+            alert('Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
+            window.location.href = '../templates/login.php';</script>";
     }
 }
 

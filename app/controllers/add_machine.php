@@ -24,10 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Check if fields are empty
     if (empty($control_no) || empty($description) || empty($model) || empty($machine_maker)) {
-        echo "<script>alert('Please fill in all required fields.');</script>";
+        echo "<script>alert('Please fill in all required fields.');
+            window.location.href = '../templates/add.php';</script>";
 
     } else if ($description !== 'AUTOMATIC' && $description !== 'SEMI-AUTOMATIC') {
-        echo "<script>alert('Invalid selection for description.');</script>";
+        echo "<script>alert('Invalid selection for description.');
+            window.location.href = '../templates/add.php';</script>";
 
     } else {
         // Include the model to handle database operations
@@ -39,12 +41,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Check if applicator creation was successful
         if ($result === true) {
-            echo "<script>alert('Machine added successfully!');</script>";
+            echo "<script>alert('Machine added successfully!');
+                window.location.href = '../templates/add.php';</script>";
             exit();
         } elseif (is_string($result)) {
-            echo $result; // Display error message from createApplicator function
+            echo $result; // Display error message from createMachine function
         } else {
-            echo "<script>alert('Failed to add Machine. Please try again.');</script>";
+            echo "<script>alert('Failed to add Machine. Please try again.');
+                window.location.href = '../templates/add.php';</script>";
         }
     }
 }

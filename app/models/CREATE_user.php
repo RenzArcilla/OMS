@@ -29,7 +29,8 @@ function createUser($first_name, $last_name, $username, $password, $confirm_pass
 
     // Password confirmation check
     if ($password !== $confirm_password) {
-        return "<script>alert('Password Mismatch!.');</script>"; 
+        return "<script>alert('Password Mismatch!.');
+            window.location.href = '../templates/signin.php';</script>"; 
     } 
 
     // Check if username exists
@@ -37,7 +38,8 @@ function createUser($first_name, $last_name, $username, $password, $confirm_pass
     $checkStmt->bindParam(':username', $username);
     $checkStmt->execute();
     if ($checkStmt->fetchColumn() > 0) {
-        return "<script>alert('Username already taken.');</script>";
+        return "<script>alert('Username already taken.');
+            window.location.href = '../templates/signin.php';</script>";
 
     }
 
@@ -73,7 +75,10 @@ function createUser($first_name, $last_name, $username, $password, $confirm_pass
         return $user;
     } catch (PDOException $e) {
         error_log("Database Error: " . $e->getMessage());
-        echo "Database error: " . $e->getMessage();
-        return false;
+        return "<script>
+            alert('Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
+            window.location.href = '../templates/signin.php';</script>";
     }   
 }
+
+?>
