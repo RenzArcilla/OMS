@@ -13,8 +13,7 @@
         </div>
         <nav class="nav">
             <a href="../templates/login.php" class="nav-link">LOG IN  ||  </a>
-            <a href="../templates/signin.php" class="nav-link">SIGN UP  ||  </a>
-            <a href="../templates/home.php" class="nav-link">HOME  ||  </a>
-            <a href="../templates/add.php" class="nav-link">ADD RECORD</a>
+            <a href="../templates/signin.php" class="nav-link">SIGN UP</a>
+
         </nav>
     </div>

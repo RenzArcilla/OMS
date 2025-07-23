@@ -29,7 +29,7 @@ function createApplicator($control_no, $terminal_no, $description,
     - true on successful operation.
     - string containing error message and redirect using JS <alert>.
     */
-                            
+
     
     // Set serial_no and invoice_no to null if empty or "NO RECORD"
     $serial_no = $serial_no === 'NO RECORD' ? null : $serial_no;
@@ -59,14 +59,14 @@ function createApplicator($control_no, $terminal_no, $description,
             return true; // Success
         } else {
             return "<script>alert('Failed to add applicator. Please try again.');
-                window.location.href = '../templates/add.php';</script>";
+                window.location.href = '../templates/add_entry.php';</script>";
         }
     } catch (PDOException $e) {
         // Log error and return error message
         error_log("Database Error: " . $e->getMessage());
         return "<script>
             alert('Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
-            window.location.href = '../templates/add.php';</script>";
+            window.location.href = '../templates/add_entry.php';</script>";
     }
 }
 
