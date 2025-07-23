@@ -22,7 +22,7 @@
                     <input type="text" id="firstname" name="firstname" class="form-input" placeholder="First name" required>
                 </div>
                 
-                <div class="form-group">
+                <div class="form-lastname">
                     <label for="lastname">Last Name</label>
                     <input type="text" id="lastname" name="lastname" class="form-input" placeholder="Last name" required>
                 </div>

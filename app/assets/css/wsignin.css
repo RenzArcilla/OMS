@@ -64,10 +64,10 @@ body {
 .form-row .form-group {
     flex: 1;
     margin-bottom: 0;
-    position: relative; /* This sets the position context for absolutely positioned children */
+    position: relative;
 }
 
-.form-group label {
+.form-group label { 
     display: block;
     margin-bottom: 8px;
     font-weight: 500;
@@ -92,6 +92,15 @@ body {
     width: 100%;
 }
 
+.form-lastname label {  
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555555;
+    font-size: 14px;
+    position: relative;
+    left: -75px;
+}
 /* Individual width control for First Name */
 #firstname {
     width: 175px;
@@ -101,7 +110,7 @@ body {
 #lastname {
     width: 175px;
     position: relative;
-    left: -23%;
+    left: -27%;
 }
 /* Individual width control for Password */
 #password { 
