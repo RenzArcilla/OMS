@@ -15,7 +15,8 @@
 
         // Check if fields are empty
         if (empty($firstname) || empty($lastname) || empty($username) || empty($password) || empty($confirm_password)) {
-            echo "<script>alert('Please fill in all fields.');</script>";
+            echo "<script>alert('Please fill in all fields.');
+                window.location.href = '../templates/signin.php';</script>";
         } else {
             // Try to register the user
             include_once '../models/CREATE_user.php';
@@ -34,7 +35,8 @@
             } elseif (is_string($result)) {
                 echo $result; // Display error message from createUser function
             } else {
-                echo "<script>alert('Registration failed. Please try again.');</script>";
+                echo "<script>alert('Registration failed. Please try again.');
+                    window.location.href = '../templates/signin.php';</script>";
             }
         }
     }
