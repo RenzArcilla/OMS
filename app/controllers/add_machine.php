@@ -1,6 +1,6 @@
 <?php
 /*
-    This script handles the addition of a new applicator to the database.
+    This script handles the addition of a new machine to the database.
     It retrieves form data, sanitizes it, and inserts it into the database.
 */
 
@@ -15,43 +15,36 @@ if (!isset($_SESSION['user_id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sanitize input
     $control_no = isset($_POST['control_no']) ? strtoupper(trim($_POST['control_no'])) : null;
-    $terminal_no = isset($_POST['terminal_no']) ? strtoupper(trim($_POST['terminal_no'])) : null;
     $description = isset($_POST['description']) ? strtoupper(trim($_POST['description'])) : null;
-    $wire_type = isset($_POST['wire_type']) ? strtoupper(trim($_POST['wire_type'])) : null;
-    $terminal_maker = isset($_POST['terminal_maker']) ? strtoupper(trim($_POST['terminal_maker'])) : null;
-    $applicator_maker = isset($_POST['applicator_maker']) ? strtoupper(trim($_POST['applicator_maker'])) : null;
+    $model = isset($_POST['model']) ? strtoupper(trim($_POST['model'])) : null;
+    $machine_maker = isset($_POST['machine_maker']) ? strtoupper(trim($_POST['machine_maker'])) : null;
     $serial_no = empty($_POST['serial_no']) ? 'NO RECORD' : strtoupper(trim($_POST['serial_no']));
     $invoice_no = empty($_POST['invoice_no']) ? 'NO RECORD' : strtoupper(trim($_POST['invoice_no']));
 
 
     // Check if fields are empty
-    if (empty($control_no) || empty($terminal_no) || empty($description) || 
-        empty($wire_type) || empty($terminal_maker) || empty($applicator_maker)) {
+    if (empty($control_no) || empty($description) || empty($model) || empty($machine_maker)) {
         echo "<script>alert('Please fill in all required fields.');</script>";
 
-    } else if ($description !== 'SIDE' && $description !== 'END') {
+    } else if ($description !== 'AUTOMATIC' && $description !== 'SEMI-AUTOMATIC') {
         echo "<script>alert('Invalid selection for description.');</script>";
-    
-    } else if ($wire_type !== 'BIG' && $wire_type !== 'SMALL') {
-        echo "<script>alert('Invalid selection for wire type.');</script>";
 
     } else {
         // Include the model to handle database operations
-        include_once '../models/CREATE_applicator.php';
+        include_once '../models/CREATE_machine.php';
 
         // Try to create the applicator
-        $result = createApplicator($control_no, $terminal_no, $description, 
-                                    $wire_type, $terminal_maker, $applicator_maker, 
-                                    $serial_no, $invoice_no);
+        $result = createMachine($control_no, $description, $model,
+                                $machine_maker, $serial_no, $invoice_no);
 
         // Check if applicator creation was successful
         if ($result === true) {
-            echo "<script>alert('Applicator added successfully!');</script>";
+            echo "<script>alert('Machine added successfully!');</script>";
             exit();
         } elseif (is_string($result)) {
             echo $result; // Display error message from createApplicator function
         } else {
-            echo "<script>alert('Failed to add applicator. Please try again.');</script>";
+            echo "<script>alert('Failed to add Machine. Please try again.');</script>";
         }
     }
 }

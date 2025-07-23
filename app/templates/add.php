@@ -35,8 +35,12 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
             <label for="machine_ctrl_no">Control No:</label>
             <input type="text" id="machine_ctrl_no" name="control_no" required><br><br>
 
-            <label for="machine_description">Description:</label>
-            <input type="text" id="machine_description" name="description" required><br><br>
+            <label for="description">Description:</label>
+            <select id="description" name="description" required>
+                <option value="">--Select--</option>
+                <option value="AUTOMATIC">AUTOMATIC</option>
+                <option value="SEMI-AUTOMATIC">SEMI-AUTOMATIC</option>
+            </select><br><br>
 
             <label for="model">Model:</label>
             <input type="text" id="model" name="model" required><br><br>
@@ -45,10 +49,10 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
             <input type="text" id="machine_maker" name="machine_maker" required><br><br>
 
             <label for="machine_serial_no">Serial No:</label>
-            <input type="text" id="machine_serial_no" name="serial_no" required><br><br>
+            <input type="text" id="machine_serial_no" name="serial_no"><br><br>
 
             <label for="machine_invoice_no">Invoice No:</label>
-            <input type="text" id="machine_invoice_no" name="invoice_no" required><br><br>
+            <input type="text" id="machine_invoice_no" name="invoice_no"><br><br>
 
             <button type="submit">Submit Machine</button>
         </form>
