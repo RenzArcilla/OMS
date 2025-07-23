@@ -2,9 +2,13 @@
 /*
     This is the home page of the application. It serves as the landing page for logged-in users.
     It includes a hero section with a brief description of the system and a call to action for accessing the dashboard or signing up.
-*/
-/*
+
 session_start();
+=======
+
+// Start session and check if user is logged in
+session_start(); 
+
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
@@ -62,5 +66,8 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
         </div>
     </section>
     <script src="../assets/js/hero.js"></script>
+=======
+    <h1>Storage and Output Monitoring System</h1>
+    <a href="add.php">Add-Record</a>
 </body>
 </html>

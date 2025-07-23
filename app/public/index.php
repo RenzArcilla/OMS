@@ -1,25 +1,24 @@
 <?php
-// Simple router - check which page to show
-$page = $_GET['page'] ?? 'login';
+/*
+    This is the main entry point for the application.
+*/
 
-switch ($page) {
-    case 'signup':
-        include '../templates/signin.php';
-        break;
-    case 'hero':
-        include '../templates/hero.php';
-        break;
-    case 'dashboard':
-        include '../templates/dashboard.php';
-        break;
-    case 'settings':
-        include '../templates/settings.php';
-        break;
-    case 'logout':
-        include '../templates/logout.php';
-        break;
-    default:
-        include '../templates/login.php';
-        break;
-}
 ?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEPC - Hero</title>
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/hero.css">
+</head>
+<body>
+    <p>Storage and Output Monitoring System</p>
+    <h2>Welcome to the SOMS System! Please log in to continue.</h2>
+    <a href="../templates/login.php">Log In</a>
+    <a href="../templates/signin.php">Sign In</a>
+</body>
+</html>

@@ -15,23 +15,28 @@
 
         // Check if fields are empty
         if (empty($firstname) || empty($lastname) || empty($username) || empty($password) || empty($confirm_password)) {
-            echo "<script>alert('Please fill in all fields.');</script>";
+            echo "<script>alert('Please fill in all fields.');
+                window.location.href = '../templates/signin.php';</script>";
         } else {
             // Try to register the user
             include_once '../models/CREATE_user.php';
 
             $result = createUser($firstname, $lastname, $username, $password, $confirm_password);
-            
+
             // Check if user creation was successful
-            if ($result === true) {
-                echo "<script>alert('Registration successful!');</script>";
-                // Redirect to login page or home page
-                header("Location: ../templates/home.php");
+            if (is_array($result)) {
+                //  Save user data into session to log them in immediately
+                $_SESSION['user_id'] = $result['user_id'];
+                $_SESSION['username'] = $result['username'];
+                $_SESSION['first_name'] = $result['first_name'];
+                $_SESSION['user_type'] = $result['user_type'];
+                header("Location: /SOMS/app/templates/home.php");
                 exit();
             } elseif (is_string($result)) {
                 echo $result; // Display error message from createUser function
             } else {
-                echo "<script>alert('Registration failed. Please try again.');</script>";
+                echo "<script>alert('Registration failed. Please try again.');
+                    window.location.href = '../templates/signin.php';</script>";
             }
         }
     }

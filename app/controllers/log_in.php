@@ -17,22 +17,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Check if fields are empty
     if (empty($username) || empty($password)) {
-        echo "<script>alert('Please fill in all fields.');</script>";
+        echo "<script>alert('Please fill in all fields.');
+            window.location.href = '../templates/login.php';</script>";
     } else {
         // Try logging in the user
         include_once '../models/READ_user.php';
 
         $result = loginUser($username, $password);
-        if ($result) {
+        if (is_array($result)) {
             // Set session variables
             $_SESSION['user_id'] = $result['user_id'];
             $_SESSION['username'] = $result['username'];
+            $_SESSION['first_name'] = $result['first_name'];
+            $_SESSION['user_type'] = $result['user_type'];
             
             // Redirect to home page 
             header("Location: ../templates/home.php");
             exit();
+        } elseif (is_string($result)) {
+            echo $result; // Display error message from createUser function
         } else {
-            echo "<script>alert('Invalid credentials. Please try again.');</script>";
+            echo "<script>alert('Invalid credentials. Please try again.');
+                window.location.href = '../templates/signin.php';</script>";
         }
     }
 }
