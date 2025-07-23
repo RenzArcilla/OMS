@@ -26,9 +26,10 @@ function createApplicator($control_no, $terminal_no, $description,
     - $invoice_no: Invoice number associated with the applicator.
                 
     Returns:
-    - true on success, error message on failure.
+    - true on successful operation.
+    - string containing error message and redirect using JS <alert>.
     */
-
+                            
     
     // Set serial_no and invoice_no to null if empty or "NO RECORD"
     $serial_no = $serial_no === 'NO RECORD' ? null : $serial_no;

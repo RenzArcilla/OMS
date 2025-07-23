@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOMS - Storage and Output Monitoring System</title>
-    <link rel="stylesheet" href="../assets/css/base.css">
-    <link rel="stylesheet" href="../assets/css/login.css">
 </head>
 <body>
     <div class="header">
@@ -14,9 +12,9 @@
             <span>HEPC</span>
         </div>
         <nav class="nav">
-            <a href="#" class="nav-link">HOME</a>
-            <a href="#" class="nav-link">ABOUT US</a>
-            <a href="#" class="nav-link">CONTACT</a>
-            <a href="#" class="nav-link active">LOG IN</a>
+            <a href="../templates/login.php" class="nav-link">LOG IN  ||  </a>
+            <a href="../templates/signin.php" class="nav-link">SIGN UP  ||  </a>
+            <a href="../templates/home.php" class="nav-link">HOME  ||  </a>
+            <a href="../templates/add.php" class="nav-link">ADD RECORD</a>
         </nav>
     </div>

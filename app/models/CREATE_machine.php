@@ -23,7 +23,8 @@ function createMachine($control_no, $description, $model,
     - $invoice_no: Invoice number associated with the applicator.
                 
     Returns:
-    - true on success, error message on failure.
+    - true on successful operation.
+    - string containing error message and redirect using JS <alert>.
     */
 
     

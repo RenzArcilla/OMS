@@ -24,7 +24,8 @@ function createUser($first_name, $last_name, $username, $password, $confirm_pass
     - $confirm_password: The confirmation password, must match $password.
 
     Returns:
-    - true on success, false on failure.
+    - User data array if the login is successful.
+    - String containing error message and redirect using JS <alert>.
     */
 
     // Password confirmation check
