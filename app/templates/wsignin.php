@@ -9,8 +9,6 @@
 <body>
     <div class="signup-container">
         <h2 class="signup-title">Create Account</h2>
-        <form method="POST" action="../controllers/sign_in.php" autocomplete="off">
-            
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" class="form-input" placeholder="Enter your username" required>

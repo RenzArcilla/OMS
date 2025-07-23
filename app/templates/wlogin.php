@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Log In</title>
     <link rel="stylesheet" href="../assets/css/wlogin.css">
-    <?php require "../controllers/wlog_in.php"; ?>
+    <?php require "../controllers/log_in.php"; ?>
 </head>
 <body>
     <div class="container">
@@ -15,7 +15,7 @@
             <div class="login-container">
                 <h1 class="login-title">Log in</h1>
                 
-                <form method="POST" action="../controllers/wlog_in.php">
+                <form method="POST" action="../controllers/log_in.php">
                     <div class="form-group">
                         <input type="text" name="username" class="form-input" placeholder="Username" required>
                         <input type="password" name="password" class="form-input" placeholder="Password" required>
@@ -24,7 +24,7 @@
                     <button type="submit" class="login-btn">Log In</button>
                 </form>
                 
-                <p class="signup-link">or <a href="wsignin.php">Sign up</a></p>
+                <p class="signup-link">or <a href="signin.php">Sign up</a></p>
                 
                 <div class="toggle-container">
                     <div class="toggle-switch" id="adminToggle">
