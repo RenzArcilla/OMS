@@ -26,7 +26,8 @@ function createApplicator($control_no, $terminal_no, $description,
     - $invoice_no: Invoice number associated with the applicator.
                 
     Returns:
-    - true on success, error message on failure.
+    - true on successful operation.
+    - string containing error message and redirect using JS <alert>.
     */
 
     
@@ -58,14 +59,14 @@ function createApplicator($control_no, $terminal_no, $description,
             return true; // Success
         } else {
             return "<script>alert('Failed to add applicator. Please try again.');
-                window.location.href = '../templates/add.php';</script>";
+                window.location.href = '../templates/add_entry.php';</script>";
         }
     } catch (PDOException $e) {
         // Log error and return error message
         error_log("Database Error: " . $e->getMessage());
         return "<script>
             alert('Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
-            window.location.href = '../templates/add.php';</script>";
+            window.location.href = '../templates/add_entry.php';</script>";
     }
 }
 

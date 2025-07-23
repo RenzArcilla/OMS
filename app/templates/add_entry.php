@@ -20,6 +20,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
 <head>
     <meta charset="UTF-8">
     <title>Add Machine or Applicator</title>
+    <script src="../assets/js/load_machines.js" defer></script>
 </head>
     <body>
 
@@ -28,6 +29,8 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
         <!-- Selection Buttons -->
         <button type="button">Add Machine</button>
         <button type="button">Add Applicator</button>
+
+        <hr>
 
         <!-- Add Machine Form -->
         <form action="../controllers/add_machine.php" method="POST">
@@ -56,6 +59,55 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
 
             <button type="submit">Submit Machine</button>
         </form>
+
+        <hr>
+
+        <!-- Section: Table Display for Machines -->
+        <div>
+            <h3>Latest Machines</h3>
+
+            <!-- Scrollable container for infinite scrolling -->
+            <div id="machine-container" style="height: 300px; overflow-y: auto;">
+                <table border="1">
+                    <thead>
+                        <!-- Table headers defining machine data columns -->
+                        <tr>
+                            <th>ID</th>
+                            <th>Control No</th>
+                            <th>Description</th>
+                            <th>Model</th>
+                            <th>Maker</th>
+                            <th>Serial No</th>
+                            <th>Invoice No</th>
+                        </tr>
+                    </thead>
+
+                    <?php
+                    // Include database connection and machine reader logic
+                    require_once __DIR__ . '/../includes/db.php';
+                    require_once __DIR__ . '/../models/READ_machines.php';
+
+                    // Fetch initial set of machines (first 10 entries)
+                    $machines = getMachines($pdo, 10, 0);
+                    ?>
+
+                    <tbody id="machine-body">
+                        <!-- Render fetched machine data as table rows -->
+                        <?php foreach ($machines as $row): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($row['machine_id']) ?></td>
+                                <td><?= htmlspecialchars($row['control_no']) ?></td>
+                                <td><?= htmlspecialchars($row['description']) ?></td>
+                                <td><?= htmlspecialchars($row['model']) ?></td>
+                                <td><?= htmlspecialchars($row['maker']) ?></td>
+                                <td><?= htmlspecialchars($row['serial_no']) ?></td>
+                                <td><?= htmlspecialchars($row['invoice_no']) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
         <hr>
 

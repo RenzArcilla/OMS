@@ -68,6 +68,6 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
     <script src="../assets/js/hero.js"></script>
 =======
     <h1>Storage and Output Monitoring System</h1>
-    <a href="add.php">Add-Record</a>
+    <a href="add_entry.php">Add-Record</a>
 </body>
 </html>

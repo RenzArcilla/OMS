@@ -22,6 +22,7 @@ function loginUser($username, $password) {
     Returns:
     - False if the user does not exist or the password is incorrect.
     - User data array if the login is successful.
+    - String containing error message and redirect using JS <alert>.
     */
 
     try {

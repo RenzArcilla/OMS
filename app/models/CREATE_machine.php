@@ -23,7 +23,8 @@ function createMachine($control_no, $description, $model,
     - $invoice_no: Invoice number associated with the applicator.
                 
     Returns:
-    - true on success, error message on failure.
+    - true on successful operation.
+    - string containing error message and redirect using JS <alert>.
     */
 
     
@@ -46,21 +47,21 @@ function createMachine($control_no, $description, $model,
         $stmt->bindParam(':model', $model);
         $stmt->bindParam(':machine_maker', $machine_maker);
         $stmt->bindParam(':serial_no', $serial_no, PDO::PARAM_NULL | PDO::PARAM_STR);
-        $stmt->bindParam(':invoice_no', $invoice_no, PDO::PARAM_NULL | PDO::PARAM_STR);
+        $stmt->bindParam(':invoice_no', $invoice_no,    PDO::PARAM_NULL | PDO::PARAM_STR);
 
         // Execute the statement
         if ($stmt->execute()) {
             return true; // Success
         } else {
             return "<script>alert('Failed to add machine. Please try again.');
-                window.location.href = '../templates/add.php';</script>";
+                window.location.href = '../templates/add_entry.php';</script>";
         }
     } catch (PDOException $e) {
         // Log error and return error message
         error_log("Database Error: " . $e->getMessage());
         return "<script>
             alert('Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
-            window.location.href = '../templates/add.php';</script>";
+            window.location.href = '../templates/add_entry.php';</script>";
     }
 }
 
