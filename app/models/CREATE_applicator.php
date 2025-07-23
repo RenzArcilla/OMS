@@ -57,12 +57,15 @@ function createApplicator($control_no, $terminal_no, $description,
         if ($stmt->execute()) {
             return true; // Success
         } else {
-            return "<script>alert('Failed to add applicator. Please try again.');</script>";
+            return "<script>alert('Failed to add applicator. Please try again.');
+                window.location.href = '../templates/add.php';</script>";
         }
     } catch (PDOException $e) {
         // Log error and return error message
         error_log("Database Error: " . $e->getMessage());
-        return "<script>alert('Database error occurred: " . htmlspecialchars($e->getMessage()) . "');</script>";
+        return "<script>
+            alert('Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
+            window.location.href = '../templates/add.php';</script>";
     }
 }
 

@@ -27,13 +27,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if fields are empty
     if (empty($control_no) || empty($terminal_no) || empty($description) || 
         empty($wire_type) || empty($terminal_maker) || empty($applicator_maker)) {
-        echo "<script>alert('Please fill in all required fields.');</script>";
+        echo "<script>alert('Please fill in all required fields.');
+            window.location.href = '../templates/add.php';</script>";
 
     } else if ($description !== 'SIDE' && $description !== 'END') {
-        echo "<script>alert('Invalid selection for description.');</script>";
+        echo "<script>alert('Invalid selection for description.');
+            window.location.href = '../templates/add.php';</script>";
     
     } else if ($wire_type !== 'BIG' && $wire_type !== 'SMALL') {
-        echo "<script>alert('Invalid selection for wire type.');</script>";
+        echo "<script>alert('Invalid selection for wire type.');
+            window.location.href = '../templates/add.php';</script>";
 
     } else {
         // Include the model to handle database operations
@@ -46,12 +49,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Check if applicator creation was successful
         if ($result === true) {
-            echo "<script>alert('Applicator added successfully!');</script>";
+            echo "<script>alert('Applicator added successfully!');
+                window.location.href = '../templates/add.php';</script>";
             exit();
         } elseif (is_string($result)) {
             echo $result; // Display error message from createApplicator function
         } else {
-            echo "<script>alert('Failed to add applicator. Please try again.');</script>";
+            echo "<script>alert('Failed to add applicator. Please try again.');
+                window.location.href = '../templates/add.php';</script>";
         }
     }
 }
