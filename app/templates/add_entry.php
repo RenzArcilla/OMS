@@ -20,7 +20,10 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
 <head>
     <meta charset="UTF-8">
     <title>Add Machine or Applicator</title>
+    <!-- Load machine infinite scroll logic -->
     <script src="../assets/js/load_machines.js" defer></script>
+    <!-- Load applicator infinite scroll logic -->
+    <script src="../assets/js/load_applicators.js" defer></script>
 </head>
     <body>
 
@@ -31,6 +34,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
         <button type="button">Add Applicator</button>
 
         <hr>
+
 
         <!-- Add Machine Form -->
         <form action="../controllers/add_machine.php" method="POST">
@@ -62,9 +66,10 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
 
         <hr>
 
+
         <!-- Section: Table Display for Machines -->
         <div>
-            <h3>Latest Machines</h3>
+            <h3>Latest Machines Added</h3>
 
             <!-- Scrollable container for infinite scrolling -->
             <div id="machine-container" style="height: 300px; overflow-y: auto;">
@@ -111,6 +116,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
 
         <hr>
 
+
         <!-- Add Applicator Form -->
         <form action="../controllers/add_applicator.php" method="POST">
             <h2>Applicator Information</h2>
@@ -149,5 +155,55 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
 
             <button type="submit">Submit Applicator</button>
         </form>
+
+
+        <!-- Section: Table Display for Applicators -->
+        <div>
+            <h3>Latest Applicators Added</h3>
+
+            <!-- Scrollable container for infinite scrolling -->
+            <div id="applicator-container" style="height: 300px; overflow-y: auto;">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <!-- Table headers defining machine data columns -->
+                            <th>HP No</th>
+                            <th>Terminal No</th>
+                            <th>Description</th>
+                            <th>Wire Type</th>
+                            <th>Terminal Maker</th>
+                            <th>Applicator Maker</th>
+                            <th>Serial No</th>
+                            <th>Invoice No</th>
+                        </tr>
+                    </thead>
+
+                    <?php
+                        // Include database connection and machine reader logic
+                        require_once __DIR__ . '/../includes/db.php';
+                        require_once __DIR__ . '/../models/READ_applicators.php';
+
+                        // Fetch initial set of machines (first 10 entries)
+                        $applicators = getApplicators($pdo, 10, 0);
+                        ?>
+
+                    <tbody id="applicator-body">
+                        <!-- Render fetched machine data as table rows -->
+                        <?php foreach ($applicators as $row): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($row['hp_no']) ?></td>
+                                <td><?= htmlspecialchars($row['terminal_no']) ?></td>
+                                <td><?= htmlspecialchars($row['description']) ?></td>
+                                <td><?= htmlspecialchars($row['wire']) ?></td>
+                                <td><?= htmlspecialchars($row['terminal_maker']) ?></td>
+                                <td><?= htmlspecialchars($row['applicator_maker']) ?></td>
+                                <td><?= htmlspecialchars($row['serial_no']) ?></td>
+                                <td><?= htmlspecialchars($row['invoice_no']) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </body>
 </html>
