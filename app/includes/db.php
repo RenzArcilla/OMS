@@ -20,4 +20,3 @@ try {
     echo "<script>alert('Connection failed: " . addslashes($e->getMessage()) . "');</script>";
     exit();
 }
-?>

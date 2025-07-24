@@ -10,4 +10,3 @@ define('DB_PASS', '');
 
 // Debug mode
 define('DEBUG', true);
-?>

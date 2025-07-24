@@ -81,5 +81,3 @@ function createUser($first_name, $last_name, $username, $password, $confirm_pass
             window.location.href = '../templates/signin.php';</script>";
     }   
 }
-
-?>

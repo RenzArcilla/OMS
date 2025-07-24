@@ -52,5 +52,3 @@ function loginUser($username, $password) {
             window.location.href = '../templates/login.php';</script>";
     }
 }
-
-?>
