@@ -1,28 +1,24 @@
-// Initial offset and limit for pagination
-let offset = 0;
-const limit = 10;
+// Infinite Scroll Logic for Machine Table
 
-// Flag to prevent multiple simultaneous fetches
-let loading = false;
+// State variables
+let machineOffset = 0;              // Tracks how many rows we've already loaded
+const machineLimit = 10;           // How many rows to fetch per scroll
+let machineLoading = false;        // Prevents overlapping AJAX calls
 
 
+/*
+Fetches and appends machine rows from the server.
+*/
 function loadMachines() {
-    /*
-    Loads a batch of machine rows from the server via AJAX
-    and appends them to the machine table body.
-    */
+    if (machineLoading) return;
+    machineLoading = true;
 
-    // Prevent multiple fetches if one is already in progress
-    if (loading) return;    
-    loading = true;
-
-    // Fetch machine data using offset and limit
-    fetch(`../ajax/get_machines.php?offset=${offset}&limit=${limit}`)
-        .then(response => response.json()) // Parse response as JSON
+    fetch(`../ajax/get_machines.php?offset=${machineOffset}&limit=${machineLimit}`)
+        .then(response => response.json())
         .then(data => {
             const tbody = document.getElementById('machine-body');
 
-            // Loop through returned machine rows and create <tr> elements
+            // Create and append each machine row
             data.forEach(row => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
@@ -34,40 +30,38 @@ function loadMachines() {
                     <td>${row.serial_no}</td>
                     <td>${row.invoice_no}</td>
                 `;
-                tbody.appendChild(tr); // Append new row to table
+                tbody.appendChild(tr);
             });
 
-            // Increase offset for the next fetch
-            offset += data.length;
-            loading = false;
+            // Update offset
+            machineOffset += data.length;
+            machineLoading = false;
 
-            // If fewer results returned than limit, stop further loading
-            if (data.length < limit) {
-                document.getElementById('machine-container').removeEventListener('scroll', scrollHandler);
+            // If fewer than limit were returned, we've reached the end
+            if (data.length < machineLimit) {
+                document.getElementById('machine-container').removeEventListener('scroll', machineScrollHandler);
             }
         })
         .catch(error => {
-            // Handle any errors and allow retrying
             console.error("Error loading machines:", error);
-            loading = false;
+            machineLoading = false;
         });
 }
 
-/**
- * Handles scroll event:
- * Loads more machines if the user scrolls near the bottom of the container.
- */
-function scrollHandler() {
-    const container = document.getElementById('machine-container');
 
-    // Check if user has scrolled near the bottom (with 5px threshold)
+/*
+Handles scroll event for the machine container.
+Loads more data when near the bottom.
+*/
+function machineScrollHandler() {
+    const container = document.getElementById('machine-container');
     if (container.scrollTop + container.clientHeight >= container.scrollHeight - 5) {
         loadMachines();
     }
 }
 
-// Set up event listeners when the DOM is fully loaded
+// Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('machine-container').addEventListener('scroll', scrollHandler); // Scroll trigger
-    loadMachines(); // Load initial batch of machines
+    document.getElementById('machine-container').addEventListener('scroll', machineScrollHandler);
+    loadMachines(); // Load initial data
 });
