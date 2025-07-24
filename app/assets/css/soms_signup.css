@@ -1,0 +1,183 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI';
+    background: #F9FAFB;
+    height: 100vh;
+    overflow: hidden;
+    color: #111827; 
+    margin: 0;
+    padding: 0;
+}
+
+/* This is the key for centering */
+.container {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+
+.signup-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 450px;
+    width: 100%;
+    max-height: 95vh;
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 25px 50px rgba(47, 128, 237, 0.3), 0 10px 30px rgba(47, 128, 237, 0.2);
+    border: 2px solid #E5E7EB;
+}
+
+.signup-title {
+    font-size: 33px;
+    font-weight: 1000;
+    color: #111827;
+    margin-bottom: 25px;
+    text-align: center;
+    background: #111827;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(47, 128, 237, 0.3);
+}
+
+.form-group {   
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+    margin-bottom: 0;
+    position: relative;
+}
+
+.form-group label { 
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #6B7280;
+    font-size: 14px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 16px 20px 16px 50px;
+    border: 2px solid rgba(47, 128, 237, 0.5);
+    border-radius: 12px;
+    margin-right: 100px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #111827;
+    transition: all 0.3s ease;
+}
+
+/* Individual width control for Username */
+#username {
+    width: 100%;
+}
+
+.form-lastname label {  
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #6B7280;
+    font-size: 14px;
+    position: relative;
+    left: -75px;
+}
+
+/* Individual width control for First Name */
+#firstname {
+    width: 175px;
+}
+
+/* Individual width control for Last Name */
+#lastname {
+    width: 175px;
+    position: relative;
+    left: -27%;
+}
+
+/* Individual width control for Password */
+#password { 
+    width: 100%;
+}
+
+/* Individual width control for Confirm Password */
+#confirm_password {
+    width: 100%;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #2F80ED;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.3), 0 4px 12px rgba(47, 128, 237, 0.2);
+}
+
+.form-input::placeholder {
+    color: #6B7280;
+}
+
+.signup-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(45deg, #2F80ED, #27AE60, #2F80ED);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 20px rgba(47, 128, 237, 0.5);
+}
+
+.signup-btn:hover {
+    background: linear-gradient(45deg, #27AE60, #2F80ED, #1D4ED8);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(47, 128, 237, 0.7);
+}
+
+.login-link {
+    text-align: center;
+    color: #6B7280;
+    font-size: 14px;
+}
+
+.login-link a {
+    color: #EB5757;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+    .signup-container {
+        max-width: 90%;
+        padding: 20px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+}
