@@ -81,7 +81,7 @@
                             
                         </div>
 
-                        <!-- Performance Metrics Section -->
+                        <!-- Applicator Status Section -->
                         <div class="data-section">
                             <div class="section-header expanded" onclick="toggleSection(this)">
                                 <div class="section-title">
@@ -178,11 +178,11 @@
                             </div>
                         </div>
 
-                        <!-- User Analytics Section -->
+                        <!-- Machine Status Section -->
                         <div class="data-section">
                             <div class="section-header expanded" onclick="toggleSection(this)">
                                 <div class="section-title">
-                                    Performance Metrics
+                                    Machine Status
                                     <span class="section-badge">24</span>
                                 </div>
                                 <svg class="expand-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
