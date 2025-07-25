@@ -64,5 +64,3 @@ function createMachine($control_no, $description, $model,
             window.location.href = '../templates/add_entry.php';</script>";
     }
 }
-
-?>

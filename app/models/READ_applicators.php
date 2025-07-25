@@ -1,13 +1,15 @@
 <?php
 /*
-    This file defines a function that queries a list of applicators from the database.
-    Used in the applicator listing with pagination, such as in infinite scroll.
+    This file defines functions that queries (READ) the applicators table from the database.
 */
 
+// Include the database connection
+require_once __DIR__ . '/../includes/db.php'; 
 
 function getApplicators(PDO $pdo, int $limit = 10, int $offset = 0): array {
     /*
     Retrieve applicator records from the database with pagination.
+    Used in the applicator listing with pagination, such as in infinite scroll.
 
     This function fetches applicator rows ordered by latest ID, limited by
     the given amount and offset. Used for infinite scroll in the frontend.
@@ -32,4 +34,50 @@ function getApplicators(PDO $pdo, int $limit = 10, int $offset = 0): array {
     $stmt->execute();
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+function applicatorExists($hp_no){
+    /*
+    Function to check if applicator exists.
+
+    Arg:
+    - $hp_no: unique identifier of the applicator
+
+    Returns:
+    - Applicator data if exists
+    - False if applicator does not exist
+    - String containing error message and redirect using JS <alert>.
+    */
+
+    global $pdo;
+
+
+    try {
+        // Prepare SQL select query with first_name and last_name
+        $stmt = $pdo->prepare("SELECT * FROM applicators WHERE hp_no = :hp_no");
+
+        // Bind parameters
+        $stmt->bindParam(':hp_no', $hp_no);
+
+        // Execute the query
+        $stmt->execute();
+
+        // Fetch user data
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        // Check if data is empty (no record found)
+        if (!$data) {
+            return false;
+        }
+
+        return $data;
+
+    } catch (PDOException $e) {
+        // Log error and return false on failure
+        error_log("Database Error: " . $e->getMessage());
+        return "<script>
+            alert('Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
+            window.location.href = '../templates/record_output.php';</script>";
+    }
 }

@@ -4,6 +4,8 @@
     Used in the machine listing with pagination, such as in infinite scroll.
 */
 
+// Include the database connection
+require_once __DIR__ . '/../includes/db.php'; 
 
 function getMachines(PDO $pdo, int $limit = 10, int $offset = 0): array {
     /*
@@ -36,4 +38,50 @@ function getMachines(PDO $pdo, int $limit = 10, int $offset = 0): array {
     // Execute the query and return the results
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+function machineExists($control_no){
+    /*
+    Function to check if machine exists.
+
+    Arg:
+    - $control_no: unique identifier of the machine
+
+    Returns:
+    - Machine data if exists
+    - False if machine does not exist
+    - String containing error message and redirect using JS <alert>.
+    */
+
+    global $pdo;
+
+
+    try {
+        // Prepare SQL select query with first_name and last_name
+        $stmt = $pdo->prepare("SELECT * FROM machines WHERE control_no = :control_no");
+
+        // Bind parameters
+        $stmt->bindParam(':control_no', $control_no);
+
+        // Execute the query
+        $stmt->execute();
+
+        // Fetch user data
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Check if data is empty (no record found)
+        if (!$data) {
+            return false;
+        }
+
+        return $data;
+
+    } catch (PDOException $e) {
+        // Log error and return false on failure
+        error_log("Database Error: " . $e->getMessage());
+        return "<script>
+            alert('Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
+            window.location.href = '../templates/record_output.php';</script>";
+    }
 }

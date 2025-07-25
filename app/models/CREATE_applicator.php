@@ -69,5 +69,3 @@ function createApplicator($control_no, $terminal_no, $description,
             window.location.href = '../templates/add_entry.php';</script>";
     }
 }
-
-?>
