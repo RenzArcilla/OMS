@@ -65,7 +65,7 @@
         <div class="right-section">
             
             <div class="right-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
-                <img src="../assets/images/logo.png" alt="Logo" style="width: 500%; max-width: 650px;">
+                <img src="../assets/images/hepc_white.png" alt="Logo" style="width: 500%; max-width: 650px;">
             </div>
         
         </div>
