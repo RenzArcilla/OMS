@@ -46,6 +46,7 @@ function applicatorExists($hp_no){
 
     Returns:
     - Applicator data if exists
+    - False if applicator does not exist
     - String containing error message and redirect using JS <alert>.
     */
 
@@ -64,6 +65,12 @@ function applicatorExists($hp_no){
 
         // Fetch user data
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        // Check if data is empty (no record found)
+        if (!$data) {
+            return false;
+        }
+
         return $data;
 
     } catch (PDOException $e) {

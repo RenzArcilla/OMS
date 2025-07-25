@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOMS - Sign Up</title>
-    <link rel="stylesheet" href="../assets/css/signin.css">
+    <link rel="stylesheet" href="../assets/css/soms_signup.css">
 </head>
 <body>
     <div class="signup-container">
@@ -40,7 +40,7 @@
             
             <button type="submit" class="signup-btn">Create Account</button>
         </form>
-        <p class="login.php">Already have an account? <a href="login.php">Log in here</a></p>
+        <p class="login-link">Already have an account? <a href="wlogin.php">Log in here</a></p>
     </div>
 
 </body>

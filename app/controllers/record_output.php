@@ -54,9 +54,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Check if applicators exists 
         include_once '../models/READ_applicators.php';
         $app1_result = applicatorExists($app1);
-        if (is_string($app1_result)) { // Fixed variable name
+        if (is_string($app1_result)) {
             echo $app1_result;
-            exit(); // Add exit to stop execution
+            exit(); // Stop further execution
+        } elseif ($app1_result === false) {
+            echo "<script>alert('Applicator 1 does not exist.');
+                window.location.href = '../templates/record_output.php';</script>";
+            exit; // Prevent further execution
         }
 
         $app2_result = null; // Initialize variable
@@ -65,6 +69,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (is_string($app2_result)) {
                 echo $app2_result;
                 exit(); // Add exit to stop execution
+            } elseif ($app2_result === false) {
+                echo "<script>alert('Applicator 2 does not exist.');
+                    window.location.href = '../templates/record_output.php';</script>";
+                exit; // Prevent further execution
             }
         }
 
@@ -74,6 +82,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (is_string($machine_results)) {
             echo $machine_results;
             exit(); // Add exit to stop execution
+        } elseif ($machine_results === false) {
+            echo "<script>alert('Machine does not exist.');
+                window.location.href = '../templates/record_output.php';</script>";
+            exit; // Prevent further execution
         }
         
         // Try to create a record 

@@ -50,6 +50,7 @@ function machineExists($control_no){
 
     Returns:
     - Machine data if exists
+    - False if machine does not exist
     - String containing error message and redirect using JS <alert>.
     */
 
@@ -68,6 +69,12 @@ function machineExists($control_no){
 
         // Fetch user data
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Check if data is empty (no record found)
+        if (!$data) {
+            return false;
+        }
+
         return $data;
 
     } catch (PDOException $e) {
