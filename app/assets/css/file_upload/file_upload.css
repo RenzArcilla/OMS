@@ -1,76 +1,34 @@
-/*              
-        * .upload-section
-        *
-        * What function it does:
-        * - Styles the upload section of the dashboard preview, which is the section that says "Upload Section".
-        * - Ensures the upload section is displayed as a flex container, and that the section is spaced out evenly.
-        *
-        */
+
         .upload-section {
             padding: 100px 0;
             background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
         }
-        /*
-        * .section-title
-        *
-        * What function it does:
-        * - Styles the title of the upload section, which is the title that says "Upload Section".
-        * - Ensures the title is displayed as a flex container, and that the title is spaced out evenly.
-        *
-        */
+        
         .section-title {
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 60px;
             color: #ffffff;
         }
-        /*
-        * .upload-container
-        *
-        * What function it does:
-        * - Styles the container of the upload section, which is the container that says "Upload Section".
-        * - Ensures the container is displayed as a flex container, and that the container is spaced out evenly.
-        *
-        */
+        
         .upload-container {
             max-width: 1000px;
             margin: 0 auto;
         }
-        /*
-        * .upload-grid
-        *
-        * What function it does:
-        * - Styles the grid of the upload section, which is the grid that says "Upload Section".
-        * - Ensures the grid is displayed as a grid container, and that the grid is spaced out evenly.
-        *
-        */
+        
         .upload-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
             margin-bottom: 60px;
         }
-        /*
-        * .upload-area
-        *
-        * What function it does:
-        * - Styles the area of the upload section, which is the area that says "Upload Section".
-        * - Ensures the area is displayed as a flex container, and that the area is spaced out evenly.
-        *
-        */
+      
         .upload-area {
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
-        /*
-        * .upload-box
-        *
-        * What function it does:
-        * - Styles the box of the upload section, which is the box that says "Upload Section".
-        * - Ensures the box is displayed as a flex container, and that the box is spaced out evenly.
-        *
-        */  
+      
         .upload-box {
             background: rgba(0, 0, 0, 0.3);
             border: 2px dashed rgba(220, 20, 60, 0.5);
@@ -81,90 +39,40 @@
             cursor: pointer;
             backdrop-filter: blur(10px);
         }
-        /*
-        * .upload-box:hover
-        *
-        * What function it does:
-        * - Styles the box when hovered, which is the box that says "Upload Section".
-        * - Ensures the box is displayed as a flex container, and that the box is spaced out evenly.
-        *
-        */
+        
         .upload-box:hover {
             border-color: #DC143C;
             background: rgba(220, 20, 60, 0.1);
         }
-        /*
-        * .upload-box.dragover
-        *
-        * What function it does:
-        * - Styles the box when dragged over, which is the box that says "Upload Section".
-        * - Ensures the box is displayed as a flex container, and that the box is spaced out evenly.
-        *
-        */
+        
         .upload-box.dragover {
             border-color: #DC143C;
             background: rgba(220, 20, 60, 0.1);
             transform: scale(1.02);
         }
-        /*
-        * .upload-icon
-        *
-        * What function it does:
-        * - Styles the icon of the upload section, which is the icon that says "Upload Section".
-        * - Ensures the icon is displayed as a flex container, and that the icon is spaced out evenly.
-        *
-        */
+        
         .upload-icon {
             font-size: 48px;
             margin-bottom: 20px;
         }
-        /*
-        * .upload-box h3
-        *
-        * What function it does:
-        * - Styles the h3 of the upload section, which is the h3 that says "Upload Section".
-        * - Ensures the h3 is displayed as a flex container, and that the h3 is spaced out evenly.
-        *
-        */
+        
         .upload-box h3 {
             color: #ffffff;
             margin-bottom: 10px;
             font-size: 1.3rem;
         }
-        /*
-        * .upload-box p
-        *
-        * What function it does:
-        * - Styles the p of the upload section, which is the p that says "Upload Section".
-        * - Ensures the p is displayed as a flex container, and that the p is spaced out evenly.
-        *
-        */
         .upload-box p {
             color: #cccccc;
             margin-bottom: 20px;
         }
-        /*
-        * .upload-progress
-        *
-        * What function it does:
-        * - Styles the progress of the upload section, which is the progress that says "Upload Section".
-        * - Ensures the progress is displayed as a flex container, and that the progress is spaced out evenly.
-        *
-        */
+        
         .upload-progress {
             background: rgba(0, 0, 0, 0.5);
             border-radius: 10px;
             padding: 20px;
             border: 1px solid rgba(220, 20, 60, 0.3);
         }
-        /*
-        * .progress-bar
-        *
-        * What function it does:
-        * - Styles the bar of the upload section, which is the bar that says "Upload Section".
-        * - Ensures the bar is displayed as a flex container, and that the bar is spaced out evenly.
-        *
-        */
+        
         .progress-bar {
             width: 100%;
             height: 8px;
@@ -173,41 +81,20 @@
             overflow: hidden;
             margin-bottom: 10px;
         }
-        /*
-        * .progress-fill
-        *
-        * What function it does:
-        * - Styles the fill of the upload section, which is the fill that says "Upload Section".
-        * - Ensures the fill is displayed as a flex container, and that the fill is spaced out evenly.
-        *
-        */
+        
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #DC143C, #B22222);
             width: 0%;
             transition: width 0.3s ease;
         }
-        /*
-        * .progress-text
-        *
-        * What function it does:
-        * - Styles the text of the upload section, which is the text that says "Upload Section".
-        * - Ensures the text is displayed as a flex container, and that the text is spaced out evenly.
-        *
-        */
+       
         .progress-text {
             color: #DC143C;
             font-weight: bold;
             font-size: 14px;
         }
-        /*
-        * .upload-info
-        *
-        * What function it does:
-        * - Styles the info of the upload section, which is the info that says "Upload Section".
-        * - Ensures the info is displayed as a flex container, and that the info is spaced out evenly.
-        *
-        */
+        
         .upload-info {
             background: rgba(0, 0, 0, 0.5);
             border-radius: 15px;
@@ -215,65 +102,30 @@
             border: 1px solid rgba(220, 20, 60, 0.3);
             backdrop-filter: blur(10px);
         }
-        /*
-        * .upload-info h3
-        *
-        * What function it does:
-        * - Styles the h3 of the upload section, which is the h3 that says "Upload Section".
-        * - Ensures the h3 is displayed as a flex container, and that the h3 is spaced out evenly.
-        *
-        */  
+         
         .upload-info h3 {
             color: #DC143C;
             margin-bottom: 20px;
             font-size: 1.3rem;
         }
-        /*
-        * .upload-info ul
-        *
-        * What function it does:
-        * - Styles the ul of the upload section, which is the ul that says "Upload Section".
-        * - Ensures the ul is displayed as a flex container, and that the ul is spaced out evenly.
-        *
-        */
+        
         .upload-info ul {
             color: #cccccc;
             margin-bottom: 30px;
             padding-left: 20px;
         }
-        /*
-        * .upload-info li
-        *
-        * What function it does:
-        * - Styles the li of the upload section, which is the li that says "Upload Section".
-        * - Ensures the li is displayed as a flex container, and that the li is spaced out evenly.
-        *
-        */
+        
         .upload-info li {
             margin-bottom: 8px;
             line-height: 1.5;
         }
-        /*
-        * .upload-stats
-        *
-        * What function it does:
-        * - Styles the stats of the upload section, which is the stats that says "Upload Section".
-        * - Ensures the stats is displayed as a flex container, and that the stats is spaced out evenly.
-        *
-        */
+        
         .upload-stats {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
-        /*
-        * .stat-item
-        *
-        * What function it does:
-        * - Styles the item of the upload section, which is the item that says "Upload Section".
-        * - Ensures the item is displayed as a flex container, and that the item is spaced out evenly.
-        *
-        */
+        
         .stat-item {
             text-align: center;
             padding: 15px;
@@ -281,40 +133,19 @@
             border-radius: 8px;
             border: 1px solid rgba(220, 20, 60, 0.3);
         }
-        /*
-        * .stat-value
-        *
-        * What function it does:
-        * - Styles the value of the upload section, which is the value that says "Upload Section".
-        * - Ensures the value is displayed as a flex container, and that the value is spaced out evenly.
-        *
-        */
+        
         .stat-value {
             font-size: 20px;
             font-weight: bold;
             color: #DC143C;
             margin-bottom: 5px;
         }
-        /*
-        * .stat-label
-        *
-        * What function it does:
-        * - Styles the label of the upload section, which is the label that says "Upload Section".
-        * - Ensures the label is displayed as a flex container, and that the label is spaced out evenly.
-        *
-        */
+        
         .stat-label {
             font-size: 12px;
             color: #cccccc;
         }
-        /*
-        * .recent-uploads
-        *
-        * What function it does:
-        * - Styles the recent uploads of the upload section, which is the recent uploads that says "Upload Section".
-        * - Ensures the recent uploads is displayed as a flex container, and that the recent uploads is spaced out evenly.
-        *
-        */
+        
         .recent-uploads {
             background: rgba(0, 0, 0, 0.5);
             border-radius: 15px;
@@ -322,40 +153,19 @@
             border: 1px solid rgba(220, 20, 60, 0.3);
             backdrop-filter: blur(10px);
         }
-        /*
-        * .recent-uploads h3
-        *
-        * What function it does:
-        * - Styles the h3 of the upload section, which is the h3 that says "Upload Section".
-        * - Ensures the h3 is displayed as a flex container, and that the h3 is spaced out evenly.
-        *
-        */
+        
         .recent-uploads h3 {
             color: #DC143C;
             margin-bottom: 20px;
             font-size: 1.3rem;
         }
-        /*
-        * .upload-list
-        *
-        * What function it does:
-        * - Styles the list of the upload section, which is the list that says "Upload Section".
-        * - Ensures the list is displayed as a flex container, and that the list is spaced out evenly.
-        *
-        */
+        
         .upload-list {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
-        /*
-        * .upload-item
-        *
-        * What function it does:
-        * - Styles the item of the upload section, which is the item that says "Upload Section".
-        * - Ensures the item is displayed as a flex container, and that the item is spaced out evenly.
-        *
-        */
+        
         .upload-item {
             display: flex;
             align-items: center;
@@ -366,75 +176,33 @@
             border: 1px solid rgba(220, 20, 60, 0.2);
             transition: all 0.3s ease;
         }
-        /*
-        * .upload-item:hover
-        *
-        * What function it does:
-        * - Styles the item when hovered, which is the item that says "Upload Section".
-        * - Ensures the item is displayed as a flex container, and that the item is spaced out evenly.
-        *
-        */
+        
         .upload-item:hover {
             background: rgba(220, 20, 60, 0.15);
             transform: translateX(5px);
         }
-        /*
-        * .file-icon
-        *
-        * What function it does:
-        * - Styles the icon of the upload section, which is the icon that says "Upload Section".
-        * - Ensures the icon is displayed as a flex container, and that the icon is spaced out evenly.
-        *
-        */
+        
         .file-icon {
             font-size: 24px;
             width: 40px;
             text-align: center;
         }
-        /*
-        * .file-info
-        *
-        * What function it does:
-        * - Styles the info of the upload section, which is the info that says "Upload Section".
-        * - Ensures the info is displayed as a flex container, and that the info is spaced out evenly.
-        *
-        */
+        
         .file-info {
             flex: 1;
         }
-        /*
-        * .file-name
-        *
-        * What function it does:
-        * - Styles the name of the upload section, which is the name that says "Upload Section".
-        * - Ensures the name is displayed as a flex container, and that the name is spaced out evenly.
-        *
-        */
+        
         .file-name {
             color: #ffffff;
             font-weight: 600;
             margin-bottom: 2px;
         }
-        /*
-        * .file-details
-        *
-        * What function it does:
-        * - Styles the details of the upload section, which is the details that says "Upload Section".
-        * - Ensures the details is displayed as a flex container, and that the details is spaced out evenly.
-        *
-        */
+        
         .file-details {
             color: #cccccc;
             font-size: 12px;
         }
-        /*
-        * .file-status
-        *
-        * What function it does:
-        * - Styles the status of the upload section, which is the status that says "Upload Section".
-        * - Ensures the status is displayed as a flex container, and that the status is spaced out evenly.
-        *
-        */
+        
         .file-status {
             padding: 4px 12px;
             border-radius: 12px;
@@ -445,17 +213,4 @@
         .file-status.success {
             background: rgba(0, 255, 0, 0.2);
             color: #00ff00;
-        }
-        /*  
-        * .login-section
-        *
-        * What function it does:
-        * - Styles the section of the login section, which is the section that says "Login Section".
-        * - Ensures the section is displayed as a flex container, and that the section is spaced out evenly.
-        *
-        */
-        .login-section {
-            padding: 80px 0;
-            background: rgba(0, 0, 0, 0.8);
-            text-align: center;
         }
