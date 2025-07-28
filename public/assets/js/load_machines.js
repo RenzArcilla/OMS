@@ -1,7 +1,7 @@
 // Infinite Scroll Logic for Machine Table
 
 // State variables
-let machineOffset = 0;              // Tracks how many rows we've already loaded
+let machineOffset = 10;              // Tracks how many rows we've already loaded
 const machineLimit = 10;           // How many rows to fetch per scroll
 let machineLoading = false;        // Prevents overlapping AJAX calls
 
@@ -13,7 +13,7 @@ function loadMachines() {
     if (machineLoading) return;
     machineLoading = true;
 
-    fetch(`../ajax/get_machines.php?offset=${machineOffset}&limit=${machineLimit}`)
+    fetch('/SOMS/public/ajax/get_machines.php?offset=' + machineOffset + '&limit=' + machineLimit)
         .then(response => response.json())
         .then(data => {
             const tbody = document.getElementById('machine-body');

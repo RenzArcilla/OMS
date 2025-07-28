@@ -22,9 +22,9 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
     <meta charset="UTF-8">
     <title>Add Machine or Applicator</title>
     <!-- Load machine infinite scroll logic -->
-    <script src="../assets/js/load_machines.js" defer></script>
+    <script src="../../public/assets/js/load_machines.js" defer></script>
     <!-- Load applicator infinite scroll logic -->
-    <script src="../assets/js/load_applicators.js" defer></script>
+    <script src="../../public/assets/js/load_applicators.js" defer></script>
 </head>
     <body>
 
@@ -91,7 +91,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                     <?php
                     // Include database connection and machine reader logic
                     require_once __DIR__ . '/../includes/db.php';
-                    require_once __DIR__ . '/../models/READ_machines.php';
+                    require_once __DIR__ . '/../models/read_machines.php';
 
                     // Fetch initial set of machines (first 10 entries)
                     $machines = getMachines($pdo, 10, 0);
@@ -182,7 +182,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                     <?php
                         // Include database connection and machine reader logic
                         require_once __DIR__ . '/../includes/db.php';
-                        require_once __DIR__ . '/../models/READ_applicators.php';
+                        require_once __DIR__ . '/../models/read_applicators.php';
 
                         // Fetch initial set of machines (first 10 entries)
                         $applicators = getApplicators($pdo, 10, 0);

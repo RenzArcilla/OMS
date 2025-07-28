@@ -6,8 +6,8 @@
 
 header('Content-Type: application/json'); // Tell the browser this returns JSON
 
-require_once __DIR__ . '/../includes/db.php';
-require_once __DIR__ . '/../models/READ_machines.php';
+require_once __DIR__ . '/../../app/includes/db.php';
+require_once __DIR__ . '/../../app/models/read_machines.php';
 
 // Get offset and limit from query string, with default values
 $offset = isset($_GET['offset']) ? (int) $_GET['offset'] : 0;
