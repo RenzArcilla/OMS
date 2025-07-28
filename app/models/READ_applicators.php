@@ -78,6 +78,6 @@ function applicatorExists($hp_no){
         error_log("Database Error: " . $e->getMessage());
         return "<script>
             alert('Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
-            window.location.href = '../templates/record_output.php';</script>";
+            window.location.href = '../views/record_output.php';</script>";
     }
 }

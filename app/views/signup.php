@@ -9,7 +9,7 @@
 <body>
     <div class="signup-container">
         <h2 class="signup-title">Create Account</h2>
-        <form method="POST" action="../controllers/sign_in.php" autocomplete="off">
+        <form method="POST" action="../controllers/sign_up.php" autocomplete="off">
             
             <div class="form-group">
                 <label for="username">Username</label>
@@ -40,7 +40,7 @@
             
             <button type="submit" class="signup-btn">Create Account</button>
         </form>
-        <p class="login-link">Already have an account? <a href="wlogin.php">Log in here</a></p>
+        <p class="login-link">Already have an account? <a href="login.php">Log in here</a></p>
     </div>
 
 </body>

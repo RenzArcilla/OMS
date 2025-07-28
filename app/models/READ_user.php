@@ -49,6 +49,6 @@ function loginUser($username, $password) {
         error_log("Database Error: " . $e->getMessage());
         return "<script>
             alert('Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
-            window.location.href = '../templates/login.php';</script>";
+            window.location.href = '../views/login.php';</script>";
     }
 }

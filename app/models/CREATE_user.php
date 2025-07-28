@@ -31,7 +31,7 @@ function createUser($first_name, $last_name, $username, $password, $confirm_pass
     // Password confirmation check
     if ($password !== $confirm_password) {
         return "<script>alert('Password Mismatch!.');
-            window.location.href = '../templates/signin.php';</script>"; 
+            window.location.href = '../views/signup.php';</script>"; 
     } 
 
     // Check if username exists
@@ -40,7 +40,7 @@ function createUser($first_name, $last_name, $username, $password, $confirm_pass
     $checkStmt->execute();
     if ($checkStmt->fetchColumn() > 0) {
         return "<script>alert('Username already taken.');
-            window.location.href = '../templates/signin.php';</script>";
+            window.location.href = '../views/signup.php';</script>";
 
     }
 
@@ -78,6 +78,6 @@ function createUser($first_name, $last_name, $username, $password, $confirm_pass
         error_log("Database Error: " . $e->getMessage());
         return "<script>
             alert('Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
-            window.location.href = '../templates/signin.php';</script>";
+            window.location.href = '../views/signup.php';</script>";
     }   
 }

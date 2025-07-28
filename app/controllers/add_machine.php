@@ -7,7 +7,7 @@
 // Start session and check if user is logged in
 session_start(); 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../templates/login.php");
+    header("Location: ../views/login.php");
     exit();
 }
 
@@ -25,15 +25,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if fields are empty
     if (empty($control_no) || empty($description) || empty($model) || empty($machine_maker)) {
         echo "<script>alert('Please fill in all required fields.');
-            window.location.href = '../templates/add_entry.php';</script>";
+            window.location.href = '../views/add_entry.php';</script>";
 
     } else if ($description !== 'AUTOMATIC' && $description !== 'SEMI-AUTOMATIC') {
         echo "<script>alert('Invalid selection for description.');
-            window.location.href = '../templates/add_entry.php';</script>";
+            window.location.href = '../views/add_entry.php';</script>";
 
     } else {
         // Include the model to handle database operations
-        include_once '../models/CREATE_machine.php';
+        include_once '../models/create_machine.php';
 
         // Try to create the applicator
         $result = createMachine($control_no, $description, $model,
@@ -42,13 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Check if applicator creation was successful
         if ($result === true) {
             echo "<script>alert('Machine added successfully!');
-                window.location.href = '../templates/add_entry.php';</script>";
+                window.location.href = '../views/add_entry.php';</script>";
             exit();
         } elseif (is_string($result)) {
             echo $result; // Display error message from createMachine function
         } else {
             echo "<script>alert('Failed to add Machine. Please try again.');
-                window.location.href = '../templates/add_entry.php';</script>";
+                window.location.href = '../views/add_entry.php';</script>";
         }
     }
 }
