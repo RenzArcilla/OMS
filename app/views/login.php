@@ -56,7 +56,7 @@
                     </div>
 
                     <div class="signup-link"> 
-                        Don't have an account? <a href="wsignin.php">Create one here</a>
+                        Don't have an account? <a href="signup.php">Create one here</a>
                     </div>
                 </form>
             </div>

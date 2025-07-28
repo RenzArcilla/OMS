@@ -59,7 +59,7 @@ function submitApplicatorOutput($applicator_data, $app_output, $record_id) {
             default:
                 return "<script>
                     alert('Invalid applicator type: " . htmlspecialchars($type, ENT_QUOTES) . "');
-                    window.location.href = '../templates/record_output.php';</script>";
+                    window.location.href = '../views/record_output.php';</script>";
         }
         
         $stmt->bindParam(':record_id', $record_id, PDO::PARAM_INT);
@@ -76,7 +76,6 @@ function submitApplicatorOutput($applicator_data, $app_output, $record_id) {
         error_log("Database Error in submitApplicatorOutput: " . $e->getMessage());
         return "<script>
             alert('Database error occurred while submitting applicator output: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
-            window.location.href = '../templates/record_output.php';</script>";
+            window.location.href = '../views/record_output.php';</script>";
     }
 }
-?>

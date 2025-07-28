@@ -18,7 +18,7 @@
 <body>
     <p>Storage and Output Monitoring System</p>
     <h2>Welcome to the SOMS System! Please log in to continue.</h2>
-    <a href="../templates/login.php">Log In</a>
-    <a href="../templates/signin.php">Sign In</a>
+    <a href="../app/views/login.php">Log In</a>
+    <a href="../app/views/signup.php">Sign In</a>
 </body>
 </html>

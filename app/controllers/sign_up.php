@@ -16,10 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if fields are empty
     if (empty($firstname) || empty($lastname) || empty($username) || empty($password) || empty($confirm_password)) {
         echo "<script>alert('Please fill in all fields.');
-            window.location.href = '../templates/signin.php';</script>";
+            window.location.href = '../views/soms_signup.php';</script>";
     } else {
         // Try to register the user
-        include_once '../models/CREATE_user.php';
+        include_once '../models/create_user.php';
 
         $result = createUser($firstname, $lastname, $username, $password, $confirm_password);
 
@@ -30,13 +30,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['username'] = $result['username'];
             $_SESSION['first_name'] = $result['first_name'];
             $_SESSION['user_type'] = $result['user_type'];
-            header("Location: /SOMS/app/templates/home.php");
+            header("Location: /SOMS/app/views/home.php");
             exit();
         } elseif (is_string($result)) {
             echo $result; // Display error message from createUser function
         } else {
             echo "<script>alert('Registration failed. Please try again.');
-                window.location.href = '../templates/signin.php';</script>";
+                window.location.href = '../views/signup.php';</script>";
         }
     }
 }

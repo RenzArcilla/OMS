@@ -41,7 +41,7 @@ function createRecord($shift, $machine_data, $applicator_data, $date_inspected, 
             default:
                 return "<script>
                     alert('Invalid shift value: " . htmlspecialchars($shift, ENT_QUOTES) . "');
-                    window.location.href = '../templates/record_output.php';</script>";
+                    window.location.href = '../views/record_output.php';</script>";
         }
         
         // Get machine and applicator IDs
@@ -74,7 +74,7 @@ function createRecord($shift, $machine_data, $applicator_data, $date_inspected, 
         error_log("Database Error in createRecord: " . $e->getMessage());
         return "<script>
             alert('Database error occurred while creating record: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
-            window.location.href = '../templates/record_output.php';</script>";
+            window.location.href = '../views/record_output.php';</script>";
     }
 }
 ?>

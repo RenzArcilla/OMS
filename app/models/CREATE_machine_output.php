@@ -53,7 +53,6 @@ function submitMachineOutput($machine_data, $machine_output, $record_id) {
         error_log("Database Error in submitMachineOutput: " . $e->getMessage());
         return "<script>
             alert('Database error occurred while submitting machine output: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
-            window.location.href = '../templates/record_output.php';</script>";
+            window.location.href = '../views/record_output.php';</script>";
     }
 }
-?>
