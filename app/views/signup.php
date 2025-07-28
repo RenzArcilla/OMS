@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOMS - Sign Up</title>
-    <link rel="stylesheet" href="../assets/css/soms_signup.css">
+    <link rel="stylesheet" href="../../public/assets/css/signup.css">
 </head>
 <body>
     <div class="signup-container">

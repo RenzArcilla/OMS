@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOMS - Home</title>
-    <link rel="stylesheet" href="../assets/css/soms_home_viewer.css">
+    <link rel="stylesheet" href="../../public/assets/css/home.css">
 </head>
 <!-- Animated Background -->
 <div class="background-canvas">
@@ -16,13 +16,13 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo"><img src="../assets/images/hepc_black.png" alt="Logo" style="width: 100%; max-width: 100px; position: relative; left: -50px; top: 10px;"></div>
+            <div class="logo"><img src="../../public/assets/images/hepc_black.png" alt="Logo" style="width: 100%; max-width: 100px; position: relative; left: -50px; top: 10px;"></div>
 
             <ul class="nav-menu">
-                <li class="nav-home"><a href="#platform">Home</a></li>
-                <li class="nav-dashboard"><a href="#solutions">Dashboard</a></li>
+                <li class="nav-home"><a href="home.php">Home</a></li>
+                <li class="nav-dashboard"><a href="dashboard.php">Dashboard</a></li>
             </ul>
-            <button class="nav-cta">Log In</button>
+            <button class="nav-cta"><a href="login.php">Log In</a></button>
         </div>
     </nav>
 
@@ -31,7 +31,7 @@
         <div class="hero-container">
             <div class="hero-content">
                 <div class="hero-badge">
-                    <span class="hero-text">View-Access Only</span>
+                    <span class="hero-text">Input Privilege Here</span>
                 </div>
                 
                 <h1 class="hero-title">
