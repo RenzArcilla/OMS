@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if fields are empty
     if (empty($firstname) || empty($lastname) || empty($username) || empty($password) || empty($confirm_password)) {
         echo "<script>alert('Please fill in all fields.');
-            window.location.href = '../views/soms_signup.php';</script>";
+            window.location.href = '../views/signup.php';</script>";
     } else {
         // Try to register the user
         include_once '../models/create_user.php';
