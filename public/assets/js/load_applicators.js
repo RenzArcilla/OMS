@@ -1,19 +1,19 @@
 // Infinite Scroll Logic for Applicator Table
 
 // State variables
-let applicatorOffset = 0;              // Tracks how many rows we've already loaded
-const applicatorLimit = 10;           // How many rows to fetch per scroll
-let applicatorLoading = false;        // Prevents overlapping AJAX calls
-
+let applicatorOffset = 10;              // Tracks how many rows we've already loaded
+const applicatorLimit = 10;            // How many rows to fetch per scroll
+let applicatorLoading = false;         // Prevents overlapping AJAX calls
 
 /*
-Fetches and appends applicator rows from the server.
+    Fetches and appends applicator rows from the server.
+    Automatically loads more if the container is not scrollable.
 */
 function loadApplicators() {
     if (applicatorLoading) return;
     applicatorLoading = true;
 
-    fetch(`../ajax/get_applicators.php?offset=${applicatorOffset}&limit=${applicatorLimit}`)
+    fetch('/SOMS/public/ajax/get_applicators.php?offset=' + applicatorOffset + '&limit=' + applicatorLimit)
         .then(response => response.json())
         .then(data => {
             const tbody = document.getElementById('applicator-body');
@@ -34,7 +34,7 @@ function loadApplicators() {
                 tbody.appendChild(tr);
             });
 
-            // Update offset
+            // Update offset for next batch
             applicatorOffset += data.length;
             applicatorLoading = false;
 
@@ -42,6 +42,7 @@ function loadApplicators() {
             if (data.length < applicatorLimit) {
                 document.getElementById('applicator-container').removeEventListener('scroll', applicatorScrollHandler);
             }
+
         })
         .catch(error => {
             console.error("Error loading applicators:", error);
@@ -49,20 +50,19 @@ function loadApplicators() {
         });
 }
 
-
- /*
-Handles scroll event for the applicator container.
-Loads more data when near the bottom.
+/*
+    Handles scroll event for the applicator container.
+    Loads more data when near the bottom.
 */
 function applicatorScrollHandler() {
     const container = document.getElementById('applicator-container');
+    console.log('Scroll event fired', container.scrollTop, container.scrollHeight, container.clientHeight);
     if (container.scrollTop + container.clientHeight >= container.scrollHeight - 5) {
         loadApplicators();
     }
 }
 
-
-// Initialize on page load
+// Initialize the applicator loading on page load
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('applicator-container').addEventListener('scroll', applicatorScrollHandler);
     loadApplicators(); // Load initial data
