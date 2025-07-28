@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOMS - File Upload </title>
-    <link rel="stylesheet" href="../assets/css/soms_fileupload_tk_admin.css">
+    <link rel="stylesheet" href="../../public/assets/css/fileupload_tk_admin.css">
 </head>
 <body>
     <section class="upload-section" id="upload">
