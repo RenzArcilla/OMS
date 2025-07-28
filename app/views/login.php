@@ -17,17 +17,18 @@
             </div>
 
             <div class="login-container">
-                <form class="login-form">
+                <form class="login-form" action="../controllers/log_in.php" method="POST">
                     <h1 class="login-title">Welcome Back</h1>
                     <p class="login-subtitle">Sign in to your account to continue</p>
 
                     <div class="form-group">
-                        <label class="form-label" for="email">Email Address</label>
+                        <label class="form-label" for="username">Username</label>
                         <input 
-                            type="email" 
-                            id="email" 
+                            type="text" 
+                            id="username" 
+                            name="username"
                             class="form-input" 
-                            placeholder="Enter your email"
+                            placeholder="Enter your username"
                             required
                         >
                     </div>
@@ -37,6 +38,7 @@
                         <input 
                             type="password" 
                             id="password" 
+                            name="password"
                             class="form-input" 
                             placeholder="Enter your password"
                             required
