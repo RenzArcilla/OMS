@@ -30,18 +30,47 @@ function submitMachineOutput($machine_data, $machine_output, $record_id) {
         
         // Get the machine ID
         $machine_id = $machine_data['machine_id'];
-        
+
+        // Get the custom parts of the machine and ensure they are set to the output value
+        require_once __DIR__ . '/read_custom_parts.php';
+        $custom_machine_parts = getCustomParts('MACHINE');
+
+        $custom_parts_arr = []; // Default to empty
+
+        if (is_array($custom_machine_parts)) {
+            if (!empty($custom_machine_parts)) {
+                // Convert each custom part to the desired format
+                $json_array = [];
+
+                foreach ($custom_machine_parts as $part) {
+                    $json_array[] = [
+                        'name' => $part['part_name'],
+                        'value' => $output_value
+                    ];
+                }
+
+                $custom_parts_arr = $json_array;
+            }
+        } else {
+            // If getCustomParts returned an error script (not an array)
+            return $custom_machine_parts; // Contains <script>...</script>
+        }
+
+        // Custom parts
+        $custom_parts_json = json_encode($custom_parts_arr);
+
         // Always create a new record with all values set to the output value
         $stmt = $pdo->prepare("
             INSERT INTO machine_outputs 
-            (record_id, machine_id, total_machine_output, cut_blade, strip_blade_a, strip_blade_b) 
+            (record_id, machine_id, total_machine_output, cut_blade, strip_blade_a, strip_blade_b, custom_parts) 
             VALUES 
-            (:record_id, :machine_id, :output_value, :output_value, :output_value, :output_value)
+            (:record_id, :machine_id, :output_value, :output_value, :output_value, :output_value, :custom_parts)
         ");
         
         $stmt->bindParam(':record_id', $record_id, PDO::PARAM_INT);
         $stmt->bindParam(':machine_id', $machine_id, PDO::PARAM_INT);
         $stmt->bindParam(':output_value', $output_value, PDO::PARAM_INT);
+        $stmt->bindParam(':custom_parts', $custom_parts_json, PDO::PARAM_STR);
         
         // Execute the query
         $stmt->execute();

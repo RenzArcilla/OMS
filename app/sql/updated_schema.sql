@@ -82,14 +82,13 @@ CREATE TABLE records (
 CREATE TABLE custom_part_definitions (
     part_id INT PRIMARY KEY AUTO_INCREMENT,
     equipment_type ENUM('MACHINE', 'APPLICATOR') NOT NULL,
-    part_code VARCHAR(50) NOT NULL,
-    part_name VARCHAR(100) NOT NULL,
+    part_name VARCHAR(100) NOT NULL UNIQUE,
     is_active BOOLEAN DEFAULT TRUE,
     created_by INT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     
     FOREIGN KEY (created_by) REFERENCES users(user_id),
-    UNIQUE KEY unique_equipment_part (equipment_type, part_code),
+    UNIQUE KEY unique_equipment_part (equipment_type, part_name),
     INDEX idx_equipment_type (equipment_type),
     INDEX idx_is_active (is_active)
 );
@@ -227,8 +226,3 @@ CREATE TABLE applicator_reset (
     INDEX idx_applicator_id (applicator_id),
     INDEX idx_reset_time (reset_time)
 );
-
--- Insert some example custom parts 
-INSERT INTO custom_part_definitions (equipment_type, part_code, part_name, created_by) VALUES
-('APPLICATOR', 'special_crimper', 'Special Crimper Tool', 1),
-('MACHINE', 'precision_cutter', 'Precision Cutting Blade', 1);

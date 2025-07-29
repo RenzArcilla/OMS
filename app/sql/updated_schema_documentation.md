@@ -78,14 +78,13 @@ This database system is designed to track machine and applicator usage in a manu
 |--------|------|-------------|-------------|
 | `part_id` | INT | PRIMARY KEY, AUTO_INCREMENT | Unique identifier for custom part |
 | `equipment_type` | ENUM | NOT NULL | 'MACHINE' or 'APPLICATOR' |
-| `part_code` | VARCHAR(50) | NOT NULL | System code for the part (used in JSON) |
 | `part_name` | VARCHAR(100) | NOT NULL | Human-readable part name |
 | `is_active` | BOOLEAN | DEFAULT TRUE | Whether this part is currently available |
 | `created_by` | INT | NOT NULL, FK → users | Admin user who created this part |
 | `created_at` | DATETIME | DEFAULT CURRENT_TIMESTAMP | When this part was created |
 
 **Indexes**: `idx_equipment_type`, `idx_is_active`
-**Unique Constraint**: `unique_equipment_part` (prevents duplicate part codes per equipment type)
+**Unique Constraint**: `unique_equipment_part` (prevents duplicate part names per equipment type)
 
 ---
 
