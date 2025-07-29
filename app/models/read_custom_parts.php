@@ -20,6 +20,7 @@ function getCustomParts($type){
     - Array of machines (associative arrays) on success.
     - String containing error message and redirect using JS <alert> on failure.
     */
+    
     global $pdo;
 
     try {
@@ -40,10 +41,8 @@ function getCustomParts($type){
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
         
     } catch (PDOException $e) {
-        // Log error and return false on failure
+        // Log error and return an error message on failure
         error_log("Database Error: " . $e->getMessage());
-        return "<script>
-            alert('Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
-            window.location.href = '../views/record_output.php';</script>";
+        return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }

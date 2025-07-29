@@ -10,8 +10,6 @@ require_once __DIR__ . '/../includes/db.php';
 
 
 function loginUser($username, $password) {
-    global $pdo;
-
     /*
     Function to log in a user by checking the username and password.
   
@@ -24,6 +22,8 @@ function loginUser($username, $password) {
     - User data array if the login is successful.
     - String containing error message and redirect using JS <alert>.
     */
+
+    global $pdo;
 
     try {
         // Prepare SQL select query with first_name and last_name
@@ -45,10 +45,8 @@ function loginUser($username, $password) {
             return false; // Invalid credentials
         }
     } catch (PDOException $e) {
-        // Log error and return false on failure
+        // Log error and return an error message on failure
         error_log("Database Error: " . $e->getMessage());
-        return "<script>
-            alert('Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
-            window.location.href = '../views/login.php';</script>";
+        return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }

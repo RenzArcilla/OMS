@@ -56,7 +56,6 @@ function machineExists($control_no){
 
     global $pdo;
 
-
     try {
         // Prepare SQL select query with first_name and last_name
         $stmt = $pdo->prepare("SELECT * FROM machines WHERE control_no = :control_no");
@@ -78,10 +77,8 @@ function machineExists($control_no){
         return $data;
 
     } catch (PDOException $e) {
-        // Log error and return false on failure
+        // Log error and return an error message on failure
         error_log("Database Error: " . $e->getMessage());
-        return "<script>
-            alert('Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
-            window.location.href = '../views/record_output.php';</script>";
+        return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }

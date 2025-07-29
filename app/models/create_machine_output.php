@@ -52,8 +52,8 @@ function submitMachineOutput($machine_data, $machine_output, $record_id) {
                 $custom_parts_arr = $json_array;
             }
         } else {
-            // If getCustomParts returned an error script (not an array)
-            return $custom_machine_parts; // Contains <script>...</script>
+            // If getCustomParts returned an error 
+            return $custom_machine_parts;
         }
 
         // Custom parts
@@ -78,10 +78,8 @@ function submitMachineOutput($machine_data, $machine_output, $record_id) {
         return true;
         
     } catch (PDOException $e) {
-        // Log error and return error message
-        error_log("Database Error in submitMachineOutput: " . $e->getMessage());
-        return "<script>
-            alert('Database error occurred while submitting machine output: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
-            window.location.href = '../views/record_output.php';</script>";
+        // Log error and return an error message on failure
+        error_log("Database Error: " . $e->getMessage());
+        return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }

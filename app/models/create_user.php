@@ -9,9 +9,7 @@
 require_once __DIR__ . '/../includes/db.php'; 
 
 
-function createUser($first_name, $last_name, $username, $password, $confirm_password) {
-    global $pdo;
-
+function createUser($first_name, $last_name, $username, $password) {
     /*
     Function to create a new user in the database.
     It verifies that password and confirm_password match,
@@ -28,20 +26,14 @@ function createUser($first_name, $last_name, $username, $password, $confirm_pass
     - String containing error message and redirect using JS <alert>.
     */
 
-    // Password confirmation check
-    if ($password !== $confirm_password) {
-        return "<script>alert('Password Mismatch!.');
-            window.location.href = '../views/signup.php';</script>"; 
-    } 
+    global $pdo;
 
     // Check if username exists
     $checkStmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = :username");
     $checkStmt->bindParam(':username', $username);
     $checkStmt->execute();
     if ($checkStmt->fetchColumn() > 0) {
-        return "<script>alert('Username already taken.');
-            window.location.href = '../views/signup.php';</script>";
-
+        return "Username already taken. Please choose another.";
     }
 
     try {
@@ -75,9 +67,8 @@ function createUser($first_name, $last_name, $username, $password, $confirm_pass
         // Success
         return $user;
     } catch (PDOException $e) {
+        // Log error and return an error message on failure
         error_log("Database Error: " . $e->getMessage());
-        return "<script>
-            alert('Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
-            window.location.href = '../views/signup.php';</script>";
+        return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }   
 }
