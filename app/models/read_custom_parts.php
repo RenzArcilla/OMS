@@ -1,0 +1,49 @@
+<?php
+/*
+    This file defines a function that queries a list of custom parts from the database.
+    Used when recording outputs, such as in infinite scroll.
+*/
+
+// Include the database connection
+require_once __DIR__ . '/../includes/db.php'; 
+
+function getCustomParts($type){
+    /*
+    Function to fetch custom parts of machines/applicators.
+    It prepares and executes a SELECT query that fetches custom parts of machines or applicators,
+    and returns them as an associative array.
+
+    Args:
+    - $type: Type of custom parts to fetch (e.g., 'machine' or 'applicator').
+
+    Returns:
+    - Array of machines (associative arrays) on success.
+    - String containing error message and redirect using JS <alert> on failure.
+    */
+    global $pdo;
+
+    try {
+        // Prepare the SQL statement with placeholders for limit and offset
+        $stmt = $pdo->prepare("
+            SELECT * 
+            FROM custom_part_definitions 
+            WHERE type = :type AND is_active = 1
+        ");
+
+        // Bind pagination parameters securely
+        $stmt->bindValue(':type', $type, PDO::PARAM_STR);
+
+        // Execute the query and return the results
+        $stmt->execute();
+
+        // Return the results
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+    } catch (PDOException $e) {
+        // Log error and return false on failure
+        error_log("Database Error: " . $e->getMessage());
+        return "<script>
+            alert('Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
+            window.location.href = '../views/record_output.php';</script>";
+    }
+}

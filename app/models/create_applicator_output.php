@@ -7,7 +7,7 @@
 // Include the database connection
 require_once __DIR__ . '/../includes/db.php';
 
-function submitApplicatorOutput($applicator_data, $app_output, $record_id) {
+function submitApplicatorOutput($applicator_data, $applicator_output, $record_id) {
     /*
     Function to submit applicator output data to the database.
     The app_output value is added to all existing component values for this applicator.
@@ -25,23 +25,23 @@ function submitApplicatorOutput($applicator_data, $app_output, $record_id) {
     global $pdo;
     
     try {
-        // Convert app_output to integer
-        $increment_value = intval($app_output);
+        // Convert applicator_output to integer
+        $output_value = intval($applicator_output);
         
         // Get the applicator type and ID
         $type = $applicator_data['description'];
         $applicator_id = $applicator_data['applicator_id'];
         
-        // Always create a new record with all values set to the increment value
+        // Always create a new record with all values set to the applicator output value
         switch ($type) {
             case "SIDE":
                 $stmt = $pdo->prepare("
                     INSERT INTO applicator_outputs 
                     (record_id, applicator_id, total_output, wire_crimper, wire_anvil, 
-                     insulation_crimper, insulation_anvil, slide_cutter, cutter_holder) 
+                     insulation_crimper, insulation_anvil, slide_cutter, cutter_holder, custom_parts) 
                     VALUES 
-                    (:record_id, :applicator_id, :increment, :increment, :increment, 
-                     :increment, :increment, :increment, :increment)
+                    (:record_id, :applicator_id, :output_value, :output_value, :output_value, 
+                     :output_value, :output_value, :output_value, :output_value, :custom_parts)
                 ");
                 break;
                 
@@ -49,10 +49,10 @@ function submitApplicatorOutput($applicator_data, $app_output, $record_id) {
                 $stmt = $pdo->prepare("
                     INSERT INTO applicator_outputs 
                     (record_id, applicator_id, total_output, wire_crimper, wire_anvil, 
-                     insulation_crimper, insulation_anvil, shear_blade, cutter_a, cutter_b) 
+                     insulation_crimper, insulation_anvil, shear_blade, cutter_a, cutter_b, custom_parts) 
                     VALUES 
-                    (:record_id, :applicator_id, :increment, :increment, :increment, 
-                     :increment, :increment, :increment, :increment, :increment)
+                    (:record_id, :applicator_id, :output_value, :output_value, :output_value, 
+                     :output_value, :output_value, :output_value, :output_value, :output_value, :custom_parts)
                 ");
                 break;
                 
@@ -64,7 +64,9 @@ function submitApplicatorOutput($applicator_data, $app_output, $record_id) {
         
         $stmt->bindParam(':record_id', $record_id, PDO::PARAM_INT);
         $stmt->bindParam(':applicator_id', $applicator_id, PDO::PARAM_INT);
-        $stmt->bindParam(':increment', $increment_value, PDO::PARAM_INT);
+        $stmt->bindParam(':output_value', $output_value, PDO::PARAM_INT);
+        $stmt->bindParam(':custom_parts', $custom_parts_json, PDO::PARAM_STR);
+
         
         // Execute the query
         $stmt->execute();
