@@ -11,5 +11,5 @@ function jsAlertRedirect($message, $redirect_url="../views/login.php") {
     - $message (string): The message to display in the alert.
     - $redirect_url (string): The URL to redirect to after the alert.
     */
-    return "<script>alert('$message'); window.location.href = '$redirect_url';</script>";
+    echo "<script>alert('$message'); window.location.href = '$redirect_url';</script>";
 }

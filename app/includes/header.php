@@ -12,8 +12,7 @@
             <span>HEPC</span>
         </div>
         <nav class="nav">
-            <a href="../templates/login.php" class="nav-link">LOG IN  ||  </a>
-            <a href="../templates/signin.php" class="nav-link">SIGN UP</a>
-
+            <a href="../views/login.php" class="nav-link">LOG IN  ||  </a>
+            <a href="../views/signup.php" class="nav-link">SIGN UP</a>
         </nav>
     </div>

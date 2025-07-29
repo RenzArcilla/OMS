@@ -4,6 +4,9 @@
     It retrieves form data, sanitizes it, and inserts it into the database.
 */
 
+ini_set("log_errors", 1);
+error_reporting(E_ALL);
+
 // Start session and check if user is logged in
 session_start(); 
 if (!isset($_SESSION['user_id'])) {
@@ -40,6 +43,7 @@ if (empty($control_no) || empty($description) || empty($model) || empty($machine
 if ($description !== 'AUTOMATIC' && $description !== 'SEMI-AUTOMATIC') {
     jsAlertRedirect("Invalid selection for description.", "../views/add_entry.php");
     exit;
+}
 
 // 3. Database operation
 $result = createMachine($control_no, $description, $model,
