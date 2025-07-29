@@ -39,9 +39,7 @@ function createRecord($shift, $machine_data, $applicator_data, $date_inspected, 
                 $shift_formatted = 'NIGHT';
                 break;
             default:
-                return "<script>
-                    alert('Invalid shift value: " . htmlspecialchars($shift, ENT_QUOTES) . "');
-                    window.location.href = '../views/record_output.php';</script>";
+                return "Invalid shift value: " . htmlspecialchars($shift, ENT_QUOTES);
         }
         
         // Get machine and applicator IDs
@@ -70,11 +68,9 @@ function createRecord($shift, $machine_data, $applicator_data, $date_inspected, 
         return $pdo->lastInsertId();
         
     } catch (PDOException $e) {
-        // Log error and return error message
-        error_log("Database Error in createRecord: " . $e->getMessage());
-        return "<script>
-            alert('Database error occurred while creating record: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
-            window.location.href = '../views/record_output.php';</script>";
+        // Log error and return an error message on failure
+        error_log("Database Error: " . $e->getMessage());
+        return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
 ?>

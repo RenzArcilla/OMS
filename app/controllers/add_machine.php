@@ -11,44 +11,48 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// Retrieve form data
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Sanitize input
-    $control_no = isset($_POST['control_no']) ? strtoupper(trim($_POST['control_no'])) : null;
-    $description = isset($_POST['description']) ? strtoupper(trim($_POST['description'])) : null;
-    $model = isset($_POST['model']) ? strtoupper(trim($_POST['model'])) : null;
-    $machine_maker = isset($_POST['machine_maker']) ? strtoupper(trim($_POST['machine_maker'])) : null;
-    $serial_no = empty($_POST['serial_no']) ? 'NO RECORD' : strtoupper(trim($_POST['serial_no']));
-    $invoice_no = empty($_POST['invoice_no']) ? 'NO RECORD' : strtoupper(trim($_POST['invoice_no']));
+// Include necessary files
+require_once '../includes/js_alert.php';
+require_once '../includes/db.php'; 
+include_once '../models/create_machine.php';
+
+// Check if the request method is POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    jsAlertRedirect("Invalid request method.", "../views/add_entry.php");
+    exit;
+}
+
+// 1. Sanitize input
+$control_no = isset($_POST['control_no']) ? strtoupper(trim($_POST['control_no'])) : null;
+$description = isset($_POST['description']) ? strtoupper(trim($_POST['description'])) : null;
+$model = isset($_POST['model']) ? strtoupper(trim($_POST['model'])) : null;
+$machine_maker = isset($_POST['machine_maker']) ? strtoupper(trim($_POST['machine_maker'])) : null;
+$serial_no = empty($_POST['serial_no']) ? 'NO RECORD' : strtoupper(trim($_POST['serial_no']));
+$invoice_no = empty($_POST['invoice_no']) ? 'NO RECORD' : strtoupper(trim($_POST['invoice_no']));
 
 
-    // Check if fields are empty
-    if (empty($control_no) || empty($description) || empty($model) || empty($machine_maker)) {
-        echo "<script>alert('Please fill in all required fields.');
-            window.location.href = '../views/add_entry.php';</script>";
+// 2. Validation
+if (empty($control_no) || empty($description) || empty($model) || empty($machine_maker)) {
+    jsAlertRedirect("Please fill in all required fields.", "../views/add_entry.php");
+    exit;
+} 
 
-    } else if ($description !== 'AUTOMATIC' && $description !== 'SEMI-AUTOMATIC') {
-        echo "<script>alert('Invalid selection for description.');
-            window.location.href = '../views/add_entry.php';</script>";
+if ($description !== 'AUTOMATIC' && $description !== 'SEMI-AUTOMATIC') {
+    jsAlertRedirect("Invalid selection for description.", "../views/add_entry.php");
+    exit;
 
-    } else {
-        // Include the model to handle database operations
-        include_once '../models/create_machine.php';
+// 3. Database operation
+$result = createMachine($control_no, $description, $model,
+                        $machine_maker, $serial_no, $invoice_no);
 
-        // Try to create the applicator
-        $result = createMachine($control_no, $description, $model,
-                                $machine_maker, $serial_no, $invoice_no);
-
-        // Check if applicator creation was successful
-        if ($result === true) {
-            echo "<script>alert('Machine added successfully!');
-                window.location.href = '../views/add_entry.php';</script>";
-            exit();
-        } elseif (is_string($result)) {
-            echo $result; // Display error message from createMachine function
-        } else {
-            echo "<script>alert('Failed to add Machine. Please try again.');
-                window.location.href = '../views/add_entry.php';</script>";
-        }
-    }
+// Check if applicator creation was successful
+if ($result === true) {
+    jsAlertRedirect("Machine added successfully!", "../views/add_entry.php");
+    exit;
+} elseif (is_string($result)) {
+    jsAlertRedirect($result, "../views/add_entry.php");
+    exit;
+} else {
+    jsAlertRedirect("Failed to add Machine. Please try again.", "../views/add_entry.php");
+    exit;
 }

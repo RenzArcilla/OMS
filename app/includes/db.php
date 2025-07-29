@@ -1,10 +1,9 @@
 <?php
 /*
-Database connection script for the application
-This script establishes a connection to the MySQL database using MySQLi.
-It is included in other scripts to ensure database operations can be performed.
+    Database connection script for the application
+    This script establishes a connection to the MySQL database using MySQLi.
+    It is included in other scripts to ensure database operations can be performed.
 */
-
 
 require_once __DIR__ . '/config.php'; // Include the configuration file for database settings
 
@@ -17,6 +16,8 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     // Show alert if connection fails
-    echo "<script>alert('Connection failed: " . addslashes($e->getMessage()) . "');</script>";
-    exit();
+    $error = "Connection failed: " . $e->getMessage();
+    require_once 'js_alert.php';
+    jsAlertRedirect($error, "../views/home.php");
+    exit;
 }

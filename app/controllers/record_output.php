@@ -1,118 +1,93 @@
 <?php
 /*
-    This script handles the submission of a new output record to the system.
-    It retrieves form data, sanitizes it, and inserts it into the database.
+    This file handles the recording of outputs for machines and applicators.
+    It processes the form submission from the record output page and saves the data to the database.
 */
 
-// Start session and check if user is logged in
-session_start(); 
+// Ensure the user is logged in before proceeding
+session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../views/login.php");
-    exit();
+    exit;
 }
 
-// Retrieve form data
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Sanitize input
-    $date_inspected = isset($_POST['date_inspected']) ? trim($_POST['date_inspected']) : null;
-    $shift = isset($_POST['shift']) ? strtoupper(trim($_POST['shift'])) : null;
-    $app1 = isset($_POST['app1']) ? strtoupper(trim($_POST['app1'])) : null;
-    $app1_output = isset($_POST['app1_output']) ? strtoupper(trim($_POST['app1_output'])) : null;
-    $app2 = empty($_POST['app2']) ? 'NO RECORD' : strtoupper(trim($_POST['app2']));
-    $app2_output = empty($_POST['app2_output']) ? 'NO RECORD' : strtoupper(trim($_POST['app2_output']));
-    $machine = isset($_POST['machine']) ? strtoupper(trim($_POST['machine'])) : null;
-    $machine_output = isset($_POST['machine_output']) ? strtoupper(trim($_POST['machine_output'])) : null;
-    
-    // Check if fields are empty
-    if (empty($date_inspected) || empty($shift) || empty($app1) || empty($app1_output) || empty($machine) || empty($machine_output)) {
-        echo "<script>alert('Please fill in all required fields.');
-            window.location.href = '../views/record_output.php';</script>";
+// Include necessary files
+require_once '../includes/js_alert.php';
+require_once '../models/read_applicators.php';
+require_once '../models/read_machines.php';
+require_once '../models/create_record.php';
+require_once '../models/create_applicator_output.php';
+require_once '../models/create_machine_output.php';
 
-    // Reg-ex to verify date format
-    } else if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date_inspected)) {
-        // Invalid format
-        echo "<script>alert('Invalid date format.');
-            window.location.href = '../views/record_output.php';</script>";    
-
-    // Verify valid 'shift' selection
-    } else if ($shift !== 'FIRST' && $shift !== 'SECOND' && $shift !== 'NIGHT') {
-        echo "<script>alert('Invalid selection for description.');
-            window.location.href = '../views/record_output.php';</script>";
-
-    } else {
-
-        // Convert the date input to DateTime format
-        try {
-            $dateObj = new DateTime($date_inspected); // Fixed variable name
-            $sanitizedDate = $dateObj->format('Y-m-d');
-        } catch (Exception $e) {
-            echo "<script>alert('Invalid date value.');
-                window.location.href = '../views/record_output.php';</script>";
-            exit(); // Add exit to stop execution
-        }
-
-        // Check if applicators exists 
-        include_once '../models/read_applicators.php';
-        $app1_result = applicatorExists($app1);
-        if (is_string($app1_result)) {
-            echo $app1_result;
-            exit(); // Stop further execution
-        } elseif ($app1_result === false) {
-            echo "<script>alert('Applicator 1 does not exist.');
-                window.location.href = '../views/record_output.php';</script>";
-            exit; // Prevent further execution
-        }
-
-        $app2_result = null; // Initialize variable
-        if ($app2 !== "NO RECORD") {
-            $app2_result = applicatorExists($app2);
-            if (is_string($app2_result)) {
-                echo $app2_result;
-                exit(); // Add exit to stop execution
-            } elseif ($app2_result === false) {
-                echo "<script>alert('Applicator 2 does not exist.');
-                    window.location.href = '../views/record_output.php';</script>";
-                exit; // Prevent further execution
-            }
-        }
-
-        // Check if machine exists
-        include_once '../models/read_machines.php';
-        $machine_results = machineExists($machine);
-        if (is_string($machine_results)) {
-            echo $machine_results;
-            exit(); // Add exit to stop execution
-        } elseif ($machine_results === false) {
-            echo "<script>alert('Machine does not exist.');
-                window.location.href = '../views/record_output.php';</script>";
-            exit; // Prevent further execution
-        }
-        
-        // Try to create a record 
-        include_once '../models/create_record.php';
-        $record_id = createRecord($shift, $machine_results, $app1_result, $sanitizedDate, $_SESSION['user_id']);
-
-        // Try to submit outputs
-        include_once '../models/create_applicator_output.php';
-        $app1_submit_result = submitApplicatorOutput($app1_result, $app1_output, $record_id);
-
-
-        // Try to submit the output of second applicator (if exists)
-        if ($app2 !== "NO RECORD") {
-            $app2_submit_result = submitApplicatorOutput($app2_result, $app2_output, $record_id);
-        }
-
-        // Try to submit the output of the machine
-        include_once '../models/create_machine_output.php';
-        $machine_submit_result = submitMachineOutput($machine_results, $machine_output, $record_id);
-
-        // If we get here, everything succeeded
-        if ($record_id && $app1_submit_result === true && $machine_submit_result === true) {
-            echo "<script>alert('All outputs recorded successfully!');
-                window.location.href = '../views/record_output.php';</script>";
-        } else {
-            echo "<script>alert('An unexpected error occurred. Please try again.');
-                window.location.href = '../views/record_output.php';</script>";
-        }
-    }
+// Check if the request method is POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    jsAlertRedirect("Invalid request method.", "../views/record_output.php");
+    exit;
 }
+
+// --- Helper: Fail during error ---
+function fail($msg) {
+    jsAlertRedirect($msg, "../views/record_output.php");
+    exit;
+}
+
+// --- Helper: Get Inputs ---
+function getInput($key) {
+    return strtoupper(trim($_POST[$key] ?? ''));
+}
+
+// 1. Sanitize input
+$date = trim($_POST['date_inspected'] ?? '');
+$shift = getInput('shift');
+$app1 = getInput('app1');
+$app1_out = getInput('app1_output');
+$app2 = getInput('app2');
+$app2_out = getInput('app2_output');
+$machine = getInput('machine');
+$machine_out = getInput('machine_output');
+
+// 2. Validation
+if (!$date || !$shift || !$app1 || !$app1_out || !$machine || !$machine_out) {
+    fail("Please fill in all required fields.");
+}
+if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+    fail("Invalid date format.");
+}
+if (!in_array($shift, ['FIRST', 'SECOND', 'NIGHT'])) {
+    fail("Invalid shift.");
+}
+
+try {
+    $date = (new DateTime($date))->format('Y-m-d');
+} catch (Exception $e) {
+    fail("Invalid date value.");
+}
+
+// 3. Check Existence
+$app1_id = applicatorExists($app1);
+if (!$app1_id) fail("Applicator 1 not found.");
+if (is_string($app1_id)) fail($app1_id);
+
+$app2_id = null;
+if (!empty($app2)) {
+    $app2_id = applicatorExists($app2);
+    if (!$app2_id) fail("Applicator 2 not found.");
+    if (is_string($app2_id)) fail($app2_id);
+}
+
+$machine_id = machineExists($machine);
+if (!$machine_id) fail("Machine not found.");
+if (is_string($machine_id)) fail($machine_id);
+
+// 4. Database operation
+$record_id = createRecord($shift, $machine_id, $app1_id, $date, $_SESSION['user_id']);
+if (!$record_id) fail("Failed to create record.");
+
+if (!submitApplicatorOutput($app1_id, $app1_out, $record_id) ||
+    ($app2_id && !submitApplicatorOutput($app2_id, $app2_out, $record_id)) ||
+    !submitMachineOutput($machine_id, $machine_out, $record_id)
+) {
+    fail("Error recording outputs.");
+}
+
+jsAlertRedirect("All outputs recorded successfully!", "../views/record_output.php");

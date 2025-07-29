@@ -9,8 +9,6 @@ require_once __DIR__ . '/../includes/db.php';
 
 function createMachine($control_no, $description, $model,
                           $machine_maker, $serial_no, $invoice_no) {
-    global $pdo;
-
     /*
     Function to create a new machine in the database.
     
@@ -27,7 +25,8 @@ function createMachine($control_no, $description, $model,
     - string containing error message and redirect using JS <alert>.
     */
 
-    
+    global $pdo;
+
     // Set serial_no and invoice_no to null if empty or "NO RECORD"
     $serial_no = $serial_no === 'NO RECORD' ? null : $serial_no;
     $invoice_no = $invoice_no === 'NO RECORD' ? null : $invoice_no;
@@ -53,14 +52,11 @@ function createMachine($control_no, $description, $model,
         if ($stmt->execute()) {
             return true; // Success
         } else {
-            return "<script>alert('Failed to add machine. Please try again.');
-                window.location.href = '../views/add_entry.php';</script>";
+            return "Failed to add machine. Please try again.";
         }
     } catch (PDOException $e) {
-        // Log error and return error message
+        // Log error and return an error message on failure
         error_log("Database Error: " . $e->getMessage());
-        return "<script>
-            alert('Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "');
-            window.location.href = '../views/add_entry.php';</script>";
+        return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }

@@ -5,8 +5,11 @@
 */
 
 
-session_start(); // Start session
-            
+session_start(); 
+
+require_once '../includes/js_alert.php';
+require_once '../includes/db.php';
+require_once '../models/read_user.php';
 
 // Get the form data
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -14,31 +17,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = isset($_POST['username']) ? trim($_POST['username']) : null;
     $password = isset($_POST['password']) ? trim($_POST['password']) : null;
     
-
     // Check if fields are empty
     if (empty($username) || empty($password)) {
-        echo "<script>alert('Please fill in all fields.');
-            window.location.href = '../views/login.php';</script>";
-    } else {
-        // Try logging in the user
-        include_once '../models/read_user.php';
+        jsAlertRedirect("Please fill in all fields.", "../views/login.php");
+        exit;
+    }   
 
-        $result = loginUser($username, $password);
-        if (is_array($result)) {
-            // Set session variables
-            $_SESSION['user_id'] = $result['user_id'];
-            $_SESSION['username'] = $result['username'];
-            $_SESSION['first_name'] = $result['first_name'];
-            $_SESSION['user_type'] = $result['user_type'];
-            
-            // Redirect to home page 
-            header("Location: ../views/home.php");
-            exit();
-        } elseif (is_string($result)) {
-            echo $result; // Display error message from createUser function
-        } else {
-            echo "<script>alert('Invalid credentials. Please try again.');
-                window.location.href = '../views/signup.php';</script>";
-        }
+    // Try logging in the user
+    $result = loginUser($username, $password);
+    if (is_array($result)) {
+        $_SESSION['user_id'] = $result['user_id'];
+        $_SESSION['username'] = $result['username'];
+        $_SESSION['first_name'] = $result['first_name'];
+        $_SESSION['user_type'] = $result['user_type'];
+        
+        header("Location: ../views/home.php");
+        exit();
+    } elseif (is_string($result)) {
+        jsAlertRedirect($result, "../views/login.php");
+        exit;
+    } else {
+        jsAlertRedirect("Invalid credentials. Please try again.", "../views/login.php");
+        exit;
     }
 }
