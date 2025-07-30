@@ -12,7 +12,7 @@ require_once __DIR__ . '/../includes/db.php';
 function loginUser($username, $password) {
     /*
     Function to log in a user by checking the username and password.
-  
+
     Args:
     - $username: The username of the user.
     - $password: The password of the user.

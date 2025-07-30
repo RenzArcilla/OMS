@@ -32,7 +32,7 @@ function submitMachineOutput($machine_data, $machine_output, $record_id) {
         require_once __DIR__ . '/read_custom_parts.php';
         $custom_machine_parts = getCustomParts('MACHINE');
 
-       if (is_string($custom_machine_parts)) {
+        if (is_string($custom_machine_parts)) {
             // If getCustomParts returned an error 
             return $custom_machine_parts;
         }

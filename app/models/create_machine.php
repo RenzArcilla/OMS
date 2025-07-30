@@ -8,7 +8,7 @@
 require_once __DIR__ . '/../includes/db.php';
 
 function createMachine($control_no, $description, $model,
-                          $machine_maker, $serial_no, $invoice_no) {
+                        $machine_maker, $serial_no, $invoice_no) {
     /*
     Function to create a new machine in the database.
     
@@ -35,7 +35,7 @@ function createMachine($control_no, $description, $model,
         // Prepare SQL insert query
         $stmt = $pdo->prepare("
             INSERT INTO machines (control_no, description, model, 
-                                     maker, serial_no, invoice_no)
+                                    maker, serial_no, invoice_no)
             VALUES (:control_no, :description, :model,
                     :machine_maker, :serial_no, :invoice_no)
         ");

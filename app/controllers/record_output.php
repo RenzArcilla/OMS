@@ -112,5 +112,29 @@ if (is_string($machine_status)) {
     exit;
 }
 
+// Upodate monitoring tables
+require_once '../models/update_monitor_applicator.php';
+$app1_monitor_status = monitorApplicatorOutput($app1_data, $app1_out);
+if (is_string($app1_monitor_status)) {
+    jsAlertRedirect($app1_monitor_status, $redirect);
+    exit;
+}
+
+$app2_monitor_status = null;
+if ($app2_data) {
+    $app2_monitor_status = monitorApplicatorOutput($app2_data, $app2_out);
+    if (is_string($app2_monitor_status)) {
+        jsAlertRedirect($app2_monitor_status, $redirect);
+        exit;
+    }
+}
+
+require_once '../models/update_monitor_machine.php';
+$machine_monitor_status = monitorMachineOutput($machine_data, $machine_out);
+if (is_string($machine_monitor_status)) {
+    jsAlertRedirect($machine_monitor_status, $redirect);
+    exit;
+}
+
 // If all operations were successful, redirect to the record output page with success message
 jsAlertRedirect("All outputs recorded successfully!", $redirect);

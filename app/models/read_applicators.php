@@ -25,9 +25,9 @@ function getApplicators(PDO $pdo, int $limit = 10, int $offset = 0): array {
 
 
     $stmt = $pdo->prepare("SELECT hp_no, terminal_no, description, wire, terminal_maker, applicator_maker, serial_no, invoice_no
-                           FROM applicators
-                           ORDER BY applicator_id DESC
-                           LIMIT :limit OFFSET :offset");
+                        FROM applicators
+                        ORDER BY applicator_id DESC
+                        LIMIT :limit OFFSET :offset");
 
     $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
     $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
