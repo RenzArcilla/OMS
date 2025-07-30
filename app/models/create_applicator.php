@@ -8,8 +8,8 @@
 require_once __DIR__ . '/../includes/db.php';
 
 function createApplicator($control_no, $terminal_no, $description, 
-                           $wire_type, $terminal_maker, $applicator_maker, 
-                           $serial_no, $invoice_no) {
+                        $wire_type, $terminal_maker, $applicator_maker, 
+                        $serial_no, $invoice_no) {
     /*
     Function to create a new applicator in the database.
     
@@ -38,7 +38,7 @@ function createApplicator($control_no, $terminal_no, $description,
         // Prepare SQL insert query
         $stmt = $pdo->prepare("
             INSERT INTO applicators (hp_no, terminal_no, description, wire, 
-                                     terminal_maker, applicator_maker, serial_no, invoice_no)
+                                    terminal_maker, applicator_maker, serial_no, invoice_no)
             VALUES (:control_no, :terminal_no, :description, :wire_type, 
                     :terminal_maker, :applicator_maker, :serial_no, :invoice_no)
         ");

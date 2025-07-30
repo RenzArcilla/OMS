@@ -150,7 +150,7 @@ CREATE TABLE machine_outputs (
 -- Hybrid monitor tables
 CREATE TABLE monitor_machine (
     monitor_id INT PRIMARY KEY AUTO_INCREMENT,
-    machine_id INT NOT NULL,
+    machine_id INT NOT NULL UNIQUE,
     
     -- Standard parts totals
     total_machine_output INT DEFAULT 0,
@@ -171,7 +171,7 @@ CREATE TABLE monitor_machine (
 
 CREATE TABLE monitor_applicator (
     monitor_id INT PRIMARY KEY AUTO_INCREMENT,
-    applicator_id INT NOT NULL,
+    applicator_id INT NOT NULL UNIQUE,
 
     -- Standard parts totals
     total_output INT DEFAULT 0,

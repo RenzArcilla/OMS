@@ -172,7 +172,7 @@ This database system is designed to track machine and applicator usage in a manu
 | Column | Type | Constraints | Description |
 |--------|------|-------------|-------------|
 | `monitor_id` | INT | PRIMARY KEY, AUTO_INCREMENT | Unique identifier |
-| `machine_id` | INT | NOT NULL, FK → machines | Machine being monitored |
+| `machine_id` | INT | NOT NULL, UNIQUE, FK → machines | Machine being monitored |
 | **Standard Parts Totals** | | | |
 | `total_machine_output` | INT | DEFAULT 0 | Cumulative total output |
 | `cut_blade_output` | INT | DEFAULT 0 | Cumulative cut blade output |
@@ -190,7 +190,7 @@ This database system is designed to track machine and applicator usage in a manu
 | Column | Type | Constraints | Description |
 |--------|------|-------------|-------------|
 | `monitor_id` | INT | PRIMARY KEY, AUTO_INCREMENT | Unique identifier |
-| `applicator_id` | INT | NOT NULL, FK → applicators | Applicator being monitored |
+| `applicator_id` | INT | NOT NULL, UNIQUE, FK → applicators | Applicator being monitored |
 | **Standard Parts Totals** | | | |
 | `total_output` | INT | DEFAULT 0 | Cumulative total output |
 | `wire_crimper_output` | INT | DEFAULT 0 | Cumulative wire crimper output |

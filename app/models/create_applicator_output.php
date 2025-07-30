@@ -61,10 +61,10 @@ function submitApplicatorOutput($applicator_data, $applicator_output, $record_id
                 $stmt = $pdo->prepare("
                     INSERT INTO applicator_outputs 
                     (record_id, applicator_id, total_output, wire_crimper, wire_anvil, 
-                     insulation_crimper, insulation_anvil, slide_cutter, cutter_holder, custom_parts) 
+                    insulation_crimper, insulation_anvil, slide_cutter, cutter_holder, custom_parts) 
                     VALUES 
                     (:record_id, :applicator_id, :output_value, :output_value, :output_value, 
-                     :output_value, :output_value, :output_value, :output_value, :custom_parts)
+                    :output_value, :output_value, :output_value, :output_value, :custom_parts)
                 ");
                 break;
                 
@@ -72,10 +72,10 @@ function submitApplicatorOutput($applicator_data, $applicator_output, $record_id
                 $stmt = $pdo->prepare("
                     INSERT INTO applicator_outputs 
                     (record_id, applicator_id, total_output, wire_crimper, wire_anvil, 
-                     insulation_crimper, insulation_anvil, shear_blade, cutter_a, cutter_b, custom_parts) 
+                    insulation_crimper, insulation_anvil, shear_blade, cutter_a, cutter_b, custom_parts) 
                     VALUES 
                     (:record_id, :applicator_id, :output_value, :output_value, :output_value, 
-                     :output_value, :output_value, :output_value, :output_value, :output_value, :custom_parts)
+                    :output_value, :output_value, :output_value, :output_value, :output_value, :custom_parts)
                 ");
                 break;
                 
