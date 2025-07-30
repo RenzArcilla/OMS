@@ -28,7 +28,7 @@ function getCustomParts($type){
         $stmt = $pdo->prepare("
             SELECT * 
             FROM custom_part_definitions 
-            WHERE type = :type AND is_active = 1
+            WHERE equipment_type = :type AND is_active = 1
         ");
 
         // Bind pagination parameters securely

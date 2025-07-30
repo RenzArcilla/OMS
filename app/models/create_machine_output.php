@@ -24,10 +24,7 @@ function submitMachineOutput($machine_data, $machine_output, $record_id) {
     
     global $pdo;
     
-    try {
-        // Convert machine_output to integer
-        $output_value = intval($machine_output);
-        
+    try {      
         // Get the machine ID
         $machine_id = $machine_data['machine_id'];
 
@@ -35,29 +32,27 @@ function submitMachineOutput($machine_data, $machine_output, $record_id) {
         require_once __DIR__ . '/read_custom_parts.php';
         $custom_machine_parts = getCustomParts('MACHINE');
 
-        $custom_parts_arr = []; // Default to empty
-
-        if (is_array($custom_machine_parts)) {
-            if (!empty($custom_machine_parts)) {
-                // Convert each custom part to the desired format
-                $json_array = [];
-
-                foreach ($custom_machine_parts as $part) {
-                    $json_array[] = [
-                        'name' => $part['part_name'],
-                        'value' => $output_value
-                    ];
-                }
-
-                $custom_parts_arr = $json_array;
-            }
-        } else {
+       if (is_string($custom_machine_parts)) {
             // If getCustomParts returned an error 
             return $custom_machine_parts;
         }
 
-        // Custom parts
-        $custom_parts_json = json_encode($custom_parts_arr);
+        $custom_parts_arr = []; // Default to empty
+
+        if (!empty($custom_machine_parts)) {
+            // Convert each custom part to the desired format
+            $json_array = [];
+            foreach ($custom_machine_parts as $part) {
+                $json_array[] = [
+                    'name' => $part['part_name'],
+                    'value' => $machine_output
+                ];
+            }
+            $custom_parts_arr = $json_array;
+        }
+
+        // Convert to JSON format
+        $custom_parts_json = json_encode($custom_parts_arr); 
 
         // Always create a new record with all values set to the output value
         $stmt = $pdo->prepare("
@@ -69,7 +64,7 @@ function submitMachineOutput($machine_data, $machine_output, $record_id) {
         
         $stmt->bindParam(':record_id', $record_id, PDO::PARAM_INT);
         $stmt->bindParam(':machine_id', $machine_id, PDO::PARAM_INT);
-        $stmt->bindParam(':output_value', $output_value, PDO::PARAM_INT);
+        $stmt->bindParam(':output_value', $machine_output, PDO::PARAM_INT);
         $stmt->bindParam(':custom_parts', $custom_parts_json, PDO::PARAM_STR);
         
         // Execute the query
