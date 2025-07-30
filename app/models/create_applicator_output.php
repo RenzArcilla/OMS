@@ -25,12 +25,35 @@ function submitApplicatorOutput($applicator_data, $applicator_output, $record_id
     global $pdo;
     
     try {
-        // Convert applicator_output to integer
-        $output_value = intval($applicator_output);
-        
         // Get the applicator type and ID
         $type = $applicator_data['description'];
         $applicator_id = $applicator_data['applicator_id'];
+
+        // Get the custom parts of the applicator and ensure they are set to the output value
+        require_once __DIR__ . '/read_custom_parts.php';
+        $custom_applicator_parts = getCustomParts('APPLICATOR');
+
+        if (is_string($custom_applicator_parts)) {
+            // If getCustomParts returned an error 
+            return $custom_applicator_parts;
+        }
+
+                $custom_parts_arr = []; // Default to empty
+
+        if (!empty($custom_applicator_parts)) {
+            // Convert each custom part to the desired format
+            $json_array = [];
+            foreach ($custom_applicator_parts as $part) {
+                $json_array[] = [
+                    'name' => $part['part_name'],
+                    'value' => $applicator_output
+                ];
+            }
+            $custom_parts_arr = $json_array;
+        }
+
+        // Convert to JSON format  
+        $custom_parts_json = json_encode($custom_parts_arr);
         
         // Always create a new record with all values set to the applicator output value
         switch ($type) {
@@ -62,7 +85,7 @@ function submitApplicatorOutput($applicator_data, $applicator_output, $record_id
         
         $stmt->bindParam(':record_id', $record_id, PDO::PARAM_INT);
         $stmt->bindParam(':applicator_id', $applicator_id, PDO::PARAM_INT);
-        $stmt->bindParam(':output_value', $output_value, PDO::PARAM_INT);
+        $stmt->bindParam(':output_value', $applicator_output, PDO::PARAM_INT);
         $stmt->bindParam(':custom_parts', $custom_parts_json, PDO::PARAM_STR);
 
         

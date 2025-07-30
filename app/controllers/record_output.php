@@ -25,9 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+// --- Redirect path ---
+$redirect = "../views/record_output.php";
+
 // --- Helper: Fail during error ---
 function fail($msg) {
-    jsAlertRedirect($msg, "../views/record_output.php");
+    jsAlertRedirect($msg, $redirect);
     exit;
 }
 
@@ -40,11 +43,11 @@ function getInput($key) {
 $date = trim($_POST['date_inspected'] ?? '');
 $shift = getInput('shift');
 $app1 = getInput('app1');
-$app1_out = getInput('app1_output');
+$app1_out = (int)(getInput('app1_output') ?? 0);
 $app2 = getInput('app2');
-$app2_out = getInput('app2_output');
+$app2_out = (int)(getInput('app2_output') ?? 0);
 $machine = getInput('machine');
-$machine_out = getInput('machine_output');
+$machine_out = (int)(getInput('machine_output') ?? 0);
 
 // 2. Validation
 if (!$date || !$shift || !$app1 || !$app1_out || !$machine || !$machine_out) {
@@ -64,30 +67,50 @@ try {
 }
 
 // 3. Check Existence
-$app1_id = applicatorExists($app1);
-if (!$app1_id) fail("Applicator 1 not found.");
-if (is_string($app1_id)) fail($app1_id);
+$app1_data = applicatorExists($app1);
+if (!$app1_data) fail("Applicator 1 not found.");
+if (is_string($app1_data)) fail($app1_data);
 
-$app2_id = null;
+$app2_data = null;
 if (!empty($app2)) {
-    $app2_id = applicatorExists($app2);
-    if (!$app2_id) fail("Applicator 2 not found.");
-    if (is_string($app2_id)) fail($app2_id);
+    $app2_data = applicatorExists($app2);
+    if (!$app2_data) fail("Applicator 2 not found.");
+    if (is_string($app2_data)) fail($app2_data);
 }
 
-$machine_id = machineExists($machine);
-if (!$machine_id) fail("Machine not found.");
-if (is_string($machine_id)) fail($machine_id);
+$machine_data = machineExists($machine);
+if (!$machine_data) fail("Machine not found.");
+if (is_string($machine_data)) fail($machine_data);
 
 // 4. Database operation
-$record_id = createRecord($shift, $machine_id, $app1_id, $date, $_SESSION['user_id']);
+// Create the record
+$record_id = createRecord($shift, $machine_data, $app1_data, $app2_data, $date, $_SESSION['user_id']);
+if (is_string($record_id)) {
+    jsAlertRedirect($record_id, $redirect);
+    exit;
+}
 if (!$record_id) fail("Failed to create record.");
 
-if (!submitApplicatorOutput($app1_id, $app1_out, $record_id) ||
-    ($app2_id && !submitApplicatorOutput($app2_id, $app2_out, $record_id)) ||
-    !submitMachineOutput($machine_id, $machine_out, $record_id)
-) {
-    fail("Error recording outputs.");
+// Submit applicator1 output
+$app1_status = submitApplicatorOutput($app1_data, $app1_out, $record_id);
+if (is_string($app1_status)) {
+    jsAlertRedirect($app1_status, $redirect);
+    exit;
 }
 
-jsAlertRedirect("All outputs recorded successfully!", "../views/record_output.php");
+// Submit applicator2 output
+$app2_status = submitApplicatorOutput($app2_data, $app2_out, $record_id);
+if (is_string($app2_status)) {
+    jsAlertRedirect($app2_status, $redirect);
+    exit;
+}
+
+// Submit machine output
+$machine_status = submitMachineOutput($machine_data, $machine_out, $record_id);
+if (is_string($machine_status)) {
+    jsAlertRedirect($machine_status, $redirect);
+    exit;
+}
+
+// If all operations were successful, redirect to the record output page with success message
+jsAlertRedirect("All outputs recorded successfully!", $redirect);
