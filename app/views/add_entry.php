@@ -112,8 +112,8 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                                     <a href="../controllers/edit_machine.php?id=<?= $row['machine_id'] ?>">✏️</a>
 
                                     <!-- Delete form -->
-                                    <form action="../controllers/delete_machine.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this machine?');">
-                                        <input type="hidden" name="id" value="<?= $row['machine_id'] ?>">
+                                    <form action="/SOMS/app/controllers/delete_machine.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this machine?');">
+                                        <input type="hidden" name="machine_id" value="<?= $row['machine_id'] ?>">
                                         <button type="submit">🗑️</button>
                                     </form>
                                 </td>
@@ -207,7 +207,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                                 <td>
                                     <a href="../controllers/edit_applicator.php?id=<?= htmlspecialchars($row['applicator_id']) ?>">✏️</a>
                                     <form action="../controllers/delete_applicator.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this applicator?');">
-                                        <input type="hidden" name="id" value="<?= htmlspecialchars($row['applicator_id']) ?>">
+                                        <input type="hidden" name="applicator_id" value="<?= htmlspecialchars($row['applicator_id']) ?>">
                                         <button type="submit">🗑️</button>
                                     </form>
                                 </td>
