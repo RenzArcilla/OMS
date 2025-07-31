@@ -286,6 +286,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
             background:#fff; padding:20px; border:1px solid #ccc; box-shadow:0 0 10px rgba(0,0,0,0.2); z-index:999;">
             
             <form id="editApplicatorForm" action="../controllers/edit_applicator.php" method="POST">
+                <!-- Hidden input to store applicator ID -->
                 <input type="hidden" name="applicator_id" id="edit_applicator_id">
 
                 <h2>Edit Applicator</h2>
