@@ -22,10 +22,6 @@ function loadMachines() {
         data.forEach(row => {
             const tr = document.createElement('tr');
 
-            const tdId = document.createElement('td');
-            tdId.textContent = row.machine_id;
-            tr.appendChild(tdId);
-
             const tdControlNo = document.createElement('td');
             tdControlNo.textContent = row.control_no;
             tr.appendChild(tdControlNo);
