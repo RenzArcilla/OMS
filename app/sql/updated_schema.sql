@@ -23,6 +23,7 @@ CREATE TABLE applicators (
     applicator_id INT PRIMARY KEY AUTO_INCREMENT,
     hp_no VARCHAR(50) UNIQUE NOT NULL,
     terminal_no VARCHAR(50) NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE NOT NULL,
     description ENUM('SIDE', 'END', 'CLAMP', 'STRIP AND CLAMP') NOT NULL,
     wire ENUM('BIG', 'SMALL') NOT NULL,
     terminal_maker VARCHAR(50) NOT NULL,
@@ -34,13 +35,16 @@ CREATE TABLE applicators (
     INDEX idx_hp_no (hp_no),
     INDEX idx_terminal_no (terminal_no),
     INDEX idx_terminal_maker (terminal_maker),
-    INDEX idx_last_encoded (last_encoded)
+    INDEX idx_last_encoded (last_encoded),
+    INDEX idx_applicators_is_active (is_active),
+    INDEX idx_applicators_active_id (is_active, applicator_id)
 );
 
 -- Create the machines table
 CREATE TABLE machines (
     machine_id INT PRIMARY KEY AUTO_INCREMENT,
     control_no VARCHAR(50) UNIQUE NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE NOT NULL,
     description VARCHAR(50) NOT NULL,
     model VARCHAR(50) NOT NULL,
     maker VARCHAR(50) NOT NULL,
@@ -50,7 +54,9 @@ CREATE TABLE machines (
 
     INDEX idx_control_no (control_no),
     INDEX idx_maker (maker),
-    INDEX idx_last_encoded (last_encoded)
+    INDEX idx_last_encoded (last_encoded),
+    INDEX idx_machines_is_active (is_active),
+    INDEX idx_machines_active_id (is_active, machine_id)
 );
 
 -- Create the records table
