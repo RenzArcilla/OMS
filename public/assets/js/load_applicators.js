@@ -63,13 +63,13 @@ function loadApplicators() {
 
                 const deleteForm = document.createElement('form');
                 deleteForm.method = 'POST';
-                deleteForm.action = '/SOMS/controllers/delete_applicator.php';
+                deleteForm.action = '/SOMS/app/controllers/delete_applicator.php';
                 deleteForm.style.display = 'inline';
                 deleteForm.onsubmit = () => confirm('Are you sure you want to delete this applicator?');
 
                 const hiddenId = document.createElement('input');
                 hiddenId.type = 'hidden';
-                hiddenId.name = 'id';
+                hiddenId.name = 'applicator_id';
                 hiddenId.value = row.applicator_id;
                 deleteForm.appendChild(hiddenId);
 

@@ -1,6 +1,6 @@
 <?php
 /*
-    This script handles the deletion (soft delete) of a machine to the database.
+    This script handles the deletion (soft delete) of an applicator to the database.
     It retrieves form data, sanitizes it, and updates the status in the database.
 */
 
@@ -13,7 +13,7 @@ if (!isset($_SESSION['user_id'])) {
 
 // Include necessary files
 require_once '../includes/js_alert.php';
-include_once '../models/delete_machine.php';
+include_once '../models/delete_applicator.php';
 
 // Redirect url
 $redirect_url = "../views/add_entry.php";
@@ -25,25 +25,25 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // 1. Sanitize input
-$machine_id = isset($_POST['machine_id']) ? strtoupper(trim($_POST['machine_id'])) : null;
+$applicator_id = isset($_POST['applicator_id']) ? strtoupper(trim($_POST['applicator_id'])) : null;
 
 // 2. Validation
-if (empty($machine_id)) {
-    jsAlertRedirect("Machine ID is required.", $redirect_url);
+if (empty($applicator_id)) {
+    jsAlertRedirect("Applicator ID is required.", $redirect_url);
     exit;
 }
 
 // 3. Database operation
-$result = disableMachine($machine_id);
+$result = disableApplicator($applicator_id);
 
-// Check if machine deletion was successful
+// Check if applicator deletion was successful
 if ($result === true) {
-    jsAlertRedirect("Machine deleted successfully!", $redirect_url);
+    jsAlertRedirect("Applicator deleted successfully!", $redirect_url);
     exit;
 } elseif (is_string($result)) {
     jsAlertRedirect($result, $redirect_url);
     exit;
 } else {
-    jsAlertRedirect("Failed to delete machine. Please try again.", $redirect_url);
+    jsAlertRedirect("Failed to delete applicator. Please try again.", $redirect_url);
     exit;
 }
