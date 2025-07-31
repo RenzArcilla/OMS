@@ -27,6 +27,8 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
     <script src="../../public/assets/js/load_applicators.js" defer></script>
     <!-- Load modal logic for editing machines -->
     <script src="../../public/assets/js/edit_machine_modal.js" defer></script>
+    <!-- Load modal logic for editing applicators -->
+    <script src="../../public/assets/js/edit_applicator_modal.js" defer></script>
 </head>
     <body>
 
@@ -124,11 +126,11 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                                     data-invoice="<?= htmlspecialchars($row['invoice_no'], ENT_QUOTES) ?>"
                                 >✏️</button>
 
-                                    <!-- Delete form -->
-                                    <form action="/SOMS/app/controllers/delete_machine.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this machine?');">
-                                        <input type="hidden" name="machine_id" value="<?= $row['machine_id'] ?>">
-                                        <button type="submit">🗑️</button>
-                                    </form>
+                                <!-- Delete form -->
+                                <form action="/SOMS/app/controllers/delete_machine.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this machine?');">
+                                    <input type="hidden" name="machine_id" value="<?= $row['machine_id'] ?>">
+                                    <button type="submit">🗑️</button>
+                                </form>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -253,17 +255,76 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                                 <td><?= htmlspecialchars($row['serial_no']) ?></td>
                                 <td><?= htmlspecialchars($row['invoice_no']) ?></td>
                                 <td>
-                                    <a href="../controllers/edit_applicator.php?id=<?= htmlspecialchars($row['applicator_id']) ?>">✏️</a>
-                                    <form action="/SOMS/app/controllers/delete_applicator.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this applicator?');">
-                                        <input type="hidden" name="applicator_id" value="<?= htmlspecialchars($row['applicator_id']) ?>">
-                                        <button type="submit">🗑️</button>
-                                    </form>
+                                <!-- Edit link with data attributes -->
+                                <a href="#" onclick="openApplicatorEditModal(this)" 
+                                    data-id="<?= $row['applicator_id'] ?>"
+                                    data-control="<?= htmlspecialchars($row['hp_no']) ?>"
+                                    data-terminal="<?= htmlspecialchars($row['terminal_no']) ?>"
+                                    data-description="<?= htmlspecialchars($row['description']) ?>"
+                                    data-wire="<?= htmlspecialchars($row['wire']) ?>"
+                                    data-terminal-maker="<?= htmlspecialchars($row['terminal_maker']) ?>"
+                                    data-applicator-maker="<?= htmlspecialchars($row['applicator_maker']) ?>"
+                                    data-serial="<?= htmlspecialchars($row['serial_no']) ?>"
+                                    data-invoice="<?= htmlspecialchars($row['invoice_no']) ?>"
+                                >✏️</a>
+
+                                <!-- Delete form -->
+                                <form action="/SOMS/app/controllers/delete_applicator.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this applicator?');">
+                                    <input type="hidden" name="applicator_id" value="<?= htmlspecialchars($row['applicator_id']) ?>">
+                                    <button type="submit">🗑️</button>
+                                </form>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
+        </div>
+
+        <!-- Edit Applicator Modal -->
+        <div id="editApplicatorModal" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%);
+            background:#fff; padding:20px; border:1px solid #ccc; box-shadow:0 0 10px rgba(0,0,0,0.2); z-index:999;">
+            
+            <form id="editApplicatorForm" action="../controllers/edit_applicator.php" method="POST">
+                <input type="hidden" name="applicator_id" id="edit_applicator_id">
+
+                <h2>Edit Applicator</h2>
+
+                <label>Control No:</label>
+                <input type="text" name="control_no" id="edit_applicator_control" required><br><br>
+
+                <label>Terminal No:</label>
+                <input type="text" name="terminal_no" id="edit_terminal_no" required><br><br>
+
+                <label>Description:</label>
+                <select name="description" id="edit_applicator_description" required>
+                    <option value="">--Select--</option>
+                    <option value="SIDE">SIDE</option>
+                    <option value="END">END</option>
+                </select><br><br>
+
+                <label>Wire Type:</label>
+                <select name="wire_type" id="edit_wire_type" required>
+                    <option value="">--Select--</option>
+                    <option value="BIG">BIG</option>
+                    <option value="SMALL">SMALL</option>
+                </select><br><br>
+
+                <label>Terminal Maker:</label>
+                <input type="text" name="terminal_maker" id="edit_terminal_maker" required><br><br>
+
+                <label>Applicator Maker:</label>
+                <input type="text" name="applicator_maker" id="edit_applicator_maker" required><br><br>
+
+                <label>Serial No:</label>
+                <input type="text" name="serial_no" id="edit_applicator_serial_no"><br><br>
+
+                <label>Invoice No:</label>
+                <input type="text" name="invoice_no" id="edit_applicator_invoice_no"><br><br>
+
+                <button type="submit">Save</button>
+                <button type="button" onclick="closeApplicatorModal()">Cancel</button>
+            </form>
         </div>
     </body>
 </html>

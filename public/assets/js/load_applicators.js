@@ -55,33 +55,51 @@ function loadApplicators() {
 
                 // Actions TD
                 const tdActions = document.createElement('td');
+                
+                // Edit link
+                    const editButton = document.createElement('button');
+                    editButton.textContent = '✏️';
+                    editButton.setAttribute('type', 'button');
+                    editButton.setAttribute('class', 'edit-applicator-button');
 
-                const editLink = document.createElement('a');
-                editLink.href = '/SOMS/controllers/edit_applicator.php?id=' + row.applicator_id;
-                editLink.textContent = '✏️';
-                tdActions.appendChild(editLink);
+                    // Set data attributes
+                    editButton.dataset.id = row.applicator_id;
+                    editButton.dataset.control = row.hp_no;
+                    editButton.dataset.terminal = row.terminal_no;
+                    editButton.dataset.description = row.description;
+                    editButton.dataset.wire = row.wire;
+                    editButton.dataset.terminalMaker = row.terminal_maker;
+                    editButton.dataset.applicatorMaker = row.applicator_maker;
+                    editButton.dataset.serial = row.serial_no;
+                    editButton.dataset.invoice = row.invoice_no;
 
-                const deleteForm = document.createElement('form');
-                deleteForm.method = 'POST';
-                deleteForm.action = '/SOMS/app/controllers/delete_applicator.php';
-                deleteForm.style.display = 'inline';
-                deleteForm.onsubmit = () => confirm('Are you sure you want to delete this applicator?');
+                    // Set onclick handler to open applicator modal
+                    editButton.onclick = () => openApplicatorEditModal(editButton);
 
-                const hiddenId = document.createElement('input');
-                hiddenId.type = 'hidden';
-                hiddenId.name = 'applicator_id';
-                hiddenId.value = row.applicator_id;
-                deleteForm.appendChild(hiddenId);
+                    tdActions.appendChild(editButton);
 
-                const deleteButton = document.createElement('button');
-                deleteButton.type = 'submit';
-                deleteButton.textContent = '🗑️';
-                deleteForm.appendChild(deleteButton);
+                // Delete form
+                    const deleteForm = document.createElement('form');
+                    deleteForm.method = 'POST';
+                    deleteForm.action = '/SOMS/app/controllers/delete_applicator.php';
+                    deleteForm.style.display = 'inline';
+                    deleteForm.onsubmit = () => confirm('Are you sure you want to delete this applicator?');
 
-                tdActions.appendChild(deleteForm);
-                tr.appendChild(tdActions);
+                    const hiddenId = document.createElement('input');
+                    hiddenId.type = 'hidden';
+                    hiddenId.name = 'applicator_id';
+                    hiddenId.value = row.applicator_id;
+                    deleteForm.appendChild(hiddenId);
 
-                tbody.appendChild(tr);
+                    const deleteButton = document.createElement('button');
+                    deleteButton.type = 'submit';
+                    deleteButton.textContent = '🗑️';
+                    deleteForm.appendChild(deleteButton);
+
+                    tdActions.appendChild(deleteForm);
+                    tr.appendChild(tdActions);
+
+                    tbody.appendChild(tr);
             });
 
             applicatorOffset += data.length;
