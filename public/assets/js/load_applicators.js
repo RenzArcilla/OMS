@@ -18,37 +18,85 @@ function loadApplicators() {
         .then(data => {
             const tbody = document.getElementById('applicator-body');
 
-            // Create and append each applicator row
             data.forEach(row => {
                 const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${row.hp_no}</td>
-                    <td>${row.terminal_no}</td>
-                    <td>${row.description}</td>
-                    <td>${row.wire}</td>
-                    <td>${row.terminal_maker}</td>
-                    <td>${row.applicator_maker}</td>
-                    <td>${row.serial_no}</td>
-                    <td>${row.invoice_no}</td>
-                `;
+
+                const tdId = document.createElement('td');
+                tdId.textContent = row.hp_no;
+                tr.appendChild(tdId);
+
+                const tdControlNo = document.createElement('td');
+                tdControlNo.textContent = row.terminal_no;
+                tr.appendChild(tdControlNo);
+
+                const tdDesc = document.createElement('td');
+                tdDesc.textContent = row.description;
+                tr.appendChild(tdDesc);
+
+                const tdModel = document.createElement('td');
+                tdModel.textContent = row.wire;
+                tr.appendChild(tdModel);
+
+                const tdTerminalMaker = document.createElement('td');
+                tdTerminalMaker.textContent = row.terminal_maker;
+                tr.appendChild(tdTerminalMaker); 
+
+                const tdApplicatorMaker = document.createElement('td');
+                tdApplicatorMaker.textContent = row.applicator_maker || '';
+                tr.appendChild(tdApplicatorMaker); 
+
+                const tdSerial = document.createElement('td');
+                tdSerial.textContent = row.serial_no || '';
+                tr.appendChild(tdSerial); 
+
+                const tdInvoice = document.createElement('td');
+                tdInvoice.textContent = row.invoice_no || '';
+                tr.appendChild(tdInvoice);
+
+                // Actions TD
+                const tdActions = document.createElement('td');
+
+                const editLink = document.createElement('a');
+                editLink.href = '/SOMS/controllers/edit_applicator.php?id=' + row.applicator_id;
+                editLink.textContent = '✏️';
+                tdActions.appendChild(editLink);
+
+                const deleteForm = document.createElement('form');
+                deleteForm.method = 'POST';
+                deleteForm.action = '/SOMS/controllers/delete_applicator.php';
+                deleteForm.style.display = 'inline';
+                deleteForm.onsubmit = () => confirm('Are you sure you want to delete this applicator?');
+
+                const hiddenId = document.createElement('input');
+                hiddenId.type = 'hidden';
+                hiddenId.name = 'id';
+                hiddenId.value = row.applicator_id;
+                deleteForm.appendChild(hiddenId);
+
+                const deleteButton = document.createElement('button');
+                deleteButton.type = 'submit';
+                deleteButton.textContent = '🗑️';
+                deleteForm.appendChild(deleteButton);
+
+                tdActions.appendChild(deleteForm);
+                tr.appendChild(tdActions);
+
                 tbody.appendChild(tr);
             });
 
-            // Update offset for next batch
             applicatorOffset += data.length;
             applicatorLoading = false;
 
-            // If fewer than limit were returned, we've reached the end
             if (data.length < applicatorLimit) {
                 document.getElementById('applicator-container').removeEventListener('scroll', applicatorScrollHandler);
             }
-
         })
         .catch(error => {
             console.error("Error loading applicators:", error);
             applicatorLoading = false;
         });
 }
+
 
 /*
     Handles scroll event for the applicator container.

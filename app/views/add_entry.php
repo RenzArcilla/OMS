@@ -85,6 +85,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                             <th>Maker</th>
                             <th>Serial No</th>
                             <th>Invoice No</th>
+                            <th>Actions</th> 
                         </tr>
                     </thead>
 
@@ -108,6 +109,16 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                                 <td><?= htmlspecialchars($row['maker']) ?></td>
                                 <td><?= htmlspecialchars($row['serial_no']) ?></td>
                                 <td><?= htmlspecialchars($row['invoice_no']) ?></td>
+                                <td>
+                                    <!-- Edit link -->
+                                    <a href="../controllers/edit_machine.php?id=<?= $row['machine_id'] ?>">✏️</a>
+
+                                    <!-- Delete form -->
+                                    <form action="../controllers/delete_machine.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this machine?');">
+                                        <input type="hidden" name="id" value="<?= $row['machine_id'] ?>">
+                                        <button type="submit">🗑️</button>
+                                    </form>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -167,7 +178,6 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                 <table border="1">
                     <thead>
                         <tr>
-                            <!-- Table headers defining machine data columns -->
                             <th>HP No</th>
                             <th>Terminal No</th>
                             <th>Description</th>
@@ -176,21 +186,17 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                             <th>Applicator Maker</th>
                             <th>Serial No</th>
                             <th>Invoice No</th>
+                            <th>Actions</th> 
                         </tr>
                     </thead>
 
-                    <?php
-                        // Include database connection and machine reader logic
-                        require_once __DIR__ . '/../includes/db.php';
-                        require_once __DIR__ . '/../models/read_applicators.php';
-
-                        // Fetch initial set of machines (first 10 entries)
-                        $applicators = getApplicators($pdo, 10, 0);
-                        ?>
-
                     <tbody id="applicator-body">
-                        <!-- Render fetched machine data as table rows -->
-                        <?php foreach ($applicators as $row): ?>
+                        <?php
+                            require_once __DIR__ . '/../includes/db.php';
+                            require_once __DIR__ . '/../models/read_applicators.php';
+                            $applicators = getApplicators($pdo, 10, 0);
+                            foreach ($applicators as $row):
+                        ?>
                             <tr>
                                 <td><?= htmlspecialchars($row['hp_no']) ?></td>
                                 <td><?= htmlspecialchars($row['terminal_no']) ?></td>
@@ -200,6 +206,13 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                                 <td><?= htmlspecialchars($row['applicator_maker']) ?></td>
                                 <td><?= htmlspecialchars($row['serial_no']) ?></td>
                                 <td><?= htmlspecialchars($row['invoice_no']) ?></td>
+                                <td>
+                                    <a href="../controllers/edit_applicator.php?id=<?= htmlspecialchars($row['applicator_id']) ?>">✏️</a>
+                                    <form action="../controllers/delete_applicator.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this applicator?');">
+                                        <input type="hidden" name="id" value="<?= htmlspecialchars($row['applicator_id']) ?>">
+                                        <button type="submit">🗑️</button>
+                                    </form>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
