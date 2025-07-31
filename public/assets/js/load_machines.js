@@ -58,14 +58,14 @@ function loadMachines() {
             // Delete form
             const deleteForm = document.createElement('form');
             deleteForm.method = 'POST';
-            deleteForm.action = '/SOMS/controllers/delete_machine.php';
+            deleteForm.action = '/SOMS/app/controllers/delete_machine.php';
             deleteForm.name = 'deleteForm'; 
             deleteForm.style.display = 'inline';
             deleteForm.onsubmit = () => confirm('Are you sure you want to delete this machine?');
 
             const hiddenId = document.createElement('input');
             hiddenId.type = 'hidden';
-            hiddenId.name = 'id';
+            hiddenId.name = 'machine_id';
             hiddenId.value = row.machine_id;
             deleteForm.appendChild(hiddenId);
 

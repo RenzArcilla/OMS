@@ -38,6 +38,7 @@ This database system is designed to track machine and applicator usage in a manu
 |--------|------|-------------|-------------|
 | `machine_id` | INT | PRIMARY KEY, AUTO_INCREMENT | Unique identifier for each machine |
 | `control_no` | VARCHAR(50) | UNIQUE, NOT NULL | Machine control number |
+| `is_active` | BOOLEAN | DEFAULT TRUE | Soft delete flag |
 | `description` | VARCHAR(50) | NOT NULL | Machine description |
 | `model` | VARCHAR(50) | NOT NULL | Machine model |
 | `maker` | VARCHAR(50) | NOT NULL | Manufacturer name |
@@ -45,7 +46,7 @@ This database system is designed to track machine and applicator usage in a manu
 | `invoice_no` | VARCHAR(50) | DEFAULT NULL | Invoice number (optional) |
 | `last_encoded` | DATETIME | DEFAULT NULL | Last time data was entered for this machine |
 
-**Indexes**: `idx_control_no` `idx_maker`, `idx_last_encoded`
+**Indexes**: `idx_control_no`, `idx_maker`, `idx_last_encoded`, `idx_machines_is_active`, `idx_machines_active_id`
 
 ---
 
@@ -57,6 +58,7 @@ This database system is designed to track machine and applicator usage in a manu
 | `applicator_id` | INT | PRIMARY KEY, AUTO_INCREMENT | Unique identifier for each applicator |
 | `hp_no` | VARCHAR(50) | UNIQUE, NOT NULL | HP number |
 | `terminal_no` | VARCHAR(50) | NOT NULL | Terminal number |
+| `is_active` | BOOLEAN | DEFAULT TRUE | Soft delete flag |
 | `description` | ENUM | NOT NULL | Type: 'SIDE', 'END', 'CLAMP', 'STRIP AND CLAMP' |
 | `wire` | ENUM | NOT NULL | Wire size: 'BIG', 'SMALL' |
 | `terminal_maker` | VARCHAR(50) | NOT NULL | Terminal manufacturer |
@@ -65,7 +67,7 @@ This database system is designed to track machine and applicator usage in a manu
 | `invoice_no` | VARCHAR(50) | DEFAULT NULL | Invoice number (optional) |
 | `last_encoded` | DATETIME | DEFAULT NULL | Last time data was entered for this applicator |
 
-**Indexes**: `idx_hp_no`, `idx_terminal_no`, `idx_terminal_maker`, `idx_last_encoded`
+**Indexes**: `idx_hp_no`, `idx_terminal_no`, `idx_terminal_maker`, `idx_last_encoded`, `idx_applicators_is_active`, `idx_applicators_active_id`
 
 ---
 
