@@ -26,7 +26,8 @@ function getMachines(PDO $pdo, int $limit = 10, int $offset = 0): array {
     // Prepare the SQL statement with placeholders for limit and offset
     $stmt = $pdo->prepare("
         SELECT machine_id, control_no, description, model, maker, serial_no, invoice_no 
-        FROM machines 
+        FROM machines
+        WHERE is_active = 1
         ORDER BY machine_id DESC 
         LIMIT :limit OFFSET :offset
     ");
