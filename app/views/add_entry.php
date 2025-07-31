@@ -206,7 +206,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                                 <td><?= htmlspecialchars($row['invoice_no']) ?></td>
                                 <td>
                                     <a href="../controllers/edit_applicator.php?id=<?= htmlspecialchars($row['applicator_id']) ?>">✏️</a>
-                                    <form action="../controllers/delete_applicator.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this applicator?');">
+                                    <form action="/SOMS/app/controllers/delete_applicator.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this applicator?');">
                                         <input type="hidden" name="applicator_id" value="<?= htmlspecialchars($row['applicator_id']) ?>">
                                         <button type="submit">🗑️</button>
                                     </form>
