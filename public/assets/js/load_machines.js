@@ -50,10 +50,26 @@ function loadMachines() {
             const tdActions = document.createElement('td');
 
             // Edit link
-            const editLink = document.createElement('a');
-            editLink.href = '/SOMS/controllers/edit_machine.php?id=' + row.machine_id;
-            editLink.textContent = '✏️';
-            tdActions.appendChild(editLink);
+            const editButton = document.createElement('button');
+            editButton.textContent = '✏️';
+            editButton.setAttribute('type', 'button');
+            editButton.setAttribute('class', 'edit-machine-button');
+
+            // Set data attributes
+            editButton.dataset.id = row.machine_id;
+            editButton.dataset.control = row.control_no;
+            editButton.dataset.description = row.description;
+            editButton.dataset.model = row.model;
+            editButton.dataset.maker = row.maker;
+            editButton.dataset.serial = row.serial_no;
+            editButton.dataset.invoice = row.invoice_no;
+
+            // Attach event listener
+            editButton.addEventListener('click', function () {
+                openEditModal(editButton);
+            });
+
+            tdActions.appendChild(editButton);
             
             // Delete form
             const deleteForm = document.createElement('form');

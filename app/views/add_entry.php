@@ -25,6 +25,8 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
     <script src="../../public/assets/js/load_machines.js" defer></script>
     <!-- Load applicator infinite scroll logic -->
     <script src="../../public/assets/js/load_applicators.js" defer></script>
+    <!-- Load modal logic for editing machines -->
+    <script src="../../public/assets/js/edit_machine_modal.js" defer></script>
 </head>
     <body>
 
@@ -108,8 +110,19 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                                 <td><?= htmlspecialchars($row['serial_no']) ?></td>
                                 <td><?= htmlspecialchars($row['invoice_no']) ?></td>
                                 <td>
-                                    <!-- Edit link -->
-                                    <a href="../controllers/edit_machine.php?id=<?= $row['machine_id'] ?>">✏️</a>
+
+                                <!-- Edit link with data attributes -->
+                                <button 
+                                    type="button"
+                                    onclick="openEditModal(this)"
+                                    data-id="<?= $row['machine_id'] ?>"
+                                    data-control="<?= htmlspecialchars($row['control_no'], ENT_QUOTES) ?>"
+                                    data-description="<?= $row['description'] ?>"
+                                    data-model="<?= htmlspecialchars($row['model'], ENT_QUOTES) ?>"
+                                    data-maker="<?= htmlspecialchars($row['maker'], ENT_QUOTES) ?>"
+                                    data-serial="<?= htmlspecialchars($row['serial_no'], ENT_QUOTES) ?>"
+                                    data-invoice="<?= htmlspecialchars($row['invoice_no'], ENT_QUOTES) ?>"
+                                >✏️</button>
 
                                     <!-- Delete form -->
                                     <form action="/SOMS/app/controllers/delete_machine.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this machine?');">
@@ -126,6 +139,41 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
 
         <hr>
 
+        <!-- Edit Machine Modal -->
+        <div id="editModal" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%);
+            background:#fff; padding:20px; border:1px solid #ccc; box-shadow:0 0 10px rgba(0,0,0,0.2); z-index:999;">
+            
+            <form id="editMachineForm" action="../controllers/edit_machine.php" method="POST">
+                <input type="hidden" name="machine_id" id="edit_machine_id">
+
+                <h2>Edit Machine</h2>
+
+                <label>Control No:</label>
+                <input type="text" name="control_no" id="edit_control_no" required><br><br>
+
+                <label>Description:</label>
+                <select name="description" id="edit_description" required>
+                    <option value="">--Select--</option>
+                    <option value="AUTOMATIC">AUTOMATIC</option>
+                    <option value="SEMI-AUTOMATIC">SEMI-AUTOMATIC</option>
+                </select><br><br>
+
+                <label>Model:</label>
+                <input type="text" name="model" id="edit_model" required><br><br>
+
+                <label>Maker:</label>
+                <input type="text" name="machine_maker" id="edit_maker" required><br><br>
+
+                <label>Serial No:</label>
+                <input type="text" name="serial_no" id="edit_serial_no"><br><br>
+
+                <label>Invoice No:</label>
+                <input type="text" name="invoice_no" id="edit_invoice_no"><br><br>
+
+                <button type="submit">Save</button>
+                <button type="button" onclick="closeModal()">Cancel</button>
+            </form>
+        </div>
 
         <!-- Add Applicator Form -->
         <form action="../controllers/add_applicator.php" method="POST">
