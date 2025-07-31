@@ -78,7 +78,6 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                     <thead>
                         <!-- Table headers defining machine data columns -->
                         <tr>
-                            <th>ID</th>
                             <th>Control No</th>
                             <th>Description</th>
                             <th>Model</th>
@@ -102,7 +101,6 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                         <!-- Render fetched machine data as table rows -->
                         <?php foreach ($machines as $row): ?>
                             <tr>
-                                <td><?= htmlspecialchars($row['machine_id']) ?></td>
                                 <td><?= htmlspecialchars($row['control_no']) ?></td>
                                 <td><?= htmlspecialchars($row['description']) ?></td>
                                 <td><?= htmlspecialchars($row['model']) ?></td>
