@@ -19,14 +19,14 @@ require_once '../models/create_record.php';
 require_once '../models/create_applicator_output.php';
 require_once '../models/create_machine_output.php';
 
-// Check if the request method is POST
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    jsAlertRedirect("Invalid request method.", "../views/record_output.php");
-    exit;
-}
-
 // --- Redirect path ---
 $redirect = "../views/record_output.php";
+
+// Check if the request method is POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    jsAlertRedirect("Invalid request method.", $redirect);
+    exit;
+}
 
 // --- Helper: Fail during error ---
 function fail($msg) {

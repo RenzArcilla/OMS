@@ -15,14 +15,14 @@ if (!isset($_SESSION['user_id'])) {
 require_once '../includes/js_alert.php';
 include_once '../models/update_applicator.php';
 
-// Check if the request method is POST
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    jsAlertRedirect("Invalid request method.", "../views/add_entry.php");
-    exit;
-}
-
 // Redirect url
 $redirect_url = "../views/add_entry.php";
+
+// Check if the request method is POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    jsAlertRedirect("Invalid request method.", $redirect_url);
+    exit;
+}
 
 // 1. Sanitize input
 $applicator_id = isset($_POST['applicator_id']) ? intval($_POST['applicator_id']) : null;
