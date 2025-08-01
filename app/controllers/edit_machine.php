@@ -14,6 +14,7 @@ if (!isset($_SESSION['user_id'])) {
 // Include necessary files
 require_once '../includes/js_alert.php';
 include_once '../models/update_machine.php';
+include_once '../models/read_machines.php';
 
 // Redirect url
 $redirect_url = "../views/add_entry.php";
@@ -46,6 +47,21 @@ if ($description !== 'AUTOMATIC' && $description !== 'SEMI-AUTOMATIC') {
 }
 
 // 3. Database operation
+// Check if the machine with the same control_no exists and is active
+$active_duplicate = getActiveMachineByControlNo($control_no);
+if ($active_duplicate && $active_duplicate['machine_id'] != $machine_id) {
+    jsAlertRedirect("An active machine with control_no: $control_no already exists.", $redirect_url);
+    exit;
+}
+
+// Check if the machine with the same control_no exists and is inactive
+$inactive_duplicate = getInactiveMachineByControlNo($control_no);
+if ($inactive_duplicate) {
+    jsAlertRedirect("A disabled machine with control_no: $control_no already exists.", $redirect_url);
+    exit;
+}
+
+// Update the machine in the database
 $result = updateMachine($machine_id, $control_no, $description, $model,
                         $machine_maker, $serial_no, $invoice_no);
 
