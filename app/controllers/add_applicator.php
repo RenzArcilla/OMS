@@ -16,11 +16,15 @@ require_once '../includes/js_alert.php';
 require_once '../includes/db.php'; 
 include_once '../models/create_applicator.php';
 
+// Redirect url
+$redirect_url = "../views/add_entry.php"
+
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    jsAlertRedirect("Invalid request method.", "../views/add_entry.php");
+    jsAlertRedirect("Invalid request method.", $redirect_url);
     exit;
 }
+
 
 // 1. Sanitize input
 $control_no = isset($_POST['control_no']) ? strtoupper(trim($_POST['control_no'])) : null;
@@ -35,17 +39,17 @@ $invoice_no = empty($_POST['invoice_no']) ? 'NO RECORD' : strtoupper(trim($_POST
 // 2. Validation
 if (empty($control_no) || empty($terminal_no) || empty($description) || 
     empty($wire_type) || empty($terminal_maker) || empty($applicator_maker)) {
-    jsAlertRedirect("Please fill in all required fields.", "../views/add_entry.php");
+    jsAlertRedirect("Please fill in all required fields.", $redirect_url);
     exit;
 }
 
 if ($description !== 'SIDE' && $description !== 'END') {
-    jsAlertRedirect("Invalid selection for description.", "../views/add_entry.php");
+    jsAlertRedirect("Invalid selection for description.", $redirect_url);
     exit;
 }
 
 if ($wire_type !== 'BIG' && $wire_type !== 'SMALL') {
-    jsAlertRedirect("Invalid selection for wire type.", "../views/add_entry.php");
+    jsAlertRedirect("Invalid selection for wire type.", $redirect_url);
     exit;
 } 
 
@@ -56,12 +60,12 @@ $result = createApplicator($control_no, $terminal_no, $description,
 
 // Check if applicator creation was successful
 if ($result === true) {
-    jsAlertRedirect("Applicator added successfully!", "../views/add_entry.php");
+    jsAlertRedirect("Applicator added successfully!", $redirect_url);
     exit;
 } elseif (is_string($result)) {
-    jsAlertRedirect($result, "../views/add_entry.php");
+    jsAlertRedirect($result, $redirect_url);
     exit;
 } else {
-    jsAlertRedirect("Failed to add applicator. Please try again.", "../views/add_entry.php");
+    jsAlertRedirect("Failed to add applicator. Please try again.", $redirect_url);
     exit;
 }

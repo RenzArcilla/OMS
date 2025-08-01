@@ -7,8 +7,12 @@
 require_once '../includes/js_alert.php'; // Include the JavaScript alert function
 require_once '../includes/db.php'; // Include the database connection
 
+// Redirect url
+$redirect_url = "../views/signup.php";
+
+// Quick Fail
 function failRedirect($message) {
-    jsAlertRedirect($message, "../views/signup.php");
+    jsAlertRedirect($message, $redirect_url);
     exit;
 }
 
@@ -46,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['username'] = $result['username'];
         $_SESSION['first_name'] = $result['first_name'];
         $_SESSION['user_type'] = $result['user_type'];
-        header("Location: /SOMS/app/views/home.php");
+        header("Location: ../views/home.php");
         exit();
     } elseif (is_string($result)) {
         failRedirect($result);
