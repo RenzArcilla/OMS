@@ -24,23 +24,8 @@
                         </button>
                     </div>
                 </div>
-
+                
                 <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-card-content">
-                            <div class="stat-info">
-                                <h3>Total Outputs Today</h3>
-                                <div class="stat-value">2,847</div>
-                                <div class="stat-change positive">
-                                    <i data-lucide="trending-up"></i>
-                                    +15.3% vs yesterday
-                                </div>
-                            </div>
-                            <div class="stat-icon">
-                                <i data-lucide="scissors"></i>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="stat-card">
                         <div class="stat-card-content">
@@ -52,9 +37,7 @@
                                     +8.2% this week
                                 </div>
                             </div>
-                            <div class="stat-icon">
-                                <i data-lucide="minus"></i>
-                            </div>
+                            
                         </div>
                     </div>
 
@@ -67,9 +50,6 @@
                                     <i data-lucide="trending-up"></i>
                                     +12.1% this week
                                 </div>
-                            </div>
-                            <div class="stat-icon">
-                                <i data-lucide="zap"></i>
                             </div>
                         </div>
                     </div>
@@ -91,67 +71,159 @@
                     </div>
                 </div>
 
-                <div class="dashboard-grid">
-                    <div class="card">
-                        <h3 class="card-title">📈 Weekly Productivity Overview</h3>
-                        <div class="chart-placeholder">
-                            <div>
-                                <i data-lucide="trending-up" style="width: 48px; height: 48px; margin-bottom: 8px;"></i>
-                                <p><strong>Productivity Chart</strong></p>
-                                <p style="margin-top: 8px; font-size: 14px;">Daily/weekly productivity trends for cut and strip operations</p>
-                                <p style="margin-top: 4px; font-size: 12px; color: #9CA3AF;">Chart visualization would display here</p>
+                <!-- Applicator Status Section -->
+                        <div class="data-section">
+                            <div class="section-header expanded" onclick="toggleSection(this)">
+                                <div class="section-title">
+                                    Applicator Status
+                                    <span class="section-badge">24</span>
+                                </div>
+                                <svg class="expand-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                            <div class="section-content expanded">
+                                <div class="search-filter">
+                                    <input type="text" class="search-input" placeholder="Search metrics..." onkeyup="filterTable(this.value)">
+                                    <button class="filter-btn active" onclick="filterByStatus(this, 'all')">All</button>
+                                    <button class="filter-btn" onclick="filterByStatus(this, 'success')">Active</button>
+                                    <button class="filter-btn" onclick="filterByStatus(this, 'warning')">Warning</button>
+                                </div>
+                                <table class="data-table" id="metricsTable">
+                                    <thead>
+                                        <tr>
+                                            <th>HP No.</th>
+                                            <th>Wire</th>
+                                            <th>Last Encoded</th>
+                                            <th>Total Output</th>
+                                            <th>Wire Crimper</th>
+                                            <th>Wire Anvil</th>
+                                            <th>Insulation Crimper</th>
+                                            <th>Insulation Anvil</th>
+                                            <th>Slide Cutter</th>
+                                            <th>Cutter Holder</th>
+                                            <th>Shear Blade</th>
+                                            <th>Cutter A</th>
+                                            <th>Cutter B</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="metricsBody">
+                                        <tr data-status="success">
+                                            <td>Connect to Database the HP No.</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="status-cell">
+                                                <div class="status-indicator success"></div>
+                                                Optimal
+                                            </td>
+                                        </tr>
+                                        <tr data-status="success">
+                                            <td>Connect to Database the HP No.</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="status-cell">
+                                                <div class="status-indicator success"></div>
+                                                Optimal
+                                            </td>
+                                        </tr>
+                                        <tr data-status="warning">
+                                            <td>Connect to Database the HP No.</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="status-cell">
+                                                <div class="status-indicator success"></div>
+                                                Optimal
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="card">
-                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
-                            <h3 class="card-title" style="margin: 0;">🔔 System Alerts</h3>
-                            <i data-lucide="bell" style="width: 20px; height: 20px; color: #9ca3af;"></i>
+                        <!-- Machine Status Section -->
+                        <div class="data-section">
+                            <div class="section-header expanded" onclick="toggleSection(this)">
+                                <div class="section-title">
+                                    Machine Status
+                                    <span class="section-badge">24</span>
+                                </div>
+                                <svg class="expand-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                            <div class="section-content expanded">
+                                <div class="search-filter">
+                                    <input type="text" class="search-input" placeholder="Search metrics..." onkeyup="filterTable(this.value)">
+                                    <button class="filter-btn active" onclick="filterByStatus(this, 'all')">All</button>
+                                    <button class="filter-btn" onclick="filterByStatus(this, 'success')">Active</button>
+                                    <button class="filter-btn" onclick="filterByStatus(this, 'warning')">Warning</button>
+                                </div>
+                                <table class="data-table" id="metricsTable">
+                                    <thead>
+                                        <tr>
+                                            <th>AM No.</th>
+                                            <th>Total Output</th>
+                                            <th>Cut Blade</th>
+                                            <th>Strip Blade A</th>
+                                            <th>Strip Blade B</b></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="metricsBody">
+                                        <tr data-status="success">
+                                            <td>Connect to Database the AM No.</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="status-cell">
+                                                <div class="status-indicator success"></div>
+                                                Optimal
+                                            </td>
+                                        </tr>
+                                        <tr data-status="success">
+                                            <td>Connect to Database the AM No.</td>
+                                            <td class="metric-value">Data Here</td>
+                                            <td class="metric-value">Data Here</td>
+                                            
+                                            <td class="status-cell">
+                                                <div class="status-indicator success"></div>
+                                                Good
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <div class="activity-list">
-                            <div class="activity-item">
-                                <i data-lucide="alert-triangle" class="activity-icon warning"></i>
-                                <div class="activity-content">
-                                    <div class="activity-action">Applicator #3 nearing replacement</div>
-                                    <div class="activity-user">85% wear detected</div>
-                                </div>
-                                <div class="activity-time">5 mins ago</div>
-                            </div>
-                            <div class="activity-item">
-                                <i data-lucide="alert-circle" class="activity-icon critical"></i>
-                                <div class="activity-content">
-                                    <div class="activity-action">Cut blade #2 requires attention</div>
-                                    <div class="activity-user">92% wear detected</div>
-                                </div>
-                                <div class="activity-time">15 mins ago</div>
-                            </div>
-                            <div class="activity-item">
-                                <i data-lucide="check-circle" class="activity-icon success"></i>
-                                <div class="activity-content">
-                                    <div class="activity-action">User logged in</div>
-                                    <div class="activity-user">Operator Johnson</div>
-                                </div>
-                                <div class="activity-time">22 mins ago</div>
-                            </div>
-                            <div class="activity-item">
-                                <i data-lucide="alert-triangle" class="activity-icon warning"></i>
-                                <div class="activity-content">
-                                    <div class="activity-action">Strip tool #1 maintenance due</div>
-                                    <div class="activity-user">Scheduled for tomorrow</div>
-                                </div>
-                                <div class="activity-time">1 hour ago</div>
-                            </div>
-                            <div class="activity-item">
-                                <i data-lucide="activity" class="activity-icon info"></i>
-                                <div class="activity-content">
-                                    <div class="activity-action">Daily productivity report</div>
-                                    <div class="activity-user">Generated automatically</div>
-                                </div>
-                                <div class="activity-time">2 hours ago</div>
-                            </div>
-                        </div>
-                    </div>
+
+                    
                 </div>
 
                 <!-- Additional info cards -->
