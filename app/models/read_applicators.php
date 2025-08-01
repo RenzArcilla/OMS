@@ -80,3 +80,64 @@ function applicatorExists($hp_no){
         return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
+
+function getInactiveApplicatorByHpNo($hp_no) {
+    global $pdo;
+
+    try {
+        // Prepare SQL select query with hp_no
+        $stmt = $pdo->prepare("SELECT * FROM applicators WHERE hp_no = :hp_no AND is_active = 0");
+
+        // Bind parameters
+        $stmt->bindParam(':hp_no', $hp_no, PDO::PARAM_STR);
+
+        // Execute the query
+        $stmt->execute();
+
+        // Fetch user data
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Check if data is empty (no record found)
+        if (!$data) {
+            return false;
+        }
+
+        return true;
+
+    } catch (PDOException $e) {
+        // Log error and return an error message on failure
+        error_log("Database Error: " . $e->getMessage());
+        return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}
+
+
+function getActiveApplicatorByHpNo($hp_no) {
+    global $pdo;
+
+    try {
+        // Prepare SQL select query with hp_no
+        $stmt = $pdo->prepare("SELECT * FROM applicators WHERE hp_no = :hp_no AND is_active = 1");
+
+        // Bind parameters
+        $stmt->bindParam(':hp_no', $hp_no, PDO::PARAM_STR);
+
+        // Execute the query
+        $stmt->execute();
+
+        // Fetch user data
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Check if data is empty (no record found)
+        if (!$data) {
+            return false;
+        }
+
+        return true;
+
+    } catch (PDOException $e) {
+        // Log error and return an error message on failure
+        error_log("Database Error: " . $e->getMessage());
+        return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}
