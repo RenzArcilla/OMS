@@ -57,14 +57,14 @@ if ($wire_type !== 'BIG' && $wire_type !== 'SMALL') {
 // Check if the applicator with the same hp_no exists and is active
 $active_duplicate = getActiveApplicatorByHpNo($hp_no);
 if ($active_duplicate && $active_duplicate['applicator_id'] != $applicator_id) {
-    jsAlertRedirect("An applicator with this hp_no already exists.", $redirect_url);
+    jsAlertRedirect("An applicator with hp_no: $hp_no already exists.", $redirect_url);
     exit;
 }
 
 // Check if the applicator with the same hp_no exists and is inactive
 $inactive_duplicate = getInactiveApplicatorByHpNo($hp_no);
 if ($inactive_duplicate) {
-    jsAlertRedirect("A disabled applicator with this hp_no already exists.", $redirect_url);
+    jsAlertRedirect("A disabled applicator with hp_no: $hp_no already exists.", $redirect_url);
     exit;
 }
 

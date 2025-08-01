@@ -83,3 +83,64 @@ function machineExists($control_no){
         return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
+
+function getInactiveMachineByControlNo($control_no) {
+    global $pdo;
+
+    try {
+        // Prepare SQL select query with hp_no
+        $stmt = $pdo->prepare("SELECT * FROM Machines WHERE control_no = :control_no AND is_active = 0");
+
+        // Bind parameters
+        $stmt->bindParam(':control_no', $control_no, PDO::PARAM_STR);
+
+        // Execute the query
+        $stmt->execute();
+
+        // Fetch user data
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Check if data is empty (no record found)
+        if (!$data) {
+            return false;
+        }
+
+        return true;
+
+    } catch (PDOException $e) {
+        // Log error and return an error message on failure
+        error_log("Database Error in getInactiveMachineByControlNo: " . $e->getMessage());
+        return "Database error occurred in getInactiveMachineByControlNo: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}
+
+
+function getActiveMachineByControlNo($control_no) {
+    global $pdo;
+
+    try {
+        // Prepare SQL select query with control_no
+        $stmt = $pdo->prepare("SELECT * FROM machines WHERE control_no = :control_no AND is_active = 1");
+
+        // Bind parameters
+        $stmt->bindParam(':control_no', $control_no, PDO::PARAM_STR);
+
+        // Execute the query
+        $stmt->execute();
+
+        // Fetch user data
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Check if data is empty (no record found)
+        if (!$data) {
+            return false;
+        }
+
+        return true;
+
+    } catch (PDOException $e) {
+        // Log error and return an error message on failure
+        error_log("Database Error in getActiveMachineByControlNo: " . $e->getMessage());
+        return "Database error occurred in getActiveMachineByControlNo: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}
