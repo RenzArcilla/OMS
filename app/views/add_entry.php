@@ -22,6 +22,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
     <meta charset="UTF-8">
     <title>Add Machine or Applicator</title>
     <!-- Load machine infinite scroll logic -->
+    <link rel="stylesheet" href="../../public/assets/css/add_entry.css">
     <script src="../../public/assets/js/load_machines.js" defer></script>
     <!-- Load applicator infinite scroll logic -->
     <script src="../../public/assets/js/load_applicators.js" defer></script>
@@ -29,17 +30,27 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
     <script src="../../public/assets/js/edit_machine_modal.js" defer></script>
     <!-- Load modal logic for editing applicators -->
     <script src="../../public/assets/js/edit_applicator_modal.js" defer></script>
+    <!-- For animation effects -->
+    <script src="../../public/assets/js/animate.js" defer></script>
 </head>
-    <body>
-
-        <h1>Add Entry</h1>
+<body>
+    <div classs="main-container">
+        <!--Page Header -->
+        <header class="page-header">
+            <h1 class="page-title">ADD TOOLS</h1>
+            <p class="page-subtitle">Manage nachines and applicators</p>
+        </header>
+    <h1>Add Entry</h1>
 
         <!-- Selection Buttons -->
-        <button type="button">Add Machine</button>
-        <button type="button">Add Applicator</button>
-
-        <hr>
-
+        <nav class="tab-navigation">
+            <button class="tab-btn active" data-tab="machines">
+                <span>Machines</span>
+            </button>
+            <button class="tab-btn" data-tab="applicators">
+                <span>Applicators</span>
+            </button>
+        </nav>
 
         <!-- Add Machine Form -->
         <form action="../controllers/add_machine.php" method="POST">
@@ -327,5 +338,5 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                 <button type="button" onclick="closeApplicatorModal()">Cancel</button>
             </form>
         </div>
-    </body>
+</body>
 </html>
