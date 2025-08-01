@@ -14,6 +14,7 @@ if (!isset($_SESSION['user_id'])) {
 // Include necessary files
 require_once '../includes/js_alert.php';
 include_once '../models/update_applicator.php';
+include_once '../models/read_applicators.php';
 
 // Redirect url
 $redirect_url = "../views/add_entry.php";
@@ -26,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // 1. Sanitize input
 $applicator_id = isset($_POST['applicator_id']) ? intval($_POST['applicator_id']) : null;
-$control_no = isset($_POST['control_no']) ? strtoupper(trim($_POST['control_no'])) : null;
+$hp_no = isset($_POST['control_no']) ? strtoupper(trim($_POST['control_no'])) : null;
 $terminal_no = isset($_POST['terminal_no']) ? strtoupper(trim($_POST['terminal_no'])) : null;
 $description = isset($_POST['description']) ? strtoupper(trim($_POST['description'])) : null;
 $wire_type = isset($_POST['wire_type']) ? strtoupper(trim($_POST['wire_type'])) : null;
@@ -36,7 +37,7 @@ $serial_no = empty($_POST['serial_no']) ? 'NO RECORD' : strtoupper(trim($_POST['
 $invoice_no = empty($_POST['invoice_no']) ? 'NO RECORD' : strtoupper(trim($_POST['invoice_no']));
 
 // 2. Validation
-if (empty($applicator_id) || empty($control_no) || empty($terminal_no) || empty($description) || 
+if (empty($applicator_id) || empty($hp_no) || empty($terminal_no) || empty($description) || 
     empty($wire_type) || empty($terminal_maker) || empty($applicator_maker)) {
     jsAlertRedirect("Please fill in all required fields.", $redirect_url);
     exit;
@@ -53,7 +54,21 @@ if ($wire_type !== 'BIG' && $wire_type !== 'SMALL') {
 } 
 
 // 3. Database operation
-$result = updateApplicator($applicator_id, $control_no, $terminal_no, $description, 
+// Check if the applicator with the same hp_no exists and is active
+$active_duplicate = getActiveApplicatorByHpNo($hp_no);
+if ($active_duplicate && $active_duplicate['applicator_id'] != $applicator_id) {
+    jsAlertRedirect("An applicator with this hp_no already exists.", $redirect_url);
+    exit;
+}
+
+// Check if the applicator with the same hp_no exists and is inactive
+$inactive_duplicate = getInactiveApplicatorByHpNo($hp_no);
+if ($inactive_duplicate) {
+    jsAlertRedirect("A disabled applicator with this hp_no already exists.", $redirect_url);
+    exit;
+}
+
+$result = updateApplicator($applicator_id, $hp_no, $terminal_no, $description, 
                             $wire_type, $terminal_maker, $applicator_maker, 
                             $serial_no, $invoice_no);
 

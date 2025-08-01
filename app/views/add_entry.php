@@ -291,7 +291,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
 
                 <h2>Edit Applicator</h2>
 
-                <label>Control No:</label>
+                <label>HP No:</label>
                 <input type="text" name="control_no" id="edit_applicator_control" required><br><br>
 
                 <label>Terminal No:</label>
