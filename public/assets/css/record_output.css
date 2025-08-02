@@ -1,0 +1,64 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #F9FAFB 0%, #E5E7EB 100%);
+    min-height: 100vh;
+    padding: 24px;
+    color: #111827;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-container {
+    background: #FFFFFF;
+    border-radius: 20px;
+    box-shadow: 
+        0 25px 50px -12px rgba(47, 128, 237, 0.08),
+        0 8px 16px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(229, 231, 235, 0.6);
+    max-width: 800px;
+    width: 100%;
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+}
+
+.form-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #2F80ED 0%, #27AE60 100%);
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.form-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #2F80ED 0%, #27AE60 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 4px rgba(47, 128, 237, 0.1);
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.form-subtitle {
+    color: #6B7280;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 24px;
+}

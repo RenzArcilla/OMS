@@ -23,12 +23,21 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
 <head>
     <meta charset="UTF-8">
     <title>Record Output</title>
+    <link rel="stylesheet" href="../../public/assets/css/record_output.css">
 </head>
 <body>
+    <div class="form-container">
+        <div class="form-header">
+                <h1 class="form-title">Record Production Output</h1>
+                <p class="form-subtitle">Enter your production data step by step</p>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            ✅ Production record saved successfully! You can now enter another record.
+        </div>
     <!-- Form for recording outputs -->
-    <div>
+    
         <form action="../controllers/record_output.php" method="POST">
-        <h2>RECORD AN OUTPUT (MANUALLY)</h2>
 
         <label for="date_inspected">Date Inspected:</label>
         <input type="date" id="date_inspected" name="date_inspected" value="<?= date('Y-m-d') ?>" required><br><br>
