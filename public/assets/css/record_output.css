@@ -62,3 +62,22 @@ body {
     font-weight: 500;
     margin-bottom: 24px;
 }
+
+.required-badge {
+    background: #EB5757;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.input-help {
+    font-size: 0.85rem;
+    color: #6B7280;
+    margin-top: 6px;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
