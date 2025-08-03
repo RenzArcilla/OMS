@@ -131,6 +131,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                         <div class="section-title">Machine Data</div>
                         <div class="section-description">Enter machine identification and total output</div>
                     </div>
+                </div>
                 
                 <div class="form-grid">
                     <div class="form-group">

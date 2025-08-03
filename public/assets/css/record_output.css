@@ -103,6 +103,26 @@ body {
     font-weight: bold;
     font-size: 1.1rem;
 }
+
+.form-section {
+    margin-bottom: 40px;
+    opacity: 1;
+    pointer-events: all;
+    transition: all 0.3s ease;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    position: relative;
+}
+
 .required-badge {
     background: #EB5757;
     color: white;
@@ -240,3 +260,4 @@ select.form-input {
     color: #6B7280;
     line-height: 1.4;
 }
+
