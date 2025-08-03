@@ -72,6 +72,15 @@ body {
     font-weight: 500;
 }
 
+.optional-badge {
+    background: #6B7280;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
 .input-help {
     font-size: 0.85rem;
     color: #6B7280;
