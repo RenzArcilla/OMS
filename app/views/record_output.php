@@ -80,62 +80,84 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                 </div>
             </div>
 
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="app1" class="form-label">
-                                Applicator 1
-                                <span class="required-badge">Required</span>
-                            </label>
-                            <input type="text" id="app1" name="app1" class="form-input" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="app1_output" class="form-label">
-                                Applicator 1 Output
-                                <span class="required-badge">Required</span>
-                            </label>
-                            <input type="text" id="app1_output" name="app1_output" class="form-input" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="app2" class="form-label">
-                                Applicator 2
-                                <span class="optional-badge">Optional</span>
-                            </label>
-                            <input type="text" id="app2" name="app2" class="form-input">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="app2_output" class="form-label">
-                                Applicator 2 Output
-                                <span class="optional-badge">Optional</span>
-                            </label>
-                            <input type="text" id="app2_output" name="app2_output" class="form-input">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="machine" class="form-label">
-                                Machine Number
-                                <span class="required-badge">Required</span>
-                            </label>
-                            <input type="text" id="machine" name="machine" class="form-input" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="machine_output" class="form-label">
-                                Machine Output
-                                <span class="required-badge">Required</span>
-                            </label>
-                            <input type="text" id="machine_output" name="machine_output" class="form-input" required>
-                        </div>
+            <div class="form-section active">
+                <div class="section-header">
+                    <div class="section-icon">🔧</div>
+                    <div class="section-info">
+                        <div class="section-title">Applicator</div>
+                        <div class="section-description">Enter applicator IDs and their output values</div>
                     </div>
-                    
-                    <div class="button-group">
-                        <button type="submit" class="submit-btn">
-                            Submit Record
-                        </button>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="app1" class="form-label">
+                            Applicator 1
+                            <span class="required-badge">Required</span>
+                        </label>
+                        <input type="text" id="app1" name="app1" class="form-input" required>
                     </div>
-    </form>
+
+                    <div class="form-group">
+                        <label for="app1_output" class="form-label">
+                            Applicator 1 Output
+                            <span class="required-badge">Required</span>
+                        </label>
+                        <input type="text" id="app1_output" name="app1_output" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="app2" class="form-label">
+                            Applicator 2
+                            <span class="optional-badge">Optional</span>
+                        </label>
+                        <input type="text" id="app2" name="app2" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="app2_output" class="form-label">
+                            Applicator 2 Output
+                            <span class="optional-badge">Optional</span>
+                        </label>
+                        <input type="text" id="app2_output" name="app2_output" class="form-input">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section active">
+                <div class="section-header">
+                    <div class="section-icon">🏭</div>
+                    <div class="section-info">
+                        <div class="section-title">Machine Data</div>
+                        <div class="section-description">Enter machine identification and total output</div>
+                    </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="machine" class="form-label">
+                            Machine Number
+                            <span class="required-badge">Required</span>
+                        </label>
+                        <input type="text" id="machine" name="machine" class="form-input" required>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="machine_output" class="form-label">
+                            Machine Output
+                            <span class="required-badge">Required</span>
+                        </label>
+                        <input type="text" id="machine_output" name="machine_output" class="form-input" required>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Submit -->
+            <div class="button-group">
+                <button type="submit" class="submit-btn">
+                    Submit Record
+                </button>
+            </div>
+        </form>
     </div>
 </body>
 </html>
