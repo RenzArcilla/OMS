@@ -337,6 +337,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                 <label>Invoice No:</label>
                 <input type="text" name="invoice_no" id="edit_applicator_invoice_no"><br><br>
 
+                
                 <button type="submit">Save</button>
                 <button type="button" onclick="closeApplicatorModal()">Cancel</button>
             </form>

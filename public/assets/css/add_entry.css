@@ -61,6 +61,7 @@ body {
     gap: 1rem;
 }
 
+
 .add-entry-btn {
     display: flex;
     align-items: center;
@@ -82,3 +83,4 @@ body {
     background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
     box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
 }
+
