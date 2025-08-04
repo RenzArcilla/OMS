@@ -118,20 +118,19 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
             <h3>Latest Machines Added</h3>
 
             <!-- Scrollable container for infinite scrolling -->
-            <div id="machine-container" style="height: 300px; overflow-y: auto;">
-                <table border="1">
-                    <thead>
-                        <!-- Table headers defining machine data columns -->
-                        <tr>
-                            <th>Control No</th>
-                            <th>Description</th>
-                            <th>Model</th>
-                            <th>Maker</th>
-                            <th>Serial No</th>
-                            <th>Invoice No</th>
-                            <th>Actions</th> 
-                        </tr>
-                    </thead>
+            <div id="machines-table" class="entries-table-card active" style="height: 300px; overflow-y: auto;">
+            <table class="entries-table">
+                <thead>
+                    <tr>
+                        <th>Control No</th>
+                        <th>Description</th>
+                        <th>Model</th>
+                        <th>Maker</th>
+                        <th>Serial No</th>
+                        <th>Invoice No</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
 
                     <?php
                     // Include database connection and machine reader logic
@@ -142,7 +141,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                     $machines = getMachines($pdo, 10, 0);
                     ?>
 
-                    <tbody id="machine-body">
+                    <tbody id="machinesTanleBody">
                         <!-- Render fetched machine data as table rows -->
                         <?php foreach ($machines as $row): ?>
                             <tr>
@@ -155,23 +154,25 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                                 <td>
 
                                 <!-- Edit link with data attributes -->
-                                <button 
-                                    type="button"
-                                    onclick="openEditModal(this)"
-                                    data-id="<?= $row['machine_id'] ?>"
-                                    data-control="<?= htmlspecialchars($row['control_no'], ENT_QUOTES) ?>"
-                                    data-description="<?= $row['description'] ?>"
-                                    data-model="<?= htmlspecialchars($row['model'], ENT_QUOTES) ?>"
-                                    data-maker="<?= htmlspecialchars($row['maker'], ENT_QUOTES) ?>"
-                                    data-serial="<?= htmlspecialchars($row['serial_no'], ENT_QUOTES) ?>"
-                                    data-invoice="<?= htmlspecialchars($row['invoice_no'], ENT_QUOTES) ?>"
-                                >✏️</button>
-
+                                    <div class="actions">
+                                        <button class="action-btn edit-btn"
+                                            type="button"
+                                            onclick="openEditModal(this)"
+                                            data-id="<?= $row['machine_id'] ?>"
+                                            data-control="<?= htmlspecialchars($row['control_no'], ENT_QUOTES) ?>"
+                                            data-description="<?= $row['description'] ?>"
+                                            data-model="<?= htmlspecialchars($row['model'], ENT_QUOTES) ?>"
+                                            data-maker="<?= htmlspecialchars($row['maker'], ENT_QUOTES) ?>"
+                                            data-serial="<?= htmlspecialchars($row['serial_no'], ENT_QUOTES) ?>"
+                                            data-invoice="<?= htmlspecialchars($row['invoice_no'], ENT_QUOTES) ?>"
+                                        >✏️</button>
+                                    
                                 <!-- Delete form -->
-                                <form action="/SOMS/app/controllers/delete_machine.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this machine?');">
-                                    <input type="hidden" name="machine_id" value="<?= $row['machine_id'] ?>">
-                                    <button type="submit">🗑️</button>
-                                </form>
+                                        <form action="/SOMS/app/controllers/delete_machine.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this machine?');">
+                                            <input type="hidden" name="machine_id" value="<?= $row['machine_id'] ?>">
+                                            <button class="action-btn delete-btn" type="submit">🗑️</button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -263,21 +264,21 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
             <h3>Latest Applicators Added</h3>
 
             <!-- Scrollable container for infinite scrolling -->
-            <div id="applicator-container" style="height: 300px; overflow-y: auto;">
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th>HP No</th>
-                            <th>Terminal No</th>
-                            <th>Description</th>
-                            <th>Wire Type</th>
-                            <th>Terminal Maker</th>
-                            <th>Applicator Maker</th>
-                            <th>Serial No</th>
-                            <th>Invoice No</th>
-                            <th>Actions</th> 
-                        </tr>
-                    </thead>
+            <div id="applicator-table" class="entries-table-card active" style="height: 300px; overflow-y: auto;">
+            <table class="entries-table">
+                <thead>
+                    <tr>
+                        <th>HP No</th>
+                        <th>Terminal No</th>
+                        <th>Description</th>
+                        <th>Wire Type</th>
+                        <th>Terminal Maker</th>
+                        <th>Applicator Maker</th>
+                        <th>Serial No</th>
+                        <th>Invoice No</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
 
                     <tbody id="applicator-body">
                         <?php
