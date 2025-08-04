@@ -54,6 +54,33 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
             </div>
         </div>
 
+        <!-- Filters -->
+        <div class="filters-card">
+            <div class="filters-grid">
+                <div class="search-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Search entries..." class="search-input">
+                </div>
+                
+                <select id="typeFilter" class="filter-select">
+                    <option value="all">All Types</option>
+                    <option value="AUTOMATIC">Automatic</option>
+                    <option value="SEMI-AUTOMATIC">Semi-Automatic</option>
+                    <option value="SIDE">Side</option>
+                    <option value="END">End</option>
+                </select>
+                
+                <select id="statusFilter" class="filter-select">
+                    <option value="all">All Status</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+                
+                <button type="button" class="btn-secondary" onclick="exportData()">📥 Export</button>
+                <button type="button" class="btn-secondary" onclick="refreshData()">🔄 Refresh</button>
+            </div>
+        </div>
+
 
         <!-- Add Machine Form -->
         <form action="../controllers/add_machine.php" method="POST">
@@ -337,7 +364,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                 <label>Invoice No:</label>
                 <input type="text" name="invoice_no" id="edit_applicator_invoice_no"><br><br>
 
-                
+
                 <button type="submit">Save</button>
                 <button type="button" onclick="closeApplicatorModal()">Cancel</button>
             </form>
