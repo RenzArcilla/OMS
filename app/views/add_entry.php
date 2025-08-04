@@ -21,8 +21,8 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
 <head>
     <meta charset="UTF-8">
     <title>Add Machine or Applicator</title>
-    <!-- Load machine infinite scroll logic -->
     <link rel="stylesheet" href="../../public/assets/css/add_entry.css">
+    <!-- Load machine infinite scroll logic -->
     <script src="../../public/assets/js/load_machines.js" defer></script>
     <!-- Load applicator infinite scroll logic -->
     <script src="../../public/assets/js/load_applicators.js" defer></script>
@@ -30,71 +30,85 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
     <script src="../../public/assets/js/edit_machine_modal.js" defer></script>
     <!-- Load modal logic for editing applicators -->
     <script src="../../public/assets/js/edit_applicator_modal.js" defer></script>
-    <!-- For animation effects -->
-    <script src="../../public/assets/js/animate.js" defer></script>
 </head>
 <body>
-    <div classs="main-container">
-        <!--Page Header -->
-        <header class="page-header">
-            <h1 class="page-title">ADD TOOLS</h1>
-            <p class="page-subtitle">Manage nachines and applicators</p>
-        </header>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <button class="back-btn" onclick="window.history.back()">
+                    ←
+                </button>
+                <div>
+                    <h1 class="title">Manage Entries</h1>
+                    <p class="subtitle">Manage machines and applicators in the system</p>
+                </div>
+            </div>
+            <div class="add-entry-buttons">
+                <button class="add-entry-btn add-machine-btn" onclick="openModal('machine')">
+                    🔧 Add Machine
+                </button>
+                <button class="add-entry-btn add-applicator-btn" onclick="openModal('applicator')">
+                    ⚡ Add Applicator
+                </button>
+            </div>
+        </div>
 
-        <!-- Selection Buttons -->
-        <nav class="tab-navigation">
-            <button class="tab-btn active" data-tab="machines">
-                <span>Machines</span>
-            </button>
-            <button class="tab-btn" data-tab="applicators">
-                <span>Applicators</span>
-            </button>
-        </nav>
-
-        <!-- Add Machine Form -->
-        <section id="machines-section" class="content-section active">
-            <!-- Add Machine Form -->
-            <div class="form-card">
-                <div class="card-header">
-                    <h2 class="card-title">Add New Machine</h2>
-                    <p class="card-subtitle">Register a new machine to your inventory</p>
+        <!-- Filters -->
+        <div class="filters-card">
+            <div class="filters-grid">
+                <div class="search-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Search entries..." class="search-input">
                 </div>
                 
-                <form id="machine-form" action="../controllers/add_machine.php" method="POST">
-                    <div class="form-group">    
-                        <h2>Machine Information</h2>
-                        <label for="machine_ctrl_no">Control No:</label>
-                        <input type="text" id="machine_ctrl_no" name="control_no" required><br><br>
+                <select id="typeFilter" class="filter-select">
+                    <option value="all">All Types</option>
+                    <option value="AUTOMATIC">Automatic</option>
+                    <option value="SEMI-AUTOMATIC">Semi-Automatic</option>
+                    <option value="SIDE">Side</option>
+                    <option value="END">End</option>
+                </select>
+                
+                <select id="statusFilter" class="filter-select">
+                    <option value="all">All Status</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+                
+                <button type="button" class="btn-secondary" onclick="exportData()">📥 Export</button>
+                <button type="button" class="btn-secondary" onclick="refreshData()">🔄 Refresh</button>
+            </div>
+        </div>
 
-                    <label for="description">Description:</label>
-                    <select id="description" name="description" required>
-                        <option value="">--Select--</option>
-                        <option value="AUTOMATIC">AUTOMATIC</option>
-                        <option value="SEMI-AUTOMATIC">SEMI-AUTOMATIC</option>
-                    </select><br><br>
 
-                    <div class="form-group">
-                        <label class="form-label" for="model">Model:</label>
-                        <input type="text" id="model" name="model" required><br><br>
-                    </div>
+        <!-- Add Machine Form -->
+        <form action="../controllers/add_machine.php" method="POST">
+            <h2>Machine Information</h2>
+            <label for="machine_ctrl_no">Control No:</label>
+            <input type="text" id="machine_ctrl_no" name="control_no" required><br><br>
 
-                    <div class="form-group">
-                        <label class="form-label" for="machine_maker">Machine Maker:</label>
-                        <input type="text" id="machine_maker" name="machine_maker" required><br><br>
-                    </div>
+            <label for="description">Description:</label>
+            <select id="description" name="description" required>
+                <option value="">--Select--</option>
+                <option value="AUTOMATIC">AUTOMATIC</option>
+                <option value="SEMI-AUTOMATIC">SEMI-AUTOMATIC</option>
+            </select><br><br>
 
-                    <div class="form-group">
-                        <label class="form-label" for="machine_serial_no">Serial No:</label>
-                        <input type="text" id="machine_serial_no" name="serial_no"><br><br>
-                    </div>
+            <label for="model">Model:</label>
+            <input type="text" id="model" name="model" required><br><br>
 
-                    <div class="form-group">
-                        <label class="machine_invoice_no">Invoice No:</label>
-                        <input type="text" id="machine_invoice_no" name="invoice_no"><br><br>
-                    </div>
-                    
-                    <button type="submit">Submit Machine</button>
-                </form>
+            <label for="machine_maker">Machine Maker:</label>
+            <input type="text" id="machine_maker" name="machine_maker" required><br><br>
+
+            <label for="machine_serial_no">Serial No:</label>
+            <input type="text" id="machine_serial_no" name="serial_no"><br><br>
+
+            <label for="machine_invoice_no">Invoice No:</label>
+            <input type="text" id="machine_invoice_no" name="invoice_no"><br><br>
+
+            <button type="submit">Submit Machine</button>
+        </form>
 
         <hr>
 
@@ -104,20 +118,19 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
             <h3>Latest Machines Added</h3>
 
             <!-- Scrollable container for infinite scrolling -->
-            <div id="machine-container" style="height: 300px; overflow-y: auto;">
-                <table border="1">
-                    <thead>
-                        <!-- Table headers defining machine data columns -->
-                        <tr>
-                            <th>Control No</th>
-                            <th>Description</th>
-                            <th>Model</th>
-                            <th>Maker</th>
-                            <th>Serial No</th>
-                            <th>Invoice No</th>
-                            <th>Actions</th> 
-                        </tr>
-                    </thead>
+            <div id="machines-table" class="entries-table-card active" style="height: 300px; overflow-y: auto;">
+            <table class="entries-table">
+                <thead>
+                    <tr>
+                        <th>Control No</th>
+                        <th>Description</th>
+                        <th>Model</th>
+                        <th>Maker</th>
+                        <th>Serial No</th>
+                        <th>Invoice No</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
 
                     <?php
                     // Include database connection and machine reader logic
@@ -128,7 +141,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                     $machines = getMachines($pdo, 10, 0);
                     ?>
 
-                    <tbody id="machine-body">
+                    <tbody id="machinesTanleBody">
                         <!-- Render fetched machine data as table rows -->
                         <?php foreach ($machines as $row): ?>
                             <tr>
@@ -141,23 +154,25 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                                 <td>
 
                                 <!-- Edit link with data attributes -->
-                                <button 
-                                    type="button"
-                                    onclick="openEditModal(this)"
-                                    data-id="<?= $row['machine_id'] ?>"
-                                    data-control="<?= htmlspecialchars($row['control_no'], ENT_QUOTES) ?>"
-                                    data-description="<?= $row['description'] ?>"
-                                    data-model="<?= htmlspecialchars($row['model'], ENT_QUOTES) ?>"
-                                    data-maker="<?= htmlspecialchars($row['maker'], ENT_QUOTES) ?>"
-                                    data-serial="<?= htmlspecialchars($row['serial_no'], ENT_QUOTES) ?>"
-                                    data-invoice="<?= htmlspecialchars($row['invoice_no'], ENT_QUOTES) ?>"
-                                >✏️</button>
-
+                                    <div class="actions">
+                                        <button class="action-btn edit-btn"
+                                            type="button"
+                                            onclick="openEditModal(this)"
+                                            data-id="<?= $row['machine_id'] ?>"
+                                            data-control="<?= htmlspecialchars($row['control_no'], ENT_QUOTES) ?>"
+                                            data-description="<?= $row['description'] ?>"
+                                            data-model="<?= htmlspecialchars($row['model'], ENT_QUOTES) ?>"
+                                            data-maker="<?= htmlspecialchars($row['maker'], ENT_QUOTES) ?>"
+                                            data-serial="<?= htmlspecialchars($row['serial_no'], ENT_QUOTES) ?>"
+                                            data-invoice="<?= htmlspecialchars($row['invoice_no'], ENT_QUOTES) ?>"
+                                        >✏️</button>
+                                    
                                 <!-- Delete form -->
-                                <form action="/SOMS/app/controllers/delete_machine.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this machine?');">
-                                    <input type="hidden" name="machine_id" value="<?= $row['machine_id'] ?>">
-                                    <button type="submit">🗑️</button>
-                                </form>
+                                        <form action="/SOMS/app/controllers/delete_machine.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this machine?');">
+                                            <input type="hidden" name="machine_id" value="<?= $row['machine_id'] ?>">
+                                            <button class="action-btn delete-btn" type="submit">🗑️</button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -249,21 +264,21 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
             <h3>Latest Applicators Added</h3>
 
             <!-- Scrollable container for infinite scrolling -->
-            <div id="applicator-container" style="height: 300px; overflow-y: auto;">
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th>HP No</th>
-                            <th>Terminal No</th>
-                            <th>Description</th>
-                            <th>Wire Type</th>
-                            <th>Terminal Maker</th>
-                            <th>Applicator Maker</th>
-                            <th>Serial No</th>
-                            <th>Invoice No</th>
-                            <th>Actions</th> 
-                        </tr>
-                    </thead>
+            <div id="applicator-table" class="entries-table-card active" style="height: 300px; overflow-y: auto;">
+            <table class="entries-table">
+                <thead>
+                    <tr>
+                        <th>HP No</th>
+                        <th>Terminal No</th>
+                        <th>Description</th>
+                        <th>Wire Type</th>
+                        <th>Terminal Maker</th>
+                        <th>Applicator Maker</th>
+                        <th>Serial No</th>
+                        <th>Invoice No</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
 
                     <tbody id="applicator-body">
                         <?php
@@ -318,7 +333,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
 
                 <h2>Edit Applicator</h2>
 
-                <label>Control No:</label>
+                <label>HP No:</label>
                 <input type="text" name="control_no" id="edit_applicator_control" required><br><br>
 
                 <label>Terminal No:</label>
@@ -350,9 +365,10 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                 <label>Invoice No:</label>
                 <input type="text" name="invoice_no" id="edit_applicator_invoice_no"><br><br>
 
+
                 <button type="submit">Save</button>
                 <button type="button" onclick="closeApplicatorModal()">Cancel</button>
             </form>
         </div>
-</body>
+    </body>
 </html>
