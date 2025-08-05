@@ -18,7 +18,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Redirect url
-$redirect_url = "../views/add_entry.php";
+$redirect_url = "../views/file_upload.php";
 
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -35,19 +35,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['dataFiles'])) { // I
 
             if (move_uploaded_file($tmpName, $targetPath)) { // Moves the uploaded file to the target path.
                 $pdo->beginTransaction();
-                    $rawData = extractData($targetPath); // Calls  extractData() function from includes/extract.php.
+                    $rawData = extractData($targetPath); // Calls extractData() function from includes/extract.php.
                     $cleanData = transformData($rawData); // Calls transformData() function from includes/transform.php.
-                    loadData($cleanData);
-                $pdo->commit();
-                unlink($targetPath); // Deletes the file after ETL
+                    $result = loadData($cleanData); // Passes the cleaned data to loadData() from includes/load.php.
+                    if ($result === "All outputs recorded successfully!") {
+                        $pdo->commit();
+                        unlink($targetPath); // Deletes the file after ETL
+                    } else {
+                        $pdo->rollBack(); // Rollback transaction in case of error
+                        unlink($targetPath); // Deletes the file if there was an error
+                        jsAlertRedirect($result, $redirect_url); // Redirects to the etl_form.php with error message
+                        exit();
+                    }
             }
-        }   
+        }
 
-        header("Location: /SOMS/public/etl_form.php?success=1"); // Passes the cleaned data to loadData() includes/load.php.
+        header("Location: /SOMS/public/etl_form.php?success=1"); // Redirects to view page if all files processed successfully
         exit();
+
     } catch (Exception $e) {
-        $pdo->rollBack(); // Rollback transaction in case of error
-        jsAlertRedirect("Error processing files: " . $e->getMessage(), $redirect_url);
+        $pdo->rollBack(); // Rollback transaction in case of exception
+        if (isset($targetPath) && file_exists($targetPath)) {
+            unlink($targetPath); // Delete uploaded file if it exists
+        }
+        jsAlertRedirect("Error processing files: " . $e->getMessage() . " Trashing the uploaded file.", $redirect_url); // Redirect with error message
         exit();
     }
 }
