@@ -6,6 +6,7 @@
 require_once __DIR__ . '/../includes/etl/extract.php';
 require_once __DIR__ . '/../includes/etl/transform.php';
 require_once __DIR__ . '/../includes/etl/load.php';
+require_once __DIR__ . '/../includes/db.php'; // Database connection
 
 $tempDir = __DIR__ . '/../temp/'; // Directory where uploaded files will be temporarily stored
 
@@ -33,10 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['dataFiles'])) { // I
             $targetPath = $tempDir . $fileName; // Constructs the full path (where to move the file) inside app/temp/ directory.
 
             if (move_uploaded_file($tmpName, $targetPath)) { // Moves the uploaded file to the target path.
-                $rawData = extractData($targetPath); // Calls  extractData() function from includes/extract.php.
-                $cleanData = transformData($rawData); // Calls transformData() function from includes/transform.php.
-                loadData($cleanData);
-
+                $pdo->beginTransaction();
+                    $rawData = extractData($targetPath); // Calls  extractData() function from includes/extract.php.
+                    $cleanData = transformData($rawData); // Calls transformData() function from includes/transform.php.
+                    loadData($cleanData);
+                $pdo->commit();
                 unlink($targetPath); // Deletes the file after ETL
             }
         }   
@@ -44,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['dataFiles'])) { // I
         header("Location: /SOMS/public/etl_form.php?success=1"); // Passes the cleaned data to loadData() includes/load.php.
         exit();
     } catch (Exception $e) {
+        $pdo->rollBack(); // Rollback transaction in case of error
         jsAlertRedirect("Error processing files: " . $e->getMessage(), $redirect_url);
         exit();
     }
