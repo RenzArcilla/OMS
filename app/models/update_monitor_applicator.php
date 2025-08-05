@@ -23,7 +23,7 @@ function monitorApplicatorOutput($applicator_data, $applicator_output) {
 
     try {
         $type = $applicator_data['description'];
-        $applicator_id = $applicator_data['applicator_id'];
+        $applicator_id = is_array($applicator_data) ? $applicator_data['applicator_id'] : $applicator_data;
 
         // Fetch applicable custom parts
         require_once __DIR__ . '/read_custom_parts.php';
@@ -60,8 +60,8 @@ function monitorApplicatorOutput($applicator_data, $applicator_output) {
         }
 
         // Determine query based on type
-        switch ($type) {
-            case "SIDE":
+        switch (true) {
+            case $type === "SIDE":
                 $stmt = $pdo->prepare("
                     INSERT INTO monitor_applicator (
                         applicator_id, total_output, wire_crimper_output, wire_anvil_output, 
@@ -85,7 +85,7 @@ function monitorApplicatorOutput($applicator_data, $applicator_output) {
                 ");
                 break;
 
-            case "END":
+            case in_array($type, ["END", "CLAMP", "STRIP AND CRIMP"], true):
                 $stmt = $pdo->prepare("
                     INSERT INTO monitor_applicator (
                         applicator_id, total_output, wire_crimper_output, wire_anvil_output, 

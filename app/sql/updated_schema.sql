@@ -24,7 +24,7 @@ CREATE TABLE applicators (
     hp_no VARCHAR(50) UNIQUE NOT NULL,
     terminal_no VARCHAR(50) NOT NULL,
     is_active BOOLEAN DEFAULT TRUE NOT NULL,
-    description ENUM('SIDE', 'END', 'CLAMP', 'STRIP AND CLAMP') NOT NULL,
+    description ENUM('SIDE', 'END', 'CLAMP', 'STRIP AND CRIMP') NOT NULL,
     wire ENUM('BIG', 'SMALL') NOT NULL,
     terminal_maker VARCHAR(50) NOT NULL,
     applicator_maker VARCHAR(50) NOT NULL,

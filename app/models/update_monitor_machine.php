@@ -22,7 +22,7 @@ function monitorMachineOutput($machine_data, $machine_output) {
     global $pdo;
 
     try {
-        $machine_id = $machine_data['machine_id'];
+        $machine_id = is_array($machine_data) ? $machine_data['machine_id'] : $machine_data;
 
         // Fetch applicable custom parts
         require_once __DIR__ . '/read_custom_parts.php';

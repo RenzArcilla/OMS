@@ -26,38 +26,38 @@ function submitApplicatorOutput($applicator_data, $applicator_output, $record_id
     
     try {
         // Get the applicator type and ID
-        $type = $applicator_data['description'];
+        $type = trim($applicator_data['description']);
         $applicator_id = $applicator_data['applicator_id'];
 
         // Get the custom parts of the applicator and ensure they are set to the output value
-        require_once __DIR__ . '/read_custom_parts.php';
-        $custom_applicator_parts = getCustomParts('APPLICATOR');
+            require_once __DIR__ . '/read_custom_parts.php';
+            $custom_applicator_parts = getCustomParts('APPLICATOR');
 
-        if (is_string($custom_applicator_parts)) {
-            // If getCustomParts returned an error 
-            return $custom_applicator_parts;
-        }
+            if (is_string($custom_applicator_parts)) {
+                // If getCustomParts returned an error 
+                return $custom_applicator_parts;
+            }
 
                 $custom_parts_arr = []; // Default to empty
 
-        if (!empty($custom_applicator_parts)) {
-            // Convert each custom part to the desired format
-            $json_array = [];
-            foreach ($custom_applicator_parts as $part) {
-                $json_array[] = [
-                    'name' => $part['part_name'],
-                    'value' => $applicator_output
-                ];
+            if (!empty($custom_applicator_parts)) {
+                // Convert each custom part to the desired format
+                $json_array = [];
+                foreach ($custom_applicator_parts as $part) {
+                    $json_array[] = [
+                        'name' => $part['part_name'],
+                        'value' => $applicator_output
+                    ];
+                }
+                $custom_parts_arr = $json_array;
             }
-            $custom_parts_arr = $json_array;
-        }
 
-        // Convert to JSON format  
-        $custom_parts_json = json_encode($custom_parts_arr);
+            // Convert to JSON format  
+            $custom_parts_json = json_encode($custom_parts_arr);
         
-        // Always create a new record with all values set to the applicator output value
-        switch ($type) {
-            case "SIDE":
+        // Create a new record with all values set to the applicator output value
+        switch (true) {
+            case $type === "SIDE":
                 $stmt = $pdo->prepare("
                     INSERT INTO applicator_outputs 
                     (record_id, applicator_id, total_output, wire_crimper, wire_anvil, 
@@ -67,8 +67,8 @@ function submitApplicatorOutput($applicator_data, $applicator_output, $record_id
                     :output_value, :output_value, :output_value, :output_value, :custom_parts)
                 ");
                 break;
-                
-            case "END":
+
+            case in_array($type, ["END", "CLAMP", "STRIP AND CRIMP"], true):
                 $stmt = $pdo->prepare("
                     INSERT INTO applicator_outputs 
                     (record_id, applicator_id, total_output, wire_crimper, wire_anvil, 
@@ -78,17 +78,16 @@ function submitApplicatorOutput($applicator_data, $applicator_output, $record_id
                     :output_value, :output_value, :output_value, :output_value, :output_value, :custom_parts)
                 ");
                 break;
-                
+
             default:
                 return "Invalid applicator type: " . htmlspecialchars($type, ENT_QUOTES);
         }
-        
+
         $stmt->bindParam(':record_id', $record_id, PDO::PARAM_INT);
         $stmt->bindParam(':applicator_id', $applicator_id, PDO::PARAM_INT);
         $stmt->bindParam(':output_value', $applicator_output, PDO::PARAM_INT);
         $stmt->bindParam(':custom_parts', $custom_parts_json, PDO::PARAM_STR);
 
-        
         // Execute the query
         $stmt->execute();
         

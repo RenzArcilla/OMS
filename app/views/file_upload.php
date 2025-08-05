@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOMS - File Upload </title>
-    <link rel="stylesheet" href="../../public/assets/css/fileupload_tk_admin.css">
 </head>
 <body>
     <section class="upload-section" id="upload">
@@ -13,24 +12,20 @@
             <div class="upload-container">
                 <div class="upload-grid">
                     <div class="upload-area">
-                        <div class="upload-box" id="uploadBox">
-                            <div class="upload-icon">📁</div>
-                            <h3>Drop files here or click to browse</h3>
-                            <p>Supported formats: .csv</p>
-                            <input type="file" id="fileInput" multiple accept=".csv" style="display: none;">
-                            <div class="upload-btn">
-                                <button type="button" class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
-                                    Choose Files
-                                </button>
+                        <form id="uploadForm" action="/SOMS/app/controllers/upload.php" method="POST" enctype="multipart/form-data">
+                            <div class="upload-box" id="uploadBox">
+                                <div class="upload-icon">📁</div>
+                                <h3>Drop files here or click to browse</h3>
+                                <p>Supported formats: .csv, .xls, .xlsx</p>
+                                <input type="file" name="dataFiles[]" id="fileInput" multiple accept=".csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display: none;">
+                                <div class="upload-btn">
+                                    <button type="button" class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                                        Choose Files
+                                    </button>
+                                    <button type="submit" class="btn btn-success">Upload</button>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="upload-progress" id="uploadProgress" style="display: none;">
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="progressFill"></div>
-                            </div>
-                            <div class="progress-text" id="progressText">0%</div>
-                        </div>
+                        </form>
                     </div>
                     
                     <div class="upload-info">
