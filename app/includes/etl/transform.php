@@ -23,9 +23,9 @@ function transformData($data) {
         $row['Output'] = isset($row['Total Output Qty']) ? (int) $row['Total Output Qty'] : 0;
 
         // Trim applicators
-        $row['Applicator1'] = strtoupper(trim($row['Applicator1'] ?? ''));
+        $row['Applicator1'] = strtoupper(trim($row['Applicator1'] ?? ' '));
         // Set to uppercase if not empty; otherwise, set to null
-        $row['Applicator2'] = isset($row['Applicator2']) && trim($row['Applicator2']) !== ''
+        $row['Applicator2'] = isset($row['Applicator2']) && trim($row['Applicator2']) !== ' '
             ? strtoupper(trim($row['Applicator2']))
             : null;
         }

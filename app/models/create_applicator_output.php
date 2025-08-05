@@ -27,7 +27,7 @@ function submitApplicatorOutput($applicator_data, $applicator_output, $record_id
     try {
         // Get the applicator type and ID
         $type = $applicator_data['description'];
-        $applicator_id = is_array($applicator_data) ? $applicator_data['applicator_id'] : $applicator_data;
+        $applicator_id = $applicator_data['applicator_id'];
 
         // Get the custom parts of the applicator and ensure they are set to the output value
         require_once __DIR__ . '/read_custom_parts.php';
@@ -56,8 +56,8 @@ function submitApplicatorOutput($applicator_data, $applicator_output, $record_id
         $custom_parts_json = json_encode($custom_parts_arr);
         
         // Always create a new record with all values set to the applicator output value
-        switch ($type) {
-            case "SIDE":
+        switch (true) {
+            case $type === "SIDE":
                 $stmt = $pdo->prepare("
                     INSERT INTO applicator_outputs 
                     (record_id, applicator_id, total_output, wire_crimper, wire_anvil, 
@@ -67,8 +67,8 @@ function submitApplicatorOutput($applicator_data, $applicator_output, $record_id
                     :output_value, :output_value, :output_value, :output_value, :custom_parts)
                 ");
                 break;
-                
-            case "END":
+
+            case in_array($type, ["END", "CLAMP", "STRIP AND CRIMP"], true);
                 $stmt = $pdo->prepare("
                     INSERT INTO applicator_outputs 
                     (record_id, applicator_id, total_output, wire_crimper, wire_anvil, 
@@ -78,11 +78,11 @@ function submitApplicatorOutput($applicator_data, $applicator_output, $record_id
                     :output_value, :output_value, :output_value, :output_value, :output_value, :custom_parts)
                 ");
                 break;
-                
+
             default:
                 return "Invalid applicator type: " . htmlspecialchars($type, ENT_QUOTES);
         }
-        
+            
         $stmt->bindParam(':record_id', $record_id, PDO::PARAM_INT);
         $stmt->bindParam(':applicator_id', $applicator_id, PDO::PARAM_INT);
         $stmt->bindParam(':output_value', $applicator_output, PDO::PARAM_INT);

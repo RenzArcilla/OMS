@@ -6,19 +6,37 @@ function extractData($filePath) {
     $spreadsheet = IOFactory::load($filePath);     
     $sheet = $spreadsheet->getActiveSheet()->toArray();
 
-    // Expecting real data to start from row 4, and headers at row 2 (index 1)
-    if (count($sheet) < 4) return []; // Not enough rows
+    // Exit early if not enough rows for header and data
+    if (count($sheet) < 4) return "Invalid row count";
 
-    $headers = array_map('trim', $sheet[1]); // Use only row 2 (index 1) as headers
-    $rows = array_slice($sheet, 3); // Skip to row 4 (index 3)
+    // Try to detect header row by checking rows 1–3 (index 0–2)
+    $headerRowIndex = -1;
+    foreach (range(0, 2) as $i) { // Check only rows 1–3 (index 0–2)
+        if (isset($sheet[$i]) && in_array('Production Date', $sheet[$i]) && in_array('Machine No', $sheet[$i])) {
+            $headerRowIndex = $i;
+            break;
+        }
+    }
+
+    // Fallback
+    if ($headerRowIndex === -1) {
+        $headerRowIndex = 0; // Assume row 1 (index 0) contains headers
+    }
+
+    // Trim and set headers
+    $headers = array_map('trim', $sheet[$headerRowIndex]);
+
+    // Slice data starting from the index 3 (Excel row 4)
+    $rows = array_slice($sheet, 3); 
 
     $data = [];
     foreach ($rows as $row) {
-        if (count(array_filter($row)) === 0) continue; // Skip entirely blank rows
+        if (count(array_filter($row)) === 0) continue; // Skip blank rows
 
+        // Combine header keys with current row values
         $combined = array_combine($headers, $row);
 
-        // Skip rows that repeat the header
+        // Detect repeated header rows mid-sheet (and skip)
         $isHeaderRow = true;
         foreach ($headers as $h) {
             if (trim($combined[$h]) !== $h) {
@@ -27,7 +45,6 @@ function extractData($filePath) {
             }
         }
 
-        // Skips rows that are identical to the header row
         if (!$isHeaderRow) {
             $data[] = $combined;
         }

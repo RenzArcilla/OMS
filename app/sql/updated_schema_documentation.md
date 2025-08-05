@@ -59,7 +59,7 @@ This database system is designed to track machine and applicator usage in a manu
 | `hp_no` | VARCHAR(50) | UNIQUE, NOT NULL | HP number |
 | `terminal_no` | VARCHAR(50) | NOT NULL | Terminal number |
 | `is_active` | BOOLEAN | DEFAULT TRUE | Soft delete flag |
-| `description` | ENUM | NOT NULL | Type: 'SIDE', 'END', 'CLAMP', 'STRIP AND CLAMP' |
+| `description` | ENUM | NOT NULL | Type: 'SIDE', 'END', 'CLAMP', 'STRIP AND CRIMP' |
 | `wire` | ENUM | NOT NULL | Wire size: 'BIG', 'SMALL' |
 | `terminal_maker` | VARCHAR(50) | NOT NULL | Terminal manufacturer |
 | `applicator_maker` | VARCHAR(50) | NOT NULL | Applicator manufacturer |
