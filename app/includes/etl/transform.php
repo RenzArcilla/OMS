@@ -13,7 +13,7 @@ function transformData($data) {
             $row['Shift'] = 'FIRST';
         } elseif (strpos($shift, "2pm to 10pm") !== false) {
             $row['Shift'] = 'SECOND';
-        } elseif (strpos($shift, "10pm to 6am") !== false) {
+        } elseif (strpos($shift, "6pm to 3am") !== false) {
             $row['Shift'] = 'NIGHT';
         } else {
             $row['Shift'] = null;
