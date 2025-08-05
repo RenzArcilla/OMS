@@ -23,7 +23,7 @@ function monitorApplicatorOutput($applicator_data, $applicator_output) {
 
     try {
         $type = $applicator_data['description'];
-        $applicator_id = $applicator_data['applicator_id'];
+        $applicator_id = is_array($applicator_data) ? $applicator_data['applicator_id'] : $applicator_data;
 
         // Fetch applicable custom parts
         require_once __DIR__ . '/read_custom_parts.php';

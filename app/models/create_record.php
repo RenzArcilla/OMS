@@ -45,9 +45,13 @@ function createRecord($shift, $machine_data, $applicator1_data,
         }
         
         // Get machine and applicator IDs
-        $machine_id = $machine_data['machine_id'];
-        $applicator1_id = $applicator1_data['applicator_id'];
-        $applicator2_id = empty($applicator2_data) ? null : $applicator2_data['applicator_id'];
+        $machine_id = is_array($machine_data) ? $machine_data['machine_id'] : $machine_data;
+        $applicator1_id = is_array($applicator1_data) ? $applicator1_data['applicator_id'] : $applicator1_data;
+        if ($applicator2_id === null) {
+            $applicator2_id = null; // Ensure null if no applicator2 data
+        } else {
+            $applicator2_id = is_array($applicator2_data) ? $applicator2_data['applicator_id'] : $applicator2_data;
+        }
         
         // Prepare the SQL statement
         $stmt = $pdo->prepare("

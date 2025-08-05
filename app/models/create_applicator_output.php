@@ -27,7 +27,7 @@ function submitApplicatorOutput($applicator_data, $applicator_output, $record_id
     try {
         // Get the applicator type and ID
         $type = $applicator_data['description'];
-        $applicator_id = $applicator_data['applicator_id'];
+        $applicator_id = is_array($applicator_data) ? $applicator_data['applicator_id'] : $applicator_data;
 
         // Get the custom parts of the applicator and ensure they are set to the output value
         require_once __DIR__ . '/read_custom_parts.php';

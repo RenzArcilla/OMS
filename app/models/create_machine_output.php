@@ -26,7 +26,7 @@ function submitMachineOutput($machine_data, $machine_output, $record_id) {
     
     try {      
         // Get the machine ID
-        $machine_id = $machine_data['machine_id'];
+        $machine_id = is_array($machine_data) ? $machine_data['machine_id'] : $machine_data;
 
         // Get the custom parts of the machine and ensure they are set to the output value
         require_once __DIR__ . '/read_custom_parts.php';

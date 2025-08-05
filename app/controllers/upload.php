@@ -1,0 +1,50 @@
+<?php
+/*
+    This PHP code handles the file upload and ETL pipeline trigger for the file upload form in file_upload.php.
+*/
+
+require_once __DIR__ . '/../includes/etl/extract.php';
+require_once __DIR__ . '/../includes/etl/transform.php';
+require_once __DIR__ . '/../includes/etl/load.php';
+
+$tempDir = __DIR__ . '/../temp/'; // Directory where uploaded files will be temporarily stored
+
+// Start session and check if user is logged in
+session_start(); 
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../views/login.php");
+    exit();
+}
+
+// Redirect url
+$redirect_url = "../views/add_entry.php";
+
+// Check if the request method is POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    jsAlertRedirect("Invalid request method.", $redirect_url);
+    exit();
+}
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['dataFiles'])) { // If the dataFiles field exists in the $_FILES array (means user uploaded one or more files).
+    try {
+        foreach ($_FILES['dataFiles']['tmp_name'] as $index => $tmpName) { // Loops through all uploaded files.
+            $fileName = basename($_FILES['dataFiles']['name'][$index]); // Extracts the original filename of the uploaded file.
+            $targetPath = $tempDir . $fileName; // Constructs the full path (where to move the file) inside app/temp/ directory.
+
+            if (move_uploaded_file($tmpName, $targetPath)) { // Moves the uploaded file to the target path.
+                $rawData = extractData($targetPath); // Calls  extractData() function from includes/extract.php.
+                $cleanData = transformData($rawData); // Calls transformData() function from includes/transform.php.
+                loadData($cleanData);
+
+                unlink($targetPath); // Deletes the file after ETL
+            }
+        }   
+
+        header("Location: /SOMS/public/etl_form.php?success=1"); // Passes the cleaned data to loadData() includes/load.php.
+        exit();
+    } catch (Exception $e) {
+        jsAlertRedirect("Error processing files: " . $e->getMessage(), $redirect_url);
+        exit();
+    }
+}

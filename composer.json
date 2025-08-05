@@ -1,0 +1,17 @@
+{
+    "name": "lm5/soms",
+    "autoload": {
+        "psr-4": {
+            "Lm5\\Soms\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "RenzArcilla",
+            "email": "renzarcilla09@gmail.com"
+        }
+    ],
+    "require": {
+        "phpoffice/phpspreadsheet": "^4.5"
+    }
+}
