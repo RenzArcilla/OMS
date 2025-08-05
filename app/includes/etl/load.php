@@ -111,9 +111,8 @@ function loadData($data) {
         if (is_string($machine_monitor_status)) {
             return($machine_monitor_status);
         }
-
-
-        // 4. If all operations were successful, return to the upload controller with a success message
-        return("All outputs recorded successfully!");
     }
+
+    // 4. If all operations were successful, return to the upload controller with a success message
+    return("All outputs recorded successfully!");
 }

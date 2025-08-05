@@ -60,8 +60,8 @@ function monitorApplicatorOutput($applicator_data, $applicator_output) {
         }
 
         // Determine query based on type
-        switch ($type) {
-            case "SIDE":
+        switch (true) {
+            case $type === "SIDE":
                 $stmt = $pdo->prepare("
                     INSERT INTO monitor_applicator (
                         applicator_id, total_output, wire_crimper_output, wire_anvil_output, 
@@ -85,7 +85,7 @@ function monitorApplicatorOutput($applicator_data, $applicator_output) {
                 ");
                 break;
 
-            case "END":
+            case in_array($type, ["END", "CLAMP", "STRIP AND CRIMP"], true):
                 $stmt = $pdo->prepare("
                     INSERT INTO monitor_applicator (
                         applicator_id, total_output, wire_crimper_output, wire_anvil_output, 

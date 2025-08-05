@@ -44,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['dataFiles'])) { // I
                     if ($result === "All outputs recorded successfully!") {
                         $pdo->commit();
                         unlink($targetPath); // Deletes the file after ETL
+                        jsAlertRedirect($result, $redirect_url); // Redirects to the etl_form.php with success message
                     } else {
                         $pdo->rollBack(); // Rollback transaction in case of error
                         unlink($targetPath); // Deletes the file if there was an error
@@ -52,9 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['dataFiles'])) { // I
                     }
             }
         }
-
-        header("Location: /SOMS/public/etl_form.php?success=1"); // Redirects to view page if all files processed successfully
-        exit();
 
     } catch (Exception $e) {
         $pdo->rollBack(); // Rollback transaction in case of exception
