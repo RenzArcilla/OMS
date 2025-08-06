@@ -7,7 +7,7 @@
 // Include the database connection
 require_once __DIR__ . '/../../includes/db.php'; 
 
-function getRecordsAndOutputs(int $limit = 10, int $offset = 0): array {
+function getRecordsAndOutputs(int $limit = 20, int $offset = 0): array {
     /*
     Function to fetch a list of machines from the database with pagination.
     It prepares and executes a SELECT query that fetches machines ordered by most recent,
