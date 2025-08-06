@@ -205,7 +205,14 @@ if (!isset($_SESSION['user_id'])) {
                             <td><?= htmlspecialchars($row['app2_output']) ?></td>
                             <td><?= htmlspecialchars($row['control_no']) ?></td>
                             <td><?= htmlspecialchars($row['machine_output']) ?></td>
-                            <td>✏️🗑️</td>
+                            <td>✏️
+                                <!-- Delete form -->
+                                <form action="/SOMS/app/controllers/delete_record.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this record?');">
+                                    <input type="hidden" name="record_id" value="<?= htmlspecialchars($row['record_id']) ?>">
+                                    <button type="submit">🗑️</button>
+                                </form>
+                                </td>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
