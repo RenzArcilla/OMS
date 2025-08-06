@@ -21,4 +21,29 @@
                 ➕ Add New Record
             </a>
         </div>
+        <!-- Filters -->
+        <div class="filters-card">
+            <div class="filters-grid">
+                <div class="search-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search by machine, applicator, or any field...">
+                </div>
+                
+                <select class="filter-select" id="shiftFilter">
+                    <option value="">All Shifts</option>
+                    <option value="FIRST">First Shift</option>
+                    <option value="SECOND">Second Shift</option>
+                    <option value="NIGHT">Night Shift</option>
+                </select>
+
+                <select class="filter-select" id="dateFilter">
+                    <option value="">All Dates</option>
+                    <option value="today">Today</option>
+                    <option value="week">This Week</option>
+                    <option value="month">This Month</option>
+                </select>
+
+                <button class="btn-secondary" onclick="clearFilters()">Clear Filters</button>
+            </div>
+        </div>
 </html>
