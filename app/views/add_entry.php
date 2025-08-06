@@ -146,7 +146,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                     $machines = getMachines($pdo, 10, 0);
                     ?>
 
-                    <tbody id="machinesTanleBody">
+                    <tbody id="machinesTableBody">
                         <!-- Render fetched machine data as table rows -->
                         <?php foreach ($machines as $row): ?>
                             <tr>
