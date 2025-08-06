@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // 3. Try to register the user
     include_once '../models/create_user.php';
-
+    $pdo->beginTransaction();
     $result = createUser($firstname, $lastname, $username, $password, $confirm_password);
 
     // 4. Handle response
@@ -50,11 +50,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['username'] = $result['username'];
         $_SESSION['first_name'] = $result['first_name'];
         $_SESSION['user_type'] = $result['user_type'];
+        $pdo->commit();
         header("Location: ../views/home.php");
         exit();
     } elseif (is_string($result)) {
+        $pdo->rollBack();
         failRedirect($result);
     } else {
+        $pdo->rollBack();
         failRedirect("Registration failed. Please try again.");
     }
 } 

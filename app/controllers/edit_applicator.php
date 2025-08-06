@@ -68,18 +68,22 @@ if ($inactive_duplicate) {
     exit;
 }
 
+$pdo->beginTransaction();
 $result = updateApplicator($applicator_id, $hp_no, $terminal_no, $description, 
                             $wire_type, $terminal_maker, $applicator_maker, 
                             $serial_no, $invoice_no);
 
 // Check if applicator update was successful
 if ($result === true) {
+    $pdo->commit();
     jsAlertRedirect("Applicator updated successfully!", $redirect_url);
     exit;
 } elseif (is_string($result)) {
+    $pdo->rollBack(); // Rollback transaction in case of error
     jsAlertRedirect($result, $redirect_url);
     exit;
 } else {
+    $pdo->rollBack();
     jsAlertRedirect("Failed to update applicator. Please try again.", $redirect_url);
     exit;
 }

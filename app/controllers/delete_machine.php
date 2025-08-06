@@ -34,16 +34,20 @@ if (empty($machine_id)) {
 }
 
 // 3. Database operation
+$pdo->beginTransaction();
 $result = disableMachine($machine_id);
 
 // Check if machine deletion was successful
 if ($result === true) {
+    $pdo->commit();
     jsAlertRedirect("Machine deleted successfully!", $redirect_url);
     exit;
 } elseif (is_string($result)) {
+    $pdo->rollBack(); // Rollback transaction in case of error
     jsAlertRedirect($result, $redirect_url);
     exit;
 } else {
+    $pdo->rollBack();
     jsAlertRedirect("Failed to delete machine. Please try again.", $redirect_url);
     exit;
 }

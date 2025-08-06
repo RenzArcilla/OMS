@@ -34,16 +34,20 @@ if (empty($applicator_id)) {
 }
 
 // 3. Database operation
+$pdo->beginTransaction();
 $result = disableApplicator($applicator_id);
 
 // Check if applicator deletion was successful
 if ($result === true) {
+    $pdo->commit();
     jsAlertRedirect("Applicator deleted successfully!", $redirect_url);
     exit;
 } elseif (is_string($result)) {
+    $pdo->rollBack(); // Rollback transaction in case of error
     jsAlertRedirect($result, $redirect_url);
     exit;
 } else {
+    $pdo->rollBack();
     jsAlertRedirect("Failed to delete applicator. Please try again.", $redirect_url);
     exit;
 }
