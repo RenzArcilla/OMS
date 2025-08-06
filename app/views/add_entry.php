@@ -4,6 +4,7 @@
     It includes a form for entering details and submitting them to the server.
 */
 
+
 // Start session and check if user is logged in
 session_start();
 if (!isset($_SESSION['user_id'])) {
@@ -11,8 +12,12 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+
 include_once __DIR__ . '/../includes/header.php'; // Include the header file for the navigation and logo
 ?>
+
+
+
 
 
 
@@ -54,6 +59,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
             </div>
         </div>
 
+
         <!-- Filters -->
         <div class="filters-card">
             <div class="filters-grid">
@@ -61,7 +67,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                     <span class="search-icon">🔍</span>
                     <input type="text" id="searchInput" placeholder="Search entries..." class="search-input">
                 </div>
-                
+               
                 <select id="typeFilter" class="filter-select">
                     <option value="all">All Types</option>
                     <option value="AUTOMATIC">Automatic</option>
@@ -69,17 +75,18 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                     <option value="SIDE">Side</option>
                     <option value="END">End</option>
                 </select>
-                
+               
                 <select id="statusFilter" class="filter-select">
                     <option value="all">All Status</option>
                     <option value="Active">Active</option>
                     <option value="Inactive">Inactive</option>
                 </select>
-                
+               
                 <button type="button" class="btn-secondary" onclick="exportData()">📥 Export</button>
                 <button type="button" class="btn-secondary" onclick="refreshData()">🔄 Refresh</button>
             </div>
         </div>
+
 
         <!-- Tab Section -->
         <div class="tab-section">
@@ -87,43 +94,13 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
             <button class="tab-btn" onclick="switchTab('applicators')">⚡ Applicators</button>
         </div>  
 
-        <!-- Add Machine Form -->
-        <form action="../controllers/add_machine.php" method="POST">
-            <h2>Machine Information</h2>
-            <label for="machine_ctrl_no">Control No:</label>
-            <input type="text" id="machine_ctrl_no" name="control_no" required><br><br>
 
-            <label for="description">Description:</label>
-            <select id="description" name="description" required>
-                <option value="">--Select--</option>
-                <option value="AUTOMATIC">AUTOMATIC</option>
-                <option value="SEMI-AUTOMATIC">SEMI-AUTOMATIC</option>
-            </select><br><br>
-
-            <label for="model">Model:</label>
-            <input type="text" id="model" name="model" required><br><br>
-
-            <label for="machine_maker">Machine Maker:</label>
-            <input type="text" id="machine_maker" name="machine_maker" required><br><br>
-
-            <label for="machine_serial_no">Serial No:</label>
-            <input type="text" id="machine_serial_no" name="serial_no"><br><br>
-
-            <label for="machine_invoice_no">Invoice No:</label>
-            <input type="text" id="machine_invoice_no" name="invoice_no"><br><br>
-
-            <button type="submit">Submit Machine</button>
-        </form>
-
-        <hr>
-
-
-        <!-- Section: Table Display for Machines -->
+        <!-- Machine Table -->
         <div>
             <h3>Latest Machines Added</h3>
 
-            <!-- Scrollable container for infinite scrolling -->
-            <div id="machines-table" class="entries-table-card active" style="height: 300px; overflow-y: auto;">
+
+        <div id="machines-table" class="entries-table-card active" style="height: 300px; overflow-y: auto;">
             <table class="entries-table">
                 <thead>
                     <tr>
@@ -137,16 +114,19 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                     </tr>
                 </thead>
 
+
                     <?php
                     // Include database connection and machine reader logic
                     require_once __DIR__ . '/../includes/db.php';
                     require_once __DIR__ . '/../models/read_machines.php';
 
+
                     // Fetch initial set of machines (first 10 entries)
                     $machines = getMachines($pdo, 10, 0);
                     ?>
 
-                    <tbody id="machinesTanleBody">
+
+                    <tbody id="machinesTableBody">
                         <!-- Render fetched machine data as table rows -->
                         <?php foreach ($machines as $row): ?>
                             <tr>
@@ -157,6 +137,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                                 <td><?= htmlspecialchars($row['serial_no']) ?></td>
                                 <td><?= htmlspecialchars($row['invoice_no']) ?></td>
                                 <td>
+
 
                                 <!-- Edit link with data attributes -->
                                     <div class="actions">
@@ -171,7 +152,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                                             data-serial="<?= htmlspecialchars($row['serial_no'], ENT_QUOTES) ?>"
                                             data-invoice="<?= htmlspecialchars($row['invoice_no'], ENT_QUOTES) ?>"
                                         >✏️</button>
-                                    
+                                   
                                 <!-- Delete form -->
                                         <form action="/SOMS/app/controllers/delete_machine.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this machine?');">
                                             <input type="hidden" name="machine_id" value="<?= $row['machine_id'] ?>">
@@ -186,111 +167,9 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
             </div>
         </div>
 
-        <hr>
 
-        <!-- Edit Machine Modal -->
-        <div id="editModal" class="modal-overlay">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title">
-                        <span class="modal-icon">🔧</span>
-                        Edit Machine
-                    </h2>
-                </div>
-                
-                <div class="modal-body">
-                    <form id="editMachineForm" action="../controllers/edit_machine.php" method="POST">
-                        <input type="hidden" name="machine_id" id="edit_machine_id">
-
-                        <div class="form-group">
-                            <label>Control No:</label>
-                            <input type="text" name="control_no" id="edit_control_no" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Description:</label>
-                            <select name="description" id="edit_description" required>
-                                <option value="">--Select--</option>
-                                <option value="AUTOMATIC">AUTOMATIC</option>
-                                <option value="SEMI-AUTOMATIC">SEMI-AUTOMATIC</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Model:</label>
-                            <input type="text" name="model" id="edit_model" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Maker:</label>
-                            <input type="text" name="machine_maker" id="edit_maker" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Serial No:</label>
-                            <input type="text" name="serial_no" id="edit_serial_no">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Invoice No:</label>
-                            <input type="text" name="invoice_no" id="edit_invoice_no">
-                        </div>
-                    </form>
-                </div>
-                
-                <div class="modal-footer">
-                    <button type="button" onclick="closeModal()">Cancel</button>
-                    <button type="submit" form="editMachineForm">Save</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Add Applicator Form -->
-        <form action="../controllers/add_applicator.php" method="POST">
-            <h2>Applicator Information</h2>
-
-            <label for="applicator_ctrl_no">Control No:</label>
-            <input type="text" id="applicator_ctrl_no" name="control_no" required><br><br>
-
-            <label for="terminal_no">Terminal No:</label>
-            <input type="text" id="terminal_no" name="terminal_no" required><br><br>
-
-            <label for="description">Description:</label>
-            <select id="description" name="description" required>
-                <option value="">--Select--</option>
-                <option value="SIDE">SIDE</option>
-                <option value="END">END</option>
-            </select><br><br>
-
-            <label for="wire_type">Wire Type:</label>
-            <select id="wire_type" name="wire_type" required>
-                <option value="">--Select--</option>
-                <option value="BIG">BIG</option>
-                <option value="SMALL">SMALL</option>
-            </select><br><br>
-
-            <label for="terminal_maker">Terminal Maker:</label>
-            <input type="text" id="terminal_maker" name="terminal_maker" required><br><br>
-
-            <label for="applicator_maker">Applicator Maker:</label>
-            <input type="text" id="applicator_maker" name="applicator_maker" required><br><br>
-
-            <label for="applicator_serial_no">Serial No:</label>
-            <input type="text" id="applicator_serial_no" name="serial_no"><br><br>
-
-            <label for="applicator_invoice_no">Invoice No:</label>
-            <input type="text" id="applicator_invoice_no" name="invoice_no"><br><br>
-
-            <button type="submit">Submit Applicator</button>
-        </form>
-
-
-        <!-- Section: Table Display for Applicators -->
-        <div>
-            <h3>Latest Applicators Added</h3>
-
-            <!-- Scrollable container for infinite scrolling -->
-            <div id="applicator-table" class="entries-table-card active" style="height: 300px; overflow-y: auto;">
+            <!-- Applicator Table -->
+        <div id="applicators-table" class="entries-table-card active" style="height: 300px; overflow-y: auto;">
             <table class="entries-table">
                 <thead>
                     <tr>
@@ -305,6 +184,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                         <th>Actions</th>
                     </tr>
                 </thead>
+
 
                     <tbody id="applicator-body">
                         <?php
@@ -324,22 +204,26 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                                 <td><?= htmlspecialchars($row['invoice_no']) ?></td>
                                 <td>
                                 <!-- Edit link with data attributes -->
-                                <a href="#" onclick="openApplicatorEditModal(this)" 
-                                    data-id="<?= $row['applicator_id'] ?>"
-                                    data-control="<?= htmlspecialchars($row['hp_no']) ?>"
-                                    data-terminal="<?= htmlspecialchars($row['terminal_no']) ?>"
-                                    data-description="<?= htmlspecialchars($row['description']) ?>"
-                                    data-wire="<?= htmlspecialchars($row['wire']) ?>"
-                                    data-terminal-maker="<?= htmlspecialchars($row['terminal_maker']) ?>"
-                                    data-applicator-maker="<?= htmlspecialchars($row['applicator_maker']) ?>"
-                                    data-serial="<?= htmlspecialchars($row['serial_no']) ?>"
-                                    data-invoice="<?= htmlspecialchars($row['invoice_no']) ?>"
-                                >✏️</a>
+                                <div class="actions">
+                                    <button class="action-btn edit-btn"
+                                        type="button"
+                                        onclick="openApplicatorEditModal(this)"
+                                        data-id="<?= $row['applicator_id'] ?>"
+                                        data-control="<?= htmlspecialchars($row['hp_no']) ?>"
+                                        data-terminal="<?= htmlspecialchars($row['terminal_no']) ?>"
+                                        data-description="<?= htmlspecialchars($row['description']) ?>"
+                                        data-wire="<?= htmlspecialchars($row['wire']) ?>"
+                                        data-terminal-maker="<?= htmlspecialchars($row['terminal_maker']) ?>"
+                                        data-applicator-maker="<?= htmlspecialchars($row['applicator_maker']) ?>"
+                                        data-serial="<?= htmlspecialchars($row['serial_no']) ?>"
+                                        data-invoice="<?= htmlspecialchars($row['invoice_no']) ?>"
+                                >✏️</button>
+
 
                                 <!-- Delete form -->
                                 <form action="/SOMS/app/controllers/delete_applicator.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this applicator?');">
                                     <input type="hidden" name="applicator_id" value="<?= htmlspecialchars($row['applicator_id']) ?>">
-                                    <button type="submit">🗑️</button>
+                                    <button type="submit"class="action-btn delete-btn">🗑️</button>
                                 </form>
                                 </td>
                             </tr>
@@ -349,6 +233,157 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
             </div>
         </div>
 
+
+        <!-- Add Machine Form Modal-->
+
+
+        <form action="../controllers/add_machine.php" method="POST">
+            <h2>Machine Information</h2>
+            <label for="machine_ctrl_no">Control No:</label>
+            <input type="text" id="machine_ctrl_no" name="control_no" required><br><br>
+
+
+            <label for="description">Description:</label>
+            <select id="description" name="description" required>
+                <option value="">--Select--</option>
+                <option value="AUTOMATIC">AUTOMATIC</option>
+                <option value="SEMI-AUTOMATIC">SEMI-AUTOMATIC</option>
+            </select><br><br>
+
+
+            <label for="model">Model:</label>
+            <input type="text" id="model" name="model" required><br><br>
+
+
+            <label for="machine_maker">Machine Maker:</label>
+            <input type="text" id="machine_maker" name="machine_maker" required><br><br>
+
+
+            <label for="machine_serial_no">Serial No:</label>
+            <input type="text" id="machine_serial_no" name="serial_no"><br><br>
+
+
+            <label for="machine_invoice_no">Invoice No:</label>
+            <input type="text" id="machine_invoice_no" name="invoice_no"><br><br>
+
+
+            <button type="submit">Submit Machine</button>
+        </form>
+
+
+        <!-- Edit Machine Modal -->
+        <div id="editModal" class="modal-overlay">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">
+                        <span class="modal-icon">🔧</span>
+                        Edit Machine
+                    </h2>
+                    <button class="close-btn" onclick="closeModal()">✖️</button>
+                </div>
+               
+                <div class="modal-body">
+                    <form id="editMachineForm" action="../controllers/edit_machine.php" method="POST">
+                        <input type="hidden" name="machine_id" id="edit_machine_id">
+
+
+                        <div class="form-group">
+                            <label>Control No:</label>
+                            <input type="text" name="control_no" id="edit_control_no" required>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Description:</label>
+                            <select name="description" id="edit_description" required>
+                                <option value="">--Select--</option>
+                                <option value="AUTOMATIC">AUTOMATIC</option>
+                                <option value="SEMI-AUTOMATIC">SEMI-AUTOMATIC</option>
+                            </select>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Model:</label>
+                            <input type="text" name="model" id="edit_model" required>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Maker:</label>
+                            <input type="text" name="machine_maker" id="edit_maker" required>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Serial No:</label>
+                            <input type="text" name="serial_no" id="edit_serial_no">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Invoice No:</label>
+                            <input type="text" name="invoice_no" id="edit_invoice_no">
+                        </div>
+                    </form>
+                </div>
+               
+                <div class="modal-footer">
+                    <button type="button" onclick="closeModal()">Cancel</button>
+                    <button type="submit" form="editMachineForm">Save</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Add Applicator Form -->
+        <form action="../controllers/add_applicator.php" method="POST">
+            <h2>Applicator Information</h2>
+
+
+            <label for="applicator_ctrl_no">Control No:</label>
+            <input type="text" id="applicator_ctrl_no" name="control_no" required><br><br>
+
+
+            <label for="terminal_no">Terminal No:</label>
+            <input type="text" id="terminal_no" name="terminal_no" required><br><br>
+
+
+            <label for="description">Description:</label>
+            <select id="description" name="description" required>
+                <option value="">--Select--</option>
+                <option value="SIDE">SIDE</option>
+                <option value="END">END</option>
+            </select><br><br>
+
+
+            <label for="wire_type">Wire Type:</label>
+            <select id="wire_type" name="wire_type" required>
+                <option value="">--Select--</option>
+                <option value="BIG">BIG</option>
+                <option value="SMALL">SMALL</option>
+            </select><br><br>
+
+
+            <label for="terminal_maker">Terminal Maker:</label>
+            <input type="text" id="terminal_maker" name="terminal_maker" required><br><br>
+
+
+            <label for="applicator_maker">Applicator Maker:</label>
+            <input type="text" id="applicator_maker" name="applicator_maker" required><br><br>
+
+
+            <label for="applicator_serial_no">Serial No:</label>
+            <input type="text" id="applicator_serial_no" name="serial_no"><br><br>
+
+
+            <label for="applicator_invoice_no">Invoice No:</label>
+            <input type="text" id="applicator_invoice_no" name="invoice_no"><br><br>
+
+
+            <button type="submit">Submit Applicator</button>
+        </form>
+
         <!-- Edit Applicator Modal -->
         <div id="editApplicatorModal" class="modal-overlay">
             <div class="modal-content">
@@ -357,22 +392,26 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                         <span class="modal-icon">⚡</span>
                         Edit Applicator
                     </h2>
+                    <button class="close-btn" onclick="closeModal()">✖️</button>
                 </div>
-                
+               
                 <div class="modal-body">
                     <form id="editApplicatorForm" action="../controllers/edit_applicator.php" method="POST">
                         <!-- Hidden input to store applicator ID -->
                         <input type="hidden" name="applicator_id" id="edit_applicator_id">
+
 
                         <div class="form-group">
                             <label>HP No:</label>
                             <input type="text" name="control_no" id="edit_applicator_control" required>
                         </div>
 
+
                         <div class="form-group">
                             <label>Terminal No:</label>
                             <input type="text" name="terminal_no" id="edit_terminal_no" required>
                         </div>
+
 
                         <div class="form-group">
                             <label>Description:</label>
@@ -383,6 +422,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                             </select>
                         </div>
 
+
                         <div class="form-group">
                             <label>Wire Type:</label>
                             <select name="wire_type" id="edit_wire_type" required>
@@ -392,20 +432,24 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                             </select>
                         </div>
 
+
                         <div class="form-group">
                             <label>Terminal Maker:</label>
                             <input type="text" name="terminal_maker" id="edit_terminal_maker" required>
                         </div>
+
 
                         <div class="form-group">
                             <label>Applicator Maker:</label>
                             <input type="text" name="applicator_maker" id="edit_applicator_maker" required>
                         </div>
 
+
                         <div class="form-group">
                             <label>Serial No:</label>
                             <input type="text" name="serial_no" id="edit_applicator_serial_no">
                         </div>
+
 
                         <div class="form-group">
                             <label>Invoice No:</label>
@@ -413,12 +457,13 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                         </div>
                     </form>
                 </div>
-                
+               
                 <div class="modal-footer">
                     <button type="button" onclick="closeApplicatorModal()">Cancel</button>
                     <button type="submit" form="editApplicatorForm">Save</button>
                 </div>
             </div>
         </div>
-    </body>
+    <script src="../../public/assets/js/add_entry.js"></script>
+</body>
 </html>
