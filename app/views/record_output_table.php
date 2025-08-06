@@ -74,4 +74,7 @@
                     <!-- Sample data will be inserted here -->
                 </tbody>
             </table>
+        </div>
+    </div>
+</body>
 </html>
