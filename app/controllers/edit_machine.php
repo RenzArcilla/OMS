@@ -62,17 +62,21 @@ if ($inactive_duplicate) {
 }
 
 // Update the machine in the database
+$pdo->beginTransaction();
 $result = updateMachine($machine_id, $control_no, $description, $model,
                         $machine_maker, $serial_no, $invoice_no);
 
 // Check if machine update was successful
 if ($result === true) {
+    $pdo->commit();
     jsAlertRedirect("machine updated successfully!", $redirect_url);
     exit;
 } elseif (is_string($result)) {
+    $pdo->rollBack(); // Rollback transaction in case of error
     jsAlertRedirect($result, $redirect_url);
     exit;
 } else {
+    $pdo->rollBack();
     jsAlertRedirect("Failed to update machine. Please try again.", $redirect_url);
     exit;
 }

@@ -54,18 +54,22 @@ if ($wire_type !== 'BIG' && $wire_type !== 'SMALL') {
 } 
 
 // 3. Database operation
+$pdo->beginTransaction();
 $result = createApplicator($control_no, $terminal_no, $description, 
                             $wire_type, $terminal_maker, $applicator_maker, 
                             $serial_no, $invoice_no);
 
 // Check if applicator creation was successful
 if ($result === true) {
+    $pdo->commit();
     jsAlertRedirect("Applicator added successfully!", $redirect_url);
     exit;
 } elseif (is_string($result)) {
+    $pdo->rollBack(); // Rollback transaction in case of error
     jsAlertRedirect($result, $redirect_url);
     exit;
 } else {
+    $pdo->rollBack();
     jsAlertRedirect("Failed to add applicator. Please try again.", $redirect_url);
     exit;
 }

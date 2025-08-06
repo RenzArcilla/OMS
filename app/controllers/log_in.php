@@ -24,8 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }   
 
     // Try logging in the user
+    $pdo->beginTransaction();
     $result = loginUser($username, $password);
     if (is_array($result)) {
+        $pdo->commit();
         $_SESSION['user_id'] = $result['user_id'];
         $_SESSION['username'] = $result['username'];
         $_SESSION['first_name'] = $result['first_name'];
@@ -34,9 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: ../views/home.php");
         exit();
     } elseif (is_string($result)) {
+        $pdo->rollBack(); // Rollback transaction in case of error
         jsAlertRedirect($result, "../views/login.php");
         exit;
     } else {
+        $pdo->rollBack();
         jsAlertRedirect("Invalid credentials. Please try again.", "../views/login.php");
         exit;
     }

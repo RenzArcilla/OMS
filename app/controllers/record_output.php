@@ -84,16 +84,22 @@ if (is_string($machine_data)) fail($machine_data);
 
 // 4. Database operation
 // Create the record
+$pdo->beginTransaction();
 $record_id = createRecord($shift, $machine_data, $app1_data, $app2_data, $date, $_SESSION['user_id']);
 if (is_string($record_id)) {
+    $pdo->rollBack();
     jsAlertRedirect($record_id, $redirect);
     exit;
 }
-if (!$record_id) fail("Failed to create record.");
+if (!$record_id) {
+    $pdo->rollBack();
+    fail("Failed to create record.");
+}
 
 // Submit applicator1 output
 $app1_status = submitApplicatorOutput($app1_data, $app1_out, $record_id);
 if (is_string($app1_status)) {
+    $pdo->rollBack();
     jsAlertRedirect($app1_status, $redirect);
     exit;
 }
@@ -101,6 +107,7 @@ if (is_string($app1_status)) {
 // Submit applicator2 output
 $app2_status = submitApplicatorOutput($app2_data, $app2_out, $record_id);
 if (is_string($app2_status)) {
+    $pdo->rollBack();
     jsAlertRedirect($app2_status, $redirect);
     exit;
 }
@@ -108,6 +115,7 @@ if (is_string($app2_status)) {
 // Submit machine output
 $machine_status = submitMachineOutput($machine_data, $machine_out, $record_id);
 if (is_string($machine_status)) {
+    $pdo->rollBack();
     jsAlertRedirect($machine_status, $redirect);
     exit;
 }
@@ -116,6 +124,7 @@ if (is_string($machine_status)) {
 require_once '../models/update_monitor_applicator.php';
 $app1_monitor_status = monitorApplicatorOutput($app1_data, $app1_out);
 if (is_string($app1_monitor_status)) {
+    $pdo->rollBack();
     jsAlertRedirect($app1_monitor_status, $redirect);
     exit;
 }
@@ -124,6 +133,7 @@ $app2_monitor_status = null;
 if ($app2_data) {
     $app2_monitor_status = monitorApplicatorOutput($app2_data, $app2_out);
     if (is_string($app2_monitor_status)) {
+        $pdo->rollBack();
         jsAlertRedirect($app2_monitor_status, $redirect);
         exit;
     }
@@ -132,9 +142,11 @@ if ($app2_data) {
 require_once '../models/update_monitor_machine.php';
 $machine_monitor_status = monitorMachineOutput($machine_data, $machine_out);
 if (is_string($machine_monitor_status)) {
+    $pdo->rollBack();
     jsAlertRedirect($machine_monitor_status, $redirect);
     exit;
 }
 
 // If all operations were successful, redirect to the record output page with success message
+$pdo->commit();
 jsAlertRedirect("All outputs recorded successfully!", $redirect);
