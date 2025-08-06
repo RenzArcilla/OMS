@@ -11,8 +11,6 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
 }
-
-include_once __DIR__ . '/../includes/header.php'; // Include the header file for the navigation and logo
 */
 ?>
 
@@ -23,7 +21,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
 <head>
     <meta charset="UTF-8">
     <title>Record Output</title>
-    <link rel="stylesheet" href="../../public/assets/css/record_output.css">
+    <link rel="stylesheet" href="../../public/assets/css/record_output.css" >
 </head>
 <body>
     <div class="form-container">
@@ -159,6 +157,60 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                 </button>
             </div>
         </form>
+    </div>
+
+    <!-- Table for displaying recent records --> 
+    <div>
+        <h3>Latest Records</h3>
+
+        <!-- Scrollable container for infinite scrolling -->
+        <div id="records-table" style="height: 300px; overflow-y: auto;">
+        <table class="entries-table">
+            <thead>
+                <tr>
+                    <th>Record ID</th>
+                    <th>Date Inspected</th>
+                    <th>Date Encoded</th>
+                    <th>Shift</th>
+                    <th>Applicator1</th>
+                    <th>App1 Output</th>
+                    <th>Applicator2</th>
+                    <th>App2 Output</th>
+                    <th>Machine</th>
+                    <th>Machine Output</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+                <?php
+                // Include database connection and machine reader logic
+                require_once __DIR__ . '/../includes/db.php';
+                require_once __DIR__ . '/../models/read_joins/record_and_outputs.php';
+
+                // Fetch initial set of machines (first 10 entries)
+                $records = getRecordsAndOutputs(10, 0);
+                ?>
+
+                <tbody id="machinesTanleBody">
+                    <!-- Render fetched machine data as table rows -->
+                    <?php foreach ($records as $row): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($row['record_id']) ?></td>
+                            <td><?= htmlspecialchars($row['date_inspected']) ?></td>
+                            <td><?= htmlspecialchars($row['date_encoded']) ?></td>
+                            <td><?= htmlspecialchars($row['shift']) ?></td>
+                            <td><?= htmlspecialchars($row['hp1_no']) ?></td>
+                            <td><?= htmlspecialchars($row['app1_output']) ?></td>
+                            <td><?= htmlspecialchars($row['hp2_no']) ?></td>
+                            <td><?= htmlspecialchars($row['app2_output']) ?></td>
+                            <td><?= htmlspecialchars($row['control_no']) ?></td>
+                            <td><?= htmlspecialchars($row['machine_output']) ?></td>
+                            <td>✏️🗑️</td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>
