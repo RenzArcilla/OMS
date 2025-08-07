@@ -291,58 +291,75 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
         <!-- Add Applicator Form Modal -->
         <div id="addApplicatorModal" class="modal-overlay">
             <div class="modal-content">
-                    <button class="close-btn" onclick="closeModal()">✖️</button>
+                <div class="modal-header">
+                    <h2 id="applicatorModalTitle" class="modal-title">
+                        <span class="modal-icon">⚡</span>
+                        <span id="applicatorModalTitleText">Add Applicator</span>
+                    </h2>
+                    <button class="close-btn" onclick="closeModal()">✕</button>
+                </div>
 
                 <div class="modal-body">
-                    <form action="../controllers/add_applicator.php" method="POST">
-                        <h2>Applicator Information</h2>
+                    <form id="applicatorForm" action="../controllers/add_applicator.php" method="POST">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="applicator_ctrl_no">Control No:</label>
+                                <input type="text" id="applicator_ctrl_no" name="control_no" required><br><br>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="terminal_no">Terminal No:</label>
+                                <input type="text" id="terminal_no" name="terminal_no" required><br><br>
+                            </div>
 
+                            <div class="form-group">
+                                <label for="description">Description:</label>
+                                <select id="description" name="description" required>
+                                    <option value="">--Select--</option>
+                                    <option value="SIDE">SIDE</option>
+                                    <option value="END">END</option>
+                                </select>
+                            </div>
 
-                        <label for="applicator_ctrl_no">Control No:</label>
-                        <input type="text" id="applicator_ctrl_no" name="control_no" required><br><br>
+                            <div class="form-group">
+                                <label for="wire_type">Wire Type:</label>
+                                <select id="wire_type" name="wire_type" required>
+                                    <option value="">--Select--</option>
+                                    <option value="BIG">BIG</option>
+                                    <option value="SMALL">SMALL</option>
+                                </select><br><br>
+                            </div>
 
+                            <div class="form-group">
+                                <label for="terminal_maker">Terminal Maker:</label>
+                                <input type="text" id="terminal_maker" name="terminal_maker" required><br><br>
+                            </div>
 
-                        <label for="terminal_no">Terminal No:</label>
-                        <input type="text" id="terminal_no" name="terminal_no" required><br><br>
+                            <div class="form-group">
+                                <label for="applicator_maker">Applicator Maker:</label>
+                                <input type="text" id="applicator_maker" name="applicator_maker" required><br><br>
+                            </div>
 
+                            <div class="form-group">
+                                <label for="applicator_serial_no">Serial No:</label>
+                                <input type="text" id="applicator_serial_no" name="serial_no"><br><br>
+                            </div>
 
-                        <label for="description">Description:</label>
-                        <select id="description" name="description" required>
-                            <option value="">--Select--</option>
-                            <option value="SIDE">SIDE</option>
-                            <option value="END">END</option>
-                        </select><br><br>
-
-
-                        <label for="wire_type">Wire Type:</label>
-                        <select id="wire_type" name="wire_type" required>
-                            <option value="">--Select--</option>
-                            <option value="BIG">BIG</option>
-                            <option value="SMALL">SMALL</option>
-                        </select><br><br>
-
-
-                        <label for="terminal_maker">Terminal Maker:</label>
-                        <input type="text" id="terminal_maker" name="terminal_maker" required><br><br>
-
-
-                        <label for="applicator_maker">Applicator Maker:</label>
-                        <input type="text" id="applicator_maker" name="applicator_maker" required><br><br>
-
-
-                        <label for="applicator_serial_no">Serial No:</label>
-                        <input type="text" id="applicator_serial_no" name="serial_no"><br><br>
-
-
-                        <label for="applicator_invoice_no">Invoice No:</label>
-                        <input type="text" id="applicator_invoice_no" name="invoice_no"><br><br>
-
-
-                        <button type="submit">Submit Applicator</button>
+                            <div class="form-group">
+                                <label for="applicator_invoice_no">Invoice No:</label>
+                                <input type="text" id="applicator_invoice_no" name="invoice_no"><br><br>
+                            </div>
+                        </div>
                     </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button id="applicatorActionBtn" class="btn-primary" onclick="saveApplicator()">Add Applicator</button>
                 </div>
             </div>
         </div>
+
         <!-- Edit Machine Modal -->
         <div id="editModal" class="modal-overlay">
             <div class="modal-content">

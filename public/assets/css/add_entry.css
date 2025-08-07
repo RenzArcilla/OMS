@@ -333,7 +333,7 @@ body {
 .modal-content {
     position: relative;
     left: 30%;
-    top: 10%;
+    top: 5%;
     background: white;
     border-radius: 0.75rem;
     max-width: 48rem;
@@ -374,7 +374,7 @@ body {
 
 
 .form-group {
-    margin-bottom: 1.5rem;
+    
 }
 
 
