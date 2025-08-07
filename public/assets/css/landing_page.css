@@ -41,3 +41,74 @@ body {
     left: 0;
 }
 
+body.loaded .left {
+    transform: translateX(-100%);
+}
+
+body.loaded .right {
+    transform: translateX(100%);
+}
+
+.logo-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logo-container:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.logo-container:active {
+    transform: translate(-50%, -50%) scale(0.98);
+}
+
+.logo-card {
+    background: #FFFFFF;
+    padding: 48px 64px;
+    border-radius: 20px;
+    box-shadow: 
+        0 25px 50px -12px rgba(47, 128, 237, 0.15),
+        0 10px 15px -3px rgba(47, 128, 237, 0.1),
+        0 0 0 1px rgba(229, 231, 235, 0.1);
+    border: 1px solid #E5E7EB;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.logo-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #2F80ED 0%, #27AE60 100%);
+}
+
+.logo-title {
+    font-size: 4rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    margin: 0 0 16px 0;
+    background: linear-gradient(135deg, #2F80ED 0%, #27AE60 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 4px 8px rgba(47, 128, 237, 0.1);
+}
+
+.logo-subtitle {
+    color: #6B7280;
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 24px;
+    letter-spacing: 1px;
+}
+
+
