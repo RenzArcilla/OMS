@@ -31,6 +31,7 @@ function getRecordsAndOutputs(int $limit = 20, int $offset = 0): array {
             r.shift AS shift,
             r.date_inspected AS date_inspected,
             r.date_encoded AS date_encoded,
+            r.last_updated AS last_updated,
 
             ao1.total_output AS app1_output,
             ao2.total_output AS app2_output,
@@ -43,8 +44,14 @@ function getRecordsAndOutputs(int $limit = 20, int $offset = 0): array {
             m.control_no AS control_no
 
         FROM records r
-        LEFT JOIN applicator_outputs ao1 ON r.applicator1_id = ao1.applicator_output_id
-        LEFT JOIN applicator_outputs ao2 ON r.applicator2_id = ao2.applicator_output_id
+        LEFT JOIN applicator_outputs ao1 
+            ON r.record_id = ao1.record_id 
+            AND r.applicator1_id = ao1.applicator_id
+
+        LEFT JOIN applicator_outputs ao2 
+            ON r.record_id = ao2.record_id 
+            AND r.applicator2_id = ao2.applicator_id
+
 
         LEFT JOIN machine_outputs mo ON r.machine_id = mo.machine_output_id
 
@@ -54,7 +61,7 @@ function getRecordsAndOutputs(int $limit = 20, int $offset = 0): array {
         LEFT JOIN machines m ON r.machine_id = m.machine_id
 
         WHERE r.is_active = 1
-        ORDER BY r.record_id DESC
+        ORDER BY r.last_updated DESC
         LIMIT :limit OFFSET :offset
     ");
 

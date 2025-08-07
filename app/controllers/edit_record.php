@@ -31,10 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // 1. Sanitize input
 $record_id = isset($_POST['record_id']) ? intval($_POST['record_id']) : null;
-$prev_app1 = isset($_POST['prev_app1']) ? intval($_POST['prev_app1']) : null;
-$prev_app2 = isset($_POST['prev_app2']) ? intval($_POST['prev_app2']) : null;
-echo $prev_app1;
-echo $prev_app1;
+$prev_app1 = isset($_POST['prev_app1']) ? strtoupper(trim($_POST['prev_app1'])) : null;
+$prev_app2 = isset($_POST['prev_app2']) ? strtoupper(trim($_POST['prev_app2'])) : null;
 $date_inspected = isset($_POST['date_inspected']) ? strtoupper(trim($_POST['date_inspected'])) : null;
 $shift = isset($_POST['shift']) ? strtoupper(trim($_POST['shift'])) : null;
 $app1 = isset($_POST['app1']) ? strtoupper(trim($_POST['app1'])) : null;
@@ -63,28 +61,41 @@ if (!in_array($shift, ['FIRST', 'SECOND', 'NIGHT'])) {
 $app1_data = applicatorExists($app1);
 if (!is_array($app1_data)) {
     jsAlertRedirect("Applicator: $app1 not found!", $redirect_url);
+    exit;
 } elseif (is_string($app1_data)) {
     jsAlertRedirect($app1_data, $redirect_url);
+    exit;
 }
 
 if (!empty($app2)) {
     $app2_data = applicatorExists($app2);
     if (!is_array($app2_data)) {
         jsAlertRedirect("Applicator: $app2 not found!", $redirect_url);
+        exit;
     } elseif (is_string($app2_data)) {
         jsAlertRedirect($app2_data, $redirect_url);
+        exit;
     }
 }
 
 // a.1 for previous applicators (will be used to differentiate app1 and app2 in the applicator_outputs table)
 $prev_app1_data = applicatorExists($prev_app1);
-if (is_string($prev_app1_data)) {
+if (!is_array($prev_app1_data)) {
+    jsAlertRedirect("Previous Applicator 1: $prev_app1 not found!", $redirect_url);
+    exit;
+} elseif (is_string($prev_app1_data)) {
     jsAlertRedirect($prev_app1_data, $redirect_url);
+    exit;
 }
-if (!empty($app2)) {
+
+if (!empty($prev_app2)) {
     $prev_app2_data = applicatorExists($prev_app2);
-    if (is_string($prev_app2_data)) {
+    if (!is_array($prev_app2_data)) {
+        jsAlertRedirect("Previous Applicator 2: $prev_app2 not found!", $redirect_url);
+        exit;
+    } elseif (is_string($prev_app2_data)) {
         jsAlertRedirect($prev_app2_data, $redirect_url);
+        exit;
     }
 }
 
@@ -92,24 +103,30 @@ if (!empty($app2)) {
 $machine_data = machineExists($machine);
 if (!is_array($machine_data)) {
     jsAlertRedirect("Machine: $machine not found!", $redirect_url);
+    exit;
 } elseif (is_string($machine_data)) {
     jsAlertRedirect($machine_data, $redirect_url);
+    exit;
 }
 
 // c. Check if applicators are disabled
 $app1_disabled = getInactiveApplicatorByHpNo($app1);
 if ($app1_disabled) {
     jsAlertRedirect("Applicator: $app1 is disabled!", $redirect_url);
+    exit;
 } elseif (is_string($app1_disabled)) {
     jsAlertRedirect($app1_disabled, $redirect_url);
+    exit;
 }
 
 if (!empty($app2)) {
     $app2_disabled = getInactiveApplicatorByHpNo($app2);
     if ($app2_disabled) {
         jsAlertRedirect("Applicator: $app2 is disabled!", $redirect_url);
+        exit;
     } elseif (is_string($app2_disabled)) {
         jsAlertRedirect($app2_disabled, $redirect_url);
+        exit;
     }
 }
 
@@ -117,41 +134,68 @@ if (!empty($app2)) {
 $machine_disabled = getInactiveMachineByControlNo($machine);
 if ($machine_disabled) {
     jsAlertRedirect("Machine: $machine is disabled!", $redirect_url);
+    exit;
 } elseif (is_string($machine_disabled)) {
     jsAlertRedirect($machine_disabled, $redirect_url);
+    exit;
 }
 
-// e. Update the records table
-$pdo->beginTransaction();
-$update_record_result = updateRecord($record_id, $date_inspected, $shift, $app1_data['applicator_id'], 
-                                    $app2_data['applicator_id'], $machine_data['machine_id']);
-if (is_string($update_record_result)) {
-    $pdo->rollBack();
-    jsAlertRedirect($update_record_result, $redirect_url);
-}
+try {
+    $pdo->beginTransaction();
 
-// f. Update the applicator_outputs table
-$update_app1_output_result = updateApplicatorOutput($app1_data, $app1_output, $record_id, $prev_app1_data);
-if (is_string($update_app1_output_result)) {
-    $pdo->rollBack();
-    jsAlertRedirect($update_app1_output_result, $redirect_url);
-}
-if (!empty($app2)) {
-    $update_app2_output_result = updateApplicatorOutput($app2_data, $app2_output, $record_id, $prev_app2_data);
-    if (is_string($update_app2_output_result)) {
-        $pdo->rollBack();
-        jsAlertRedirect($update_app2_output_result, $redirect_url);
+    // e. Update the records table 
+    $update_record_result = updateRecord(
+        $record_id, 
+        $date_inspected, 
+        $shift, 
+        $app1_data['applicator_id'], 
+        !empty($app2) ? $app2_data['applicator_id'] : null, 
+        $machine_data['machine_id']
+    );
+    if (is_string($update_record_result)) {
+        throw new Exception($update_record_result);
     }
-}
 
-// g. Update the machine_outputs table
-$update_machine_output_result = updateMachineOutput($machine_data, $machine_output, $record_id);
-if (is_string($update_machine_output_result)) {
-    $pdo->rollBack();
-    jsAlertRedirect($update_machine_output_result, $redirect_url);
-}
+    // f. Update applicator_outputs 
+    $update_app1_output_result = updateApplicatorOutput(
+        $app1_data, 
+        $app1_output, 
+        $record_id, 
+        $prev_app1_data
+    );
+    if (is_string($update_app1_output_result)) {
+        throw new Exception($update_app1_output_result);
+    }
 
-// Success, no failures occurred
-$pdo->commit();
-jsAlertRedirect("Record updated successfully!", $redirect_url);
-exit;
+    if (!empty($app2)) {
+        $update_app2_output_result = updateApplicatorOutput(
+            $app2_data, 
+            $app2_output, 
+            $record_id, 
+            $prev_app2_data
+        );
+        if (is_string($update_app2_output_result)) {
+            throw new Exception($update_app2_output_result);
+        }
+    }
+
+    // g. Update machine_outputs 
+    $update_machine_output_result = updateMachineOutput(
+        $machine_data, 
+        $machine_output, 
+        $record_id
+    );
+    if (is_string($update_machine_output_result)) {
+        throw new Exception($update_machine_output_result);
+    }
+
+    $pdo->commit();
+    jsAlertRedirect("Record updated successfully!", $redirect_url);
+    exit;
+} catch (Exception $e) {
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+    jsAlertRedirect("Update failed: " . $e->getMessage(), $redirect_url);
+    exit;
+}

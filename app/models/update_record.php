@@ -30,8 +30,8 @@ function updateRecord($record_id, $date_inspected, $shift, $app1_id, $app2_id, $
             SET
                 date_inspected = :date_inspected,
                 shift = :shift,
-                applicator1_id = :app1_id
-                applicator2_id = :app2_id
+                applicator1_id = :app1_id,
+                applicator2_id = :app2_id,
                 machine_id = :machine_id
             WHERE record_id = :record_id
         ");
