@@ -15,7 +15,7 @@ This guide will help you set up the SOMS app on your local machine.
 ```bash
 git clone https://github.com/your-username/SOMS.git
 cd SOMS
-Replace your-username with your actual GitHub username if it's different.
+Replace your-username with your actual GitHub username.
 ```
 
 ### 2. Install Dependencies (Composer)

@@ -22,14 +22,6 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
     <meta charset="UTF-8">
     <title>Add Machine or Applicator</title>
     <link rel="stylesheet" href="../../public/assets/css/add_entry.css">
-    <!-- Load machine infinite scroll logic -->
-    <script src="../../public/assets/js/load_machines.js" defer></script>
-    <!-- Load applicator infinite scroll logic -->
-    <script src="../../public/assets/js/load_applicators.js" defer></script>
-    <!-- Load modal logic for editing machines -->
-    <script src="../../public/assets/js/edit_machine_modal.js" defer></script>
-    <!-- Load modal logic for editing applicators -->
-    <script src="../../public/assets/js/edit_applicator_modal.js" defer></script>
 </head>
 <body>
     <div class="container">
@@ -323,24 +315,24 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                                 <td><?= htmlspecialchars($row['serial_no']) ?></td>
                                 <td><?= htmlspecialchars($row['invoice_no']) ?></td>
                                 <td>
-                                <!-- Edit link with data attributes -->
-                                <a href="#" onclick="openApplicatorEditModal(this)" 
-                                    data-id="<?= $row['applicator_id'] ?>"
-                                    data-control="<?= htmlspecialchars($row['hp_no']) ?>"
-                                    data-terminal="<?= htmlspecialchars($row['terminal_no']) ?>"
-                                    data-description="<?= htmlspecialchars($row['description']) ?>"
-                                    data-wire="<?= htmlspecialchars($row['wire']) ?>"
-                                    data-terminal-maker="<?= htmlspecialchars($row['terminal_maker']) ?>"
-                                    data-applicator-maker="<?= htmlspecialchars($row['applicator_maker']) ?>"
-                                    data-serial="<?= htmlspecialchars($row['serial_no']) ?>"
-                                    data-invoice="<?= htmlspecialchars($row['invoice_no']) ?>"
-                                >✏️</a>
+                                    <!-- Edit link with data attributes -->
+                                    <a href="#" onclick="openApplicatorEditModal(this)" 
+                                        data-id="<?= $row['applicator_id'] ?>"
+                                        data-control="<?= htmlspecialchars($row['hp_no']) ?>"
+                                        data-terminal="<?= htmlspecialchars($row['terminal_no']) ?>"
+                                        data-description="<?= htmlspecialchars($row['description']) ?>"
+                                        data-wire="<?= htmlspecialchars($row['wire']) ?>"
+                                        data-terminal-maker="<?= htmlspecialchars($row['terminal_maker']) ?>"
+                                        data-applicator-maker="<?= htmlspecialchars($row['applicator_maker']) ?>"
+                                        data-serial="<?= htmlspecialchars($row['serial_no']) ?>"
+                                        data-invoice="<?= htmlspecialchars($row['invoice_no']) ?>"
+                                    >✏️</a>
 
-                                <!-- Delete form -->
-                                <form action="/SOMS/app/controllers/delete_applicator.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this applicator?');">
-                                    <input type="hidden" name="applicator_id" value="<?= htmlspecialchars($row['applicator_id']) ?>">
-                                    <button type="submit">🗑️</button>
-                                </form>
+                                    <!-- Delete form -->
+                                    <form action="/SOMS/app/controllers/delete_applicator.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this applicator?');">
+                                        <input type="hidden" name="applicator_id" value="<?= htmlspecialchars($row['applicator_id']) ?>">
+                                        <button type="submit">🗑️</button>
+                                    </form>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -420,5 +412,13 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                 </div>
             </div>
         </div>
+    <!-- Load machine infinite scroll logic -->
+    <script src="../../public/assets/js/load_machines.js" defer></script>
+    <!-- Load applicator infinite scroll logic -->
+    <script src="../../public/assets/js/load_applicators.js" defer></script>
+    <!-- Load modal logic for editing machines -->
+    <script src="../../public/assets/js/edit_machine_modal.js" defer></script>
+    <!-- Load modal logic for editing applicators -->
+    <script src="../../public/assets/js/edit_applicator_modal.js" defer></script>
     </body>
 </html>

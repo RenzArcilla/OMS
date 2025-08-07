@@ -205,7 +205,19 @@ if (!isset($_SESSION['user_id'])) {
                             <td><?= htmlspecialchars($row['app2_output']) ?></td>
                             <td><?= htmlspecialchars($row['control_no']) ?></td>
                             <td><?= htmlspecialchars($row['machine_output']) ?></td>
-                            <td>✏️
+                            <td>
+                                <a href="#" onclick="openRecordEditModal(this)" 
+                                    data-id="<?= htmlspecialchars($row['record_id']) ?>"
+                                    data-date-inspected="<?= htmlspecialchars($row['date_inspected']) ?>"
+                                    data-shift="<?= htmlspecialchars($row['shift'] === '1st' ? 'FIRST' : ($row['shift'] === '2nd' ? 'SECOND' : $row['shift'])) ?>"
+                                    data-hp1-no="<?= htmlspecialchars($row['hp1_no']) ?>"
+                                    data-app1-output="<?= htmlspecialchars($row['app1_output']) ?>"
+                                    data-hp2-no="<?= htmlspecialchars($row['hp2_no']) ?>"
+                                    data-app2-output="<?= htmlspecialchars($row['app2_output']) ?>"
+                                    data-control-no="<?= htmlspecialchars($row['control_no']) ?>"
+                                    data-machine-output="<?= htmlspecialchars($row['machine_output']) ?>"
+                                >✏️</a>
+
                                 <!-- Delete form -->
                                 <form action="/SOMS/app/controllers/delete_record.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this record?');">
                                     <input type="hidden" name="record_id" value="<?= htmlspecialchars($row['record_id']) ?>">
@@ -219,6 +231,78 @@ if (!isset($_SESSION['user_id'])) {
             </table>
         </div>
     </div>
-    <script src="../../public/assets/js/load_records.js"></script>
+
+    <!-- Edit Record Modal -->
+    <div id="editRecordModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    Edit Record
+                </h2>
+            </div>
+            
+            <div class="modal-body">
+                <form id="editRecordForm" action="../controllers/edit_record.php" method="POST">
+                    <!-- Hidden input to store record ID and previous applicator IDs-->
+                    <input type="hidden" name="record_id" id="edit_record_id" required>
+                    <input type="hidden" name="prev_app1" id="edit_prev_app1" required>
+                    <input type="hidden" name="prev_app2" id="edit_prev_app2" required>
+                    
+                    <div class="form-group">
+                        <label>Date Inspected:</label>
+                        <input type="date" name="date_inspected" id="edit_date_inspected" value="<?= date('Y-m-d') ?>" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Work Shift:</label>
+                        <select name="shift" id="edit_shift" required>
+                            <option value="">Choose your work shift</option>
+                            <option value="FIRST">First Shift (Morning)</option>
+                            <option value="SECOND">Second Shift (Afternoon)</option>
+                            <option value="NIGHT">Night Shift (Overnight)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Applicator 1:</label>
+                        <input type="text" name="app1" id="edit_app1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Applicator 1 Output:</label>
+                        <input type="text" name="app1_output" id="edit_app1_output" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Applicator 2:</label>
+                        <input type="text" name="app2" id="edit_app2">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Applicator 2 Output:</label>
+                        <input type="text" name="app2_output" id="edit_app2_output">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Machine Number:</label>
+                        <input type="text" name="machine" id="edit_machine" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Machine Output:</label>
+                        <input type="text" name="machine_output" id="edit_machine_output" required>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" onclick="closeRecordModal()">Cancel</button>
+                        <button type="submit" form="editRecordForm">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    <!-- Infinite scroll logic -->
+    <script src="../../public/assets/js/load_records.js" defer></script>
+    <!-- Load modal logic for editing records -->
+    <script src="../../public/assets/js/edit_record_modal.js" defer></script>
 </body>
 </html>
