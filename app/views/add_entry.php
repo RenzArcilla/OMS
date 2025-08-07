@@ -139,7 +139,6 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                                 <td><?= htmlspecialchars($row['invoice_no']) ?></td>
                                 <td>
 
-
                                 <!-- Edit link with data attributes -->
                                     <div class="actions">
                                         <button class="action-btn edit-btn"
@@ -153,7 +152,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                                             data-serial="<?= htmlspecialchars($row['serial_no'], ENT_QUOTES) ?>"
                                             data-invoice="<?= htmlspecialchars($row['invoice_no'], ENT_QUOTES) ?>"
                                         >✏️</button>
-                                   
+ 
                                 <!-- Delete form -->
                                         <form action="/SOMS/app/controllers/delete_machine.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this machine?');">
                                             <input type="hidden" name="machine_id" value="<?= $row['machine_id'] ?>">
@@ -167,7 +166,6 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                 </table>
             </div>
         </div>
-
 
             <!-- Applicator Table -->
         <div id="applicators-table" class="entries-table-card active" style="height: 300px; overflow-y: auto;">
@@ -185,7 +183,6 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                         <th>Actions</th>
                     </tr>
                 </thead>
-
 
                     <tbody id="applicator-body">
                         <?php
@@ -220,7 +217,6 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                                         data-invoice="<?= htmlspecialchars($row['invoice_no']) ?>"
                                 >✏️</button>
 
-
                                 <!-- Delete form -->
                                 <form action="/SOMS/app/controllers/delete_applicator.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this applicator?');">
                                     <input type="hidden" name="applicator_id" value="<?= htmlspecialchars($row['applicator_id']) ?>">
@@ -234,45 +230,60 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
             </div>
         </div>
 
-
         <!-- Add Machine Form Modal-->
         <div id="addMachineModal" class="modal-overlay">
             <div class="modal-content">
-                    <button class="close-btn" onclick="closeModal()">✖️</button>
+                <div class="modal-header">
+                    <h2 id="machineModalTitle" class="modal-title">
+                        <span class="modal-icon">🔧</span>
+                        <span id="machineModalTitleText">Add Machine</span>
+                    </h2>
+                    <button class="close-btn" onclick="closeModal()">✕</button>
+                </div>
                     
                 <div class="modal-body">
-                    <form action="../controllers/add_machine.php" method="POST">
-                        <h2>Machine Information</h2>
-                        <label for="machine_ctrl_no">Control No:</label>
-                        <input type="text" id="machine_ctrl_no" name="control_no" required><br><br>
+                    <form id="addMachineForm" action="../controllers/add_machine.php" method="POST">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="machine_ctrl_no">Control No <span class="required">*</span></label>
+                                <input type="text" id="machine_ctrl_no" name="control_no" required placeholder="Enter control number"><br><br>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="description">Description <span class="required">*</span></label>
+                                <select id="description" name="description" class="form-select" required>
+                                    <option value="">--Select--</option>
+                                    <option value="AUTOMATIC">AUTOMATIC</option>
+                                    <option value="SEMI-AUTOMATIC">SEMI-AUTOMATIC</option>
+                                </select><br><br>
+                            </div>
 
+                            <div class="form-group">
+                                <label for="model">Model<span class="required">*</span></label>
+                                <input type="text" id="model" name="model" required placeholder="Enter model"><br><br>
+                            </div>
 
-                        <label for="description">Description:</label>
-                        <select id="description" name="description" required>
-                            <option value="">--Select--</option>
-                            <option value="AUTOMATIC">AUTOMATIC</option>
-                            <option value="SEMI-AUTOMATIC">SEMI-AUTOMATIC</option>
-                        </select><br><br>
+                            <div class="form-group
+                                <label for="machine_maker">Machine Maker:</label>
+                                <input type="text" id="machine_maker" name="machine_maker" required placeholder="Enter machine maker"><br><br>
+                            </div>
 
+                            <div class="form-group
+                                <label for="machine_serial_no">Serial No:</label>
+                                <input type="text" id="machine_serial_no" name="serial_no" placeholder="Enter serial number"><br><br>
+                            </div>
 
-                        <label for="model">Model:</label>
-                        <input type="text" id="model" name="model" required><br><br>
-
-
-                        <label for="machine_maker">Machine Maker:</label>
-                        <input type="text" id="machine_maker" name="machine_maker" required><br><br>
-
-
-                        <label for="machine_serial_no">Serial No:</label>
-                        <input type="text" id="machine_serial_no" name="serial_no"><br><br>
-
-
-                        <label for="machine_invoice_no">Invoice No:</label>
-                        <input type="text" id="machine_invoice_no" name="invoice_no"><br><br>
-
-
-                        <button type="submit">Submit Machine</button>
+                            <div class="form-group
+                                <label for="machine_invoice_no">Invoice No:</label>
+                                <input type="text" id="machine_invoice_no" name="invoice_no" placeholder="Enter invoice no."><br><br>
+                            </div>
+                        </div>
                     </form>
+                </div>
+                
+                <div class="modal-footer">
+                    <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button id="machineActionBtn" class="btn-primary" onclick="saveMachine()">Add Machine</button>
                 </div>
             </div>
         </div>
