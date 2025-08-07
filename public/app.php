@@ -13,12 +13,9 @@
     <div class="logo-container" onclick="openGates()">
         <div class="logo-card">
             <h1 class="logo-title">SOMS</h1>
-            
-        </div>
-        
+        </div>  
     </div>
 
-
-    <script src="assets/css/landing_page.js"></script>
+    <script src="assets/js/landing_page.js"></script>
 </body>
 </html>

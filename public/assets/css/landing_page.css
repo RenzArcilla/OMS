@@ -157,3 +157,30 @@ body.loaded .right {
     transform: translateY(0);
 }
 
+/* Subtle floating elements */
+.floating-element {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(135deg, rgba(47, 128, 237, 0.1) 0%, rgba(39, 174, 96, 0.1) 100%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: float 8s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { 
+        transform: translateY(0) translateX(0) rotate(0deg); 
+        opacity: 0; 
+    }
+    25% { opacity: 0.6; }
+    50% { 
+        opacity: 1; 
+        transform: translateY(-20px) translateX(10px) rotate(180deg); 
+    }
+    75% { opacity: 0.4; }
+    100% { 
+        transform: translateY(-100vh) translateX(-10px) rotate(360deg); 
+        opacity: 0; 
+    }
+}
