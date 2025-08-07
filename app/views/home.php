@@ -13,19 +13,6 @@
         <div class="floating-orb orb-3"></div>
     </div>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo"><img src="../../public/assets/images/hepc_black.png" alt="Logo" style="width: 100%; max-width: 100px; position: relative; left: -50px; top: 10px;"></div>
-
-            <ul class="nav-menu">
-                <li class="nav-home"><a href="home.php">Home</a></li>
-                <li class="nav-dashboard"><a href="dashboard.php">Dashboard</a></li>
-            </ul>
-            <button class="nav-cta"><a href="login.php">Log In</a></button>
-        </div>
-    </nav>
-
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-container">
@@ -46,9 +33,9 @@
                 
                 <div class="hero-actions">
                     <button class="btn btn-primary">
-                        <span>Dashboard</span>
+                        <a href="dashboard.php">Dashboard</a>
                     </button>
-                    
+                    <button class="btn btn-primary"><a href="login.php">Log In</a></button>
                 </div>
             </div>
 
