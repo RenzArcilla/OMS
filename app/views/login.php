@@ -11,7 +11,7 @@
     <div class="container">
         <div class="left-section">
             <div class="header">
-              
+
                 <nav class="nav"> 
                 </nav>
             </div>

@@ -164,34 +164,34 @@ if (!isset($_SESSION['user_id'])) {
         <h3>Latest Records</h3>
 
         <!-- Scrollable container for infinite scrolling -->
-        <div id="records-table" style="height: 300px; overflow-y: auto;">
-        <table class="entries-table">
-            <thead>
-                <tr>
-                    <th>Record ID</th>
-                    <th>Date Inspected</th>
-                    <th>Date Encoded</th>
-                    <th>Shift</th>
-                    <th>Applicator1</th>
-                    <th>App1 Output</th>
-                    <th>Applicator2</th>
-                    <th>App2 Output</th>
-                    <th>Machine</th>
-                    <th>Machine Output</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
+        <div id="record-container" style="height: 300px; overflow-y: auto;">
+            <table id="recordsTable">
+                <thead>
+                    <tr>
+                        <th>Record ID</th>
+                        <th>Date Inspected</th>
+                        <th>Date Encoded</th>
+                        <th>Shift</th>
+                        <th>Applicator1</th>
+                        <th>App1 Output</th>
+                        <th>Applicator2</th>
+                        <th>App2 Output</th>
+                        <th>Machine</th>
+                        <th>Machine Output</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
 
-                <?php
+                <?php   
                 // Include database connection and machine reader logic
                 require_once __DIR__ . '/../includes/db.php';
                 require_once __DIR__ . '/../models/read_joins/record_and_outputs.php';
 
-                // Fetch initial set of machines (first 10 entries)
-                $records = getRecordsAndOutputs(10, 0);
+                // Fetch initial set of machines (first 20 entries)
+                $records = getRecordsAndOutputs(20, 0);
                 ?>
 
-                <tbody id="machinesTanleBody">
+                <tbody id="recordsTableBody">
                     <!-- Render fetched machine data as table rows -->
                     <?php foreach ($records as $row): ?>
                         <tr>
@@ -205,12 +205,20 @@ if (!isset($_SESSION['user_id'])) {
                             <td><?= htmlspecialchars($row['app2_output']) ?></td>
                             <td><?= htmlspecialchars($row['control_no']) ?></td>
                             <td><?= htmlspecialchars($row['machine_output']) ?></td>
-                            <td>✏️🗑️</td>
+                            <td>✏️
+                                <!-- Delete form -->
+                                <form action="/SOMS/app/controllers/delete_record.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this record?');">
+                                    <input type="hidden" name="record_id" value="<?= htmlspecialchars($row['record_id']) ?>">
+                                    <button type="submit">🗑️</button>
+                                </form>
+                                </td>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
     </div>
+    <script src="../../public/assets/js/load_records.js"></script>
 </body>
 </html>

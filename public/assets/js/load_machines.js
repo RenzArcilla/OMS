@@ -1,7 +1,7 @@
 // Infinite Scroll Logic for Machine Table
 
 // State variables
-let machineOffset = 10;              // Tracks how many rows we've already loaded
+let machineOffset = 10;            // Tracks how many rows already loaded
 const machineLimit = 10;           // How many rows to fetch per scroll
 let machineLoading = false;        // Prevents overlapping AJAX calls
 
@@ -93,7 +93,7 @@ function loadMachines() {
                 tdActions.appendChild(deleteForm);
                 tr.appendChild(tdActions);
 
-                tbody.appendChild(tr); 
+            tbody.appendChild(tr); 
         });
 
             // Update offset
