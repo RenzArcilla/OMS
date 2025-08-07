@@ -50,10 +50,11 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                 </div>
             </div>
             <div class="add-entry-buttons">
-                <button class="add-entry-btn add-machine-btn" onclick="openModal('machine')">
+                <button class="add-entry-btn add-machine-btn" onclick="openMachineModal()">
                     🔧 Add Machine
                 </button>
-                <button class="add-entry-btn add-applicator-btn" onclick="openModal('applicator')">
+            
+                <button class="add-entry-btn add-applicator-btn" onclick="openApplicatorModal()">
                     ⚡ Add Applicator
                 </button>
             </div>
@@ -235,42 +236,102 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
 
 
         <!-- Add Machine Form Modal-->
+        <div id="addMachineModal" class="modal-overlay">
+            <div class="modal-content">
+                    <button class="close-btn" onclick="closeModal()">✖️</button>
+                    
+                <div class="modal-body">
+                    <form action="../controllers/add_machine.php" method="POST">
+                        <h2>Machine Information</h2>
+                        <label for="machine_ctrl_no">Control No:</label>
+                        <input type="text" id="machine_ctrl_no" name="control_no" required><br><br>
 
 
-        <form action="../controllers/add_machine.php" method="POST">
-            <h2>Machine Information</h2>
-            <label for="machine_ctrl_no">Control No:</label>
-            <input type="text" id="machine_ctrl_no" name="control_no" required><br><br>
+                        <label for="description">Description:</label>
+                        <select id="description" name="description" required>
+                            <option value="">--Select--</option>
+                            <option value="AUTOMATIC">AUTOMATIC</option>
+                            <option value="SEMI-AUTOMATIC">SEMI-AUTOMATIC</option>
+                        </select><br><br>
 
 
-            <label for="description">Description:</label>
-            <select id="description" name="description" required>
-                <option value="">--Select--</option>
-                <option value="AUTOMATIC">AUTOMATIC</option>
-                <option value="SEMI-AUTOMATIC">SEMI-AUTOMATIC</option>
-            </select><br><br>
+                        <label for="model">Model:</label>
+                        <input type="text" id="model" name="model" required><br><br>
 
 
-            <label for="model">Model:</label>
-            <input type="text" id="model" name="model" required><br><br>
+                        <label for="machine_maker">Machine Maker:</label>
+                        <input type="text" id="machine_maker" name="machine_maker" required><br><br>
 
 
-            <label for="machine_maker">Machine Maker:</label>
-            <input type="text" id="machine_maker" name="machine_maker" required><br><br>
+                        <label for="machine_serial_no">Serial No:</label>
+                        <input type="text" id="machine_serial_no" name="serial_no"><br><br>
 
 
-            <label for="machine_serial_no">Serial No:</label>
-            <input type="text" id="machine_serial_no" name="serial_no"><br><br>
+                        <label for="machine_invoice_no">Invoice No:</label>
+                        <input type="text" id="machine_invoice_no" name="invoice_no"><br><br>
 
 
-            <label for="machine_invoice_no">Invoice No:</label>
-            <input type="text" id="machine_invoice_no" name="invoice_no"><br><br>
+                        <button type="submit">Submit Machine</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Applicator Form Modal -->
+        <div id="addApplicatorModal" class="modal-overlay">
+            <div class="modal-content">
+                    <button class="close-btn" onclick="closeModal()">✖️</button>
+
+                <div class="modal-body">
+                    <form action="../controllers/add_applicator.php" method="POST">
+                        <h2>Applicator Information</h2>
 
 
-            <button type="submit">Submit Machine</button>
-        </form>
+                        <label for="applicator_ctrl_no">Control No:</label>
+                        <input type="text" id="applicator_ctrl_no" name="control_no" required><br><br>
 
 
+                        <label for="terminal_no">Terminal No:</label>
+                        <input type="text" id="terminal_no" name="terminal_no" required><br><br>
+
+
+                        <label for="description">Description:</label>
+                        <select id="description" name="description" required>
+                            <option value="">--Select--</option>
+                            <option value="SIDE">SIDE</option>
+                            <option value="END">END</option>
+                        </select><br><br>
+
+
+                        <label for="wire_type">Wire Type:</label>
+                        <select id="wire_type" name="wire_type" required>
+                            <option value="">--Select--</option>
+                            <option value="BIG">BIG</option>
+                            <option value="SMALL">SMALL</option>
+                        </select><br><br>
+
+
+                        <label for="terminal_maker">Terminal Maker:</label>
+                        <input type="text" id="terminal_maker" name="terminal_maker" required><br><br>
+
+
+                        <label for="applicator_maker">Applicator Maker:</label>
+                        <input type="text" id="applicator_maker" name="applicator_maker" required><br><br>
+
+
+                        <label for="applicator_serial_no">Serial No:</label>
+                        <input type="text" id="applicator_serial_no" name="serial_no"><br><br>
+
+
+                        <label for="applicator_invoice_no">Invoice No:</label>
+                        <input type="text" id="applicator_invoice_no" name="invoice_no"><br><br>
+
+
+                        <button type="submit">Submit Applicator</button>
+                    </form>
+                </div>
+            </div>
+        </div>
         <!-- Edit Machine Modal -->
         <div id="editModal" class="modal-overlay">
             <div class="modal-content">
@@ -336,53 +397,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
         </div>
 
 
-        <!-- Add Applicator Form -->
-        <form action="../controllers/add_applicator.php" method="POST">
-            <h2>Applicator Information</h2>
-
-
-            <label for="applicator_ctrl_no">Control No:</label>
-            <input type="text" id="applicator_ctrl_no" name="control_no" required><br><br>
-
-
-            <label for="terminal_no">Terminal No:</label>
-            <input type="text" id="terminal_no" name="terminal_no" required><br><br>
-
-
-            <label for="description">Description:</label>
-            <select id="description" name="description" required>
-                <option value="">--Select--</option>
-                <option value="SIDE">SIDE</option>
-                <option value="END">END</option>
-            </select><br><br>
-
-
-            <label for="wire_type">Wire Type:</label>
-            <select id="wire_type" name="wire_type" required>
-                <option value="">--Select--</option>
-                <option value="BIG">BIG</option>
-                <option value="SMALL">SMALL</option>
-            </select><br><br>
-
-
-            <label for="terminal_maker">Terminal Maker:</label>
-            <input type="text" id="terminal_maker" name="terminal_maker" required><br><br>
-
-
-            <label for="applicator_maker">Applicator Maker:</label>
-            <input type="text" id="applicator_maker" name="applicator_maker" required><br><br>
-
-
-            <label for="applicator_serial_no">Serial No:</label>
-            <input type="text" id="applicator_serial_no" name="serial_no"><br><br>
-
-
-            <label for="applicator_invoice_no">Invoice No:</label>
-            <input type="text" id="applicator_invoice_no" name="invoice_no"><br><br>
-
-
-            <button type="submit">Submit Applicator</button>
-        </form>
+        
 
         <!-- Edit Applicator Modal -->
         <div id="editApplicatorModal" class="modal-overlay">

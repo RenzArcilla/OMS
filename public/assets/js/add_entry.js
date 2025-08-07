@@ -20,64 +20,26 @@ function switchTab(tab) {
     }
 }
 
-
-// Function to show machine form and hide applicator form
-function showMachineForm() {
-    const machineForm = document.getElementById('machine-form');
-    const applicatorForm = document.getElementById('applicator-form');
-    const buttons = document.querySelectorAll('.toggle-btn');
-    
-    // Show machine form, hide applicator form
-    machineForm.classList.remove('hidden');
-    applicatorForm.classList.add('hidden');
-    
-    // Update button states
-    buttons[0].classList.add('active');
-    buttons[1].classList.remove('active');
+// Function to open machine modal
+function openMachineModal() {
+    const modal = document.getElementById('addMachineModal');
+    if (modal) {
+        modal.style.display = 'block';
+    }
 }
 
-
-// Function to show applicator form and hide machine form
-function showApplicatorForm() {
-    const machineForm = document.getElementById('machine-form');
-    const applicatorForm = document.getElementById('applicator-form');
-    const buttons = document.querySelectorAll('.toggle-btn');
-    
-    // Show applicator form, hide machine form
-    machineForm.classList.add('hidden');
-    applicatorForm.classList.remove('hidden');
-    
-    // Update button states
-    buttons[0].classList.remove('active');
-    buttons[1].classList.add('active');
-}
-// Function to show machine form and hide applicator form
-function showMachineForm() {
-    const machineForm = document.getElementById('machine-form');
-    const applicatorForm = document.getElementById('applicator-form');
-    const buttons = document.querySelectorAll('.toggle-btn');
-   
-    // Show machine form, hide applicator form
-    machineForm.classList.remove('hidden');
-    applicatorForm.classList.add('hidden');
-   
-    // Update button states
-    buttons[0].classList.add('active');
-    buttons[1].classList.remove('active');
+// Function to open applicator modal
+function openApplicatorModal() {
+    const modal = document.getElementById('addApplicatorModal');
+    if (modal) {
+        modal.style.display = 'block';
+    }
 }
 
-
-// Function to show applicator form and hide machine form
-function showApplicatorForm() {
-    const machineForm = document.getElementById('machine-form');
-    const applicatorForm = document.getElementById('applicator-form');
-    const buttons = document.querySelectorAll('.toggle-btn');
-   
-    // Show applicator form, hide machine form
-    machineForm.classList.add('hidden');
-    applicatorForm.classList.remove('hidden');
-   
-    // Update button states
-    buttons[0].classList.remove('active');
-    buttons[1].classList.add('active');
+// Function to close modal
+function closeModal() {
+    const modals = document.querySelectorAll('.modal-overlay');
+    modals.forEach(modal => {
+        modal.style.display = 'none';
+    });
 }
