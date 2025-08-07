@@ -35,6 +35,8 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
     <script src="../../public/assets/js/edit_machine_modal.js" defer></script>
     <!-- Load modal logic for editing applicators -->
     <script src="../../public/assets/js/edit_applicator_modal.js" defer></script>
+    <!-- Load cancel forms of add modals form -->
+    <script scr="../../public/assets/js/cancel_add_modal_form.js" defer></script>
 </head>
 <body>
     <div class="container">
@@ -68,7 +70,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                     <span class="search-icon">🔍</span>
                     <input type="text" id="searchInput" placeholder="Search entries..." class="search-input">
                 </div>
-               
+
                 <select id="typeFilter" class="filter-select">
                     <option value="all">All Types</option>
                     <option value="AUTOMATIC">Automatic</option>
@@ -76,7 +78,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                     <option value="SIDE">Side</option>
                     <option value="END">End</option>
                 </select>
-               
+
                 <select id="statusFilter" class="filter-select">
                     <option value="all">All Status</option>
                     <option value="Active">Active</option>
@@ -94,7 +96,6 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
             <button class="tab-btn active" onclick="switchTab('machines')">🔧 Machines</button>
             <button class="tab-btn" onclick="switchTab('applicators')">⚡ Applicators</button>
         </div>  
-
 
         <!-- Machine Table -->
         <div>
@@ -238,7 +239,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                         <span class="modal-icon">🔧</span>
                         <span id="machineModalTitleText">Add Machine</span>
                     </h2>
-                    <button class="close-btn" onclick="closeModal()">✕</button>
+                    <button type="button" class="close-btn" onclick="closeModal()">✖️</button>
                 </div>
                     
                 <div class="modal-body">
@@ -263,17 +264,17 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                                 <input type="text" id="model" name="model" required placeholder="Enter model"><br><br>
                             </div>
 
-                            <div class="form-group
+                            <div class="form-group">
                                 <label for="machine_maker">Machine Maker:</label>
                                 <input type="text" id="machine_maker" name="machine_maker" required placeholder="Enter machine maker"><br><br>
                             </div>
 
-                            <div class="form-group
+                            <div class="form-group">
                                 <label for="machine_serial_no">Serial No:</label>
                                 <input type="text" id="machine_serial_no" name="serial_no" placeholder="Enter serial number"><br><br>
                             </div>
 
-                            <div class="form-group
+                            <div class="form-group">
                                 <label for="machine_invoice_no">Invoice No:</label>
                                 <input type="text" id="machine_invoice_no" name="invoice_no" placeholder="Enter invoice no."><br><br>
                             </div>
@@ -281,10 +282,10 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                     </form>
                 </div>
                 
-                <div class="modal-footer">
-                    <button class="btn-secondary" onclick="closeModal()">Cancel</button>
-                    <button id="machineActionBtn" class="btn-primary" onclick="saveMachine()">Add Machine</button>
-                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+                                <button type="submit" id="machineActionBtn" class="btn-primary" onclick="saveMachine()">Add Machine</button>
+                            </div>
             </div>
         </div>
 
@@ -294,9 +295,9 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                 <div class="modal-header">
                     <h2 id="applicatorModalTitle" class="modal-title">
                         <span class="modal-icon">⚡</span>
-                        <span id="applicatorModalTitleText">Add Applicator</span>
+                        <span>Add Applicator</span>
                     </h2>
-                    <button class="close-btn" onclick="closeModal()">✕</button>
+                    <button class="close-btn" onclick="closeModal()">✖️</button>
                 </div>
 
                 <div class="modal-body">
@@ -354,159 +355,143 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                 </div>
 
                 <div class="modal-footer">
-                    <button class="btn-secondary" onclick="closeModal()">Cancel</button>
-                    <button id="applicatorActionBtn" class="btn-primary" onclick="saveApplicator()">Add Applicator</button>
+                    <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" id="applicatorActionBtn" class="btn-primary">Add Applicator</button>
                 </div>
+
             </div>
         </div>
 
-        <!-- Edit Machine Modal -->
-        <div id="editModal" class="modal-overlay">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title">
-                        <span class="modal-icon">🔧</span>
-                        Edit Machine
-                    </h2>
-                    <button class="close-btn" onclick="closeModal()">✖️</button>
-                </div>
-               
-                <div class="modal-body">
-                    <form id="editMachineForm" action="../controllers/edit_machine.php" method="POST">
-                        <input type="hidden" name="machine_id" id="edit_machine_id">
+            <!-- Edit Machine Modal -->
+    <div id="editModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <span class="modal-icon">🔧</span>
+                    Edit Machine
+                </h2>
+                <button class="close-btn" onclick="closeModal()">✖️</button>
+            </div>
 
+            <div class="modal-body">
+                <form id="editMachineForm" action="../controllers/edit_machine.php" method="POST">
+                    <input type="hidden" name="machine_id" id="edit_machine_id">
 
-                        <div class="form-group">
-                            <label>Control No:</label>
-                            <input type="text" name="control_no" id="edit_control_no" required>
-                        </div>
+                    <div class="form-group">
+                        <label>Control No:</label>
+                        <input type="text" name="control_no" id="edit_control_no" required>
+                    </div>
 
+                    <div class="form-group">
+                        <label>Description:</label>
+                        <select name="description" id="edit_description" required>
+                            <option value="">--Select--</option>
+                            <option value="AUTOMATIC">AUTOMATIC</option>
+                            <option value="SEMI-AUTOMATIC">SEMI-AUTOMATIC</option>
+                        </select>
+                    </div>
 
-                        <div class="form-group">
-                            <label>Description:</label>
-                            <select name="description" id="edit_description" required>
-                                <option value="">--Select--</option>
-                                <option value="AUTOMATIC">AUTOMATIC</option>
-                                <option value="SEMI-AUTOMATIC">SEMI-AUTOMATIC</option>
-                            </select>
-                        </div>
+                    <div class="form-group">
+                        <label>Model:</label>
+                        <input type="text" name="model" id="edit_model" required>
+                    </div>
 
+                    <div class="form-group">
+                        <label>Maker:</label>
+                        <input type="text" name="machine_maker" id="edit_maker" required>
+                    </div>
 
-                        <div class="form-group">
-                            <label>Model:</label>
-                            <input type="text" name="model" id="edit_model" required>
-                        </div>
+                    <div class="form-group">
+                        <label>Serial No:</label>
+                        <input type="text" name="serial_no" id="edit_serial_no">
+                    </div>
 
+                    <div class="form-group">
+                        <label>Invoice No:</label>
+                        <input type="text" name="invoice_no" id="edit_invoice_no">
+                    </div>
+                </form>
+            </div>
 
-                        <div class="form-group">
-                            <label>Maker:</label>
-                            <input type="text" name="machine_maker" id="edit_maker" required>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label>Serial No:</label>
-                            <input type="text" name="serial_no" id="edit_serial_no">
-                        </div>
-
-
-                        <div class="form-group">
-                            <label>Invoice No:</label>
-                            <input type="text" name="invoice_no" id="edit_invoice_no">
-                        </div>
-                    </form>
-                </div>
-               
-                <div class="modal-footer">
-                    <button type="button" onclick="closeModal()">Cancel</button>
-                    <button type="submit" form="editMachineForm">Save</button>
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="submit" form="editMachineForm" class="btn-primary">Save Changes</button>
             </div>
         </div>
+    </div>
 
+    <!-- Edit Applicator Modal -->
+    <div id="editApplicatorModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <span class="modal-icon">⚡</span>
+                    Edit Applicator
+                </h2>
+                <button class="close-btn" onclick="closeModal()">✖️</button>
+            </div>
 
+            <div class="modal-body">
+                <form id="editApplicatorForm" action="../controllers/edit_applicator.php" method="POST">
+                    <!-- Hidden input to store applicator ID -->
+                    <input type="hidden" name="applicator_id" id="edit_applicator_id">
+
+                    <div class="form-group">
+                        <label>HP No:</label>
+                        <input type="text" name="control_no" id="edit_applicator_control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Terminal No:</label>
+                        <input type="text" name="terminal_no" id="edit_terminal_no" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description:</label>
+                        <select name="description" id="edit_applicator_description" required>
+                            <option value="">--Select--</option>
+                            <option value="SIDE">SIDE</option>
+                            <option value="END">END</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Wire Type:</label>
+                        <select name="wire_type" id="edit_wire_type" required>
+                            <option value="">--Select--</option>
+                            <option value="BIG">BIG</option>
+                            <option value="SMALL">SMALL</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Terminal Maker:</label>
+                        <input type="text" name="terminal_maker" id="edit_terminal_maker" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Applicator Maker:</label>
+                        <input type="text" name="applicator_maker" id="edit_applicator_maker" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Serial No:</label>
+                        <input type="text" name="serial_no" id="edit_applicator_serial_no">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Invoice No:</label>
+                        <input type="text" name="invoice_no" id="edit_applicator_invoice_no">
+                    </div>
+                </form>
+            </div>
         
-
-        <!-- Edit Applicator Modal -->
-        <div id="editApplicatorModal" class="modal-overlay">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title">
-                        <span class="modal-icon">⚡</span>
-                        Edit Applicator
-                    </h2>
-                    <button class="close-btn" onclick="closeModal()">✖️</button>
-                </div>
-               
-                <div class="modal-body">
-                    <form id="editApplicatorForm" action="../controllers/edit_applicator.php" method="POST">
-                        <!-- Hidden input to store applicator ID -->
-                        <input type="hidden" name="applicator_id" id="edit_applicator_id">
-
-
-                        <div class="form-group">
-                            <label>HP No:</label>
-                            <input type="text" name="control_no" id="edit_applicator_control" required>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label>Terminal No:</label>
-                            <input type="text" name="terminal_no" id="edit_terminal_no" required>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label>Description:</label>
-                            <select name="description" id="edit_applicator_description" required>
-                                <option value="">--Select--</option>
-                                <option value="SIDE">SIDE</option>
-                                <option value="END">END</option>
-                            </select>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label>Wire Type:</label>
-                            <select name="wire_type" id="edit_wire_type" required>
-                                <option value="">--Select--</option>
-                                <option value="BIG">BIG</option>
-                                <option value="SMALL">SMALL</option>
-                            </select>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label>Terminal Maker:</label>
-                            <input type="text" name="terminal_maker" id="edit_terminal_maker" required>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label>Applicator Maker:</label>
-                            <input type="text" name="applicator_maker" id="edit_applicator_maker" required>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label>Serial No:</label>
-                            <input type="text" name="serial_no" id="edit_applicator_serial_no">
-                        </div>
-
-
-                        <div class="form-group">
-                            <label>Invoice No:</label>
-                            <input type="text" name="invoice_no" id="edit_applicator_invoice_no">
-                        </div>
-                    </form>
-                </div>
-               
-                <div class="modal-footer">
-                    <button type="button" onclick="closeApplicatorModal()">Cancel</button>
-                    <button type="submit" form="editApplicatorForm">Save</button>
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="submit" form="editApplicatorForm" class="btn-primary">Save Changes</button>
             </div>
         </div>
+    </div>
     <script src="../../public/assets/js/add_entry.js"></script>
 </body>
 </html>

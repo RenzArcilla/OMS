@@ -200,6 +200,12 @@ body {
     box-shadow: 0 6px 20px rgba(47, 128, 237, 0.4);
 }
 
+.btn-primary, .btn-secondary {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
 
 .actions {
     display: flex;
@@ -374,7 +380,7 @@ body {
 
 
 .form-group {
-    
+    margin-bottom: 15px;
 }
 
 
@@ -477,3 +483,11 @@ body {
     border-color: #2F80ED;
     box-shadow: 0 0 0 4px rgba(47, 128, 237, 0.1);
 }
+
+.close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px;
+        }
