@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOMS - Professional Portal</title>
+    <link rel="stylesheet" href="assets/css/landing_page.css">
+</head>
+<body>
+    <div class="gate left"></div>
+    <div class="gate right"></div>
+    
+    <div class="logo-container" onclick="openGates()">
+        <div class="logo-card">
+            <h1 class="logo-title">SOMS</h1>
+            
+        </div>
+        
+    </div>
+
+
+    <script src="assets/css/landing_page.js"></script>
+</body>
+</html>
