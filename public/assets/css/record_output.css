@@ -289,6 +289,8 @@ select.form-input {
 
 /* Table Section Styles */
 .records-section {
+    max-width: 1400px; 
+    width: 100%;
     background: #FFFFFF;
     border-radius: 20px;
     box-shadow: 0 8px 32px rgba(47, 128, 237, 0.08);
@@ -317,13 +319,15 @@ select.form-input {
 }
 
 .records-title {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     font-weight: 700;
     color: #111827;
     display: flex;
     align-items: center;
     gap: 12px;
 }
+
+
 
 .section-badge {
     background: #2F80ED;
@@ -344,10 +348,10 @@ select.form-input {
 
 .search-input {
     flex: 1;
-    padding: 12px 16px;
+    padding: 14px 18px; /* Increase from 12px 16px */
     border: 1px solid #E5E7EB;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 16px; /* Increase from 14px */
     background: #FFFFFF;
     transition: all 0.2s ease;
 }
@@ -359,11 +363,11 @@ select.form-input {
 }
 
 .filter-btn {
-    padding: 12px 16px;
+    padding: 14px 18px; /* Increase from 12px 16px */
     background: #FFFFFF;
     border: 1px solid #E5E7EB;
     border-radius: 8px;
-    font-size: 12px;
+    font-size: 14px; /* Increase from 12px */
     font-weight: 600;
     color: #6B7280;
     cursor: pointer;
@@ -377,7 +381,7 @@ select.form-input {
 }
 
 .table-container {
-    height: 400px;
+    height: 1000px;
     overflow-y: auto;
     position: relative;
 }
@@ -395,9 +399,9 @@ select.form-input {
 }
 
 .data-table th {
-    padding: 16px 20px;
+    padding: 24px 30px; /* Increase from 21px 25px */
     text-align: left;
-    font-size: 12px;
+    font-size: 14px; /* Increase font size too */
     font-weight: 700;
     color: #6B7280;
     text-transform: uppercase;
@@ -407,8 +411,8 @@ select.form-input {
 }
 
 .data-table td {
-    padding: 16px 20px;
-    font-size: 13px;
+    padding: 24px 30px; /* Increase from 21px 25px */
+    font-size: 15px; /* Increase font size too */
     color: #111827;
     border-bottom: 1px solid #F3F4F6;
     white-space: nowrap;
@@ -458,6 +462,7 @@ select.form-input {
     gap: 8px;
 }
 
+
 .status-indicator {
     width: 8px;
     height: 8px;
@@ -467,3 +472,8 @@ select.form-input {
 .status-indicator.success { background: #27AE60; }
 .status-indicator.warning { background: #F59E0B; }
 .status-indicator.error { background: #EB5757; }
+
+.metric-value {
+    font-weight: 600;
+    color: #2F80ED;
+}

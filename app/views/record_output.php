@@ -169,13 +169,15 @@ if (!isset($_SESSION['user_id'])) {
                     <span class="section-badge">10</span>
                 </div>
             </div>
+
             <div class="search-filter">
                 <input type="text" class="search-input" placeholder="Search records..." onkeyup="filterTable(this.value)">
                 <button class="filter-btn active" onclick="filterByStatus(this, 'all')">All</button>
                 <button class="filter-btn" onclick="filterByStatus(this, 'recent')">Recent</button>
                 <button class="filter-btn" onclick="filterByStatus(this, 'today')">Today</button>
             </div>
-            <div id="table-container" style="height: 300px; overflow-y: auto;">
+
+            <div id="table-container" style="height: 500px; overflow-y: auto;">
                 <table id="data-table">
                     <thead>
                         <tr>
@@ -206,22 +208,24 @@ if (!isset($_SESSION['user_id'])) {
                         <!-- Render fetched machine data as table rows -->
                         <?php foreach ($records as $row): ?>
                             <tr>
-                                <td><?= htmlspecialchars($row['record_id']) ?></td>
+                                <td class="metric-value"><?= htmlspecialchars($row['record_id']) ?></td>
                                 <td><?= htmlspecialchars($row['date_inspected']) ?></td>
                                 <td><?= htmlspecialchars($row['date_encoded']) ?></td>
                                 <td><?= htmlspecialchars($row['shift']) ?></td>
                                 <td><?= htmlspecialchars($row['hp1_no']) ?></td>
-                                <td><?= htmlspecialchars($row['app1_output']) ?></td>
+                                <td class="metric-value"><?= htmlspecialchars($row['app1_output']) ?></td>
                                 <td><?= htmlspecialchars($row['hp2_no']) ?></td>
-                                <td><?= htmlspecialchars($row['app2_output']) ?></td>
+                                <td class="metric-value"><?= htmlspecialchars($row['app2_output']) ?></td>
                                 <td><?= htmlspecialchars($row['control_no']) ?></td>
-                                <td><?= htmlspecialchars($row['machine_output']) ?></td>
-                                <td>✏️
-                                    <!-- Delete form -->
-                                    <form action="/SOMS/app/controllers/delete_record.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this record?');">
-                                        <input type="hidden" name="record_id" value="<?= htmlspecialchars($row['record_id']) ?>">
-                                        <button type="submit">🗑️</button>
-                                    </form>
+                                <td class="metric-value"><?= htmlspecialchars($row['machine_output']) ?></td>
+                                <td>
+                                    <!-- Action form -->
+                                    <div class="action-buttons">
+                                        <button class="action-btn" title="Edit">✏️</button>
+                                        <form action="/SOMS/app/controllers/delete_record.php" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this record?');">
+                                            <input type="hidden" name="record_id" value="<?= htmlspecialchars($row['record_id']) ?>">
+                                            <button type="submit">🗑️</button>
+                                        </form>
                                     </td>
                                 </td>
                             </tr>
