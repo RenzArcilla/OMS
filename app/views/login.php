@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Log In</title>
-    <link rel="stylesheet" href="../../public/assets/css/login.css">
-    <?php require "../controllers/log_in.php"; ?>
+    <link rel="stylesheet" href="assets/css/login.css">
+    <?php require_once "../controllers/log_in.php"; ?>
 </head>
 <body>
     <div class="container">
@@ -67,7 +67,7 @@
         <div class="right-section">
             
             <div class="right-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
-                <img src="../../public/assets/images/hepc_white.png" alt="Logo" style="width: 500%; max-width: 650px;">
+                <img src="assets/images/hepc_white.png" alt="Logo" style="width: 500%; max-width: 650px;">
             </div>
         
         </div>
