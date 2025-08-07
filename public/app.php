@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOMS - Professional Portal</title>
-    <link rel="stylesheet" href="assets/css/landing_page.css">
+    <link rel="stylesheet" href="assets/css/landing_page.css"> 
 </head>
 <body>
     <div class="gate left"></div>
@@ -17,7 +17,7 @@
             </h1>
         </div>  
     </div>
-
     <script src="assets/js/landing_page.js"></script>
+    <?php include_once __DIR__ . '/../app/views/login.php'; ?>
 </body>
 </html>
