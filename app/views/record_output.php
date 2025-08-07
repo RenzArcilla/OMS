@@ -159,13 +159,23 @@ if (!isset($_SESSION['user_id'])) {
         </form>
     </div>
 
-    <!-- Table for displaying recent records --> 
-    <div>
-        <h3>Latest Records</h3>
 
-        <!-- Scrollable container for infinite scrolling -->
-        <div id="record-container" style="height: 300px; overflow-y: auto;">
-            <table id="recordsTable">
+    <!-- Scrollable container for infinite scrolling -->
+    <div class="records-section">
+        <div class="records-header">
+            <div class="records-title">
+                📊 Latest Records
+                <span class="section-badge">10</span>
+            </div>
+        </div>
+        <div class="search-filter">
+            <input type="text" class="search-input" placeholder="Search records..." onkeyup="filterTable(this.value)">
+            <button class="filter-btn active" onclick="filterByStatus(this, 'all')">All</button>
+            <button class="filter-btn" onclick="filterByStatus(this, 'recent')">Recent</button>
+            <button class="filter-btn" onclick="filterByStatus(this, 'today')">Today</button>
+        </div>
+        <div id="table-container" style="height: 300px; overflow-y: auto;">
+            <table id="data-table">
                 <thead>
                     <tr>
                         <th>Record ID</th>
