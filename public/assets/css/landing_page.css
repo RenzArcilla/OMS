@@ -85,6 +85,12 @@ body.loaded .right {
     transform: translate(-50%, -50%) scale(0.98);
 }
 
+body.loaded .logo-container {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+    transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .logo-card {
     background: #FFFFFF;
     padding: 48px 64px;
@@ -110,6 +116,8 @@ body.loaded .right {
 }
 
 .logo-title {
+    position: relative;
+    top: 15px;
     font-size: 4rem;
     font-weight: 900;
     letter-spacing: 4px;
@@ -119,6 +127,16 @@ body.loaded .right {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-shadow: 0 4px 8px rgba(47, 128, 237, 0.1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    zoom: 1.5;
+}
+
+.logo-title:hover {
+    transform: scale(1.08);
+}
+
+.logo-title:active {
+    transform: scale(0.97);
 }
 
 .logo-subtitle {

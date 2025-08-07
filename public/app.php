@@ -12,7 +12,9 @@
     
     <div class="logo-container" onclick="openGates()">
         <div class="logo-card">
-            <h1 class="logo-title">SOMS</h1>
+            <h1 class="logo-title">
+                <img src="assets/images/hepc_black.png" alt="HEPC Logo" style="height: 64px;">
+            </h1>
         </div>  
     </div>
 
