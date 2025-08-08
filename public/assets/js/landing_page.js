@@ -22,17 +22,31 @@ function openGates() {
     const button = document.querySelector('.click-button');
     const card = document.querySelector('.logo-card');
     
-    button.style.transform = 'scale(0.95)';
-    card.style.transform = 'scale(0.98)';
+    if (button) button.style.transform = 'scale(0.95)';
+    if (card) card.style.transform = 'scale(0.98)';
     
     setTimeout(() => {
-        button.style.transform = 'scale(1)';
-        card.style.transform = 'scale(1)';
+        if (button) button.style.transform = 'scale(1)';
+        if (card) card.style.transform = 'scale(1)';
     }, 150);
+
+    // Redirect to login after the gates animation (adjust delay as needed)
+    setTimeout(() => {
+        window.location.href = '../app/views/login.php';
+    }, 1500); // 1.5s delay for a smoother transition
 }
 
-// Allow clicking anywhere to open gates
-document.addEventListener('click', function(e) {
+// Auto-start transition shortly after page load
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+        if (!document.body.classList.contains('loaded')) {
+            openGates();
+        }
+    }, 300); // start the gate animation automatically
+});
+
+// Allow clicking anywhere to open gates (fallback)
+document.addEventListener('click', function() {
     if (!document.body.classList.contains('loaded')) {
         openGates();
     }
