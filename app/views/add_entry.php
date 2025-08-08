@@ -102,7 +102,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
             <h3>Latest Machines Added</h3>
 
 
-        <div id="machines-table" class="entries-table-card active" style="height: 300px; overflow-y: auto;">
+        <div id="machines-table" class="entries-table-card active" style="height: 600px; overflow-y: auto;">
             <table class="entries-table">
                 <thead>
                     <tr>
@@ -168,7 +168,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
         </div>
 
             <!-- Applicator Table -->
-        <div id="applicators-table" class="entries-table-card active" style="height: 300px; overflow-y: auto;">
+        <div id="applicators-table" class="entries-table-card active" style="height: 600px; overflow-y: auto;">
             <table class="entries-table">
                 <thead>
                     <tr>
