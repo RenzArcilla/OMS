@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +19,5 @@
         </div>  
     </div>
     <script src="assets/js/landing_page.js"></script>
-    <?php include_once __DIR__ . '/../app/views/login.php'; ?>
 </body>
 </html>
