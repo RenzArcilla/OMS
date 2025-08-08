@@ -16,7 +16,7 @@ function loadMachines() {
     fetch('/SOMS/public/ajax/get_machines.php?offset=' + machineOffset + '&limit=' + machineLimit)
         .then(response => response.json())
         .then(data => {
-            const tbody = document.getElementById('machine-body');
+            const tbody = document.getElementById('machinesTableBody');
 
         // Create and append each machine row
         data.forEach(row => {

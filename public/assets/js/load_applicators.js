@@ -121,7 +121,7 @@ function loadApplicators() {
     Loads more data when near the bottom.
 */
 function applicatorScrollHandler() {
-    const container = document.getElementById('applicator-container');
+    const container = document.getElementById('applicator-body');
     console.log('Scroll event fired', container.scrollTop, container.scrollHeight, container.clientHeight);
     if (container.scrollTop + container.clientHeight >= container.scrollHeight - 5) {
         loadApplicators();
@@ -130,6 +130,6 @@ function applicatorScrollHandler() {
 
 // Initialize the applicator loading on page load
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('applicator-container').addEventListener('scroll', applicatorScrollHandler);
+    document.getElementById('applicator-body').addEventListener('scroll', applicatorScrollHandler);
     loadApplicators(); // Load initial data
 });
