@@ -60,6 +60,10 @@ if (!in_array($shift, ['FIRST', 'SECOND', 'NIGHT'])) {
     fail("Invalid shift.");
 }
 
+if ($app1 === $app2) {
+    fail("Error! Duplicate applicator entry: $app1");
+}
+
 try {
     $date = (new DateTime($date))->format('Y-m-d');
 } catch (Exception $e) {

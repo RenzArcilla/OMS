@@ -49,6 +49,10 @@ if (empty($record_id) || empty($date_inspected) || empty($shift) ||
     exit;
 }
 
+if ($app1 === $app2) {
+    jsAlertRedirect("Error! Duplicate applicator entry: $app1");
+}
+
 if (!in_array($shift, ['FIRST', 'SECOND', 'NIGHT'])) {
     jsAlertRedirect("Invalid selection for work shift.", $redirect_url);
     exit;
