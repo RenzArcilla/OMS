@@ -69,6 +69,7 @@ CREATE TABLE records (
     created_by INT NOT NULL,
     date_inspected DATE NOT NULL,
     date_encoded DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    last_updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     is_active BOOLEAN DEFAULT TRUE NOT NULL,
     
     FOREIGN KEY (created_by) REFERENCES users(user_id),

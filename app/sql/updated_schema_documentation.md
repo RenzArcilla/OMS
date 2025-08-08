@@ -105,6 +105,7 @@ This database system is designed to track machine and applicator usage in a manu
 | `created_by` | INT | NOT NULL, FK → users | User who created the record |
 | `date_inspected` | DATE | NOT NULL | Date of inspection |
 | `date_encoded` | DATETIME | DEFAULT CURRENT_TIMESTAMP | When record was entered into system |
+| `last_updated` | DATETIME | DEFAULT CURRENT_TIMESTAMP | When record was last edited. |
 | `is_active` | BOOLEAN | DEFAULT TRUE | Soft delete flag |
 
 **Indexes**: `idx_machine_id`, `idx_created_by`, `idx_date_encoded`, `idx_is_active`, `idx_applicator1_id`, `idx_applicator2_id`
