@@ -13,7 +13,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 
-include_once __DIR__ . '/../includes/side_bar.php'; // Include the header file for the navigation and logo
+include_once __DIR__ . '/../includes/header.php'; // Include the header file for the navigation and logo
 ?>
 
 
