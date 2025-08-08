@@ -1,0 +1,204 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #F9FAFB;
+    overflow: hidden;
+    color: #111827;
+}
+
+.gate {
+    position: fixed;
+    top: 0;
+    width: 50%;
+    height: 100vh;
+    background: #FFFFFF;
+    z-index: 1000;
+    transition: transform 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 25px 50px -12px rgba(47, 128, 237, 0.1),
+        0 0 0 1px rgba(229, 231, 235, 0.1);
+}
+
+.gate::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(
+        to bottom, 
+        transparent 0%,
+        rgba(47, 128, 237, 0.3) 25%,
+        rgba(39, 174, 96, 0.4) 50%,
+        rgba(47, 128, 237, 0.3) 75%,
+        transparent 100%
+    );
+    box-shadow: 0 0 8px rgba(47, 128, 237, 0.2);
+}
+
+.left {
+    left: 0;
+    transform: translateX(0);
+}
+
+.left::before {
+    right: 0;
+}
+
+.right {
+    right: 0;
+    transform: translateX(0);
+}
+
+.right::before {
+    left: 0;
+}
+
+body.loaded .left {
+    transform: translateX(-100%);
+}
+
+body.loaded .right {
+    transform: translateX(100%);
+}
+
+.logo-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logo-container:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.logo-container:active {
+    transform: translate(-50%, -50%) scale(0.98);
+}
+
+body.loaded .logo-container {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+    transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logo-card {
+    background: #FFFFFF;
+    padding: 48px 64px;
+    border-radius: 20px;
+    box-shadow: 
+        0 25px 50px -12px rgba(47, 128, 237, 0.15),
+        0 10px 15px -3px rgba(47, 128, 237, 0.1),
+        0 0 0 1px rgba(229, 231, 235, 0.1);
+    border: 1px solid #E5E7EB;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.logo-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #2F80ED 0%, #27AE60 100%);
+}
+
+.logo-title {
+    position: relative;
+    top: 15px;
+    font-size: 4rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    margin: 0 0 16px 0;
+    background: linear-gradient(135deg, #2F80ED 0%, #27AE60 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 4px 8px rgba(47, 128, 237, 0.1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    zoom: 1.5;
+}
+
+.logo-title:hover {
+    transform: scale(1.08);
+}
+
+.logo-title:active {
+    transform: scale(0.97);
+}
+
+.logo-subtitle {
+    color: #6B7280;
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 24px;
+    letter-spacing: 1px;
+}
+
+
+.click-button {
+    background: linear-gradient(135deg, #2F80ED 0%, #27AE60 100%);
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 10px 15px -3px rgba(47, 128, 237, 0.2),
+        0 4px 6px -2px rgba(47, 128, 237, 0.1);
+}
+
+.click-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 15px 25px -5px rgba(47, 128, 237, 0.25),
+        0 8px 10px -3px rgba(47, 128, 237, 0.15);
+}
+
+.click-button:active {
+    transform: translateY(0);
+}
+
+/* Subtle floating elements */
+.floating-element {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(135deg, rgba(47, 128, 237, 0.1) 0%, rgba(39, 174, 96, 0.1) 100%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: float 8s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { 
+        transform: translateY(0) translateX(0) rotate(0deg); 
+        opacity: 0; 
+    }
+    25% { opacity: 0.6; }
+    50% { 
+        opacity: 1; 
+        transform: translateY(-20px) translateX(10px) rotate(180deg); 
+    }
+    75% { opacity: 0.4; }
+    100% { 
+        transform: translateY(-100vh) translateX(-10px) rotate(360deg); 
+        opacity: 0; 
+    }
+}
