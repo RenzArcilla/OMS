@@ -492,5 +492,6 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
         </div>
     </div>
     <script src="../../public/assets/js/add_entry.js"></script>
+    <script src="../../public/assets/js/export_entry.js"></script>
 </body>
 </html>

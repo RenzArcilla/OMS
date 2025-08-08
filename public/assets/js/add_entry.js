@@ -134,6 +134,7 @@ function saveApplicator() {
     closeModal();
 }
 
+
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Page loaded, modals ready');
