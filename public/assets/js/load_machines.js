@@ -16,7 +16,7 @@ function loadMachines() {
     fetch('/SOMS/public/ajax/get_machines.php?offset=' + machineOffset + '&limit=' + machineLimit)
         .then(response => response.json())
         .then(data => {
-            const tbody = document.getElementById('machinesTableBody');
+            const tbody = document.getElementById('machine-body');
 
         // Create and append each machine row
         data.forEach(row => {
@@ -102,7 +102,7 @@ function loadMachines() {
 
             // If fewer than limit were returned, we've reached the end
             if (data.length < machineLimit) {
-                document.getElementById('machine-container').removeEventListener('scroll', machineScrollHandler);
+                document.getElementById('machine-table').removeEventListener('scroll', machineScrollHandler);
             }
         })
         .catch(error => {
@@ -117,7 +117,7 @@ Handles scroll event for the machine container.
 Loads more data when near the bottom.
 */
 function machineScrollHandler() {
-    const container = document.getElementById('machine-container');
+    const container = document.getElementById('machine-table');
     if (container.scrollTop + container.clientHeight >= container.scrollHeight - 5) {
         loadMachines();
     }
@@ -125,5 +125,5 @@ function machineScrollHandler() {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('machine-container').addEventListener('scroll', machineScrollHandler);
+    document.getElementById('machine-table').addEventListener('scroll', machineScrollHandler);
 });

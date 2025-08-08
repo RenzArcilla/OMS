@@ -102,7 +102,7 @@ include_once __DIR__ . '/../includes/side_bar.php'; // Include the header file f
             <h3>Latest Machines Added</h3>
 
 
-        <div id="machines-table" class="entries-table-card active" style="height: 600px; overflow-y: auto;">
+        <div id="machine-table" class="entries-table-card active" style="height: 600px; overflow-y: auto;">
             <table class="entries-table">
                 <thead>
                     <tr>
@@ -127,7 +127,7 @@ include_once __DIR__ . '/../includes/side_bar.php'; // Include the header file f
                     $machines = getMachines($pdo, 10, 0);
                     ?>
               
-                    <tbody id="machinesTableBody">
+                    <tbody id="machine-body">
                         <!-- Render fetched machine data as table rows -->
                         <?php foreach ($machines as $row): ?>
                             <tr>
