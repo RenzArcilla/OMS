@@ -49,8 +49,15 @@ if (empty($record_id) || empty($date_inspected) || empty($shift) ||
     exit;
 }
 
-if ($app1 === $app2) {
-    jsAlertRedirect("Error! Duplicate applicator entry: $app1");
+// Validate app2_output if app2 is provided
+if (!empty($app2) && empty($app2_output)) {
+    jsAlertRedirect("Please provide output value for Applicator 2.", $redirect_url);
+    exit;
+}
+
+if (!empty($app1) && !empty($app2) && $app1 === $app2) {
+    jsAlertRedirect("Error! Duplicate applicator entry: $app1", $redirect_url);
+    exit;
 }
 
 if (!in_array($shift, ['FIRST', 'SECOND', 'NIGHT'])) {
@@ -92,6 +99,7 @@ if (!is_array($prev_app1_data)) {
     exit;
 }
 
+$prev_app2_data = null;
 if (!empty($prev_app2)) {
     $prev_app2_data = applicatorExists($prev_app2);
     if (!is_array($prev_app2_data)) {
