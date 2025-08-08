@@ -139,3 +139,10 @@ function saveApplicator() {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Page loaded, modals ready');
 });
+
+// Initialize the loading on page load
+function refreshData() {
+    location.reload();
+}
+    
+
