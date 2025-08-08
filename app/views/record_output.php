@@ -50,11 +50,7 @@ if (!isset($_SESSION['user_id'])) {
                     </div>
                 </div>
 
-                <div class="success-message" id="successMessage">
-                    ✅ Production record saved successfully! You can now enter another record.
-                </div>
             <!-- Form for recording outputs -->
-            
                 <form action="../controllers/record_output.php" method="POST">
                     <div class="form-section active">
                         <div class="section-header">
@@ -151,7 +147,7 @@ if (!isset($_SESSION['user_id'])) {
                                 </label>
                                 <input type="text" id="machine" name="machine" class="form-input" required>
                             </div>
-            
+
                             <div class="form-group">
                                 <label for="machine_output" class="form-label">
                                     Machine Output
@@ -161,7 +157,7 @@ if (!isset($_SESSION['user_id'])) {
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Submit -->
                     <div class="button-group">
                         <button type="submit" class="submit-btn">
@@ -195,6 +191,7 @@ if (!isset($_SESSION['user_id'])) {
                         <tr>
                             <th>Record ID</th>
                             <th>Date Inspected</th>
+                            <th>Date Encoded</th>
                             <th>Date Encoded</th>
                             <th>Shift</th>
                             <th>Applicator1</th>
