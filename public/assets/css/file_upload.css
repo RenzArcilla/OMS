@@ -78,6 +78,7 @@ body {
     background: linear-gradient(135deg, rgba(47, 128, 237, 0.02) 0%, rgba(39, 174, 96, 0.02) 100%);
     opacity: 0;
     transition: opacity 0.4s ease;
+    pointer-events: none; /* This allows clicks to pass through the overlay */
 }
 
 .upload-box:hover::before,
@@ -144,6 +145,17 @@ body {
 .btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(47, 128, 237, 0.4);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #27AE60 0%, #2F80ED 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
 }
 
 .upload-progress {

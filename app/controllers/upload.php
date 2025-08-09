@@ -36,8 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['dataFiles'])) { // I
             if (move_uploaded_file($tmpName, $targetPath)) { // Moves the uploaded file to the target path.
                 $pdo->beginTransaction();
                     $rawData = extractData($targetPath); // Calls extractData() function from includes/extract.php.
-                    if (is_string($raw_data)) {
-                        jsAlertRedirect($raw_data, $redirect_url);
+                    if (is_string($rawData)) {
+                        jsAlertRedirect($rawData, $redirect_url);
+                        exit();
                     }
                     $cleanData = transformData($rawData); // Calls transformData() function from includes/transform.php.
                     $result = loadData($cleanData); // Passes the cleaned data to loadData() from includes/load.php.
