@@ -54,7 +54,80 @@
                         </div>
                     </div>
 
-                    <div class="stat-card warning">
+                    <div class="stat-card">
+                        <div class="stat-card-content">
+                            <div class="stat-info">
+                                <h3>Strip Operations</h3>
+                                <div class="stat-value">1,223</div>
+                                <div class="stat-change positive">
+                                    <i data-lucide="trending-up"></i>
+                                    +12.1% this week
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-content">
+                            <div class="stat-info">
+                                <h3>Strip Operations</h3>
+                                <div class="stat-value">1,223</div>
+                                <div class="stat-change positive">
+                                    <i data-lucide="trending-up"></i>
+                                    +12.1% this week
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-content">
+                            <div class="stat-info">
+                                <h3>Strip Operations</h3>
+                                <div class="stat-value">1,223</div>
+                                <div class="stat-change positive">
+                                    <i data-lucide="trending-up"></i>
+                                    +12.1% this week
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-content">
+                            <div class="stat-info">
+                                <h3>Strip Operations</h3>
+                                <div class="stat-value">1,223</div>
+                                <div class="stat-change positive">
+                                    <i data-lucide="trending-up"></i>
+                                    +12.1% this week
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-content">
+                            <div class="stat-info">
+                                <h3>Strip Operations</h3>
+                                <div class="stat-value">1,223</div>
+                                <div class="stat-change positive">
+                                    <i data-lucide="trending-up"></i>
+                                    +12.1% this week
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-content">
+                            <div class="stat-info">
+                                <h3>Strip Operations</h3>
+                                <div class="stat-value">1,223</div>
+                                <div class="stat-change positive">
+                                    <i data-lucide="trending-up"></i>
+                                    +12.1% this week
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tool Lifespan Warnings -->
+                    <!--<div class="stat-card warning">
                         <div class="stat-card-content">
                             <div class="stat-info">
                                 <h3>Tool Lifespan Warnings</h3>
@@ -68,7 +141,7 @@
                                 <i data-lucide="alert-triangle"></i>
                             </div>
                         </div>
-                    </div>
+                    </div>  -->
                 </div>
 
                 <!-- Applicator Status Section -->
@@ -167,7 +240,105 @@
                                 </table>
                             </div>
                         </div>
-
+                    <!-- Tool Lifespan Warnings -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-card-content">
+                            <div class="stat-info">
+                                <h3>Strip Operations</h3>
+                                <div class="stat-value">1,223</div>
+                                <div class="stat-change positive">
+                                    <i data-lucide="trending-up"></i>
+                                    +12.1% this week
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-content">
+                            <div class="stat-info">
+                                <h3>Strip Operations</h3>
+                                <div class="stat-value">1,223</div>
+                                <div class="stat-change positive">
+                                    <i data-lucide="trending-up"></i>
+                                    +12.1% this week
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-content">
+                            <div class="stat-info">
+                                <h3>Strip Operations</h3>
+                                <div class="stat-value">1,223</div>
+                                <div class="stat-change positive">
+                                    <i data-lucide="trending-up"></i>
+                                    +12.1% this week
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-content">
+                            <div class="stat-info">
+                                <h3>Strip Operations</h3>
+                                <div class="stat-value">1,223</div>
+                                <div class="stat-change positive">
+                                    <i data-lucide="trending-up"></i>
+                                    +12.1% this week
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-content">
+                            <div class="stat-info">
+                                <h3>Strip Operations</h3>
+                                <div class="stat-value">1,223</div>
+                                <div class="stat-change positive">
+                                    <i data-lucide="trending-up"></i>
+                                    +12.1% this week
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-content">
+                            <div class="stat-info">
+                                <h3>Strip Operations</h3>
+                                <div class="stat-value">1,223</div>
+                                <div class="stat-change positive">
+                                    <i data-lucide="trending-up"></i>
+                                    +12.1% this week
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-content">
+                            <div class="stat-info">
+                                <h3>Strip Operations</h3>
+                                <div class="stat-value">1,223</div>
+                                <div class="stat-change positive">
+                                    <i data-lucide="trending-up"></i>
+                                    +12.1% this week
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-content">
+                            <div class="stat-info">
+                                <h3>Strip Operations</h3>
+                                <div class="stat-value">1,223</div>
+                                <div class="stat-change positive">
+                                    <i data-lucide="trending-up"></i>
+                                    +12.1% this week
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                         <!-- Machine Status Section -->
                         <div class="data-section">
                             <div class="section-header expanded" onclick="toggleSection(this)">
@@ -221,11 +392,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-
-                    
-                </div>
-
+                        </div>     
                 <!-- Additional info cards -->
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 24px;">
                     <div class="card">
