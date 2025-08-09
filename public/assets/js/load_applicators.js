@@ -55,58 +55,65 @@ function loadApplicators() {
 
                 // Actions TD
                 const tdActions = document.createElement('td');
+
+                // Create actions wrapper div (matching server structure)
+                const actionsDiv = document.createElement('div');
+                actionsDiv.className = 'actions';
                 
-                // Edit link
-                    const editButton = document.createElement('button');
-                    editButton.textContent = '✏️';
-                    editButton.setAttribute('type', 'button');
-                    editButton.setAttribute('class', 'edit-applicator-button');
+                // Edit button
+                const editButton = document.createElement('button');
+                editButton.textContent = '✏️';
+                editButton.setAttribute('type', 'button');
+                editButton.setAttribute('class', 'action-btn edit-btn');
 
-                    // Set data attributes
-                    editButton.dataset.id = row.applicator_id;
-                    editButton.dataset.control = row.hp_no;
-                    editButton.dataset.terminal = row.terminal_no;
-                    editButton.dataset.description = row.description;
-                    editButton.dataset.wire = row.wire;
-                    editButton.dataset.terminalMaker = row.terminal_maker;
-                    editButton.dataset.applicatorMaker = row.applicator_maker;
-                    editButton.dataset.serial = row.serial_no;
-                    editButton.dataset.invoice = row.invoice_no;
+                // Set data attributes
+                editButton.dataset.id = row.applicator_id;
+                editButton.dataset.control = row.hp_no;
+                editButton.dataset.terminal = row.terminal_no;
+                editButton.dataset.description = row.description;
+                editButton.dataset.wire = row.wire;
+                editButton.dataset.terminalMaker = row.terminal_maker;
+                editButton.dataset.applicatorMaker = row.applicator_maker;
+                editButton.dataset.serial = row.serial_no;
+                editButton.dataset.invoice = row.invoice_no;
 
-                    // Set onclick handler to open applicator modal
-                    editButton.onclick = () => openApplicatorEditModal(editButton);
+                // Set onclick handler to open applicator modal
+                editButton.onclick = () => openApplicatorEditModal(editButton);
 
-                    tdActions.appendChild(editButton);
+                actionsDiv.appendChild(editButton);
 
                 // Delete form
-                    const deleteForm = document.createElement('form');
-                    deleteForm.method = 'POST';
-                    deleteForm.action = '/SOMS/app/controllers/delete_applicator.php';
-                    deleteForm.style.display = 'inline';
-                    deleteForm.onsubmit = () => confirm('Are you sure you want to delete this applicator?');
+                const deleteForm = document.createElement('form');
+                deleteForm.method = 'POST';
+                deleteForm.action = '/SOMS/app/controllers/delete_applicator.php';
+                deleteForm.style.display = 'inline';
+                deleteForm.onsubmit = () => confirm('Are you sure you want to delete this applicator?');
 
-                    const hiddenId = document.createElement('input');
-                    hiddenId.type = 'hidden';
-                    hiddenId.name = 'applicator_id';
-                    hiddenId.value = row.applicator_id;
-                    deleteForm.appendChild(hiddenId);
+                const hiddenId = document.createElement('input');
+                hiddenId.type = 'hidden';
+                hiddenId.name = 'applicator_id';
+                hiddenId.value = row.applicator_id;
+                deleteForm.appendChild(hiddenId);
 
-                    const deleteButton = document.createElement('button');
-                    deleteButton.type = 'submit';
-                    deleteButton.textContent = '🗑️';
-                    deleteForm.appendChild(deleteButton);
+                const deleteButton = document.createElement('button');
+                deleteButton.type = 'submit';
+                deleteButton.className = 'action-btn delete-btn';
+                deleteButton.textContent = '🗑️';
+                deleteForm.appendChild(deleteButton);
 
-                    tdActions.appendChild(deleteForm);
-                    tr.appendChild(tdActions);
+                actionsDiv.appendChild(deleteForm);
+                tdActions.appendChild(actionsDiv);
+                tr.appendChild(tdActions);
 
-                    tbody.appendChild(tr);
+                tbody.appendChild(tr);
             });
 
             applicatorOffset += data.length;
             applicatorLoading = false;
 
             if (data.length < applicatorLimit) {
-                document.getElementById('applicator-container').removeEventListener('scroll', applicatorScrollHandler);
+                const container = document.getElementById('applicators-table');
+                if (container) container.removeEventListener('scroll', applicatorScrollHandler);
             }
         })
         .catch(error => {
@@ -115,14 +122,13 @@ function loadApplicators() {
         });
 }
 
-
 /*
     Handles scroll event for the applicator container.
     Loads more data when near the bottom.
 */
 function applicatorScrollHandler() {
-    const container = document.getElementById('applicator-container');
-    console.log('Scroll event fired', container.scrollTop, container.scrollHeight, container.clientHeight);
+    const container = document.getElementById('applicators-table');
+    if (!container) return;
     if (container.scrollTop + container.clientHeight >= container.scrollHeight - 5) {
         loadApplicators();
     }
@@ -130,6 +136,8 @@ function applicatorScrollHandler() {
 
 // Initialize the applicator loading on page load
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('applicator-container').addEventListener('scroll', applicatorScrollHandler);
+    const container = document.getElementById('applicators-table');
+    if (!container) return;
+    container.addEventListener('scroll', applicatorScrollHandler);
     loadApplicators(); // Load initial data
 });

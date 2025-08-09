@@ -49,6 +49,10 @@ function loadMachines() {
             // Actions TD
             const tdActions = document.createElement('td');
 
+            // Create actions wrapper div
+            const actionsDiv = document.createElement('div');
+            actionsDiv.className = 'actions';
+
             // Edit link
                 const editButton = document.createElement('button');
                 editButton.textContent = '✏️';
@@ -69,7 +73,7 @@ function loadMachines() {
                     openEditModal(editButton);
                 });
 
-                tdActions.appendChild(editButton);
+                actionsDiv.appendChild(editButton);
             
             // Delete form
                 const deleteForm = document.createElement('form');
@@ -90,7 +94,8 @@ function loadMachines() {
                 deleteButton.textContent = '🗑️';
                 deleteForm.appendChild(deleteButton);
 
-                tdActions.appendChild(deleteForm);
+                actionsDiv.appendChild(deleteForm);
+                tdActions.appendChild(actionsDiv);
                 tr.appendChild(tdActions);
 
             tbody.appendChild(tr); 
@@ -102,7 +107,7 @@ function loadMachines() {
 
             // If fewer than limit were returned, we've reached the end
             if (data.length < machineLimit) {
-                document.getElementById('machine-container').removeEventListener('scroll', machineScrollHandler);
+                document.getElementById('machine-body').removeEventListener('scroll', machineScrollHandler);
             }
         })
         .catch(error => {
@@ -117,7 +122,7 @@ Handles scroll event for the machine container.
 Loads more data when near the bottom.
 */
 function machineScrollHandler() {
-    const container = document.getElementById('machine-container');
+    const container = document.getElementById('machine-table');
     if (container.scrollTop + container.clientHeight >= container.scrollHeight - 5) {
         loadMachines();
     }
@@ -125,5 +130,5 @@ function machineScrollHandler() {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('machine-container').addEventListener('scroll', machineScrollHandler);
+    document.getElementById('machine-body').addEventListener('scroll', machineScrollHandler);
 });

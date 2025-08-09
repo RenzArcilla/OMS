@@ -14,7 +14,7 @@ function switchTab(tab) {
     });
    
     if (tab === 'machines') {
-        document.getElementById('machines-table').classList.add('active');
+        document.getElementById('machine-table').classList.add('active');
     } else if (tab === 'applicators') {
         document.getElementById('applicators-table').classList.add('active');
     }
@@ -134,7 +134,15 @@ function saveApplicator() {
     closeModal();
 }
 
+
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Page loaded, modals ready');
 });
+
+// Initialize the loading on page load
+function refreshData() {
+    location.reload();
+}
+    
+
