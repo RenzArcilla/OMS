@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="../../public/assets/css/file_upload.css"> -->
+    <link rel="stylesheet" href="../../public/assets/css/file_upload.css">
     <title>SOMS - File Upload </title>
 </head>
 <body>
@@ -23,7 +23,7 @@
                                     <button type="button" class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
                                         Choose Files
                                     </button>
-                                    <button type="submit" class="btn btn-success">Upload</button>
+                                    <button type="submit" class="btn btn-secondary">Upload</button>
                                 </div>
                             </div>
                         </form>
