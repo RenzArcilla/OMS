@@ -55,12 +55,16 @@ function loadData($data) {
             }
         }
 
-        if (empty($machine_id)) return("Machine ID is required.");
+        if (empty($machine_id)) return("Machine control number is required.");
         $machine_data = machineExists($machine_id);
         if (!is_array($machine_data)) {
             return(is_string($machine_data) ? $machine_data : "Machine: $machine_id not found.");
         }
 
+        $app1 = $app1_data['hp_no'];
+        if ($app1_id === $app2_id) {
+            return "Error! Duplicate applicator entry: $app1";
+        }
 
         // 1. Create a record
         $record_id = createRecord($shift, $machine_data, $app1_data, $app2_data, $date, $_SESSION['user_id']);

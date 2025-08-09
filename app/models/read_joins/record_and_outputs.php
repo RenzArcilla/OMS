@@ -53,7 +53,7 @@ function getRecordsAndOutputs(int $limit = 20, int $offset = 0): array {
             AND r.applicator2_id = ao2.applicator_id
 
 
-        LEFT JOIN machine_outputs mo ON r.machine_id = mo.machine_output_id
+        LEFT JOIN machine_outputs mo ON r.record_id = mo.record_id
 
         LEFT JOIN applicators a1 ON r.applicator1_id = a1.applicator_id
         LEFT JOIN applicators a2 ON r.applicator2_id = a2.applicator_id
