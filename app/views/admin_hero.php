@@ -13,3 +13,14 @@
         <div class="floating-orb orb-2"></div>
         <div class="floating-orb orb-3"></div>
     </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">SOMS</div>
+            <div class="admin-badge">Admin Panel</div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
