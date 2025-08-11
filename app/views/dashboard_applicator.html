@@ -115,6 +115,7 @@
                                         <th>Shear Blade</th>
                                         <th>Cutter A</th>
                                         <th>Cutter B</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="metricsBody">
@@ -178,8 +179,10 @@
                                                 <div class="progress-fill" style="width: 26%;"></div>
                                             </div>
                                         </td>
-                                        
-                                        
+                                        <td>
+                                            <button class="btn-small btn-edit" onclick="openEditModalDashboardApplicatorButton(this)">Undo</button>
+                                            <button class="btn-small btn-reset" onclick="openResetModal(this)">Reset</button>
+                                        </td>
                                     </tr>
                                     
                                     </tr>
@@ -191,6 +194,54 @@
             </div>
         </div>
     </div>
-    <script src="public/assets/js/side_bar.js"></script>
+
+    <!-- Edit Modal -->
+    <div id="editModalDashboardApplicator" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Edit Applicator - <span id="editHpNumber"></span></h2>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <div class="form-group">
+                        <label class="form-label">Wire Type</label>
+                        <select id="editWireType" class="form-input">
+                            <option value="BIG">Wire Crimper</option>
+                            <option value="SMALL">Wire Anvil</option>
+                            <option value="MEDIUM">Insulation Crimper</option>
+                            <option value="MEDIUM">Insulation Anvil</option>
+                            <option value="MEDIUM">Slide Cutter</option>
+                            <option value="MEDIUM">Cutter Holder</option>
+                            <option value="MEDIUM">Shear Blade</option>
+                            <option value="MEDIUM">Cutter A</option>
+                            <option value="MEDIUM">Cutter B</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Dates Replaced</label>
+                        <select id="editStatus" class="form-input">
+                            <option value="07/21/2025">07/21/2025</option>
+                            <option value="07/22/2025">07/22/2025</option>
+                            <option value="07/23/2025">07/23/2025</option>
+                            <option value="07/24/2025">07/24/2025</option>
+                            <option value="07/25/2025">07/25/2025</option>
+                            <option value="07/26/2025">07/26/2025</option>
+                            <option value="07/27/2025">07/27/2025</option>
+                            <option value="07/28/2025">07/28/2025</option>
+                            <option value="07/29/2025">07/29/2025</option>
+                        </select>
+                    </div>
+
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" onclick="closeModal('editModal')">Cancel</button>
+                <button type="button" class="btn-confirm" onclick="saveEdit()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+    <script src="../../public/assets/js/dashboard_applicator.js"></script>
 </body>
 </html>
