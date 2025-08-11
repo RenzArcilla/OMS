@@ -219,8 +219,8 @@ if (!isset($_SESSION['user_id'])) {
                             <tr>
                                 <td><?= htmlspecialchars($row['record_id']) ?></td>
                                 <td><?= htmlspecialchars($row['date_inspected']) ?></td>
-                                <td><?= htmlspecialchars($row['date_encoded']) ?></td>
-                                <td><?= htmlspecialchars($row['last_updated']) ?></td>
+                                <td><?= htmlspecialchars(explode(' ', $row['date_encoded'])[0]) ?></td>
+                                <td><?= htmlspecialchars(explode(' ', $row['last_updated'])[0]) ?></td>
                                 <td><?= htmlspecialchars($row['shift']) ?></td>
                                 <td><?= htmlspecialchars($row['hp1_no']) ?></td>
                                 <td><?= htmlspecialchars($row['app1_output']) ?></td>
