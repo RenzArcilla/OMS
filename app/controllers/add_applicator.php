@@ -43,7 +43,8 @@ if (empty($control_no) || empty($terminal_no) || empty($description) ||
     exit;
 }
 
-if ($description !== 'SIDE' && $description !== 'END') {
+if ($description !== 'SIDE' && $description !== 'END'  && $description !== 'CLAMP'  
+    && $description !== 'STRIP AND CRIMP' ) {
     jsAlertRedirect("Invalid selection for description.", $redirect_url);
     exit;
 }
