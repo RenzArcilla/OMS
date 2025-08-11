@@ -148,13 +148,13 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </div>
-                    <div class="section-content expanded">
                         <div class="search-filter">
                             <input type="text" class="search-input" placeholder="Search applicator..." onkeyup="filterTable(this.value)">
                             <button class="filter-btn active" onclick="filterByStatus(this, 'all')">All</button>
                             <button class="filter-btn" onclick="filterByStatus(this, 'success')">Active</button>
                             <button class="filter-btn" onclick="filterByStatus(this, 'warning')">⚠️ Warning</button>
                         </div>
+                    <div class="section-content expanded">
                         <div class="table-container">
                             <table class="data-table" id="metricsTable">
                                 <thead>
