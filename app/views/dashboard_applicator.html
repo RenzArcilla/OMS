@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Admin Dashboard</title>
     <link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
+</head>
 <body>
     <div class="admin-container">
         <!-- Main Content -->
@@ -62,22 +63,6 @@
                     </div>
                     
                 </div>
-                    <!-- Tool Lifespan Warnings -->
-                    <!--<div class="stat-card warning">
-                        <div class="stat-card-content">
-                            <div class="stat-info">
-                                <h3>Tool Lifespan Warnings</h3>
-                                <div class="stat-value">3</div>
-                                <div class="stat-change warning">
-                                    <i data-lucide="alert-triangle"></i>
-                                    Attention required
-                                </div>
-                            </div>
-                            <div class="stat-icon warning">
-                                <i data-lucide="alert-triangle"></i>
-                            </div>
-                        </div>
-                    </div>  -->
 
                 <!-- Applicator Status Section -->
                 <div class="data-section">
@@ -180,8 +165,8 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <button class="btn-small btn-edit" onclick="openEditModalDashboardApplicatorButton(this)">Undo</button>
-                                            <button class="btn-small btn-reset" onclick="openResetModal(this)">Reset</button>
+                                            <button class="btn-small btn-edit" onclick="openUndoModal()">Undo</button>
+                                            <button class="btn-small btn-reset" onclick="openResetModal()">Reset</button>
                                         </td>
                                     </tr>
                                     
@@ -195,16 +180,16 @@
         </div>
     </div>
 
-    <!-- Edit Modal -->
-    <div id="editModalDashboardApplicator" class="modal-overlay">
+    <!-- Undo Modal -->
+    <div id="undoModalDashboardApplicator" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
-                <h2 class="modal-title">Edit Applicator - <span id="editHpNumber"></span></h2>
+                <h2 class="modal-title">Undo Applicator - <span id="editHpNumber"></span></h2>
             </div>
             <div class="modal-body">
                 <form id="editForm">
                     <div class="form-group">
-                        <label class="form-label">Wire Type</label>
+                        <label class="form-label">Select Applicator Part to Reset</label>
                         <select id="editWireType" class="form-input">
                             <option value="BIG">Wire Crimper</option>
                             <option value="SMALL">Wire Anvil</option>
@@ -237,8 +222,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn-cancel" onclick="closeModal('editModal')">Cancel</button>
-                <button type="button" class="btn-confirm" onclick="saveEdit()">Save Changes</button>
+                <button type="button" class="btn-cancel" onclick="closeUndoModal()">Cancel</button>
+                <button type="button" class="btn-confirm" onclick="saveUndo()">Confirm</button>
             </div>
         </div>
     </div>
