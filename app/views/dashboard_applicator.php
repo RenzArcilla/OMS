@@ -157,7 +157,7 @@
                     </div>
                     <div class="section-content expanded">
                         <div class="search-filter">
-                            <input type="text" class="search-input" placeholder="Search metrics..." onkeyup="filterTable(this.value)">
+                            <input type="text" class="search-input" placeholder="Search applicator..." onkeyup="filterTable(this.value)">
                             <button class="filter-btn active" onclick="filterByStatus(this, 'all')">All</button>
                             <button class="filter-btn" onclick="filterByStatus(this, 'success')">Active</button>
                             <button class="filter-btn" onclick="filterByStatus(this, 'warning')">Warning</button>
@@ -182,7 +182,7 @@
                             </thead>
                             <tbody id="metricsBody">
                                 <tr data-status="success">
-                                    <td>Connect to Database the HP No.</td>
+                                    <td class="metric-value">Connect to Database the HP No.</td>
                                     <td class="metric-value">Data Here</td>
                                     <td class="metric-value">Data Here</td>
                                     <td class="metric-value">Data Here</td>
@@ -200,7 +200,7 @@
                                     </td>
                                 </tr>
                                 <tr data-status="success">
-                                    <td>Connect to Database the HP No.</td>
+                                    <td class="metric-value">Connect to Database the HP No.</td>
                                     <td class="metric-value">Data Here</td>
                                     <td class="metric-value">Data Here</td>
                                     <td class="metric-value">Data Here</td>
