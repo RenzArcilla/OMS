@@ -192,7 +192,7 @@ if (!isset($_SESSION['user_id'])) {
                             <th>Record ID</th>
                             <th>Date Inspected</th>
                             <th>Date Encoded</th>
-                            <th>Date Encoded</th>
+                            <th>Last Updated</th>
                             <th>Shift</th>
                             <th>Applicator1</th>
                             <th>App1 Output</th>
@@ -219,7 +219,6 @@ if (!isset($_SESSION['user_id'])) {
                             <tr>
                                 <td><?= htmlspecialchars($row['record_id']) ?></td>
                                 <td><?= htmlspecialchars($row['date_inspected']) ?></td>
-                                <td><?= htmlspecialchars($row['date_encoded']) ?></td>
                                 <td><?= htmlspecialchars($row['date_encoded']) ?></td>
                                 <td><?= htmlspecialchars($row['last_updated']) ?></td>
                                 <td><?= htmlspecialchars($row['shift']) ?></td>
