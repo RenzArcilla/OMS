@@ -26,39 +26,39 @@
                 
                 <div class="stats-overview">
                     <div class="stat-card status-good">
-                        <div class="stat-value" id="total-today">12,847</div>
+                        <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
                     <div class="stat-card status-good">
-                        <div class="stat-value" id="total-today">12,847</div>
+                        <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
                     <div class="stat-card status-warning">
-                        <div class="stat-value" id="total-today">12,847</div>
+                        <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
                     <div class="stat-card status-good">
-                        <div class="stat-value" id="total-today">12,847</div>
+                        <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
                     <div class="stat-card status-good">
-                        <div class="stat-value" id="total-today">12,847</div>
+                        <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
                     <div class="stat-card status-warning">
-                        <div class="stat-value" id="total-today">12,847</div>
+                        <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
                     <div class="stat-card status-good">
-                        <div class="stat-value" id="total-today">12,847</div>
+                        <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
                     <div class="stat-card status-good">
-                        <div class="stat-value" id="total-today">12,847</div>
+                        <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
                     <div class="stat-card status-critical">
-                        <div class="stat-value" id="total-today">12,847</div>
+                        <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
                     
@@ -240,6 +240,51 @@
             <div class="modal-footer">
                 <button type="button" class="btn-cancel" onclick="closeResetModal()">Cancel</button>
                 <button type="button" class="btn-confirm" onclick="saveReset()">Confirm</button>
+            </div>
+        </div>
+    </div>
+    <!-- Machine Modal -->
+    <div id="machineModalDashboardApplicator" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Machine - <span id="editHpNumber"></span></h2>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <div class="form-group">
+                        <label class="form-label">Select Machine</label>
+                        <select id="editWireType" class="form-input">
+                            <option value="BIG">Wire Crimper</option>
+                            <option value="SMALL">Wire Anvil</option>
+                            <option value="MEDIUM">Insulation Crimper</option>
+                            <option value="MEDIUM">Insulation Anvil</option>
+                            <option value="MEDIUM">Slide Cutter</option>
+                            <option value="MEDIUM">Cutter Holder</option>
+                            <option value="MEDIUM">Shear Blade</option>
+                            <option value="MEDIUM">Cutter A</option>
+                            <option value="MEDIUM">Cutter B</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Select Machine</label>
+                        <select id="editStatus" class="form-input">
+                            <option value="07/21/2025">07/21/2025</option>
+                            <option value="07/22/2025">07/22/2025</option>
+                            <option value="07/23/2025">07/23/2025</option>
+                            <option value="07/24/2025">07/24/2025</option>
+                            <option value="07/25/2025">07/25/2025</option>
+                            <option value="07/26/2025">07/26/2025</option>
+                            <option value="07/27/2025">07/27/2025</option>
+                            <option value="07/28/2025">07/28/2025</option>
+                            <option value="07/29/2025">07/29/2025</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" onclick="closeUndoModal()">Cancel</button>
+                <button type="button" class="btn-confirm" onclick="saveUndo()">Confirm</button>
             </div>
         </div>
     </div>
