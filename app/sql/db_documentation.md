@@ -224,8 +224,11 @@ This database system is designed to track machine and applicator usage in a manu
 | `machine_id` | INT | NOT NULL, FK → machines | Machine that was reset |
 | `reset_by` | INT | NOT NULL, FK → users | User who performed the reset |
 | `part_reset` | VARCHAR(50) | NOT NULL | Part that was reset (standard name or custom code, 'ALL' for full reset) |
+| `previous_value` | INT | NOT NULL | Value before reset |
 | `reset_time` | DATETIME | DEFAULT CURRENT_TIMESTAMP | When reset occurred |
-| `remarks` | TEXT | DEFAULT NULL | Optional notes about the reset |
+
+| `undone_by` | INT | DEFAULT NULL, FK → users | User who undid the reset |
+| `undone_time` | DATETIME | DEFAULT NULL | When reset was undone |
 
 **Indexes**: `idx_machine_id`, `idx_reset_time`
 
@@ -240,9 +243,11 @@ This database system is designed to track machine and applicator usage in a manu
 | `reset_id` | INT | PRIMARY KEY, AUTO_INCREMENT | Unique identifier |
 | `applicator_id` | INT | NOT NULL, FK → applicators | Applicator that was reset |
 | `reset_by` | INT | NOT NULL, FK → users | User who performed the reset |
+| `previous_value` | INT | NOT NULL | Value before reset |
 | `part_reset` | VARCHAR(50) | NOT NULL | Part that was reset (standard name or custom code, 'ALL' for full reset) |
 | `reset_time` | DATETIME | DEFAULT CURRENT_TIMESTAMP | When reset occurred |
-| `remarks` | TEXT | DEFAULT NULL | Optional notes about the reset |
+| `undone_by` | INT | DEFAULT NULL, FK → users | User who undid the reset |
+| `undone_time` | DATETIME | DEFAULT NULL | When reset was undone |
 
 **Indexes**: `idx_applicator_id`, `idx_reset_time`
 
