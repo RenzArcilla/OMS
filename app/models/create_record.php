@@ -29,7 +29,6 @@ function createRecord($shift, $machine_data, $applicator1_data,
     
     try {
         // Convert shift format to match database enum
-        $shift_formatted = '';
         switch (strtoupper($shift)) {
             case 'FIRST':
                 $shift_formatted = '1st';
@@ -47,7 +46,7 @@ function createRecord($shift, $machine_data, $applicator1_data,
         // Get machine and applicator IDs
         $machine_id = is_array($machine_data) ? $machine_data['machine_id'] : $machine_data;
         $applicator1_id = is_array($applicator1_data) ? $applicator1_data['applicator_id'] : $applicator1_data;
-        if ($applicator2_id === null) {
+        if ($applicator2_data === null) {
             $applicator2_id = null; // Ensure null if no applicator2 data
         } else {
             $applicator2_id = is_array($applicator2_data) ? $applicator2_data['applicator_id'] : $applicator2_data;
