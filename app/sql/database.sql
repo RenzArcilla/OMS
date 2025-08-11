@@ -208,28 +208,34 @@ CREATE TABLE machine_reset (
     reset_id INT PRIMARY KEY AUTO_INCREMENT,
     machine_id INT NOT NULL,
     reset_by INT NOT NULL,
-    part_reset VARCHAR(50) NOT NULL, -- Can be standard part name or custom part code
+    part_reset VARCHAR(50) NOT NULL, -- standard part name or custom part code
+    previous_value INT NOT NULL, -- Store the value before reset
     reset_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    remarks TEXT DEFAULT NULL,
+    undone_by INT DEFAULT NULL, -- who undid this reset
+    undone_time DATETIME DEFAULT NULL, -- when it was undone
 
     FOREIGN KEY (machine_id) REFERENCES machines(machine_id),
     FOREIGN KEY (reset_by) REFERENCES users(user_id),
+    FOREIGN KEY (undone_by) REFERENCES users(user_id),
 
     INDEX idx_machine_id (machine_id),
-    INDEX idx_reset_time (reset_time)
+    INDEX idx_reset_time (reset_time),
 );
 
 CREATE TABLE applicator_reset (
     reset_id INT PRIMARY KEY AUTO_INCREMENT,
     applicator_id INT NOT NULL,
     reset_by INT NOT NULL,
-    part_reset VARCHAR(50) NOT NULL, -- Can be standard part name or custom part code
+    part_reset VARCHAR(50) NOT NULL, -- standard part name or custom part code
+    previous_value INT NOT NULL, -- Store the value before reset
     reset_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    remarks TEXT DEFAULT NULL,
+    undone_by INT DEFAULT NULL, -- who undid this reset
+    undone_time DATETIME DEFAULT NULL, -- when it was undone
 
     FOREIGN KEY (applicator_id) REFERENCES applicators(applicator_id),
     FOREIGN KEY (reset_by) REFERENCES users(user_id),
+    FOREIGN KEY (undone_by) REFERENCES users(user_id),
 
     INDEX idx_applicator_id (applicator_id),
-    INDEX idx_reset_time (reset_time)
+    INDEX idx_reset_time (reset_time),
 );
