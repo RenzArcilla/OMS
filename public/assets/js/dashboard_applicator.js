@@ -118,3 +118,7 @@ function saveEdit() {
     closeModal('resetModalDashboardApplicator');
 }
 
+// Refresh the page
+function refreshPage() {
+    window.location.reload();
+}
