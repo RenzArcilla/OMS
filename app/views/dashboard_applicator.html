@@ -217,13 +217,29 @@
                             <option value="07/29/2025">07/29/2025</option>
                         </select>
                     </div>
-
-                    
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn-cancel" onclick="closeUndoModal()">Cancel</button>
                 <button type="button" class="btn-confirm" onclick="saveUndo()">Confirm</button>
+            </div>
+        </div>
+    </div>
+    <div id="resetModalDashboardApplicator" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Reset Applicator<span id="editHpNumber"></span></h2>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <div class="form-group">
+                        <label class="form-label">Are you sure you want to reset the applicator?</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" onclick="closeResetModal()">Cancel</button>
+                <button type="button" class="btn-confirm" onclick="saveReset()">Confirm</button>
             </div>
         </div>
     </div>
