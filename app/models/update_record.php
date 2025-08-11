@@ -23,6 +23,20 @@ function updateRecord($record_id, $date_inspected, $shift, $app1_id, $app2_id, $
 
     global $pdo;
 
+    switch (strtoupper($shift)) {
+            case 'FIRST':
+                $shift_formatted = '1st';
+                break;
+            case 'SECOND':
+                $shift_formatted = '2nd';
+                break;
+            case 'NIGHT':
+                $shift_formatted = 'NIGHT';
+                break;
+            default:
+                return "Invalid shift value: " . htmlspecialchars($shift, ENT_QUOTES);
+        }
+
     try {
         // Prepare SQL update query
         $stmt = $pdo->prepare("
