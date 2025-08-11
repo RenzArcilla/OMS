@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Admin Dashboard</title>
     <link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
+</head>
 <body>
     <div class="admin-container">
         <!-- Main Content -->
@@ -13,11 +14,11 @@
             <div id="dashboard-tab" class="tab-content">
                 <div class="page-header">
                     <h1 class="page-title">📊 Dashboard</h1>
-                    <div class="header-actions">
+                    <div class="header-actions">    
                         <button type="button" class="btn btn-secondary" onclick="exportData()">
                             Export Report
                         </button>
-                        <button type="button" class="btn btn-primary">
+                        <button type="button" class="btn btn-primary" onclick="refreshPage()">
                             Refresh Data
                         </button>
                     </div>
@@ -25,59 +26,43 @@
                 
                 <div class="stats-overview">
                     <div class="stat-card status-good">
-                        <div class="stat-value" id="total-today">12,847</div>
+                        <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
                     <div class="stat-card status-good">
-                        <div class="stat-value" id="total-today">12,847</div>
+                        <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
                     <div class="stat-card status-warning">
-                        <div class="stat-value" id="total-today">12,847</div>
+                        <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
                     <div class="stat-card status-good">
-                        <div class="stat-value" id="total-today">12,847</div>
+                        <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
                     <div class="stat-card status-good">
-                        <div class="stat-value" id="total-today">12,847</div>
+                        <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
                     <div class="stat-card status-warning">
-                        <div class="stat-value" id="total-today">12,847</div>
+                        <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
                     <div class="stat-card status-good">
-                        <div class="stat-value" id="total-today">12,847</div>
+                        <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
                     <div class="stat-card status-good">
-                        <div class="stat-value" id="total-today">12,847</div>
+                        <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
                     <div class="stat-card status-critical">
-                        <div class="stat-value" id="total-today">12,847</div>
+                        <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
                     
                 </div>
-                    <!-- Tool Lifespan Warnings -->
-                    <!--<div class="stat-card warning">
-                        <div class="stat-card-content">
-                            <div class="stat-info">
-                                <h3>Tool Lifespan Warnings</h3>
-                                <div class="stat-value">3</div>
-                                <div class="stat-change warning">
-                                    <i data-lucide="alert-triangle"></i>
-                                    Attention required
-                                </div>
-                            </div>
-                            <div class="stat-icon warning">
-                                <i data-lucide="alert-triangle"></i>
-                            </div>
-                        </div>
-                    </div>  -->
 
                 <!-- Applicator Status Section -->
                 <div class="data-section">
@@ -180,8 +165,8 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <button class="btn-small btn-edit" onclick="openEditModalDashboardApplicatorButton(this)">Undo</button>
-                                            <button class="btn-small btn-reset" onclick="openResetModal(this)">Reset</button>
+                                            <button class="btn-small btn-edit" onclick="openUndoModal()">Undo</button>
+                                            <button class="btn-small btn-reset" onclick="openResetModal()">Reset</button>
                                         </td>
                                     </tr>
                                     
@@ -195,16 +180,16 @@
         </div>
     </div>
 
-    <!-- Edit Modal -->
-    <div id="editModalDashboardApplicator" class="modal-overlay">
+    <!-- Undo Modal -->
+    <div id="undoModalDashboardApplicator" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
-                <h2 class="modal-title">Edit Applicator - <span id="editHpNumber"></span></h2>
+                <h2 class="modal-title">Undo Applicator - <span id="editHpNumber"></span></h2>
             </div>
             <div class="modal-body">
                 <form id="editForm">
                     <div class="form-group">
-                        <label class="form-label">Wire Type</label>
+                        <label class="form-label">Select Applicator Part to Reset</label>
                         <select id="editWireType" class="form-input">
                             <option value="BIG">Wire Crimper</option>
                             <option value="SMALL">Wire Anvil</option>
@@ -232,13 +217,74 @@
                             <option value="07/29/2025">07/29/2025</option>
                         </select>
                     </div>
-
-                    
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn-cancel" onclick="closeModal('editModal')">Cancel</button>
-                <button type="button" class="btn-confirm" onclick="saveEdit()">Save Changes</button>
+                <button type="button" class="btn-cancel" onclick="closeUndoModal()">Cancel</button>
+                <button type="button" class="btn-confirm" onclick="saveUndo()">Confirm</button>
+            </div>
+        </div>
+    </div>
+    <div id="resetModalDashboardApplicator" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Reset Applicator<span id="editHpNumber"></span></h2>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <div class="form-group">
+                        <label class="form-label">Are you sure you want to reset the applicator?</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" onclick="closeResetModal()">Cancel</button>
+                <button type="button" class="btn-confirm" onclick="saveReset()">Confirm</button>
+            </div>
+        </div>
+    </div>
+    <!-- Machine Modal -->
+    <div id="machineModalDashboardApplicator" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Machine - <span id="editHpNumber"></span></h2>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <div class="form-group">
+                        <label class="form-label">Select Machine</label>
+                        <select id="editWireType" class="form-input">
+                            <option value="BIG">Wire Crimper</option>
+                            <option value="SMALL">Wire Anvil</option>
+                            <option value="MEDIUM">Insulation Crimper</option>
+                            <option value="MEDIUM">Insulation Anvil</option>
+                            <option value="MEDIUM">Slide Cutter</option>
+                            <option value="MEDIUM">Cutter Holder</option>
+                            <option value="MEDIUM">Shear Blade</option>
+                            <option value="MEDIUM">Cutter A</option>
+                            <option value="MEDIUM">Cutter B</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Select Machine</label>
+                        <select id="editStatus" class="form-input">
+                            <option value="07/21/2025">07/21/2025</option>
+                            <option value="07/22/2025">07/22/2025</option>
+                            <option value="07/23/2025">07/23/2025</option>
+                            <option value="07/24/2025">07/24/2025</option>
+                            <option value="07/25/2025">07/25/2025</option>
+                            <option value="07/26/2025">07/26/2025</option>
+                            <option value="07/27/2025">07/27/2025</option>
+                            <option value="07/28/2025">07/28/2025</option>
+                            <option value="07/29/2025">07/29/2025</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" onclick="closeUndoModal()">Cancel</button>
+                <button type="button" class="btn-confirm" onclick="saveUndo()">Confirm</button>
             </div>
         </div>
     </div>

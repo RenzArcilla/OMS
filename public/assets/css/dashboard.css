@@ -243,7 +243,6 @@ body {
     background: white;
     border-radius: 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
     margin-bottom: 32px;
 }
 
@@ -293,7 +292,6 @@ body {
 
 .section-content {
     max-height: 0;
-    overflow-y: auto;
     transition: max-height 0.3s ease;
 }
 
