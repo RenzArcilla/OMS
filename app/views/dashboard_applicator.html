@@ -191,15 +191,16 @@
                     <div class="form-group">
                         <label class="form-label">Select Applicator Part to Reset</label>
                         <select id="editWireType" class="form-input">
-                            <option value="BIG">Wire Crimper</option>
-                            <option value="SMALL">Wire Anvil</option>
-                            <option value="MEDIUM">Insulation Crimper</option>
-                            <option value="MEDIUM">Insulation Anvil</option>
-                            <option value="MEDIUM">Slide Cutter</option>
-                            <option value="MEDIUM">Cutter Holder</option>
-                            <option value="MEDIUM">Shear Blade</option>
-                            <option value="MEDIUM">Cutter A</option>
-                            <option value="MEDIUM">Cutter B</option>
+                            <option>Select Part</option>
+                            <option>Wire Crimper</option>
+                            <option>Wire Anvil</option>
+                            <option>Insulation Crimper</option>
+                            <option>Insulation Anvil</option>
+                            <option>Slide Cutter</option>
+                            <option>Cutter Holder</option>
+                            <option>Shear Blade</option>
+                            <option>Cutter A</option>
+                            <option>Cutter B</option>
                         </select>
                     </div>
                     
@@ -244,7 +245,7 @@
         </div>
     </div>
     <!-- Machine Modal -->
-    <div id="machineModalDashboardApplicator" class="modal-overlay">
+    <!--div id="machineModalDashboardApplicator" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
                 <h2 class="modal-title">Machine - <span id="editHpNumber"></span></h2>
@@ -254,14 +255,15 @@
                     <div class="form-group">
                         <label class="form-label">Select Machine</label>
                         <select id="editWireType" class="form-input">
-                            <option value="BIG">Wire Crimper</option>
-                            <option value="SMALL">Wire Anvil</option>
-                            <option value="MEDIUM">Insulation Crimper</option>
-                            <option value="MEDIUM">Insulation Anvil</option>
-                            <option value="MEDIUM">Slide Cutter</option>
-                            <option value="MEDIUM">Cutter Holder</option>
-                            <option value="MEDIUM">Shear Blade</option>
-                            <option value="MEDIUM">Cutter A</option>
+                            <option>Select Machine</option>
+                            <option>Wire Crimper</option>
+                            <option>Wire Anvil</option>
+                            <option>Insulation Crimper</option>
+                            <option>Insulation Anvil</option>
+                            <option>Slide Cutter</option>
+                            <option>Cutter Holder</option>
+                            <option>Shear Blade</option>
+                            <option>Cutter A</option>
                             <option value="MEDIUM">Cutter B</option>
                         </select>
                     </div>
@@ -287,7 +289,7 @@
                 <button type="button" class="btn-confirm" onclick="saveUndo()">Confirm</button>
             </div>
         </div>
-    </div>
+    </div -->
     <script src="../../public/assets/js/dashboard_applicator.js"></script>
 </body>
 </html>
