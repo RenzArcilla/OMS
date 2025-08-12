@@ -92,7 +92,7 @@ if (!empty($app2)) {
     }
 }
 
-// a.1 for previous applicators (will be used to differentiate app1 and app2 in the applicator_outputs table)
+// for previous applicators (will be used to differentiate app1 and app2 in the applicator_outputs table)
 $prev_app1_data = applicatorExists($prev_app1);
 if (!is_array($prev_app1_data)) {
     jsAlertRedirect("Previous Applicator 1: $prev_app1 not found!", $redirect_url);
