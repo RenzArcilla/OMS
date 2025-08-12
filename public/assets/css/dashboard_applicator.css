@@ -6,9 +6,10 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #F9FAFB;
+    background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);
     min-height: 100vh;
     font-weight: 400;
+    color: #111827;
 }
 
 .admin-container {
