@@ -87,6 +87,7 @@
                                 <thead>
                                     <tr>
                                         <th>AM No.</th>
+                                        <th>Status</th>
                                         <th>Last Encoded</th>
                                         <th>Total Output</th>
                                         <th>Cut Blade</th>
@@ -96,30 +97,29 @@
                                 </thead>
                                 
                                 <tbody id="metricsBody">
-                                    <tr data-status="success">
-                                        <td class="metric-value">Connect to Database the HP No.</td>
-                                        <td class="metric-value">Data Here</td>
-                                        <td class="metric-value">Data Here</td>
-                                        <td class="metric-value">Data Here</td>
-                                        <td class="metric-value">Data Here</td>
-                                        <td class="metric-value">Data Here</td>
+                                    <tr>
+                                        <td><strong>HP-001</strong></td>
+                                        <td><span class="status-badge status-good">Good</span></td>
+                                        <td>07/21/2025</td>
+                                        <td>847</td>
+                                        <td>
+                                            <div>630K / 1.5M</div>
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" style="width: 42%;"></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>570K / 1.5M</div>
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" style="width: 38%;"></div>
+                                            </div>
+                                        </td>
                                         
-                                    </tr>
-                                    <tr data-status="success">
-                                        <td class="metric-value">Connect to Database the HP No.</td>
-                                        <td class="metric-value">Data Here</td>
-                                        <td class="metric-value">Data Here</td>
-                                        <td class="metric-value">Data Here</td>
-                                        <td class="metric-value">Data Here</td>
-                                        <td class="metric-value">Data Here</td>
-                                    </tr>
-                                    <tr data-status="warning">
-                                        <td class="metric-value">Connect to Database the HP No.</td>
-                                        <td class="metric-value">Data Here</td>
-                                        <td class="metric-value">Data Here</td>
-                                        <td class="metric-value">Data Here</td>
-                                        <td class="metric-value">Data Here</td>
-                                        <td class="metric-value">Data Here</td>
+                                        </td>
+                                        <td>
+                                            <button class="btn-small btn-edit" onclick="openUndoModal()">Undo</button>
+                                            <button class="btn-small btn-reset" onclick="openResetModal()">Reset</button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
