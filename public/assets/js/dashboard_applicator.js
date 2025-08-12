@@ -11,18 +11,6 @@ function closeUndoModal() {
     document.getElementById('undoModalDashboardApplicator').style.display = 'none';
 }
 
-// Function to open the undo modal for dashboard applicator
-function openUndoModalDashboardApplicatorButton(button) {
-    document.getElementById('undoModalDashboardApplicator').style.display = 'block';
-}
-
-// Function to close any modal by ID
-function closeModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.style.display = 'none';
-    }xa
-}
 
 // Function to save the edit changes
 function saveEdit() {
