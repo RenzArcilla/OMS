@@ -246,6 +246,27 @@ body {
     border-radius: 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     margin-bottom: 32px;
+    overflow-y: scroll; /* or auto */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #888 #f1f1f1; /* For Firefox */
+}
+
+.data-section::-webkit-scrollbar {
+    width: 10px; /* Scrollbar width */
+}
+
+.data-section::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Track color */
+}
+
+.data-section::-webkit-scrollbar-thumb {
+    background-color: #888; /* Thumb color */
+    border-radius: 10px;
+    border: 1px solid #f1f1f1; /* Padding around thumb */
+}
+
+.data-section::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Darker on hover */
 }
 
 .section-header {
