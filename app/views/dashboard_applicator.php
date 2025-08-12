@@ -233,6 +233,21 @@
             </div>
             <div class="modal-body">
                 <form id="editForm">
+                <div class="form-group">
+                    <label class="form-label">Select Applicator Part to Reset</label>
+                        <select id="editWireType" class="form-input">
+                            <option>Select Part</option>
+                            <option>Wire Crimper</option>
+                            <option>Wire Anvil</option>
+                            <option>Insulation Crimper</option>
+                            <option>Insulation Anvil</option>
+                            <option>Slide Cutter</option>
+                            <option>Cutter Holder</option>
+                            <option>Shear Blade</option>
+                            <option>Cutter A</option>
+                            <option>Cutter B</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label class="form-label">Are you sure you want to reset the applicator?</label>
                     </div>
