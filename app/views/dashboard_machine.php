@@ -24,39 +24,39 @@
                 </div>
                 
                 <div class="stats-overview">
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-warning">
+                    <div class="stat-card status-warning" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-warning">
+                    <div class="stat-card status-warning" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-critical">
+                    <div class="stat-card status-critical" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
@@ -200,6 +200,58 @@
             <div class="modal-footer">
                 <button type="button" class="btn-cancel" onclick="closeResetModalDashboardMachine()">Cancel</button>
                 <button type="button" class="btn-confirm" onclick="saveReset()">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Machine Modal -->
+    <div id="machineModalDashboardApplicator" class="modal-overlay">
+        <div class="modal">
+            <div class="parts-list">
+                <!-- Cut Blade -->
+                <div class="part-item">
+                    <div class="part-header">
+                        <h4 class="part-name">Cut Blade</h4>
+                        <span class="status-badge status-good">Good</span>
+                    </div>
+                    <div class="part-details">
+                        <span class="cycles-info">Cycles: 234,567</span>
+                        <span class="percentage">42%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-good" style="width: 42%;"></div>
+                    </div>
+                </div>
+
+                <!-- Strip Blade A -->
+                <div class="part-item">
+                    <div class="part-header">
+                        <h4 class="part-name">Strip Blade A</h4>
+                        <span class="status-badge status-good">Good</span>
+                    </div>
+                    <div class="part-details">
+                        <span class="cycles-info">Cycles: 189,234</span>
+                        <span class="percentage">38%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-good" style="width: 38%;"></div>
+                    </div>
+                </div>
+
+                <!-- Strip Blade B -->
+                <div class="part-item">
+                    <div class="part-header">
+                        <h4 class="part-name">Strip Blade B</h4>
+                        <span class="status-badge status-warn">Warn</span>
+                    </div>
+                    <div class="part-details">
+                        <span class="cycles-info">Cycles: 387,945</span>
+                        <span class="percentage">78%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-warn" style="width: 78%;"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

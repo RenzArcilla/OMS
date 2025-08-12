@@ -124,15 +124,15 @@ function refreshPage() {
 }
 
 // Open the machine modal
-function openMachineModal() {
-    document.getElementById('machineModalDashboardApplicator').style.display = 'block';
+function openApplicatorModal() {
+    document.getElementById('applicatorModalDashboardApplicator').style.display = 'block';
     window.onclick = function(event) {
-        if (event.target === document.getElementById('machineModalDashboardApplicator')) {
-            document.getElementById('machineModalDashboardApplicator').style.display = 'none';
+        if (event.target === document.getElementById('applicatorModalDashboardApplicator')) {
+            document.getElementById('applicatorModalDashboardApplicator').style.display = 'none';
         }
     }
 }
 
-function closeMachineModal() {
-    document.getElementById('machineModalDashboardApplicator').style.display = 'none';
+function closeApplicatorModal() {
+    document.getElementById('applicatorModalDashboardApplicator').style.display = 'none';
 }
