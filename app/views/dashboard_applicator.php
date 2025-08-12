@@ -29,35 +29,35 @@
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-warning">
+                    <div class="stat-card status-warning" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-warning">
+                    <div class="stat-card status-warning" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-critical">
+                    <div class="stat-card status-critical" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
