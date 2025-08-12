@@ -175,6 +175,24 @@
             </div>
         </div>
     </div>
+    <div id="resetModalDashboardMachine" class="modal-overlay">
+        <div class="modal modal-reset">
+            <div class="modal-header">
+                <h2 class="modal-title">Reset Machine<span id="editHpNumber"></span></h2>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <div class="form-group">
+                        <label class="form-label">Are you sure you want to reset the machine?</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" onclick="closeResetModalDashboardMachine()">Cancel</button>
+                <button type="button" class="btn-confirm" onclick="saveReset()">Confirm</button>
+            </div>
+        </div>
+    </div>
     <script src="../../public/assets/js/dashboard_machine.js"></script>
 </body>
 </html>

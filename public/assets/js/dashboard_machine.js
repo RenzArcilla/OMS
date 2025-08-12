@@ -42,3 +42,16 @@ function saveChanges() {
     closeUndoModalDashboardMachine();
 }
 
+// Reset
+function openResetModal() {
+    document.getElementById('resetModalDashboardMachine').style.display = 'block';
+    window.onclick = function(event) {
+        if (event.target === document.getElementById('resetModalDashboardMachine')) {
+            document.getElementById('resetModalDashboardMachine').style.display = 'none';
+        }
+    }
+}
+
+function closeResetModalDashboardMachine() {
+    document.getElementById('resetModalDashboardMachine').style.display = 'none';
+}
