@@ -55,3 +55,8 @@ function openResetModal() {
 function closeResetModalDashboardMachine() {
     document.getElementById('resetModalDashboardMachine').style.display = 'none';
 }
+
+// Refresh the page
+function refreshPage() {
+    window.location.reload();
+}
