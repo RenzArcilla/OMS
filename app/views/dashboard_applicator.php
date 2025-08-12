@@ -25,39 +25,39 @@
                 </div>
                 
                 <div class="stats-overview">
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-warning">
+                    <div class="stat-card status-warning" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-warning">
+                    <div class="stat-card status-warning" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-critical">
+                    <div class="stat-card status-critical" onclick="openMachineModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
@@ -169,9 +169,6 @@
                                             <button class="btn-small btn-reset" onclick="openResetModal()">Reset</button>
                                         </td>
                                     </tr>
-                                    
-                                    
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -228,7 +225,7 @@
         </div>
     </div>
 
-    <!-- Enhanced Reset Modal -->
+    <!-- Reset Modal -->
     <div id="resetModalDashboardApplicator" class="modal-overlay">
         <div class="modal modal-reset">
             <div class="modal-header">
@@ -266,51 +263,71 @@
         </div>
     </div>
     <!-- Machine Modal -->
-    <!--div id="machineModalDashboardApplicator" class="modal-overlay">
+    <div id="machineModalDashboardApplicator" class="modal-overlay">
         <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">Machine - <span id="editHpNumber"></span></h2>
-            </div>
-            <div class="modal-body">
-                <form id="editForm">
-                    <div class="form-group">
-                        <label class="form-label">Select Machine</label>
-                        <select id="editWireType" class="form-input">
-                            <option>Select Machine</option>
-                            <option>Wire Crimper</option>
-                            <option>Wire Anvil</option>
-                            <option>Insulation Crimper</option>
-                            <option>Insulation Anvil</option>
-                            <option>Slide Cutter</option>
-                            <option>Cutter Holder</option>
-                            <option>Shear Blade</option>
-                            <option>Cutter A</option>
-                            <option value="MEDIUM">Cutter B</option>
-                        </select>
+            <div class="parts-list">
+                <!-- Wire Crimper -->
+                <div class="part-item">
+                    <div class="part-header">
+                        <h4 class="part-name">Wire Crimper</h4>
+                        <span class="status-badge status-good">Good</span>
                     </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Select Machine</label>
-                        <select id="editStatus" class="form-input">
-                            <option value="07/21/2025">07/21/2025</option>
-                            <option value="07/22/2025">07/22/2025</option>
-                            <option value="07/23/2025">07/23/2025</option>
-                            <option value="07/24/2025">07/24/2025</option>
-                            <option value="07/25/2025">07/25/2025</option>
-                            <option value="07/26/2025">07/26/2025</option>
-                            <option value="07/27/2025">07/27/2025</option>
-                            <option value="07/28/2025">07/28/2025</option>
-                            <option value="07/29/2025">07/29/2025</option>
-                        </select>
+                    <div class="part-details">
+                        <span class="cycles-info">Cycles: 234,567</span>
+                        <span class="percentage">42%</span>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-cancel" onclick="closeUndoModal()">Cancel</button>
-                <button type="button" class="btn-confirm" onclick="saveUndo()">Confirm</button>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-good" style="width: 42%;"></div>
+                    </div>
+                </div>
+
+                <!-- Wire Anvil -->
+                <div class="part-item">
+                    <div class="part-header">
+                        <h4 class="part-name">Wire Anvil</h4>
+                        <span class="status-badge status-good">Good</span>
+                    </div>
+                    <div class="part-details">
+                        <span class="cycles-info">Cycles: 189,234</span>
+                        <span class="percentage">38%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-good" style="width: 38%;"></div>
+                    </div>
+                </div>
+
+                <!-- Insulation Crimper -->
+                <div class="part-item">
+                    <div class="part-header">
+                        <h4 class="part-name">Insulation Crimper</h4>
+                        <span class="status-badge status-warn">Warn</span>
+                    </div>
+                    <div class="part-details">
+                        <span class="cycles-info">Cycles: 387,945</span>
+                        <span class="percentage">78%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-warn" style="width: 78%;"></div>
+                    </div>
+                </div>
+
+                <!-- Insulation Anvil -->
+                <div class="part-item">
+                    <div class="part-header">
+                        <h4 class="part-name">Insulation Anvil</h4>
+                        <span class="status-badge status-good">Good</span>
+                    </div>
+                    <div class="part-details">
+                        <span class="cycles-info">Cycles: 298,671</span>
+                        <span class="percentage">60%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-good" style="width: 60%;"></div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div -->
+    </div>
     <script src="../../public/assets/js/dashboard_applicator.js"></script>
 </body>
 </html>
