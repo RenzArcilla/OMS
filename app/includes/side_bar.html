@@ -12,12 +12,12 @@
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <h2 class="sidebar-title">SOMS</h2>
-                <button class="toggle-btn" onclick="toggleSidebar()">
-                    <i data-lucide="menu"></i>
+                <button class="toggle-btn" onclick="toggleSidebar()" title="Toggle Sidebar">
+                    ☰<i data-lucide="menu"></i>
                 </button>
             </div>
 
-            <nav class="sidebar-nav">
+            <nav class="sidebar-nav" id="sidebar-nav">
                 <ul class="nav-list">
                     <li class="nav-item">
                         <button class="active" onclick="setActiveTab('dashboard')">
@@ -42,6 +42,7 @@
                             <i data-lucide="machine"></i>
                             <span>Machine</span>
                         </button>
+                    </li>
                     <li class="nav-item">
                         <button onclick="setActiveTab('applicator')">
                             <i data-lucide="applicator"></i>
@@ -60,6 +61,7 @@
                             <span>Logs</span>
                         </button>
                     </li>
+                    
                 </ul>
             </nav>
 
@@ -67,10 +69,11 @@
                 <div class="user-avatar">U</div>
                 <div class="user-info">
                     <p>Username</p>
-                    <p class=".user-name">user-name-here</p>
+                    <p class="user-name">user-name-here</p>
                 </div>
             </div>
         </div>
+    </div>
     <script src="../../public/assets/js/side_bar.js"></script>
 </body>
 </html>

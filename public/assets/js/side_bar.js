@@ -52,3 +52,10 @@
             // Simulate real-time updates
             setInterval(updateStats, 30000); // Update every 30 seconds
         });
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+
+funct
