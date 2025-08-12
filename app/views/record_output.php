@@ -21,8 +21,8 @@ if (!isset($_SESSION['user_id'])) {
 <head>
     <meta charset="UTF-8">
     <title>Record Output</title>
-    <link rel="stylesheet" href="../../public/assets/css/record_output.css" >
-    <link rel="stylesheet" href="../../public/assets/css/add_entry.css" >
+    <!-- link rel="stylesheet" href="../../public/assets/css/record_output.css" -->
+    <!-- link rel="stylesheet" href="../../public/assets/css/add_entry.css" -->
 </head>
 <body>
     <div class="container">

@@ -53,7 +53,7 @@ function updateRecord($record_id, $date_inspected, $shift, $app1_id, $app2_id, $
         // Bind parameters
         $stmt->bindParam(':record_id', $record_id);
         $stmt->bindParam(':date_inspected', $date_inspected);
-        $stmt->bindParam(':shift', $shift);
+        $stmt->bindParam(':shift', $shift_formatted);
         $stmt->bindValue(':app1_id', $app1_id);
         $stmt->bindValue(':app2_id', $app2_id);
         $stmt->bindValue(':machine_id', $machine_id);
