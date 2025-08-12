@@ -19,6 +19,7 @@ include_once '../models/read_applicators.php';
 include_once '../models/update_record.php';
 include_once '../models/update_applicator_output.php';
 include_once '../models/update_machine_output.php';
+include_once '../models/update_monitor_applicator.php';
 
 // Redirect url
 $redirect_url = "../views/record_output.php";
@@ -33,6 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $record_id = isset($_POST['record_id']) ? intval($_POST['record_id']) : null;
 $prev_app1 = isset($_POST['prev_app1']) ? strtoupper(trim($_POST['prev_app1'])) : null;
 $prev_app2 = isset($_POST['prev_app2']) ? strtoupper(trim($_POST['prev_app2'])) : null;
+$prev_app1_output = isset($_POST['prev_app1_output']) ? intval(trim($_POST['prev_app1_output'])) : null;
+$prev_app2_output = isset($_POST['prev_app2_output']) ? intval(trim($_POST['prev_app2_output'])) : null;
 $date_inspected = isset($_POST['date_inspected']) ? strtoupper(trim($_POST['date_inspected'])) : null;
 $shift = isset($_POST['shift']) ? strtoupper(trim($_POST['shift'])) : null;
 $app1 = isset($_POST['app1']) ? strtoupper(trim($_POST['app1'])) : null;
@@ -199,6 +202,67 @@ try {
     );
     if (is_string($update_machine_output_result)) {
         throw new Exception($update_machine_output_result);
+    }
+
+    // h. Update cumulative applicator outputs
+    // For app1
+    if ($prev_app1 === $app1) {
+        $difference = $app1_output - $prev_app1_output;
+        if ($difference != 0) {
+            // update cumulative sum with difference
+            $result = monitorApplicatorOutput($app1_data, $difference);
+            if (is_string($result)) {
+                throw new Exception($result);
+            }
+        }
+    } else {
+        // subtract prev_app1_output from prev_app1 cumulative
+        $result = monitorApplicatorOutput($prev_app1_data, -$prev_app1_output);
+        if (is_string($result)) {
+            throw new Exception($result);
+        }
+        // add app1_output to app1 cumulative
+        $result = monitorApplicatorOutput($app1_data, $app1_output);
+        if (is_string($result)) {
+            throw new Exception($result);
+        }
+    }
+
+    // For app2
+    if (!is_null($prev_app2) && !is_null($app2)) {
+        if ($prev_app2 === $app2) {
+            $difference = $app2_output - $prev_app2_output;
+            if ($difference != 0) {
+                // update cumulative sum with difference
+                $result = monitorApplicatorOutput($app2_data, $difference);
+                if (is_string($result)) {
+                    throw new Exception($result);
+                }
+            }
+        } else {
+            // Removing old app2 output
+            $result = monitorApplicatorOutput($prev_app2_data, -$prev_app2_output);
+            if (is_string($result)) {
+                throw new Exception($result);
+            }
+            // Adding new app2 output
+            $result = monitorApplicatorOutput($app2_data, $app2_output);
+            if (is_string($result)) {
+                throw new Exception($result);
+            }
+        }
+    } elseif (is_null($prev_app2) && !is_null($app2)) {
+        // Adding new app2 output
+        $result = monitorApplicatorOutput($app2_data, $app2_output);
+        if (is_string($result)) {
+            throw new Exception($result);
+        }
+    } elseif (!is_null($prev_app2) && is_null($app2)) {
+        // Removing old app2 output
+        $result = monitorApplicatorOutput($prev_app2_data, -$prev_app2_output);
+        if (is_string($result)) {
+            throw new Exception($result);
+        }
     }
 
     $pdo->commit();

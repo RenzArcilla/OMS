@@ -21,8 +21,8 @@ if (!isset($_SESSION['user_id'])) {
 <head>
     <meta charset="UTF-8">
     <title>Record Output</title>
-    <!-- link rel="stylesheet" href="../../public/assets/css/record_output.css" -->
-    <!-- link rel="stylesheet" href="../../public/assets/css/add_entry.css" -->
+    <link rel="stylesheet" href="../../public/assets/css/record_output.css" >
+    <link rel="stylesheet" href="../../public/assets/css/add_entry.css" >
 </head>
 <body>
     <div class="container">
@@ -270,6 +270,8 @@ if (!isset($_SESSION['user_id'])) {
                         <input type="hidden" name="record_id" id="edit_record_id" required>
                         <input type="hidden" name="prev_app1" id="edit_prev_app1" required>
                         <input type="hidden" name="prev_app2" id="edit_prev_app2" required>
+                        <input type="hidden" name="prev_app1_output" id="edit_prev_app1_output" required>
+                        <input type="hidden" name="prev_app2_output" id="edit_prev_app2_output" required>
                         
                         <div class="form-group">
                             <label>Date Inspected:</label>

@@ -4,7 +4,9 @@ function openRecordEditModal(button) {
     // CamelCase property names for data attributes
     document.getElementById('edit_record_id').value = button.dataset.id;
     document.getElementById('edit_prev_app1').value = button.dataset.hp1No;  
+    document.getElementById('edit_prev_app1_output').value = button.dataset.app2Output; 
     document.getElementById('edit_prev_app2').value = button.dataset.hp2No;  
+    document.getElementById('edit_prev_app2_output').value = button.dataset.app2Output; 
     document.getElementById('edit_date_inspected').value = button.dataset.dateInspected;  
     document.getElementById('edit_shift').value = button.dataset.shift;
     document.getElementById('edit_app1').value = button.dataset.hp1No;
