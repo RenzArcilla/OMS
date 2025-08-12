@@ -20,7 +20,7 @@ body {
 .main-content {
     flex: 1;
     padding: 40px;
-    max-width: 2500px;
+    max-width: 100%;
     margin: 0 auto;
 }
 
