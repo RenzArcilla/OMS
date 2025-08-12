@@ -110,3 +110,15 @@ function saveEdit() {
 function refreshPage() {
     window.location.reload();
 }
+
+function refreshPage() {
+    // Add loading state
+    const btn = event.target;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '⏳ Refreshing...';
+    btn.disabled = true;
+    
+    setTimeout(() => {
+        window.location.reload();
+    }, 1000);
+}
