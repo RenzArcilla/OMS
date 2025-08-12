@@ -25,39 +25,39 @@
                 </div>
                 
                 <div class="stats-overview">
-                    <div class="stat-card status-good" onclick="openMachineModal()">
+                    <div class="stat-card status-good" onclick="openApplicatorModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good" onclick="openMachineModal()">
+                    <div class="stat-card status-good" onclick="openApplicatorModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-warning" onclick="openMachineModal()">
+                    <div class="stat-card status-warning" onclick="openApplicatorModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good" onclick="openMachineModal()">
+                    <div class="stat-card status-good" onclick="openApplicatorModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good" onclick="openMachineModal()">
+                    <div class="stat-card status-good" onclick="openApplicatorModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-warning" onclick="openMachineModal()">
+                    <div class="stat-card status-warning" onclick="openApplicatorModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good" onclick="openMachineModal()">
+                    <div class="stat-card status-good" onclick="openApplicatorModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good" onclick="openMachineModal()">
+                    <div class="stat-card status-good" onclick="openApplicatorModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-critical" onclick="openMachineModal()">
+                    <div class="stat-card status-critical" onclick="openApplicatorModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
@@ -262,8 +262,8 @@
             </div>
         </div>
     </div>
-    <!-- Machine Modal -->
-    <div id="machineModalDashboardApplicator" class="modal-overlay">
+    <!-- Applicator Modal -->
+    <div id="applicatorModalDashboardApplicator" class="modal-overlay">
         <div class="modal">
             <div class="parts-list">
                 <!-- Wire Crimper -->

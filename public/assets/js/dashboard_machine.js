@@ -60,3 +60,17 @@ function closeResetModalDashboardMachine() {
 function refreshPage() {
     window.location.reload();
 }
+
+// Open the machine modal
+function openMachineModal() {
+    document.getElementById('machineModalDashboardApplicator').style.display = 'block';
+    window.onclick = function(event) {
+        if (event.target === document.getElementById('machineModalDashboardApplicator')) {
+            document.getElementById('machineModalDashboardApplicator').style.display = 'none';
+        }
+    }
+}
+
+function closeMachineModal() {
+    document.getElementById('machineModalDashboardApplicator').style.display = 'none';
+}
