@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Admin Dashboard</title>
+    <link rel="stylesheet" href="../../public/assets/css/base.css">
     <link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
 </head>
 <body>
@@ -25,39 +26,39 @@
                 </div>
                 
                 <div class="stats-overview">
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openApplicatorModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openApplicatorModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-warning">
+                    <div class="stat-card status-warning" onclick="openApplicatorModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openApplicatorModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openApplicatorModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-warning">
+                    <div class="stat-card status-warning" onclick="openApplicatorModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openApplicatorModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-good">
+                    <div class="stat-card status-good" onclick="openApplicatorModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-critical">
+                    <div class="stat-card status-critical" onclick="openApplicatorModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
@@ -75,18 +76,18 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </div>
-                        <div class="search-filter">
-                            <input type="text" class="search-input" placeholder="Search applicator..." onkeyup="filterTable(this.value)">
-                            <button class="filter-btn active" onclick="filterByStatus(this, 'all')">All</button>
-                            <button class="filter-btn" onclick="filterByStatus(this, 'success')">Active</button>
-                            <button class="filter-btn" onclick="filterByStatus(this, 'warning')">⚠️ Warning</button>
-                        </div>
+                    <div class="search-filter">
+                        <input type="text" class="search-input" placeholder="Search applicator..." onkeyup="filterTable(this.value)">
+                        <button class="filter-btn active" onclick="filterByStatus(this, 'all')">All</button>
+                        <button class="filter-btn" onclick="filterByStatus(this, 'success')">Active</button>
+                        <button class="filter-btn" onclick="filterByStatus(this, 'warning')">⚠️ Warning</button>
+                    </div>
                     <div class="section-content expanded">
                         <div class="table-container">
                             <table class="data-table" id="metricsTable">
                                 <thead>
                                     <tr>
-                                        <th>HP No.</th>
+                                        <th>HP Number</th>
                                         <th>Status</th>
                                         <th>Wire Type</th>
                                         <th>Last Encoded</th>
@@ -109,45 +110,45 @@
                                         <td><span class="status-badge status-good">Good</span></td>
                                         <td>BIG</td>
                                         <td>07/21/2025</td>
-                                        <td>847</td>
+                                        <td><strong>847</strong></td>
                                         <td>
-                                            <div>630K / 1.5M</div>
+                                            <div><strong>630K</strong> / 1.5M</div>
                                             <div class="progress-bar">
                                                 <div class="progress-fill" style="width: 42%;"></div>
                                             </div>
                                         </td>
                                         <td>
-                                            <div>570K / 1.5M</div>
+                                            <div><strong>570K</strong> / 1.5M</div>
                                             <div class="progress-bar">
                                                 <div class="progress-fill" style="width: 38%;"></div>
                                             </div>
                                         </td>
                                         <td>
-                                            <div>765K / 1.5M</div>
+                                            <div><strong>765K</strong> / 1.5M</div>
                                             <div class="progress-bar">
                                                 <div class="progress-fill" style="width: 51%;"></div>
                                             </div>
                                         </td>
                                         <td>
-                                            <div>690K / 1.5M</div>
+                                            <div><strong>690K</strong> / 1.5M</div>
                                             <div class="progress-bar">
                                                 <div class="progress-fill" style="width: 46%;"></div>
                                             </div>
                                         </td>
                                         <td>
-                                            <div>825K / 1.5M</div>
+                                            <div><strong>825K</strong> / 1.5M</div>
                                             <div class="progress-bar">
                                                 <div class="progress-fill" style="width: 55%;"></div>
                                             </div>
                                         </td>
                                         <td>
-                                            <div>450K / 1.5M</div>
+                                            <div><strong>450K</strong> / 1.5M</div>
                                             <div class="progress-bar">
                                                 <div class="progress-fill" style="width: 30%;"></div>
                                             </div>
                                         </td>
                                         <td>
-                                            <div>390K / 1.5M</div>
+                                            <div><strong>390K</strong> / 1.5M</div>
                                             <div class="progress-bar">
                                                 <div class="progress-fill" style="width: 26%;"></div>
                                             </div>
@@ -159,17 +160,15 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div>390K / 1.5M</div>
+                                            <div><strong>320K</strong> / 1.5M</div>
                                             <div class="progress-bar">
-                                                <div class="progress-fill" style="width: 26%;"></div>
+                                                <div class="progress-fill" style="width: 21%;"></div>
                                             </div>
                                         </td>
                                         <td>
                                             <button class="btn-small btn-edit" onclick="openUndoModal()">Undo</button>
                                             <button class="btn-small btn-reset" onclick="openResetModal()">Reset</button>
                                         </td>
-                                    </tr>
-                                    
                                     </tr>
                                 </tbody>
                             </table>
@@ -184,22 +183,23 @@
     <div id="undoModalDashboardApplicator" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
-                <h2 class="modal-title">Undo Applicator - <span id="editHpNumber"></span></h2>
+                <h2 class="modal-title">Undo Applicator<span id="editHpNumber"></span></h2>
             </div>
             <div class="modal-body">
                 <form id="editForm">
                     <div class="form-group">
                         <label class="form-label">Select Applicator Part to Reset</label>
                         <select id="editWireType" class="form-input">
-                            <option value="BIG">Wire Crimper</option>
-                            <option value="SMALL">Wire Anvil</option>
-                            <option value="MEDIUM">Insulation Crimper</option>
-                            <option value="MEDIUM">Insulation Anvil</option>
-                            <option value="MEDIUM">Slide Cutter</option>
-                            <option value="MEDIUM">Cutter Holder</option>
-                            <option value="MEDIUM">Shear Blade</option>
-                            <option value="MEDIUM">Cutter A</option>
-                            <option value="MEDIUM">Cutter B</option>
+                            <option>Select Part</option>
+                            <option>Wire Crimper</option>
+                            <option>Wire Anvil</option>
+                            <option>Insulation Crimper</option>
+                            <option>Insulation Anvil</option>
+                            <option>Slide Cutter</option>
+                            <option>Cutter Holder</option>
+                            <option>Shear Blade</option>
+                            <option>Cutter A</option>
+                            <option>Cutter B</option>
                         </select>
                     </div>
                     
@@ -225,15 +225,35 @@
             </div>
         </div>
     </div>
+
+    <!-- Reset Modal -->
     <div id="resetModalDashboardApplicator" class="modal-overlay">
-        <div class="modal">
+        <div class="modal modal-reset">
             <div class="modal-header">
                 <h2 class="modal-title">Reset Applicator<span id="editHpNumber"></span></h2>
             </div>
             <div class="modal-body">
-                <form id="editForm">
+                <form id="resetForm">
                     <div class="form-group">
-                        <label class="form-label">Are you sure you want to reset the applicator?</label>
+                        <label class="form-label">Select Applicator Part to Reset</label>
+                        <select id="resetWireType" class="form-input">
+                            <option>Select Part</option>
+                            <option>Wire Crimper</option>
+                            <option>Wire Anvil</option>
+                            <option>Insulation Crimper</option>
+                            <option>Insulation Anvil</option>
+                            <option>Slide Cutter</option>
+                            <option>Cutter Holder</option>
+                            <option>Shear Blade</option>
+                            <option>Cutter A</option>
+                            <option>Cutter B</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">⚠️ Are you sure you want to reset the applicator?</label>
+                        <p style="color: #6b7280; font-size: 0.9rem; margin-top: 8px;">
+                            This action will reset the selected component's usage counter to zero. This cannot be undone.
+                        </p>
                     </div>
                 </form>
             </div>
@@ -243,48 +263,69 @@
             </div>
         </div>
     </div>
-    <!-- Machine Modal -->
-    <div id="machineModalDashboardApplicator" class="modal-overlay">
+    <!-- Applicator Modal -->
+    <div id="applicatorModalDashboardApplicator" class="modal-overlay">
         <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">Machine - <span id="editHpNumber"></span></h2>
-            </div>
-            <div class="modal-body">
-                <form id="editForm">
-                    <div class="form-group">
-                        <label class="form-label">Select Machine</label>
-                        <select id="editWireType" class="form-input">
-                            <option value="BIG">Wire Crimper</option>
-                            <option value="SMALL">Wire Anvil</option>
-                            <option value="MEDIUM">Insulation Crimper</option>
-                            <option value="MEDIUM">Insulation Anvil</option>
-                            <option value="MEDIUM">Slide Cutter</option>
-                            <option value="MEDIUM">Cutter Holder</option>
-                            <option value="MEDIUM">Shear Blade</option>
-                            <option value="MEDIUM">Cutter A</option>
-                            <option value="MEDIUM">Cutter B</option>
-                        </select>
+            <div class="parts-list">
+                <!-- Wire Crimper -->
+                <div class="part-item">
+                    <div class="part-header">
+                        <h4 class="part-name">Wire Crimper</h4>
+                        <span class="status-badge status-good">Good</span>
                     </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Select Machine</label>
-                        <select id="editStatus" class="form-input">
-                            <option value="07/21/2025">07/21/2025</option>
-                            <option value="07/22/2025">07/22/2025</option>
-                            <option value="07/23/2025">07/23/2025</option>
-                            <option value="07/24/2025">07/24/2025</option>
-                            <option value="07/25/2025">07/25/2025</option>
-                            <option value="07/26/2025">07/26/2025</option>
-                            <option value="07/27/2025">07/27/2025</option>
-                            <option value="07/28/2025">07/28/2025</option>
-                            <option value="07/29/2025">07/29/2025</option>
-                        </select>
+                    <div class="part-details">
+                        <span class="cycles-info">Cycles: 234,567</span>
+                        <span class="percentage">42%</span>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-cancel" onclick="closeUndoModal()">Cancel</button>
-                <button type="button" class="btn-confirm" onclick="saveUndo()">Confirm</button>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-good" style="width: 42%;"></div>
+                    </div>
+                </div>
+
+                <!-- Wire Anvil -->
+                <div class="part-item">
+                    <div class="part-header">
+                        <h4 class="part-name">Wire Anvil</h4>
+                        <span class="status-badge status-good">Good</span>
+                    </div>
+                    <div class="part-details">
+                        <span class="cycles-info">Cycles: 189,234</span>
+                        <span class="percentage">38%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-good" style="width: 38%;"></div>
+                    </div>
+                </div>
+
+                <!-- Insulation Crimper -->
+                <div class="part-item">
+                    <div class="part-header">
+                        <h4 class="part-name">Insulation Crimper</h4>
+                        <span class="status-badge status-warn">Warn</span>
+                    </div>
+                    <div class="part-details">
+                        <span class="cycles-info">Cycles: 387,945</span>
+                        <span class="percentage">78%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-warn" style="width: 78%;"></div>
+                    </div>
+                </div>
+
+                <!-- Insulation Anvil -->
+                <div class="part-item">
+                    <div class="part-header">
+                        <h4 class="part-name">Insulation Anvil</h4>
+                        <span class="status-badge status-good">Good</span>
+                    </div>
+                    <div class="part-details">
+                        <span class="cycles-info">Cycles: 298,671</span>
+                        <span class="percentage">60%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-good" style="width: 60%;"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

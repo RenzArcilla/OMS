@@ -52,3 +52,20 @@
             // Simulate real-time updates
             setInterval(updateStats, 30000); // Update every 30 seconds
         });
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+
+        function loadPage(url, tabName) {
+            fetch(url)
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById('content-area').innerHTML = html;
+                    setActiveTab(tabName);
+                });
+        }
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+        }
