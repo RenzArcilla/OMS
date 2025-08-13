@@ -229,24 +229,24 @@ if (!isset($_SESSION['user_id'])) {
                                 <td><?= htmlspecialchars($row['control_no']) ?></td>
                                 <td><?= htmlspecialchars($row['machine_output']) ?></td>
                                 <td>
-                                    <a href="#" onclick="openRecordEditModal(this)" 
+                                    <a href="#" onclick="openRecordEditModalSafe(this); return false;" 
                                         data-id="<?= htmlspecialchars($row['record_id']) ?>"
                                         data-date-inspected="<?= htmlspecialchars($row['date_inspected']) ?>"
-                                        data-shift="<?= htmlspecialchars($row['shift'] === '1st' ? 'FIRST' : ($row['shift'] === '2nd' ? 'SECOND' : $row['shift'])) ?>"
-                                        data-hp1-no="<?= htmlspecialchars($row['hp1_no']) ?>"
-                                        data-app1-output="<?= htmlspecialchars($row['app1_output']) ?>"
-                                        data-hp2-no="<?= htmlspecialchars($row['hp2_no']) ?>"
-                                        data-app2-output="<?= htmlspecialchars($row['app2_output']) ?>"
-                                        data-control-no="<?= htmlspecialchars($row['control_no']) ?>"
-                                        data-machine-output="<?= htmlspecialchars($row['machine_output']) ?>"
+                                        data-shift="<?= htmlspecialchars($row['shift']) ?>"
+                                        data-hp1-no="<?= htmlspecialchars($row['hp1_no'] ?? '') ?>"
+                                        data-app1-output="<?= htmlspecialchars($row['app1_output'] ?? '') ?>"
+                                        data-hp2-no="<?= htmlspecialchars($row['hp2_no'] ?? '') ?>"
+                                        data-app2-output="<?= htmlspecialchars($row['app2_output'] ?? '') ?>"
+                                        data-control-no="<?= htmlspecialchars($row['control_no'] ?? '') ?>"
+                                        data-machine-output="<?= htmlspecialchars($row['machine_output'] ?? '') ?>"
+                                        title="Edit Record"
                                     >✏️</a>
 
                                     <!-- Delete form -->
                                     <form action="/SOMS/app/controllers/delete_record.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this record?');">
                                         <input type="hidden" name="record_id" value="<?= htmlspecialchars($row['record_id']) ?>">
-                                        <button type="submit">🗑️</button>
+                                        <button type="submit" title="Delete Record">🗑️</button>
                                     </form>
-                                    </td>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -255,81 +255,179 @@ if (!isset($_SESSION['user_id'])) {
             </div>
         </div>
 
-        <!-- Edit Record Modal -->
-        <div id="editRecordModal" class="modal-overlay">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title">
-                        Edit Record
-                    </h2>
-                </div>
-                
-                <div class="modal-body">
-                    <form id="editRecordForm" action="../controllers/edit_record.php" method="POST">
-                        <!-- Hidden input to store record ID, previous IDs, and previous outputs -->
-                        <input type="hidden" name="record_id" id="edit_record_id" required>
-                        <input type="hidden" name="prev_app1" id="edit_prev_app1" required>
-                        <input type="hidden" name="prev_app2" id="edit_prev_app2" required>
-                        <input type="hidden" name="prev_machine" id="edit_prev_machine" required>
-                        <input type="hidden" name="prev_app1_output" id="edit_prev_app1_output" required>
-                        <input type="hidden" name="prev_app2_output" id="edit_prev_app2_output" required>
-                        <input type="hidden" name="prev_machine_output" id="edit_prev_machine_output" required>
-                        
+<!-- Edit Record Modal -->
+<div id="editRecordModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Edit Record</h2>
+            <button type="button" class="modal-close-btn" onclick="closeRecordModal()">×</button>
+        </div>
+        
+        <div class="modal-body">
+            <form id="editRecordForm" action="../controllers/edit_record.php" method="POST" onsubmit="return validateEditForm()">
+                <!-- Hidden inputs for tracking previous values -->
+                <input type="hidden" name="record_id" id="edit_record_id" required>
+                <input type="hidden" name="prev_app1" id="edit_prev_app1">
+                <input type="hidden" name="prev_app2" id="edit_prev_app2">
+                <input type="hidden" name="prev_machine" id="edit_prev_machine">
+                <input type="hidden" name="prev_app1_output" id="edit_prev_app1_output">
+                <input type="hidden" name="prev_app2_output" id="edit_prev_app2_output">
+                <input type="hidden" name="prev_machine_output" id="edit_prev_machine_output">
+
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon">📅</div>
+                        <div class="section-info">
+                            <div class="section-title">Basic Information</div>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
                         <div class="form-group">
-                            <label>Date Inspected:</label>
-                            <input type="date" name="date_inspected" id="edit_date_inspected" value="<?= date('Y-m-d') ?>" required>
+                            <label for="edit_date_inspected" class="form-label">
+                                Date Inspected
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input type="date" name="date_inspected" id="edit_date_inspected" class="form-input" required>
                         </div>
                         
                         <div class="form-group">
-                            <label>Work Shift:</label>
-                            <select name="shift" id="edit_shift" required>
+                            <label for="edit_shift" class="form-label">
+                                Work Shift
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <select name="shift" id="edit_shift" class="form-input" required>
                                 <option value="">Choose your work shift</option>
                                 <option value="FIRST">First Shift (Morning)</option>
                                 <option value="SECOND">Second Shift (Afternoon)</option>
                                 <option value="NIGHT">Night Shift (Overnight)</option>
                             </select>
                         </div>
-                        
-                        <div class="form-group">
-                            <label>Applicator 1:</label>
-                            <input type="text" name="app1" id="edit_app1" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Applicator 1 Output:</label>
-                            <input type="text" name="app1_output" id="edit_app1_output" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Applicator 2:</label>
-                            <input type="text" name="app2" id="edit_app2">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Applicator 2 Output:</label>
-                            <input type="text" name="app2_output" id="edit_app2_output">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Machine Number:</label>
-                            <input type="text" name="machine" id="edit_machine" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Machine Output:</label>
-                            <input type="text" name="machine_output" id="edit_machine_output" required>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" onclick="closeRecordModal()">Cancel</button>
-                            <button type="submit" form="editRecordForm">Save</button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
-        <!-- Infinite scroll logic -->
-        <script src="../../public/assets/js/load_records.js" defer></script>
-        <!-- Load modal logic for editing records -->
-        <script src="../../public/assets/js/edit_record_modal.js" defer></script>
+
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon">🔧</div>
+                        <div class="section-info">
+                            <div class="section-title">Applicators</div>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="edit_app1" class="form-label">
+                                Applicator 1
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input type="text" name="app1" id="edit_app1" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit_app1_output" class="form-label">
+                                Applicator 1 Output
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input type="number" name="app1_output" id="edit_app1_output" class="form-input" min="0" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="edit_app2" class="form-label">
+                                Applicator 2
+                                <span class="optional-badge">Optional</span>
+                            </label>
+                            <input type="text" name="app2" id="edit_app2" class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit_app2_output" class="form-label">
+                                Applicator 2 Output
+                                <span class="optional-badge">Optional</span>
+                            </label>
+                            <input type="number" name="app2_output" id="edit_app2_output" class="form-input" min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon">🏭</div>
+                        <div class="section-info">
+                            <div class="section-title">Machine Data</div>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="edit_machine" class="form-label">
+                                Machine Number
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input type="text" name="machine" id="edit_machine" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit_machine_output" class="form-label">
+                                Machine Output
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input type="number" name="machine_output" id="edit_machine_output" class="form-input" min="0" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="cancel-btn" onclick="closeRecordModal()">Cancel</button>
+                    <button type="submit" class="submit-btn">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+// Add event listeners when document is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Add validation for app2 output when app2 is filled
+    const app2Input = document.getElementById('edit_app2');
+    const app2OutputInput = document.getElementById('edit_app2_output');
+    
+    if (app2Input && app2OutputInput) {
+        app2Input.addEventListener('input', function() {
+            if (this.value.trim()) {
+                app2OutputInput.setAttribute('required', 'required');
+            } else {
+                app2OutputInput.removeAttribute('required');
+                app2OutputInput.value = '';
+            }
+        });
+    }
+    
+    // Close modal when clicking outside
+    const modal = document.getElementById('editRecordModal');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeRecordModal();
+            }
+        });
+    }
+    
+    // Handle Escape key to close modal
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const modal = document.getElementById('editRecordModal');
+            if (modal && modal.style.display === 'block') {
+                closeRecordModal();
+            }
+        }
+    });
+});
+</script>
+
+<!-- Infinite scroll logic -->
+<script src="../../public/assets/js/load_records.js" defer></script>
+<!-- Load modal logic for editing records -->
+<script src="../../public/assets/js/edit_record_modal.js" defer></script>
 </body>
 </html>
