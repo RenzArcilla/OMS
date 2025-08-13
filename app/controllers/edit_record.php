@@ -14,13 +14,14 @@ if (!isset($_SESSION['user_id'])) {
 // Include necessary files
 require_once '../includes/db.php';
 require_once '../includes/js_alert.php';
+include_once '../models/create_applicator_output.php';
 include_once '../models/read_machines.php';
 include_once '../models/read_applicators.php';
-include_once '../models/delete_applicator.php';
 include_once '../models/update_record.php';
 include_once '../models/update_applicator_output.php';
 include_once '../models/update_machine_output.php';
 include_once '../models/update_monitor_applicator.php';
+include_once '../models/delete_applicator.php';
 
 // Redirect url
 $redirect_url = "../views/record_output.php";
@@ -46,10 +47,14 @@ $prev_machine_output = isset($_POST['prev_machine_output']) ? intval(trim($_POST
 
 $app1 = isset($_POST['app1']) ? strtoupper(trim($_POST['app1'])) : null;
 $app1_output = isset($_POST['app1_output']) ? intval(trim($_POST['app1_output'])) : null;
-$app2 = isset($_POST['app2']) ? strtoupper(trim($_POST['app2'])) : null;
+$app2 = (isset($_POST['app2']) && trim($_POST['app2']) !== '') 
+    ? strtoupper(trim($_POST['app2'])) 
+    : null;
 $app2_output = isset($_POST['app2_output']) ? intval(trim($_POST['app2_output'])) : null;
 $machine = isset($_POST['machine']) ? strtoupper(trim($_POST['machine'])) : null;
 $machine_output = isset($_POST['machine_output']) ? intval(trim($_POST['machine_output'])) : null;
+
+error_log($app2);
 
 // 2. Validation
 if (empty($record_id) || empty($date_inspected) || empty($shift) ||
@@ -127,6 +132,16 @@ if (!is_array($machine_data)) {
     exit;
 } elseif (is_string($machine_data)) {
     jsAlertRedirect($machine_data, $redirect_url);
+    exit;
+}
+
+// for previous applicators
+$prev_machine_data = machineExists($prev_machine);
+if (!is_array($prev_machine_data)) {
+    jsAlertRedirect("Machine: $prev_machine not found!", $redirect_url);
+    exit;
+} elseif (is_string($prev_machine_data)) {
+    jsAlertRedirect($prev_machine_data, $redirect_url);
     exit;
 }
 
