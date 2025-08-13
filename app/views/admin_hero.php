@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Hero</title>
+    <link rel="stylesheet" href="../../public/assets/css/base.css">
     <link rel="stylesheet" href="public/assets/css/admin_hero.css">
 </head>
 <body>
