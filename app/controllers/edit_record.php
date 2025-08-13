@@ -16,9 +16,11 @@ require_once '../includes/db.php';
 require_once '../includes/js_alert.php';
 include_once '../models/read_machines.php';
 include_once '../models/read_applicators.php';
+include_once '../models/delete_applicator.php';
 include_once '../models/update_record.php';
 include_once '../models/update_applicator_output.php';
 include_once '../models/update_machine_output.php';
+include_once '../models/update_monitor_applicator.php';
 
 // Redirect url
 $redirect_url = "../views/record_output.php";
@@ -29,12 +31,19 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// 1. Sanitize input
+
+// 1. Sanitize inputs
 $record_id = isset($_POST['record_id']) ? intval($_POST['record_id']) : null;
-$prev_app1 = isset($_POST['prev_app1']) ? strtoupper(trim($_POST['prev_app1'])) : null;
-$prev_app2 = isset($_POST['prev_app2']) ? strtoupper(trim($_POST['prev_app2'])) : null;
 $date_inspected = isset($_POST['date_inspected']) ? strtoupper(trim($_POST['date_inspected'])) : null;
-$shift = isset($_POST['shift']) ? strtoupper(trim($_POST['shift'])) : null;
+$shift = isset($_POST['shift']) ? (['1ST' => 'FIRST', '2ND' => 'SECOND', 'NIGHT' => 'NIGHT'][strtoupper(trim($_POST['shift']))] ?? null) : null;
+
+$prev_app1 = isset($_POST['prev_app1']) ? strtoupper(trim($_POST['prev_app1'])) : null;
+$prev_app1_output = isset($_POST['prev_app1_output']) ? intval(trim($_POST['prev_app1_output'])) : null;
+$prev_app2 = isset($_POST['prev_app2']) ? strtoupper(trim($_POST['prev_app2'])) : null;
+$prev_app2_output = isset($_POST['prev_app2_output']) ? intval(trim($_POST['prev_app2_output'])) : null;
+$prev_machine = isset($_POST['prev_machine']) ? strtoupper(trim($_POST['prev_machine'])) : null;
+$prev_machine_output = isset($_POST['prev_machine_output']) ? intval(trim($_POST['prev_machine_output'])) : null;
+
 $app1 = isset($_POST['app1']) ? strtoupper(trim($_POST['app1'])) : null;
 $app1_output = isset($_POST['app1_output']) ? intval(trim($_POST['app1_output'])) : null;
 $app2 = isset($_POST['app2']) ? strtoupper(trim($_POST['app2'])) : null;
@@ -89,7 +98,7 @@ if (!empty($app2)) {
     }
 }
 
-// a.1 for previous applicators (will be used to differentiate app1 and app2 in the applicator_outputs table)
+// for previous applicators (will be used to differentiate app1 and app2 in the applicator_outputs table)
 $prev_app1_data = applicatorExists($prev_app1);
 if (!is_array($prev_app1_data)) {
     jsAlertRedirect("Previous Applicator 1: $prev_app1 not found!", $redirect_url);
@@ -168,38 +177,10 @@ try {
         throw new Exception($update_record_result);
     }
 
-    // f. Update applicator_outputs 
-    $update_app1_output_result = updateApplicatorOutput(
-        $app1_data, 
-        $app1_output, 
-        $record_id, 
-        $prev_app1_data
-    );
-    if (is_string($update_app1_output_result)) {
-        throw new Exception($update_app1_output_result);
-    }
-
-    if (!empty($app2)) {
-        $update_app2_output_result = updateApplicatorOutput(
-            $app2_data, 
-            $app2_output, 
-            $record_id, 
-            $prev_app2_data
-        );
-        if (is_string($update_app2_output_result)) {
-            throw new Exception($update_app2_output_result);
-        }
-    }
-
-    // g. Update machine_outputs 
-    $update_machine_output_result = updateMachineOutput(
-        $machine_data, 
-        $machine_output, 
-        $record_id
-    );
-    if (is_string($update_machine_output_result)) {
-        throw new Exception($update_machine_output_result);
-    }
+    // Logic for editing applicators
+    include_once 'edit_records/applicator_records.php';
+    // Logic for editing machines
+    include_once 'edit_records/machine_records.php';
 
     $pdo->commit();
     jsAlertRedirect("Record updated successfully!", $redirect_url);
