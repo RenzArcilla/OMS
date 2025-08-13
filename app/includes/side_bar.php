@@ -13,7 +13,7 @@
             <div class="sidebar-header">
                 <h2 class="sidebar-title">SOMS</h2>
                 <button class="toggle-btn" onclick="toggleSidebar()" title="Toggle Sidebar">
-                    ☰<i data-lucide="menu"></i>
+                    ☰
                 </button>
             </div>
 
