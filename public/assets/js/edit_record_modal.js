@@ -5,6 +5,13 @@ function openRecordEditModal(button) {
     // Debug: Log all data attributes to console
     console.log('Button data attributes:', data);
     
+    // Map database shift values to form values
+    const shiftMapping = {
+        '1st': 'FIRST',
+        '2nd': 'SECOND', 
+        'NIGHT': 'NIGHT'
+    };
+    
     // Set hidden fields for tracking previous values
     document.getElementById('edit_record_id').value = data.id || '';
     document.getElementById('edit_prev_app1').value = data.hp1No || '';
@@ -54,6 +61,13 @@ function openRecordEditModalSafe(button) {
             return;
         }
         
+        // Define shift mapping here (this was missing!)
+        const shiftMapping = {
+            'FIRST': '1st',
+            'SECOND': '2nd',
+            'NIGHT': 'NIGHT'
+        };
+        
         // Set all form fields
         const fieldMappings = {
             'edit_record_id': data.id,
@@ -64,7 +78,7 @@ function openRecordEditModalSafe(button) {
             'edit_prev_machine': data.controlNo,
             'edit_prev_machine_output': data.machineOutput,
             'edit_date_inspected': data.dateInspected,
-            'edit_shift': data.shift,
+            'edit_shift': shiftMapping[data.shift] || data.shift || '',
             'edit_app1': data.hp1No,
             'edit_app1_output': data.app1Output,
             'edit_app2': data.hp2No || '',
@@ -78,6 +92,7 @@ function openRecordEditModalSafe(button) {
             const element = document.getElementById(fieldId);
             if (element) {
                 element.value = value;
+                console.log(`Set ${fieldId} to: ${value}`); // Debug log
             } else {
                 console.warn(`Form field not found: ${fieldId}`);
             }

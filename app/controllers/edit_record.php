@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // 1. Sanitize inputs
 $record_id = isset($_POST['record_id']) ? intval($_POST['record_id']) : null;
 $date_inspected = isset($_POST['date_inspected']) ? strtoupper(trim($_POST['date_inspected'])) : null;
-$shift = isset($_POST['shift']) ? strtoupper(trim($_POST['shift'])) : null;
+$shift = isset($_POST['shift']) ? (['1ST' => 'FIRST', '2ND' => 'SECOND', 'NIGHT' => 'NIGHT'][strtoupper(trim($_POST['shift']))] ?? null) : null;
 
 $prev_app1 = isset($_POST['prev_app1']) ? strtoupper(trim($_POST['prev_app1'])) : null;
 $prev_app1_output = isset($_POST['prev_app1_output']) ? intval(trim($_POST['prev_app1_output'])) : null;

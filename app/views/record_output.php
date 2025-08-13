@@ -21,9 +21,9 @@ if (!isset($_SESSION['user_id'])) {
 <head>
     <meta charset="UTF-8">
     <title>Record Output</title>
-    <!-- link rel="stylesheet" href="../../public/assets/css/record_output.css" -->
-    <!-- link rel="stylesheet" href="../../public/assets/css/add_entry.css" -->
-</head>
+    <link rel="stylesheet" href="../../public/assets/css/record_output.css" >
+    <link rel="stylesheet" href="../../public/assets/css/add_entry.css" >
+</head> 
 <body>
     <div class="container">
         <!-- Add Record Button -->
@@ -298,8 +298,8 @@ if (!isset($_SESSION['user_id'])) {
                             </label>
                             <select name="shift" id="edit_shift" class="form-input" required>
                                 <option value="">Choose your work shift</option>
-                                <option value="FIRST">First Shift (Morning)</option>
-                                <option value="SECOND">Second Shift (Afternoon)</option>
+                                <option value="1st">First Shift (Morning)</option>
+                                <option value="2nd">Second Shift (Afternoon)</option>
                                 <option value="NIGHT">Night Shift (Overnight)</option>
                             </select>
                         </div>
