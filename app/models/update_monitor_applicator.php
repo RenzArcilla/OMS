@@ -1,66 +1,61 @@
 <?php
 /*
-    This script handles both the CREATE and UPDATE operation for recording the cumulative sum of applicator outputs.
-    It updates standard part counters and increments JSON values for custom parts.
+    Updates or inserts applicator monitoring data into the `monitor_applicator` table.
+    Automatically handles both SIDE-type and END/CLAMP/STRIP AND CRIMP-type applicators,
+    including increment or decrement logic for outputs and updating custom parts.
 */
-
-require_once __DIR__ . '/../includes/db.php';
-
-function monitorApplicatorOutput($applicator_data, $applicator_output) {
-    /*
-    Function to monitor cumulative outputs of each applicator and its components.
-
-    Args:
-    - $applicator_data: The data of the applicator.
-    - $applicator_output: The output value of the applicator.
-
-    Returns:
-    - True if the monitoring is successful.
-    - String containing error message and redirect using JS <alert>.
-    */
-
+function monitorApplicatorOutput($applicator_data, $applicator_output, $direction = "increment") {
     global $pdo;
 
     try {
+        // Extract type and ID (handles if $applicator_data is just an ID or full array)
         $type = $applicator_data['description'];
         $applicator_id = is_array($applicator_data) ? $applicator_data['applicator_id'] : $applicator_data;
 
-        // Fetch applicable custom parts
+        // Convert to negative if decrementing
+        if (strtolower($direction) === "decrement") {
+            $applicator_output = -abs($applicator_output);
+        }
+
+        // Load custom parts for applicators
         require_once __DIR__ . '/read_custom_parts.php';
         $custom_parts = getCustomParts('APPLICATOR');
 
+        // If custom parts retrieval failed (string message returned), pass it back
         if (is_string($custom_parts)) {
-            return $custom_parts; // Error from getCustomParts
+            return $custom_parts; 
         }
 
-        // Build new parts to add (e.g., {"partA": 50, "partB": 50})
+        // Build an array of part => output
         $new_parts = [];
         foreach ($custom_parts as $part) {
             $new_parts[$part['part_name']] = $applicator_output;
         }
 
-        // Fetch existing JSON (if any)
-        $stmt_check = $pdo->prepare("SELECT custom_parts_output FROM monitor_applicator WHERE applicator_id = :id LIMIT 1");
+        // Check if there’s an existing record for this applicator
+        $stmt_check = $pdo->prepare("
+            SELECT custom_parts_output 
+            FROM monitor_applicator 
+            WHERE applicator_id = :id 
+            LIMIT 1
+        ");
         $stmt_check->execute([':id' => $applicator_id]);
         $existing = $stmt_check->fetchColumn();
 
+        // Merge with existing custom parts data if it exists
         if ($existing) {
             $existing_parts = json_decode($existing, true) ?? [];
-            // Merge and increment values
             foreach ($new_parts as $key => $val) {
-                if (isset($existing_parts[$key])) {
-                    $existing_parts[$key] += $val;
-                } else {
-                    $existing_parts[$key] = $val;
-                }
+                $existing_parts[$key] = ($existing_parts[$key] ?? 0) + $val;
             }
             $custom_parts_json = json_encode($existing_parts);
         } else {
             $custom_parts_json = json_encode($new_parts);
         }
 
-        // Determine query based on type
+        // Prepare SQL depending on applicator type
         switch (true) {
+            // SIDE-type applicators
             case $type === "SIDE":
                 $stmt = $pdo->prepare("
                     INSERT INTO monitor_applicator (
@@ -85,6 +80,7 @@ function monitorApplicatorOutput($applicator_data, $applicator_output) {
                 ");
                 break;
 
+            // END, CLAMP, and STRIP AND CRIMP-type applicators
             case in_array($type, ["END", "CLAMP", "STRIP AND CRIMP"], true):
                 $stmt = $pdo->prepare("
                     INSERT INTO monitor_applicator (
@@ -108,6 +104,7 @@ function monitorApplicatorOutput($applicator_data, $applicator_output) {
                 ");
                 break;
 
+            // Unknown applicator type
             default:
                 return "Invalid applicator type: " . htmlspecialchars($type, ENT_QUOTES);
         }
@@ -117,10 +114,12 @@ function monitorApplicatorOutput($applicator_data, $applicator_output) {
         $stmt->bindParam(':val', $applicator_output, PDO::PARAM_INT);
         $stmt->bindParam(':custom_json', $custom_parts_json, PDO::PARAM_STR);
 
+        // Execute query
         $stmt->execute();
         return true;
 
     } catch (PDOException $e) {
+        // Log and return a sanitized error
         error_log("DB Error in monitorApplicatorOutput(): " . $e->getMessage());
         return "Database error: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }

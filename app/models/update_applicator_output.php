@@ -11,6 +11,7 @@ require_once __DIR__ . '/read_custom_parts.php';
 function updateApplicatorOutput($applicator_data, $applicator_output, $record_id, $prev_applicator_data) {
     /*
     Function to update applicator output data in the database.
+    Updates the output if exists; creates a new row if an output with the same record does not exist.
     The applicator_output value is added to all existing component values for this applicator.
     
     Args:
