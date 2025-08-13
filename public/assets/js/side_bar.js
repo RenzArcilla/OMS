@@ -58,4 +58,14 @@
             sidebar.classList.toggle('collapsed');
         }
 
-funct
+        function loadPage(url, tabName) {
+            fetch(url)
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById('content-area').innerHTML = html;
+                    setActiveTab(tabName);
+                });
+        }
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+        }
