@@ -18,55 +18,13 @@
             </div>
 
             <nav class="sidebar-nav" id="sidebar-nav">
-                <ul class="nav-list">
-                    <li class="nav-item">
-                        <button class="active" onclick="loadPage('../../app/views/dashboard.php', 'dashboard')">
-                            <i data-lucide="bar-chart-3"></i>
-                            <span>Dashboard</span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button onclick="loadPage('../../app/views/add_entry.php', 'add_replace')">
-                            <i data-lucide="add_replace"></i>
-                            <span>Add/Replace</span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button onclick="loadPage('../../app/views/record_output.php', 'record_output')">
-                                <i data-lucide="record_output"></i>
-                                <span>Record Output</span>
-                            </button>
-                    </li>
-                    <li class="nav-item">
-                        <button onclick="loadPage('../../app/views/dashboard_machine.php', 'machine')">
-                            <i data-lucide="machine"></i>
-                            <span>Machine</span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button onclick="loadPage('../../app/views/dashboard_applicator.php', 'applicator')">
-                            <i data-lucide="applicator"></i>
-                            <span>Applicator</span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button onclick="loadPage('../../app/views/maintenance.php', 'maintenance')">
-                            <i data-lucide="maintenance"></i>
-                            <span>Maintenance</span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button onclick="loadPage('../../app/views/admin_manage_user.php', 'users')">
-                            <i data-lucide="users"></i>
-                            <span>Users</span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button onclick="loadPage('../../app/views/logs.php', 'logs')">
-                            <i data-lucide="logs"></i>
-                            <span>Logs</span>
-                        </button>
-                    </li>
+                <ul class="sidebar-menu">
+                    <li><a href="#" data-page="dashboard" class="active">Dashboard</a></li>
+                    <li><a href="../views/dashboard_machine.php" data-page="machine">Machine</a></li>
+                    <li><a href="../views/dashboard_applicator.php" data-page="applicator">Applicator</a></li>
+                    <li><a href="../views/add_entry.php" data-page="add-replace">Add/Replace</a></li>
+                    <li><a href="../views/admin_manage_user.php" data-page="users">Users</a></li>
+                    <li><a href="../views/logs.php" data-page="log">Log</a></li>
                 </ul>
             </nav>
 
@@ -86,7 +44,18 @@
                 <h1>Welcome to SOMS</h1>
                 <p>Select a menu item from the sidebar to get started.</p>
             </div>
+            <div class="page-content" id="dashboard">
+                <h1>About Us</h1>
+                <p>This is the about page content. Here you can add information about your company, team, or yourself.</p>
+                <p>The sidebar remains functional across all pages, allowing users to navigate seamlessly.</p>
+            </div>
+            <div class="page-content" id="machine">
+                <h1>About Us</h1>
+                <p>This is the about page content. Here you can add information about your company, team, or yourself.</p>
+                <p>The sidebar remains functional across all pages, allowing users to navigate seamlessly.</p>
+            </div>
         </div>
+        
     </div>
     <script src="../../public/assets/js/side_bar.js"></script>
 </body>

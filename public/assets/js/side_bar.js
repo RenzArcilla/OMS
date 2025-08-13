@@ -69,3 +69,6 @@
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('collapsed');
         }
+
+        // Get DOM elements
+        const sidebar = document.getElementById('sidebar');
