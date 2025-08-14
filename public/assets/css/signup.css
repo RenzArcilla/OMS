@@ -6,7 +6,6 @@
     overflow: hidden;
 }
 
-
 .signup-container {
     position: absolute;
     top: 50%;
@@ -26,13 +25,12 @@
     font-size: 33px;
     font-weight: 1000;
     color: #111827;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     text-align: center;
     background: #111827;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 20px;
     text-shadow: 0 2px 4px rgba(47, 128, 237, 0.3);
 }
 
@@ -61,6 +59,16 @@
     font-size: 14px;
 }
 
+.form-lastname label {  
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #6B7280;
+    font-size: 14px;
+    position: relative;
+    left: -75px;
+}
+
 .form-input {
     width: 100%;
     padding: 16px 20px 16px 50px;
@@ -73,21 +81,6 @@
     transition: all 0.3s ease;
 }
 
-/* Individual width control for Username */
-#username {
-    width: 100%;
-}
-
-.form-lastname label {  
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: #6B7280;
-    font-size: 14px;
-    position: relative;
-    left: -75px;
-}
-
 /* Individual width control for First Name */
 #firstname {
     width: 175px;
@@ -98,16 +91,6 @@
     width: 175px;
     position: relative;
     left: -27%;
-}
-
-/* Individual width control for Password */
-#password { 
-    width: 100%;
-}
-
-/* Individual width control for Confirm Password */
-#confirm_password {
-    width: 100%;
 }
 
 .form-input:focus {

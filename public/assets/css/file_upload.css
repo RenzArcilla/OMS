@@ -64,7 +64,7 @@
     background: linear-gradient(135deg, rgba(47, 128, 237, 0.02) 0%, rgba(39, 174, 96, 0.02) 100%);
     opacity: 0;
     transition: opacity 0.4s ease;
-    pointer-events: none; /* This allows clicks to pass through the overlay */
+    pointer-events: none;
 }
 
 .upload-box:hover::before,
@@ -133,47 +133,15 @@
     box-shadow: 0 8px 25px rgba(47, 128, 237, 0.4);
 }
 
-.btn-success {
-    background: linear-gradient(135deg, #27AE60 0%, #2F80ED 100%);
+.btn-secondary {
+    background: #6B7280;
     color: white;
-    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+    box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
 }
 
-.btn-success:hover {
+.btn-secondary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
-}
-
-.upload-progress {
-    background: #FFFFFF;
-    border-radius: 16px;
-    padding: 25px;
-    box-shadow: 0 4px 20px rgba(47, 128, 237, 0.08);
-    border: 1px solid #E5E7EB;
-}
-
-.progress-bar {
-    width: 100%;
-    height: 8px;
-    background: #E5E7EB;
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: 15px;
-}
-
-.progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #2F80ED, #27AE60);
-    width: 0%;
-    transition: width 0.3s ease;
-    border-radius: 4px;
-}
-
-.progress-text {
-    color: #2F80ED;
-    font-weight: 700;
-    text-align: center;
-    font-size: 14px;
+    box-shadow: 0 8px 25px rgba(107, 114, 128, 0.4);
 }
 
 .upload-info {
@@ -361,15 +329,4 @@
     .file-icon {
         align-self: center;
     }
-}
-
-/* Animation for file upload */
-@keyframes uploadSuccess {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-.upload-success {
-    animation: uploadSuccess 0.6s ease-out;
 }
