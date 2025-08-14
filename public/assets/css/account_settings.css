@@ -158,9 +158,6 @@
     box-shadow: 0 8px 25px rgba(47, 128, 237, 0.4);
 }
 
-
-
-
 .form-actions {
     display: flex;
     gap: 15px;
@@ -192,21 +189,6 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-}
-
-.strength-weak {
-    background: #EB5757;
-    color: #EB5757;
-}
-
-.strength-medium {
-    background: #F59E0B;
-    color: #F59E0B;
-}
-
-.strength-strong {
-    background: #27AE60;
-    color: #27AE60;
 }
 
 .profile-info {
@@ -311,24 +293,4 @@
         width: 100%;
         justify-content: center;
     }
-}
-
-/* Animation keyframes */
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-}
-
-.shake {
-    animation: shake 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.fade-in {
-    animation: fadeIn 0.3s ease-out;
 }
