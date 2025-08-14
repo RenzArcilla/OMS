@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../public/assets/css/admin_manage_user.css">
 </head>
 <body>
+    <?php include '../includes/side_bar.php'; ?>
     <div class="container">
         <!-- Header -->
         <div class="header">
