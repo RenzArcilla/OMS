@@ -25,8 +25,8 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
 <head>
     <meta charset="UTF-8">
     <title>Add Machine or Applicator</title>4
-    <link rel="stylesheet" href="../../public/assets/css/base.css">
-    <link rel="stylesheet" href="../../public/assets/css/add_entry.css">
+    <!-- link rel="stylesheet" href="../../public/assets/css/base.css" -->
+    <!-- link rel="stylesheet" href="../../public/assets/css/add_entry.css"-->
     <!-- Load machine infinite scroll logic -->
     <script src="../../public/assets/js/load_machines.js" defer></script>
     <!-- Load applicator infinite scroll logic -->
@@ -39,7 +39,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
     <script scr="../../public/assets/js/cancel_add_modal_form.js" defer></script>
 </head>
 <body>
-    <?php include '../includes/side_bar.php'; ?>
+    <?php // include '../includes/side_bar.php'; ?>
     <div class="container">
         <!-- Header -->
         <div class="header">
