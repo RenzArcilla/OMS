@@ -39,7 +39,20 @@ switch ($machine_case) {
 
     case "B":
         # update old machine output to new machine output in machine_outputs
+            $update_machine_output_result = updateMachineOutput(
+                        $machine_data, $machine_output, $record_id);
+            if (is_string($update_machine_output_result)) {
+                throw new Exception($update_machine_output_result);
+            }
         # decrement monitor_machines ng previous output
+            $result = monitorMachineOutput($prev_machine_data, $prev_machine_output, "decrement");
+            if (is_string($result)) {
+                throw new Exception($result);
+            }
         # increment monitor_machines ng bagong output
+            $result = monitorMachineOutput($machine_data, $machine_output, "increment");
+            if (is_string($result)) {
+                throw new Exception($result);
+            }
         break;
 }
