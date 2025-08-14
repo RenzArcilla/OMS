@@ -13,7 +13,7 @@ if (!isset($_SESSION['user_id'])) {
 
 // Include necessary files
 require_once '../includes/js_alert.php';
-include_once '../models/delete_machine.php';
+include_once '../models/delete_machines.php';
 
 // Redirect url
 $redirect_url = "../views/add_entry.php";
