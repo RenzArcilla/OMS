@@ -14,13 +14,15 @@ if (!isset($_SESSION['user_id'])) {
 // Include necessary files
 require_once '../includes/db.php';
 require_once '../includes/js_alert.php';
+include_once '../models/create_applicator_output.php';
 include_once '../models/read_machines.php';
 include_once '../models/read_applicators.php';
-include_once '../models/delete_applicator.php';
 include_once '../models/update_record.php';
 include_once '../models/update_applicator_output.php';
 include_once '../models/update_machine_output.php';
 include_once '../models/update_monitor_applicator.php';
+include_once '../models/update_monitor_machine.php';
+include_once '../models/delete_applicator_output.php';
 
 // Redirect url
 $redirect_url = "../views/record_output.php";
@@ -31,12 +33,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-
-// 1. Sanitize inputs
+// 1. SANITATION
 $record_id = isset($_POST['record_id']) ? intval($_POST['record_id']) : null;
 $date_inspected = isset($_POST['date_inspected']) ? strtoupper(trim($_POST['date_inspected'])) : null;
 $shift = isset($_POST['shift']) ? (['1ST' => 'FIRST', '2ND' => 'SECOND', 'NIGHT' => 'NIGHT'][strtoupper(trim($_POST['shift']))] ?? null) : null;
 
+// Previous values for change detection
+$prev_date_inspected = isset($_POST['prev_date_inspected']) ? strtoupper(trim($_POST['prev_date_inspected'])) : null;
+$prev_shift = isset($_POST['prev_shift']) ? (['1ST' => 'FIRST', '2ND' => 'SECOND', 'NIGHT' => 'NIGHT'][strtoupper(trim($_POST['prev_shift']))] ?? null) : null;
 $prev_app1 = isset($_POST['prev_app1']) ? strtoupper(trim($_POST['prev_app1'])) : null;
 $prev_app1_output = isset($_POST['prev_app1_output']) ? intval(trim($_POST['prev_app1_output'])) : null;
 $prev_app2 = isset($_POST['prev_app2']) ? strtoupper(trim($_POST['prev_app2'])) : null;
@@ -46,36 +50,187 @@ $prev_machine_output = isset($_POST['prev_machine_output']) ? intval(trim($_POST
 
 $app1 = isset($_POST['app1']) ? strtoupper(trim($_POST['app1'])) : null;
 $app1_output = isset($_POST['app1_output']) ? intval(trim($_POST['app1_output'])) : null;
-$app2 = isset($_POST['app2']) ? strtoupper(trim($_POST['app2'])) : null;
+$app2 = (isset($_POST['app2']) && trim($_POST['app2']) !== '') 
+    ? strtoupper(trim($_POST['app2'])) 
+    : null;
 $app2_output = isset($_POST['app2_output']) ? intval(trim($_POST['app2_output'])) : null;
 $machine = isset($_POST['machine']) ? strtoupper(trim($_POST['machine'])) : null;
 $machine_output = isset($_POST['machine_output']) ? intval(trim($_POST['machine_output'])) : null;
 
-// 2. Validation
-if (empty($record_id) || empty($date_inspected) || empty($shift) ||
-    empty($app1) || empty($app1_output) || empty($machine) || empty($machine_output)) {
-    jsAlertRedirect("Please fill in all required fields.", $redirect_url);
+error_log($app2);
+
+// 2. COMPREHENSIVE VALIDATION
+
+/**
+ * Validate required fields are not empty
+ */
+function validateRequiredFields($record_id, $date_inspected, $shift, $app1, $app1_output, $machine, $machine_output) {
+    $required_fields = [
+        'Record ID' => $record_id,
+        'Date Inspected' => $date_inspected,
+        'Shift' => $shift,
+        'Applicator 1' => $app1,
+        'Applicator 1 Output' => $app1_output,
+        'Machine' => $machine,
+        'Machine Output' => $machine_output
+    ];
+    
+    $empty_fields = [];
+    foreach ($required_fields as $field_name => $value) {
+        if (empty($value) || (is_string($value) && trim($value) === '')) {
+            $empty_fields[] = $field_name;
+        }
+    }
+    
+    if (!empty($empty_fields)) {
+        throw new Exception("Please fill in all required fields: " . implode(', ', $empty_fields));
+    }
+}
+
+/**
+ * Validate shift value
+ */
+function validateShift($shift) {
+    $valid_shifts = ['FIRST', 'SECOND', 'NIGHT'];
+    if (!in_array($shift, $valid_shifts)) {
+        throw new Exception("Invalid selection for work shift. Valid options: " . implode(', ', $valid_shifts));
+    }
+}
+
+/**
+ * Validate App2 conditional logic
+ */
+function validateApp2Logic($app2, $app2_output) {
+    if (!empty($app2) && empty($app2_output)) {
+        throw new Exception("Please provide output value for Applicator 2.");
+    }
+}
+
+/**
+ * Validate no duplicate applicators
+ */
+function validateNoDuplicateApplicators($app1, $app2) {
+    if (!empty($app1) && !empty($app2) && $app1 === $app2) {
+        throw new Exception("Error! Duplicate applicator entry: $app1");
+    }
+}
+
+/**
+ * Validate date format
+ */
+function validateDateFormat($date_inspected) {
+    $date = DateTime::createFromFormat('Y-m-d', $date_inspected);
+    if (!$date || $date->format('Y-m-d') !== $date_inspected) {
+        throw new Exception("Invalid date format. Please use YYYY-MM-DD format.");
+    }
+    
+    // Check if date is not in the future
+    $today = new DateTime();
+    if ($date > $today) {
+        throw new Exception("Date inspected cannot be in the future.");
+    }
+}
+
+/**
+ * Validate numeric outputs are positive
+ */
+function validateOutputValues($app1_output, $app2_output, $machine_output) {
+    if ($app1_output < 0) {
+        throw new Exception("Applicator 1 output must be a positive number.");
+    }
+    
+    if (!empty($app2_output) && $app2_output < 0) {
+        throw new Exception("Applicator 2 output must be a positive number.");
+    }
+    
+    if ($machine_output < 0) {
+        throw new Exception("Machine output must be a positive number.");
+    }
+}
+
+/**
+ * Check if any changes were made
+ */
+function hasChanges($current, $previous) {
+    // Check each field individually for better debugging
+    $date_changed = $current['date_inspected'] !== $previous['date_inspected'];
+    $shift_changed = $current['shift'] !== $previous['shift'];
+    $app1_changed = $current['app1'] !== $previous['app1'];
+    $app1_output_changed = intval($current['app1_output']) !== intval($previous['app1_output']);
+    $app2_changed = $current['app2'] !== $previous['app2'];
+    $app2_output_changed = intval($current['app2_output']) !== intval($previous['app2_output']);
+    $machine_changed = $current['machine'] !== $previous['machine'];
+    $machine_output_changed = intval($current['machine_output']) !== intval($previous['machine_output']);
+    
+    $changes_detected = (
+        $date_changed ||
+        $shift_changed ||
+        $app1_changed ||
+        $app1_output_changed ||
+        $app2_changed ||
+        $app2_output_changed ||
+        $machine_changed ||
+        $machine_output_changed
+    );
+    
+    return $changes_detected;
+}
+
+// 2. BASIC VALIDATION FIRST
+try {
+    // 1. Check for required fields
+    validateRequiredFields($record_id, $date_inspected, $shift, $app1, $app1_output, $machine, $machine_output);
+    
+    // 2. Validate date format
+    validateDateFormat($date_inspected);
+    
+    // 3. Validate shift
+    validateShift($shift);
+    
+    // 4. Validate app2 logic
+    validateApp2Logic($app2, $app2_output);
+    
+    // 5. Validate no duplicate applicators
+    validateNoDuplicateApplicators($app1, $app2);
+    
+    // 6. Validate output values are positive
+    validateOutputValues($app1_output, $app2_output, $machine_output);
+    
+} catch (Exception $e) {
+    jsAlertRedirect($e->getMessage(), $redirect_url);
     exit;
 }
 
-// Validate app2_output if app2 is provided
-if (!empty($app2) && empty($app2_output)) {
-    jsAlertRedirect("Please provide output value for Applicator 2.", $redirect_url);
+// 3. PREPARE DATA FOR COMPARISON AFTER SANITIZATION
+$current_data = [
+    'date_inspected' => $date_inspected,
+    'shift' => $shift,
+    'app1' => strtoupper($app1),
+    'app1_output' => $app1_output,
+    'app2' => strtoupper($app2 ?? ''),
+    'app2_output' => $app2_output ?? 0,
+    'machine' => strtoupper($machine),
+    'machine_output' => $machine_output
+];
+
+$previous_data = [
+    'date_inspected' => $prev_date_inspected,
+    'shift' => $prev_shift,
+    'app1' => strtoupper($prev_app1 ?? ''),
+    'app1_output' => $prev_app1_output ?? 0,
+    'app2' => strtoupper($prev_app2 ?? ''),
+    'app2_output' => $prev_app2_output ?? 0,
+    'machine' => strtoupper($prev_machine ?? ''),
+    'machine_output' => $prev_machine_output ?? 0
+];
+
+// 4. CHECK FOR CHANGES BEFORE DATABASE OPERATIONS
+if (!hasChanges($current_data, $previous_data)) {
+    jsAlertRedirect('No changes detected. Record remains unchanged.', $redirect_url);
     exit;
 }
 
-if (!empty($app1) && !empty($app2) && $app1 === $app2) {
-    jsAlertRedirect("Error! Duplicate applicator entry: $app1", $redirect_url);
-    exit;
-}
-
-if (!in_array($shift, ['FIRST', 'SECOND', 'NIGHT'])) {
-    jsAlertRedirect("Invalid selection for work shift.", $redirect_url);
-    exit;
-}
-
-// 3. Database operation
-// Update the record in the database
+// 5. DATABASE EXISTENCE AND STATUS CHECKS
 
 // a. Check if applicators exists
 $app1_data = applicatorExists($app1);
@@ -130,6 +285,16 @@ if (!is_array($machine_data)) {
     exit;
 }
 
+// for previous machine
+$prev_machine_data = machineExists($prev_machine);
+if (!is_array($prev_machine_data)) {
+    jsAlertRedirect("Machine: $prev_machine not found!", $redirect_url);
+    exit;
+} elseif (is_string($prev_machine_data)) {
+    jsAlertRedirect($prev_machine_data, $redirect_url);
+    exit;
+}
+
 // c. Check if applicators are disabled
 $app1_disabled = getInactiveApplicatorByHpNo($app1);
 if ($app1_disabled) {
@@ -161,6 +326,7 @@ if ($machine_disabled) {
     exit;
 }
 
+// 6. DATABASE OPERATIONS
 try {
     $pdo->beginTransaction();
 

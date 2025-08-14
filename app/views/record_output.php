@@ -268,6 +268,8 @@ if (!isset($_SESSION['user_id'])) {
             <form id="editRecordForm" action="../controllers/edit_record.php" method="POST" onsubmit="return validateEditForm()">
                 <!-- Hidden inputs for tracking previous values -->
                 <input type="hidden" name="record_id" id="edit_record_id" required>
+                <input type="hidden" name="prev_date_inspected" id="edit_prev_date_inspected">
+                <input type="hidden" name="prev_shift" id="edit_prev_shift">
                 <input type="hidden" name="prev_app1" id="edit_prev_app1">
                 <input type="hidden" name="prev_app2" id="edit_prev_app2">
                 <input type="hidden" name="prev_machine" id="edit_prev_machine">
@@ -385,46 +387,6 @@ if (!isset($_SESSION['user_id'])) {
         </div>
     </div>
 </div>
-
-<script>
-// Add event listeners when document is ready
-document.addEventListener('DOMContentLoaded', function() {
-    // Add validation for app2 output when app2 is filled
-    const app2Input = document.getElementById('edit_app2');
-    const app2OutputInput = document.getElementById('edit_app2_output');
-    
-    if (app2Input && app2OutputInput) {
-        app2Input.addEventListener('input', function() {
-            if (this.value.trim()) {
-                app2OutputInput.setAttribute('required', 'required');
-            } else {
-                app2OutputInput.removeAttribute('required');
-                app2OutputInput.value = '';
-            }
-        });
-    }
-    
-    // Close modal when clicking outside
-    const modal = document.getElementById('editRecordModal');
-    if (modal) {
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                closeRecordModal();
-            }
-        });
-    }
-    
-    // Handle Escape key to close modal
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            const modal = document.getElementById('editRecordModal');
-            if (modal && modal.style.display === 'block') {
-                closeRecordModal();
-            }
-        }
-    });
-});
-</script>
 
 <!-- Infinite scroll logic -->
 <script src="../../public/assets/js/load_records.js" defer></script>

@@ -24,23 +24,28 @@ function monitorMachineOutput($machine_data, $machine_output, $operation = 'incr
     try {
         $machine_id = is_array($machine_data) ? $machine_data['machine_id'] : $machine_data;
 
+        // Always use absolute value, then apply operation sign
+        $machine_output = abs($machine_output);
+        if (strtolower($operation) === "decrement") {
+            $machine_output = -$machine_output;
+        }
+
         // Fetch applicable custom parts for machines
         require_once __DIR__ . '/read_custom_parts.php';
         $custom_parts = getCustomParts('MACHINE');
+        
+        // If custom parts retrieval failed (string message returned), pass it back
         if (is_string($custom_parts)) {
             return $custom_parts;
         }
 
-        // Prepare value adjustment sign
-        $adjustment = ($operation === 'decrement') ? -abs($machine_output) : abs($machine_output);
-
-        // Build new parts adjustment
+        // Build an array of part => output
         $new_parts = [];
         foreach ($custom_parts as $part) {
-            $new_parts[$part['part_name']] = $adjustment;
+            $new_parts[$part['part_name']] = $machine_output;
         }
 
-        // Fetch existing JSON
+        // Check if there's an existing record for this machine
         $stmt_check = $pdo->prepare("
             SELECT custom_parts_output 
             FROM monitor_machine 
@@ -50,14 +55,11 @@ function monitorMachineOutput($machine_data, $machine_output, $operation = 'incr
         $stmt_check->execute([':id' => $machine_id]);
         $existing = $stmt_check->fetchColumn();
 
+        // Merge with existing custom parts data if it exists
         if ($existing) {
             $existing_parts = json_decode($existing, true) ?? [];
             foreach ($new_parts as $key => $val) {
-                if (isset($existing_parts[$key])) {
-                    $existing_parts[$key] += $val;
-                } else {
-                    $existing_parts[$key] = $val;
-                }
+                $existing_parts[$key] = ($existing_parts[$key] ?? 0) + $val;
             }
             $custom_parts_json = json_encode($existing_parts);
         } else {
@@ -80,8 +82,9 @@ function monitorMachineOutput($machine_data, $machine_output, $operation = 'incr
                 custom_parts_output = :custom_json,
                 last_updated = CURRENT_TIMESTAMP
         ");
+        
         $stmt->bindParam(':machine_id', $machine_id, PDO::PARAM_INT);
-        $stmt->bindParam(':val', $adjustment, PDO::PARAM_INT);
+        $stmt->bindParam(':val', $machine_output, PDO::PARAM_INT);
         $stmt->bindParam(':custom_json', $custom_parts_json, PDO::PARAM_STR);
 
         $stmt->execute();
