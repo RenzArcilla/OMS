@@ -268,6 +268,8 @@ if (!isset($_SESSION['user_id'])) {
             <form id="editRecordForm" action="../controllers/edit_record.php" method="POST" onsubmit="return validateEditForm()">
                 <!-- Hidden inputs for tracking previous values -->
                 <input type="hidden" name="record_id" id="edit_record_id" required>
+                <input type="hidden" name="prev_date_inspected" id="edit_prev_date_inspected">
+                <input type="hidden" name="prev_shift" id="edit_prev_shift">
                 <input type="hidden" name="prev_app1" id="edit_prev_app1">
                 <input type="hidden" name="prev_app2" id="edit_prev_app2">
                 <input type="hidden" name="prev_machine" id="edit_prev_machine">

@@ -1,6 +1,6 @@
 /**
  * Edit Record Modal functionality
- * Handles opening, closing, and validation of the edit record modal
+ * Handles opening, closing, and data pre-population of the edit record modal
  */
 
 // Configuration
@@ -25,9 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeModalEventListeners();
 });
 
-/**
- * Initialize all event listeners for modal functionality
- */
+// Initialize all event listeners for modal functionality
 function initializeModalEventListeners() {
     // App2 conditional validation - make output required when app2 is filled
     const app2Input = document.getElementById('edit_app2');
@@ -62,19 +60,13 @@ function initializeModalEventListeners() {
     });
 }
 
-/**
- * Check if modal is currently open
- * @returns {boolean}
- */
+// Check if modal is currently open
 function isModalOpen() {
     const modal = document.getElementById('editRecordModal');
     return modal && modal.style.display === 'block';
 }
 
-/**
- * Main function to open edit modal with error handling and validation
- * @param {HTMLElement} button - The edit button element with data attributes
- */
+// Main function to open edit modal with error handling and validation
 function openRecordEditModalSafe(button) {
     try {
         // Validate button element
@@ -99,10 +91,7 @@ function openRecordEditModalSafe(button) {
     }
 }
 
-/**
- * Validate that required data attributes are present
- * @param {DOMStringMap} data - Dataset from button element
- */
+// Validate that required data attributes are present
 function validateRequiredData(data) {
     const requiredDataFields = ['id', 'dateInspected', 'shift', 'hp1No', 'app1Output', 'controlNo', 'machineOutput'];
     const missingFields = requiredDataFields.filter(field => !data[field]);
@@ -112,14 +101,13 @@ function validateRequiredData(data) {
     }
 }
 
-/**
- * Populate all form fields with data from the record
- * @param {DOMStringMap} data - Dataset from button element
- */
+// Populate all form fields with data from the record
 function populateFormFields(data) {
     const fieldMappings = {
         // Hidden fields for tracking previous values
         'edit_record_id': data.id,
+        'edit_prev_date_inspected': data.dateInspected,
+        'edit_prev_shift': SHIFT_MAPPING[data.shift] || data.shift || '',
         'edit_prev_app1': data.hp1No,
         'edit_prev_app1_output': data.app1Output,
         'edit_prev_app2': data.hp2No || '',
@@ -149,9 +137,7 @@ function populateFormFields(data) {
     });
 }
 
-/**
- * Show the edit modal
- */
+// Show the edit modal
 function showModal() {
     const modal = document.getElementById('editRecordModal');
     if (modal) {
@@ -161,9 +147,7 @@ function showModal() {
     }
 }
 
-/**
- * Close the edit modal and reset form
- */
+// Close the edit modal and reset form
 function closeRecordModal() {
     const modal = document.getElementById('editRecordModal');
     if (modal) {
@@ -172,9 +156,7 @@ function closeRecordModal() {
     }
 }
 
-/**
- * Reset the edit form
- */
+// Reset the edit form
 function resetForm() {
     const form = document.getElementById('editRecordForm');
     if (form) {
@@ -189,67 +171,28 @@ function resetForm() {
 }
 
 /**
- * Validate form before submission
- * @returns {boolean} - True if form is valid, false otherwise
+ * Basic form validation before submission
+ * Only checks HTML5 required fields - all business logic is server-side
+ * @returns {boolean} - True if basic HTML5 validation passes
  */
 function validateEditForm() {
-    try {
-        // Check required fields
-        validateRequiredFields();
-        
-        // Validate app2 conditional logic
-        validateApp2Logic();
-        
-        // Check for duplicate applicators
-        validateNoDuplicateApplicators();
-        
-        return true;
-        
-    } catch (error) {
-        alert(error.message);
+    const form = document.getElementById('editRecordForm');
+    if (!form) {
+        alert('Form not found');
         return false;
     }
-}
-
-/**
- * Validate that all required fields are filled
- */
-function validateRequiredFields() {
-    const emptyFields = REQUIRED_FIELDS.filter(fieldId => {
-        const element = document.getElementById(fieldId);
-        return !element || !element.value.trim();
-    });
     
-    if (emptyFields.length > 0) {
-        throw new Error(`Please fill in all required fields: ${emptyFields.join(', ')}`);
+    // Let HTML5 validation handle required fields
+    if (!form.checkValidity()) {
+        // HTML5 will show validation messages
+        return false;
     }
-}
-
-/**
- * Validate App2 conditional logic - if app2 is provided, output must be provided
- */
-function validateApp2Logic() {
-    const app2 = document.getElementById('edit_app2').value.trim();
-    const app2Output = document.getElementById('edit_app2_output').value.trim();
     
-    if (app2 && !app2Output) {
-        throw new Error('Please provide output value for Applicator 2');
-    }
+    // All validations (including no-changes check) are handled server-side
+    return true;
 }
 
-/**
- * Validate that applicators are not duplicated
- */
-function validateNoDuplicateApplicators() {
-    const app1 = document.getElementById('edit_app1').value.trim();
-    const app2 = document.getElementById('edit_app2').value.trim();
-    
-    if (app1 && app2 && app1 === app2) {
-        throw new Error(`Error! Duplicate applicator entry: ${app1}`);
-    }
-}
-
-// Legacy function for backward compatibility (if still referenced somewhere)
+// Legacy function for backward compatibility
 function openRecordEditModal(button) {
     console.warn('openRecordEditModal is deprecated. Use openRecordEditModalSafe instead.');
     openRecordEditModalSafe(button);
