@@ -386,46 +386,6 @@ if (!isset($_SESSION['user_id'])) {
     </div>
 </div>
 
-<script>
-// Add event listeners when document is ready
-document.addEventListener('DOMContentLoaded', function() {
-    // Add validation for app2 output when app2 is filled
-    const app2Input = document.getElementById('edit_app2');
-    const app2OutputInput = document.getElementById('edit_app2_output');
-    
-    if (app2Input && app2OutputInput) {
-        app2Input.addEventListener('input', function() {
-            if (this.value.trim()) {
-                app2OutputInput.setAttribute('required', 'required');
-            } else {
-                app2OutputInput.removeAttribute('required');
-                app2OutputInput.value = '';
-            }
-        });
-    }
-    
-    // Close modal when clicking outside
-    const modal = document.getElementById('editRecordModal');
-    if (modal) {
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                closeRecordModal();
-            }
-        });
-    }
-    
-    // Handle Escape key to close modal
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            const modal = document.getElementById('editRecordModal');
-            if (modal && modal.style.display === 'block') {
-                closeRecordModal();
-            }
-        }
-    });
-});
-</script>
-
 <!-- Infinite scroll logic -->
 <script src="../../public/assets/js/load_records.js" defer></script>
 <!-- Load modal logic for editing records -->
