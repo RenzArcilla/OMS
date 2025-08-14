@@ -1,74 +1,23 @@
+// Get DOM elements
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+const toggleBtn = document.getElementById('toggleBtn');
+
+function toggleSidebar() {
+    sidebar.classList.toggle('active');
+    overlay.classList.toggle('active');
+
+        if (sidebar.classList.contains('active')) {
+            toggleBtn.innerHTML = '✕';
+        } else {
+            toggleBtn.innerHTML = '☰';
+        }
+}
+
+// Add event listeners
+toggleBtn.addEventListener('click', toggleSidebar);
+overlay.addEventListener('click', toggleSidebar);
+
 // Initialize Lucide icons
-        lucide.createIcons();
+lucide.createIcons();
 
-        // Global state
-        let side_barOpen = true;
-        let activeTab = 'dashboard';
-/*
-        // Sidebar toggle
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebarOpen = !sidebarOpen;
-            
-            if (sidebarOpen) {
-                sidebar.classList.remove('collapsed');
-            } else {
-                sidebar.classList.add('collapsed');
-            }
-        }
-*/
-        // Tab switching
-        function setActiveTab(tabName) {
-            // Hide all tabs
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.add('hidden'));
-            
-            // Show selected tab
-            const selectedTab = document.getElementById(tabName + '-tab');
-            if (selectedTab) {
-                selectedTab.classList.remove('hidden');
-            }
-            
-            // Update navigation
-            const navButtons = document.querySelectorAll('.nav-item button');
-            navButtons.forEach(btn => btn.classList.remove('active'));
-            
-            const activeButton = document.querySelector(`[onclick="setActiveTab('${tabName}')"]`);
-            if (activeButton) {
-                activeButton.classList.add('active');
-            }
-            
-            activeTab = tabName;
-        }
-
-        // Initialize the interface
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize icons
-            lucide.createIcons();
-            
-            // Set initial state
-            setActiveTab('dashboard');
-            
-            // Simulate real-time updates
-            setInterval(updateStats, 30000); // Update every 30 seconds
-        });
-
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('collapsed');
-        }
-
-        function loadPage(url, tabName) {
-            fetch(url)
-                .then(res => res.text())
-                .then(html => {
-                    document.getElementById('content-area').innerHTML = html;
-                    setActiveTab(tabName);
-                });
-        }
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('collapsed');
-        }
-
-        // Get DOM elements
-        const sidebar = document.getElementById('sidebar');
