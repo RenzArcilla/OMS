@@ -16,7 +16,7 @@ body {
 }
 
 /* ========================================
-SIDEBAR COMPONENT
+   SIDEBAR COMPONENT
    ======================================== */
 .sidebar {
     position: fixed;
@@ -58,10 +58,6 @@ SIDEBAR COMPONENT
     background-clip: text;
     text-align: center;
     text-shadow: 0 2px 4px rgba(47, 128, 237, 0.1);
-}
-
-.sidebar.collapsed{
-    display: none;
 }
 
 /* Sidebar Navigation */
@@ -139,14 +135,26 @@ SIDEBAR COMPONENT
     background: rgba(0, 0, 0, 0.5);
     z-index: 999;
     display: none;
-    display: block;
-    opacity: 1;
- 
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* Don't block clicks when hidden */
+    visibility: hidden; /* Completely hide when not active */
 }
 
 .sidebar-overlay.active {
-    display: block; 
-    opacity: 0;
+    display: block;
+    opacity: 1;
+    pointer-events: auto; /* Allow clicks only when active */
+    visibility: visible; /* Show when active */
+}
+
+/* Ensure overlay is completely hidden when sidebar is closed */
+.sidebar:not(.active) + .sidebar-overlay,
+.sidebar:not(.active) ~ .sidebar-overlay {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
 }
 
 /* ========================================
@@ -182,7 +190,8 @@ SIDEBAR COMPONENT
     padding: 80px 30px 30px 30px;
     transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     min-height: 100vh;
-    
+    position: relative;
+    z-index: 1; /* Ensure content is above background */
 }
 
 .main-content.sidebar-hidden {
@@ -192,12 +201,16 @@ SIDEBAR COMPONENT
 #content-area {
     max-width: 1200px;
     margin: 0 auto;
+    position: relative;
+    z-index: 2; /* Ensure content area is above overlay */
 }
 
 .content-area {
     padding: 32px;
     background-color: #F9FAFB;
     min-height: 100vh;
+    position: relative;
+    z-index: 2; /* Ensure content is clickable */
 }
 
 /* ========================================
@@ -229,11 +242,12 @@ SIDEBAR COMPONENT
    PAGE CONTENT
    ======================================== */
 .page-content {
-    display: none;
-}
-
-.page-content.active {
     display: block;
+    background: white;
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin: 20px 0;
 }
 
 .page-content h1 {
@@ -246,4 +260,121 @@ SIDEBAR COMPONENT
     color: #7f8c8d;
     line-height: 1.6;
     margin-bottom: 15px;
+}
+
+/* ========================================
+   LOADING & ERROR STATES
+   ======================================== */
+.loading {
+    text-align: center;
+    padding: 60px 20px;
+    font-size: 1.2rem;
+    color: #6B7280;
+}
+
+.loading::before {
+    content: "⏳ ";
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 16px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.error-message {
+    text-align: center;
+    padding: 40px 20px;
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+    border-radius: 12px;
+    margin: 20px 0;
+}
+
+.error-message h2 {
+    color: #DC2626;
+    margin-bottom: 16px;
+    font-size: 1.5rem;
+}
+
+.error-message p {
+    color: #6B7280;
+    margin-bottom: 8px;
+}
+
+.error-message button {
+    background: #DC2626;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: background-color 0.3s;
+}
+
+.error-message button:hover {
+    background: #B91C1C;
+}
+
+/* ========================================
+   INTERACTIVE ELEMENTS
+   ======================================== */
+button, 
+input, 
+select, 
+textarea,
+a,
+.clickable,
+[onclick] {
+    position: relative;
+    z-index: 10; /* Ensure all interactive elements are above overlay */
+    pointer-events: auto !important; /* Force clickability */
+}
+
+/* Dashboard specific elements */
+.dashboard-container,
+.admin-manage-user-container,
+.filters-card,
+.users-table-card {
+    position: relative;
+    z-index: 5; /* Ensure dashboard content is above overlay */
+}
+
+/* Table elements */
+table, tr, td, th {
+    position: relative;
+    z-index: 5;
+}
+
+/* Form elements */
+form, .form-group, .form-control {
+    position: relative;
+    z-index: 5;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding: 20px;
+    }
+    
+    .toggle-btn {
+        display: block;
+    }
 }

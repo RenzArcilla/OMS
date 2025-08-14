@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,8 +8,10 @@
     <title>HEPC - Admin Dashboard</title>
     <link rel="stylesheet" href="../../public/assets/css/base.css">
     <link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
+
 </head>
 <body>
+    <?php include '../includes/side_bar.php'; ?>
     <div class="admin-container">
         <!-- Main Content -->
         <div class="main-content">

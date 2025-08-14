@@ -39,6 +39,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
     <script scr="../../public/assets/js/cancel_add_modal_form.js" defer></script>
 </head>
 <body>
+    <?php include '../includes/side_bar.php'; ?>
     <div class="container">
         <!-- Header -->
         <div class="header">
