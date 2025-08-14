@@ -37,12 +37,12 @@ if ($app1 === $prev_app1 && $app1_output !== $prev_app1_output) {
 $app2_case = null;
 if ($app2 === $prev_app2 && $app2_output !== $prev_app2_output) {
     $app2_case = "A"; // same applicator, different output
+} elseif (empty($app2) && !empty($prev_app2)) {
+    $app2_case = "D"; // old → none
 } elseif ($app2 !== $prev_app2 && !empty($prev_app2)) {
     $app2_case = "B"; // different applicator
 } elseif (!empty($app2) && empty($prev_app2)) {
     $app2_case = "C"; // none → new
-} elseif (empty($app2) && !empty($prev_app2)) {
-    $app2_case = "D"; // old → none
 }
 
 
@@ -143,6 +143,14 @@ switch ($app2_case) {
 
     case "D": // old → none
         # remove previous app2 output in applicator_outputs
+            $result = deleteApplicatorOutputs($prev_app2_data["applicator_id"], $record_id);
+            if (is_string($result)) {
+                throw new Exception($result);
+            }
         # decrement monitor_applicator
+            $result = monitorApplicatorOutput($prev_app2_data, $prev_app2_output, "decrement");
+            if (is_string($result)) {
+                throw new Exception($result);
+            }
         break;
 } 

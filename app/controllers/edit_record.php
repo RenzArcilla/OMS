@@ -21,7 +21,7 @@ include_once '../models/update_record.php';
 include_once '../models/update_applicator_output.php';
 include_once '../models/update_machine_output.php';
 include_once '../models/update_monitor_applicator.php';
-include_once '../models/delete_applicator.php';
+include_once '../models/delete_applicator_output.php';
 
 // Redirect url
 $redirect_url = "../views/record_output.php";
