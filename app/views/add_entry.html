@@ -13,7 +13,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 
-include_once __DIR__ . '/../includes/header.php'; // Include the header file for the navigation and logo
+//include_once __DIR__ . '/../includes/header.php'; // Include the header file for the navigation and logo
 ?>
 
 
@@ -238,7 +238,6 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                         <span class="modal-icon">🔧</span>
                         <span id="machineModalTitleText">Add Machine</span>
                     </h2>
-                    <button type="button" class="close-btn" onclick="closeModal()">✖️</button>
                 </div>
                     
                 <div class="modal-body">
@@ -282,7 +281,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                 </div>
                 
                             <div class="modal-footer">
-                                <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+                                <button type="button" class="btn-secondary" onclick="closeAddMachineModal()">Cancel</button>
                                 <button type="submit" id="machineActionBtn" class="btn-primary" onclick="saveMachine()">Add Machine</button>
                             </div>
             </div>
@@ -296,7 +295,6 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                         <span class="modal-icon">⚡</span>
                         <span>Add Applicator</span>
                     </h2>
-                    <button class="close-btn" onclick="closeModal()">✖️</button>
                 </div>
 
                 <div class="modal-body">
@@ -304,17 +302,17 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
                         <div class="form-grid">
                             <div class="form-group">
                                 <label for="applicator_ctrl_no">Control No:</label>
-                                <input type="text" id="applicator_ctrl_no" name="control_no" required><br><br>
+                                <input type="text" id="add_applicator_ctrl_no" name="control_no" required><br><br>
                             </div>
                             
                             <div class="form-group">
                                 <label for="terminal_no">Terminal No:</label>
-                                <input type="text" id="terminal_no" name="terminal_no" required><br><br>
+                                <input type="text" id="add_applicator_terminal_no" name="terminal_no" required><br><br>
                             </div>
 
                             <div class="form-group">
                                 <label for="description">Description:</label>
-                                <select id="description" name="description" required>
+                                <select id="add_applicator_description" name="description" required>
                                     <option value="">--Select--</option>
                                     <option value="SIDE">SIDE</option>
                                     <option value="END">END</option>
@@ -323,7 +321,7 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
 
                             <div class="form-group">
                                 <label for="wire_type">Wire Type:</label>
-                                <select id="wire_type" name="wire_type" required>
+                                <select id="add_applicator_wire_type" name="wire_type" required>
                                     <option value="">--Select--</option>
                                     <option value="BIG">BIG</option>
                                     <option value="SMALL">SMALL</option>
@@ -332,29 +330,29 @@ include_once __DIR__ . '/../includes/header.php'; // Include the header file for
 
                             <div class="form-group">
                                 <label for="terminal_maker">Terminal Maker:</label>
-                                <input type="text" id="terminal_maker" name="terminal_maker" required><br><br>
+                                <input type="text" id="add_terminal_maker" name="terminal_maker" required><br><br>
                             </div>
 
                             <div class="form-group">
                                 <label for="applicator_maker">Applicator Maker:</label>
-                                <input type="text" id="applicator_maker" name="applicator_maker" required><br><br>
+                                <input type="text" id="add_applicator_maker" name="applicator_maker" required><br><br>
                             </div>
 
                             <div class="form-group">
                                 <label for="applicator_serial_no">Serial No:</label>
-                                <input type="text" id="applicator_serial_no" name="serial_no"><br><br>
+                                <input type="text" id="add_applicator_serial_no" name="serial_no"><br><br>
                             </div>
 
                             <div class="form-group">
                                 <label for="applicator_invoice_no">Invoice No:</label>
-                                <input type="text" id="applicator_invoice_no" name="invoice_no"><br><br>
+                                <input type="text" id="add_applicator_invoice_no" name="invoice_no"><br><br>
                             </div>
                         </div>
                     </form>
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="button" class="btn-secondary" onclick="closeAddApplicatorModal()">Cancel</button>
                     <button type="submit" id="applicatorActionBtn" class="btn-primary">Add Applicator</button>
                 </div>
 
