@@ -24,32 +24,49 @@ function getRecordsAndOutputs(int $limit = 10, int $offset = 0, $part_names_arra
     global $pdo;
 
     // Define allowed filter columns for security
-    $allowed_filters = [
+    $standard_filters = [
         'hp_no', 'last_updated', 'total_output', 'wire_crimper_output', 'wire_anvil_output',
         'insulation_crimper_output', 'insulation_anvil_output', 'slide_cutter_output', 
         'cutter_holder_output', 'shear_blade_output', 'cutter_a_output', 'cutter_b_output'
-    ]; 
+    ];
+    
+    // Define which columns should be sorted in ascending order
+    $ascending_columns = ['hp_no'];
     
     // Get filter parameter and validate it
-    $filter_by = (isset($_GET['filter_by']) && in_array($_GET['filter_by'], $allowed_filters, true))
-        ? $_GET['filter_by']
-        : 'total_output';
+    $filter_by = $_GET['filter_by'] ?? 'total_output';
+    $is_custom_part_filter = false;
+    
+    // Check if it's a standard column filter
+    if (in_array($filter_by, $standard_filters, true)) {
+        $sort_order = in_array($filter_by, $ascending_columns) ? 'ASC' : 'DESC';
+        $order_by_clause = $filter_by . " " . $sort_order;
+    } 
+    // Check if it's a custom part filter
+    elseif (!empty($part_names_array) && in_array($filter_by, $part_names_array, true)) {
+        $is_custom_part_filter = true;
+        // For MySQL, use JSON_EXTRACT to order by custom part values
+        $order_by_clause = "CAST(JSON_UNQUOTE(JSON_EXTRACT(custom_parts_output, '$.\"{$filter_by}\"')) AS UNSIGNED) DESC";
+    } 
+    else {
+        // Default fallback
+        $order_by_clause = "total_output DESC";
+    }
 
-    // Build the SQL query with the validated column name directly in the string
-    // This is safe because we've validated the column name against an allowlist
+    // Build the SQL query
     $sql = "
         SELECT *
         FROM monitor_applicator
         LEFT JOIN applicators
             USING (applicator_id)
-        ORDER BY " . $filter_by . " DESC
+        ORDER BY " . $order_by_clause . "
         LIMIT :limit OFFSET :offset
     ";
 
     // Prepare the SQL statement
     $stmt = $pdo->prepare($sql);
 
-    // Bind only the pagination parameters (not the column name)
+    // Bind only the pagination parameters
     $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
     $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 
@@ -75,11 +92,6 @@ function getRecordsAndOutputs(int $limit = 10, int $offset = 0, $part_names_arra
         } else {
             $row['custom_parts_output'] = [];
         }
-    }
-
-    // Update part names array if we have records
-    if (!empty($records[0]['custom_parts_output'])) {
-        $part_names_array = array_keys($records[0]['custom_parts_output']);
     }
 
     return $records;

@@ -88,16 +88,17 @@
                     </div>
                     <div class="section-content expanded">
                         <div class="table-container">
+                            <!-- Table section -->
                             <table class="data-table" id="metricsTable">
                                 <?php 
                                     require_once "../models/read_custom_parts.php";
                                     $custom_applicator_parts = getCustomParts("APPLICATOR");
                                 ?>
+                                <!-- Table Headers -->
                                 <thead>
-                                    <a hidden>total_output<a>
                                     <tr>
                                         <th>Actions</th>
-                                        <th><a href="?filter_by=hp_number">HP Number</a></th>
+                                        <th><a href="?filter_by=hp_no">HP Number</a></th>
                                         <th>Status</th>
                                         <th><a href="?filter_by=last_updated">Last Updated</a></th>
                                         <th><a href="?filter_by=total_output">Total Output</a></th>
@@ -113,22 +114,22 @@
                                         <?php 
                                             $part_names_array = []; // initialize array 
                                             foreach ($custom_applicator_parts as $part): ?>
-                                            <th><?= htmlspecialchars($part['part_name']) ?></th>
+                                            <th>
+                                                <a href="?filter_by=<?= urlencode($part['part_name']) ?>">
+                                                    <?= htmlspecialchars($part['part_name']) ?>
+                                                </a>
+                                            </th>
                                             <?php $part_names_array[] = $part['part_name']; ?>
                                         <?php endforeach; ?>
                                     </tr>   
                                 </thead>
+                                <!-- Table Rows -->
                                 <tbody id="metricsBody">
                                     <?php 
                                         require_once __DIR__ . '/../models/read_joins/read_monitor_applicator_and_applicator.php';
-                                        $filter_by = $_GET['filter_by'] ?? 'total_output';
-                                        $applicator_total_outputs = getRecordsAndOutputs(10, 0, $part_names_array);?>
+                                        $applicator_total_outputs = getRecordsAndOutputs(10, 0, $part_names_array);
+                                    ?>
                                     <?php foreach ($applicator_total_outputs as $row): ?>
-                                        <?php 
-                                            // The custom_parts_output is already processed in the PHP function
-                                            // No need to decode it again here
-                                            $custom_outputs = $row['custom_parts_output'] ?? [];
-                                        ?>
                                         <tr>
                                             <td>
                                                 <button class="btn-small btn-edit" onclick="openUndoModal()">Undo</button>
@@ -181,7 +182,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <div><?= htmlspecialchars($row['cutter_a_output']) ?>/ 1.5M</div>
+                                                <div><?= htmlspecialchars($row['cutter_a_output']) ?> / 1.5M</div>
                                                 <div class="progress-bar">
                                                     <div class="progress-fill" style="width: 26%;"></div>
                                                 </div>
