@@ -8,6 +8,64 @@
     <link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
 </head>
 <body>
+    <?php 
+    // Move all PHP logic to the top, before any HTML output
+    
+    // First, get custom parts
+    require_once "../models/read_custom_parts.php";
+    $custom_applicator_parts = getCustomParts("APPLICATOR");
+    
+    // Initialize part names array
+    $part_names_array = [];
+    foreach ($custom_applicator_parts as $part) {
+        $part_names_array[] = $part['part_name'];
+    }
+    
+    // Include the read join function and the alert function
+    require_once __DIR__ . '/../models/read_joins/read_monitor_applicator_and_applicator.php';
+    require_once __DIR__ . '/../includes/js_alert.php';
+
+    // Handle search if HP number is provided
+    $search_hp = $_GET['search_hp'] ?? '';
+    $search_result = null;
+    $is_searching = false;
+    
+    if (!empty(trim($search_hp))) {
+        $is_searching = true;
+        $search_result = searchApplicatorByHpNo(trim($search_hp), $part_names_array);
+        
+        // CHECK FOR SEARCH RESULT AND REDIRECT IMMEDIATELY IF NOT FOUND
+        if (!$search_result) {
+            jsAlertRedirect("Applicator not found!", $_SERVER['PHP_SELF']);
+            exit(); // Stop execution to prevent any further output
+        }
+        
+        // If searching, use search result instead of all records
+        $applicator_total_outputs = [$search_result]; // Single result in array
+    } else {
+        // Use existing logic for all records
+        $applicator_total_outputs = getRecordsAndOutputs(10, 0, $part_names_array);
+    }
+    
+    // Get current filter info (only if not searching)
+    if (!$is_searching) {
+        $current_filter = $_GET['filter_by'] ?? null;
+        if (!$current_filter) {
+            // Get the auto-selected highest output part
+            $current_filter = findHighestOutputPart($part_names_array);
+            $filter_display = "Auto-sorted by: " . str_replace('_output', '', ucwords(str_replace('_', ' ', $current_filter)));
+        } else {
+            $filter_display = "Filtered by: " . str_replace('_output', '', ucwords(str_replace('_', ' ', $current_filter)));
+        }
+    } else {
+        $filter_display = "Search Results";
+    }
+    
+    // Get parts priority data
+    $parts_ordered = getPartsOrderedByOutput($part_names_array);
+    $top_3_parts = array_slice($parts_ordered, 0, 3);
+    ?>
+
     <?php // include '../includes/side_bar.php'; ?>
     <div class="admin-container">
         <!-- Main Content -->
@@ -65,36 +123,6 @@
                     </div>
                 </div>
 
-                <?php 
-                // First, get custom parts
-                require_once "../models/read_custom_parts.php";
-                $custom_applicator_parts = getCustomParts("APPLICATOR");
-                
-                // Initialize part names array
-                $part_names_array = [];
-                foreach ($custom_applicator_parts as $part) {
-                    $part_names_array[] = $part['part_name'];
-                }
-                
-                // Include the functions and get data
-                require_once __DIR__ . '/../models/read_joins/read_monitor_applicator_and_applicator.php';
-                $applicator_total_outputs = getRecordsAndOutputs(10, 0, $part_names_array);
-                
-                // Get current filter info
-                $current_filter = $_GET['filter_by'] ?? null;
-                if (!$current_filter) {
-                    // Get the auto-selected highest output part
-                    $current_filter = findHighestOutputPart($part_names_array);
-                    $filter_display = "Auto-sorted by: " . str_replace('_output', '', ucwords(str_replace('_', ' ', $current_filter)));
-                } else {
-                    $filter_display = "Filtered by: " . str_replace('_output', '', ucwords(str_replace('_', ' ', $current_filter)));
-                }
-                
-                // Get parts priority data
-                $parts_ordered = getPartsOrderedByOutput($part_names_array);
-                $top_3_parts = array_slice($parts_ordered, 0, 3);
-                ?>
-
                 <!-- Applicator Status Section -->
                 <div class="data-section">
                     <div class="section-header expanded" onclick="toggleSection(this)">
@@ -106,8 +134,26 @@
                     </div>
                     
                     <div class="search-filter">
-                        <input type="text" class="search-input" placeholder="Search applicator..." onkeyup="filterTable(this.value)">
-                        <button class="filter-btn active" onclick="filterByStatus(this, 'all')">All</button>
+                        <!-- Search form -->
+                        <form method="GET" style="display: inline;">
+                            <!-- Preserve existing filter parameter if present -->
+                            <?php if (isset($_GET['filter_by']) && !$is_searching): ?>
+                                <input type="hidden" name="filter_by" value="<?= htmlspecialchars($_GET['filter_by']) ?>">
+                            <?php endif; ?>
+                            
+                            <input type="text" 
+                                    name="search_hp" 
+                                    class="search-input" 
+                                    placeholder="Search by HP number..." 
+                                    value="<?= htmlspecialchars($search_hp) ?>"
+                                    onkeyup="if(event.key==='Enter') this.form.submit()">
+                            <button type="submit" class="filter-btn">Search</button>
+                        </form>
+                        
+                        <?php if (!$is_searching): ?>
+                            <button class="filter-btn active" onclick="filterByStatus(this, 'all')">All</button>
+                        <?php endif; ?>
+                        
                         <button class="auto-filter-btn" onclick="window.location.href = window.location.pathname;">
                             🔄 Auto-Filter
                         </button>
