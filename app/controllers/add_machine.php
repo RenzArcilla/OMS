@@ -20,7 +20,7 @@ require_once '../includes/db.php';
 include_once '../models/create_machine.php';
 
 // Redirect url
-$redirect_url = "../views/add_entry.php"
+$redirect_url = "../views/add_entry.php";
 
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
