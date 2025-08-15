@@ -94,21 +94,22 @@
                                     $custom_applicator_parts = getCustomParts("APPLICATOR");
                                 ?>
                                 <thead>
+                                    <a hidden>total_output<a>
                                     <tr>
                                         <th>Actions</th>
-                                        <th>HP Number</th>
+                                        <th><a href="?filter_by=hp_number">HP Number</a></th>
                                         <th>Status</th>
-                                        <th>Last Updated</th>
-                                        <th>Total Output</th>
-                                        <th>Wire Crimper</th>
-                                        <th>Wire Anvil</th>
-                                        <th>Insulation Crimper</th>
-                                        <th>Insulation Anvil</th>
-                                        <th>Slide Cutter</th>
-                                        <th>Cutter Holder</th>
-                                        <th>Shear Blade</th>
-                                        <th>Cutter A</th>
-                                        <th>Cutter B</th>
+                                        <th><a href="?filter_by=last_updated">Last Updated</a></th>
+                                        <th><a href="?filter_by=total_output">Total Output</a></th>
+                                        <th><a href="?filter_by=wire_crimper_output">Wire Crimper</a></th>
+                                        <th><a href="?filter_by=wire_anvil_output">Wire Anvil</a></th>
+                                        <th><a href="?filter_by=insulation_crimper_output">Insulation Crimper</a></th>
+                                        <th><a href="?filter_by=insulation_anvil_output">Insulation Anvil</a></th>
+                                        <th><a href="?filter_by=slide_cutter_output">Slide Cutter</a></th>
+                                        <th><a href="?filter_by=cutter_holder_output">Cutter Holder</a></th>
+                                        <th><a href="?filter_by=shear_blade_output">Shear Blade</a></th>
+                                        <th><a href="?filter_by=cutter_a_output">Cutter A</a></th>
+                                        <th><a href="?filter_by=cutter_b_output">Cutter B</a></th>
                                         <?php 
                                             $part_names_array = []; // initialize array 
                                             foreach ($custom_applicator_parts as $part): ?>
@@ -120,14 +121,13 @@
                                 <tbody id="metricsBody">
                                     <?php 
                                         require_once __DIR__ . '/../models/read_joins/read_monitor_applicator_and_applicator.php';
+                                        $filter_by = $_GET['filter_by'] ?? 'total_output';
                                         $applicator_total_outputs = getRecordsAndOutputs(10, 0, $part_names_array);?>
                                     <?php foreach ($applicator_total_outputs as $row): ?>
                                         <?php 
-                                            // Decode custom parts JSON into an associative array
-                                            $custom_outputs = [];
-                                            if (!empty($row['custorm_parts_output'])) {
-                                                $custom_outputs = json_decode($row['custorm_parts_output'], true) ?? [];
-                                            }
+                                            // The custom_parts_output is already processed in the PHP function
+                                            // No need to decode it again here
+                                            $custom_outputs = $row['custom_parts_output'] ?? [];
                                         ?>
                                         <tr>
                                             <td>
