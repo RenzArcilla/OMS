@@ -23,9 +23,9 @@ function getRecordsAndOutputs(int $limit = 10, int $offset = 0, $part_names_arra
 
     global $pdo;
 
-    // Define allowed filter columns for security
+    // Define allowed filter columns for security (excluding total_output)
     $standard_filters = [
-        'hp_no', 'last_updated', 'total_output', 'wire_crimper_output', 'wire_anvil_output',
+        'hp_no', 'last_updated', 'wire_crimper_output', 'wire_anvil_output',
         'insulation_crimper_output', 'insulation_anvil_output', 'slide_cutter_output', 
         'cutter_holder_output', 'shear_blade_output', 'cutter_a_output', 'cutter_b_output'
     ];
@@ -33,8 +33,14 @@ function getRecordsAndOutputs(int $limit = 10, int $offset = 0, $part_names_arra
     // Define which columns should be sorted in ascending order
     $ascending_columns = ['hp_no'];
     
-    // Get filter parameter and validate it
-    $filter_by = $_GET['filter_by'] ?? 'total_output';
+    // Get filter parameter
+    $filter_by = $_GET['filter_by'] ?? null;
+    
+    // If no filter is specified, automatically find the part with highest average output
+    if (!$filter_by) {
+        $filter_by = findHighestOutputPart($part_names_array);
+    }
+    
     $is_custom_part_filter = false;
     
     // Check if it's a standard column filter
@@ -49,8 +55,9 @@ function getRecordsAndOutputs(int $limit = 10, int $offset = 0, $part_names_arra
         $order_by_clause = "CAST(JSON_UNQUOTE(JSON_EXTRACT(custom_parts_output, '$.\"{$filter_by}\"')) AS UNSIGNED) DESC";
     } 
     else {
-        // Default fallback
-        $order_by_clause = "total_output DESC";
+        // Default fallback - use the first standard filter (excluding total_output)
+        $filter_by = $standard_filters[2]; // wire_crimper_output
+        $order_by_clause = $filter_by . " DESC";
     }
 
     // Build the SQL query
@@ -96,3 +103,138 @@ function getRecordsAndOutputs(int $limit = 10, int $offset = 0, $part_names_arra
 
     return $records;
 }
+
+function findHighestOutputPart($part_names_array): string {
+    /*
+    Function to find the part with the highest average output across all applicators.
+    This helps identify which parts are most likely to need replacement.
+    
+    Returns:
+    - String: The column name of the part with the highest average output
+    */
+    
+    global $pdo;
+    
+    // Standard parts to check (excluding total_output)
+    $parts_to_check = [
+        'wire_crimper_output', 'wire_anvil_output', 'insulation_crimper_output', 
+        'insulation_anvil_output', 'slide_cutter_output', 'cutter_holder_output', 
+        'shear_blade_output', 'cutter_a_output', 'cutter_b_output'
+    ];
+    
+    $highest_avg = 0;
+    $highest_part = 'wire_crimper_output'; // default fallback
+    
+    // Check standard parts
+    foreach ($parts_to_check as $part) {
+        $sql = "SELECT AVG($part) as avg_output FROM monitor_applicator WHERE $part > 0";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        $avg_output = floatval($result['avg_output']);
+        if ($avg_output > $highest_avg) {
+            $highest_avg = $avg_output;
+            $highest_part = $part;
+        }
+    }
+    
+    // Check custom parts if they exist
+    if (!empty($part_names_array)) {
+        foreach ($part_names_array as $custom_part) {
+            $sql = "
+                SELECT AVG(CAST(JSON_UNQUOTE(JSON_EXTRACT(custom_parts_output, '$.\"{$custom_part}\"')) AS UNSIGNED)) as avg_output 
+                FROM monitor_applicator 
+                WHERE JSON_EXTRACT(custom_parts_output, '$.\"{$custom_part}\"') IS NOT NULL
+                AND CAST(JSON_UNQUOTE(JSON_EXTRACT(custom_parts_output, '$.\"{$custom_part}\"')) AS UNSIGNED) > 0
+            ";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            $avg_output = floatval($result['avg_output']);
+            if ($avg_output > $highest_avg) {
+                $highest_avg = $avg_output;
+                $highest_part = $custom_part;
+            }
+        }
+    }
+    
+    return $highest_part;
+}
+
+function getPartsOrderedByOutput($part_names_array): array {
+    /*
+    Function to get all parts ordered by their average output.
+    Useful for dashboard analytics and identifying replacement priorities.
+    
+    Returns:
+    - Array: Parts ordered by average output (highest first)
+    */
+    
+    global $pdo;
+    
+    $parts_data = [];
+    
+    // Standard parts to check
+    $standard_parts = [
+        'wire_crimper_output' => 'Wire Crimper',
+        'wire_anvil_output' => 'Wire Anvil',
+        'insulation_crimper_output' => 'Insulation Crimper',
+        'insulation_anvil_output' => 'Insulation Anvil',
+        'slide_cutter_output' => 'Slide Cutter',
+        'cutter_holder_output' => 'Cutter Holder',
+        'shear_blade_output' => 'Shear Blade',
+        'cutter_a_output' => 'Cutter A',
+        'cutter_b_output' => 'Cutter B'
+    ];
+    
+    // Get averages for standard parts
+    foreach ($standard_parts as $column => $display_name) {
+        $sql = "SELECT AVG($column) as avg_output, MAX($column) as max_output FROM monitor_applicator WHERE $column > 0";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        $parts_data[] = [
+            'column_name' => $column,
+            'display_name' => $display_name,
+            'avg_output' => floatval($result['avg_output']),
+            'max_output' => floatval($result['max_output']),
+            'type' => 'standard'
+        ];
+    }
+    
+    // Get averages for custom parts
+    if (!empty($part_names_array)) {
+        foreach ($part_names_array as $custom_part) {
+            $sql = "
+                SELECT 
+                    AVG(CAST(JSON_UNQUOTE(JSON_EXTRACT(custom_parts_output, '$.\"{$custom_part}\"')) AS UNSIGNED)) as avg_output,
+                    MAX(CAST(JSON_UNQUOTE(JSON_EXTRACT(custom_parts_output, '$.\"{$custom_part}\"')) AS UNSIGNED)) as max_output
+                FROM monitor_applicator 
+                WHERE JSON_EXTRACT(custom_parts_output, '$.\"{$custom_part}\"') IS NOT NULL
+                AND CAST(JSON_UNQUOTE(JSON_EXTRACT(custom_parts_output, '$.\"{$custom_part}\"')) AS UNSIGNED) > 0
+            ";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            $parts_data[] = [
+                'column_name' => $custom_part,
+                'display_name' => $custom_part,
+                'avg_output' => floatval($result['avg_output']),
+                'max_output' => floatval($result['max_output']),
+                'type' => 'custom'
+            ];
+        }
+    }
+    
+    // Sort by average output (highest first)
+    usort($parts_data, function($a, $b) {
+        return $b['avg_output'] <=> $a['avg_output'];
+    });
+    
+    return $parts_data;
+}
+?>

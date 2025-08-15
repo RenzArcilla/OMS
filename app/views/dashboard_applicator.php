@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +6,6 @@
     <title>HEPC - Admin Dashboard</title>
     <link rel="stylesheet" href="../../public/assets/css/base.css">
     <link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
-
 </head>
 <body>
     <?php // include '../includes/side_bar.php'; ?>
@@ -18,7 +15,7 @@
             <!-- Dashboard Tab -->
             <div id="dashboard-tab" class="tab-content">
                 <div class="page-header">
-                    <h1 class="page-title">📊 Dashboard</h1>
+                    <h1 class="page-title">📊 Applicator Dashboard</h1>
                     <div class="header-actions">    
                         <button type="button" class="btn btn-secondary" onclick="exportData()">
                             Export Report
@@ -66,34 +63,60 @@
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    
                 </div>
+
+                <?php 
+                // First, get custom parts
+                require_once "../models/read_custom_parts.php";
+                $custom_applicator_parts = getCustomParts("APPLICATOR");
+                
+                // Initialize part names array
+                $part_names_array = [];
+                foreach ($custom_applicator_parts as $part) {
+                    $part_names_array[] = $part['part_name'];
+                }
+                
+                // Include the functions and get data
+                require_once __DIR__ . '/../models/read_joins/read_monitor_applicator_and_applicator.php';
+                $applicator_total_outputs = getRecordsAndOutputs(10, 0, $part_names_array);
+                
+                // Get current filter info
+                $current_filter = $_GET['filter_by'] ?? null;
+                if (!$current_filter) {
+                    // Get the auto-selected highest output part
+                    $current_filter = findHighestOutputPart($part_names_array);
+                    $filter_display = "Auto-sorted by: " . str_replace('_output', '', ucwords(str_replace('_', ' ', $current_filter)));
+                } else {
+                    $filter_display = "Filtered by: " . str_replace('_output', '', ucwords(str_replace('_', ' ', $current_filter)));
+                }
+                
+                // Get parts priority data
+                $parts_ordered = getPartsOrderedByOutput($part_names_array);
+                $top_3_parts = array_slice($parts_ordered, 0, 3);
+                ?>
 
                 <!-- Applicator Status Section -->
                 <div class="data-section">
                     <div class="section-header expanded" onclick="toggleSection(this)">
                         <div class="section-title">
-                            Applicator Status
-                            <span class="section-badge">24</span>
+                            <span class="filter-info">
+                                <?= htmlspecialchars($filter_display) ?>
+                            </span>
                         </div>
-                        <svg class="expand-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
                     </div>
+                    
                     <div class="search-filter">
                         <input type="text" class="search-input" placeholder="Search applicator..." onkeyup="filterTable(this.value)">
                         <button class="filter-btn active" onclick="filterByStatus(this, 'all')">All</button>
-                        <button class="filter-btn" onclick="filterByStatus(this, 'success')">Active</button>
-                        <button class="filter-btn" onclick="filterByStatus(this, 'warning')">⚠️ Warning</button>
+                        <button class="auto-filter-btn" onclick="window.location.href = window.location.pathname;">
+                            🔄 Auto-Filter
+                        </button>
                     </div>
+                    
                     <div class="section-content expanded">
                         <div class="table-container">
                             <!-- Table section -->
                             <table class="data-table" id="metricsTable">
-                                <?php 
-                                    require_once "../models/read_custom_parts.php";
-                                    $custom_applicator_parts = getCustomParts("APPLICATOR");
-                                ?>
                                 <!-- Table Headers -->
                                 <thead>
                                     <tr>
@@ -111,24 +134,17 @@
                                         <th><a href="?filter_by=shear_blade_output">Shear Blade</a></th>
                                         <th><a href="?filter_by=cutter_a_output">Cutter A</a></th>
                                         <th><a href="?filter_by=cutter_b_output">Cutter B</a></th>
-                                        <?php 
-                                            $part_names_array = []; // initialize array 
-                                            foreach ($custom_applicator_parts as $part): ?>
+                                        <?php foreach ($custom_applicator_parts as $part): ?>
                                             <th>
                                                 <a href="?filter_by=<?= urlencode($part['part_name']) ?>">
                                                     <?= htmlspecialchars($part['part_name']) ?>
                                                 </a>
                                             </th>
-                                            <?php $part_names_array[] = $part['part_name']; ?>
                                         <?php endforeach; ?>
                                     </tr>   
                                 </thead>
                                 <!-- Table Rows -->
                                 <tbody id="metricsBody">
-                                    <?php 
-                                        require_once __DIR__ . '/../models/read_joins/read_monitor_applicator_and_applicator.php';
-                                        $applicator_total_outputs = getRecordsAndOutputs(10, 0, $part_names_array);
-                                    ?>
                                     <?php foreach ($applicator_total_outputs as $row): ?>
                                         <tr>
                                             <td>
@@ -296,6 +312,7 @@
             </div>
         </div>
     </div>
+
     <!-- Applicator Modal -->
     <div id="applicatorModalDashboardApplicator" class="modal-overlay">
         <div class="modal">
