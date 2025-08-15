@@ -13,6 +13,6 @@ function openEditModal(button) {
     document.getElementById('editModal').style.display = 'block';
 }
 
-function closeModal() {
+function closeMachineModal() {
     document.getElementById('editModal').style.display = 'none';
 }
