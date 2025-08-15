@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,17 +6,16 @@
     <title>HEPC - Admin Dashboard</title>
     <link rel="stylesheet" href="../../public/assets/css/base.css">
     <link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
-
 </head>
 <body>
-    <?php include '../includes/side_bar.php'; ?>
+    <?php // include '../includes/side_bar.php'; ?>
     <div class="admin-container">
         <!-- Main Content -->
         <div class="main-content">
             <!-- Dashboard Tab -->
             <div id="dashboard-tab" class="tab-content">
                 <div class="page-header">
-                    <h1 class="page-title">📊 Dashboard</h1>
+                    <h1 class="page-title">📊 Applicator Dashboard</h1>
                     <div class="header-actions">    
                         <button type="button" class="btn btn-secondary" onclick="exportData()">
                             Export Report
@@ -66,114 +63,162 @@
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    
                 </div>
+
+                <?php 
+                // First, get custom parts
+                require_once "../models/read_custom_parts.php";
+                $custom_applicator_parts = getCustomParts("APPLICATOR");
+                
+                // Initialize part names array
+                $part_names_array = [];
+                foreach ($custom_applicator_parts as $part) {
+                    $part_names_array[] = $part['part_name'];
+                }
+                
+                // Include the functions and get data
+                require_once __DIR__ . '/../models/read_joins/read_monitor_applicator_and_applicator.php';
+                $applicator_total_outputs = getRecordsAndOutputs(10, 0, $part_names_array);
+                
+                // Get current filter info
+                $current_filter = $_GET['filter_by'] ?? null;
+                if (!$current_filter) {
+                    // Get the auto-selected highest output part
+                    $current_filter = findHighestOutputPart($part_names_array);
+                    $filter_display = "Auto-sorted by: " . str_replace('_output', '', ucwords(str_replace('_', ' ', $current_filter)));
+                } else {
+                    $filter_display = "Filtered by: " . str_replace('_output', '', ucwords(str_replace('_', ' ', $current_filter)));
+                }
+                
+                // Get parts priority data
+                $parts_ordered = getPartsOrderedByOutput($part_names_array);
+                $top_3_parts = array_slice($parts_ordered, 0, 3);
+                ?>
 
                 <!-- Applicator Status Section -->
                 <div class="data-section">
                     <div class="section-header expanded" onclick="toggleSection(this)">
                         <div class="section-title">
-                            Applicator Status
-                            <span class="section-badge">24</span>
+                            <span class="filter-info">
+                                <?= htmlspecialchars($filter_display) ?>
+                            </span>
                         </div>
-                        <svg class="expand-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
                     </div>
+                    
                     <div class="search-filter">
                         <input type="text" class="search-input" placeholder="Search applicator..." onkeyup="filterTable(this.value)">
                         <button class="filter-btn active" onclick="filterByStatus(this, 'all')">All</button>
-                        <button class="filter-btn" onclick="filterByStatus(this, 'success')">Active</button>
-                        <button class="filter-btn" onclick="filterByStatus(this, 'warning')">⚠️ Warning</button>
+                        <button class="auto-filter-btn" onclick="window.location.href = window.location.pathname;">
+                            🔄 Auto-Filter
+                        </button>
                     </div>
+                    
                     <div class="section-content expanded">
                         <div class="table-container">
+                            <!-- Table section -->
                             <table class="data-table" id="metricsTable">
+                                <!-- Table Headers -->
                                 <thead>
                                     <tr>
-                                        <th>HP Number</th>
+                                        <th>Actions</th>
+                                        <th><a href="?filter_by=hp_no">HP Number</a></th>
                                         <th>Status</th>
-                                        <th>Wire Type</th>
-                                        <th>Last Encoded</th>
-                                        <th>Total Output</th>
-                                        <th>Wire Crimper</th>
-                                        <th>Wire Anvil</th>
-                                        <th>Insulation Crimper</th>
-                                        <th>Insulation Anvil</th>
-                                        <th>Slide Cutter</th>
-                                        <th>Cutter Holder</th>
-                                        <th>Shear Blade</th>
-                                        <th>Cutter A</th>
-                                        <th>Cutter B</th>
-                                        <th>Action</th>
-                                    </tr>
+                                        <th><a href="?filter_by=last_updated">Last Updated</a></th>
+                                        <th><a href="?filter_by=total_output">Total Output</a></th>
+                                        <th><a href="?filter_by=wire_crimper_output">Wire Crimper</a></th>
+                                        <th><a href="?filter_by=wire_anvil_output">Wire Anvil</a></th>
+                                        <th><a href="?filter_by=insulation_crimper_output">Insulation Crimper</a></th>
+                                        <th><a href="?filter_by=insulation_anvil_output">Insulation Anvil</a></th>
+                                        <th><a href="?filter_by=slide_cutter_output">Slide Cutter</a></th>
+                                        <th><a href="?filter_by=cutter_holder_output">Cutter Holder</a></th>
+                                        <th><a href="?filter_by=shear_blade_output">Shear Blade</a></th>
+                                        <th><a href="?filter_by=cutter_a_output">Cutter A</a></th>
+                                        <th><a href="?filter_by=cutter_b_output">Cutter B</a></th>
+                                        <?php foreach ($custom_applicator_parts as $part): ?>
+                                            <th>
+                                                <a href="?filter_by=<?= urlencode($part['part_name']) ?>">
+                                                    <?= htmlspecialchars($part['part_name']) ?>
+                                                </a>
+                                            </th>
+                                        <?php endforeach; ?>
+                                    </tr>   
                                 </thead>
+                                <!-- Table Rows -->
                                 <tbody id="metricsBody">
-                                    <tr>
-                                        <td><strong>HP-001</strong></td>
-                                        <td><span class="status-badge status-good">Good</span></td>
-                                        <td>BIG</td>
-                                        <td>07/21/2025</td>
-                                        <td><strong>847</strong></td>
-                                        <td>
-                                            <div><strong>630K</strong> / 1.5M</div>
-                                            <div class="progress-bar">
-                                                <div class="progress-fill" style="width: 42%;"></div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div><strong>570K</strong> / 1.5M</div>
-                                            <div class="progress-bar">
-                                                <div class="progress-fill" style="width: 38%;"></div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div><strong>765K</strong> / 1.5M</div>
-                                            <div class="progress-bar">
-                                                <div class="progress-fill" style="width: 51%;"></div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div><strong>690K</strong> / 1.5M</div>
-                                            <div class="progress-bar">
-                                                <div class="progress-fill" style="width: 46%;"></div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div><strong>825K</strong> / 1.5M</div>
-                                            <div class="progress-bar">
-                                                <div class="progress-fill" style="width: 55%;"></div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div><strong>450K</strong> / 1.5M</div>
-                                            <div class="progress-bar">
-                                                <div class="progress-fill" style="width: 30%;"></div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div><strong>390K</strong> / 1.5M</div>
-                                            <div class="progress-bar">
-                                                <div class="progress-fill" style="width: 26%;"></div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>390K / 1.5M</div>
-                                            <div class="progress-bar">
-                                                <div class="progress-fill" style="width: 26%;"></div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div><strong>320K</strong> / 1.5M</div>
-                                            <div class="progress-bar">
-                                                <div class="progress-fill" style="width: 21%;"></div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <button class="btn-small btn-edit" onclick="openUndoModal()">Undo</button>
-                                            <button class="btn-small btn-reset" onclick="openResetModal()">Reset</button>
-                                        </td>
-                                    </tr>
+                                    <?php foreach ($applicator_total_outputs as $row): ?>
+                                        <tr>
+                                            <td>
+                                                <button class="btn-small btn-edit" onclick="openUndoModal()">Undo</button>
+                                                <button class="btn-small btn-reset" onclick="openResetModal()">Reset</button>
+                                            </td>
+                                            <td><?= htmlspecialchars($row['hp_no']) ?></td>
+                                            <td><span class="status-badge status-good">Good</span></td>
+                                            <td><strong><?= htmlspecialchars(explode(' ', $row['last_updated'])[0]) ?></strong></td>
+                                            <td><strong><?= htmlspecialchars($row['total_output']) ?></strong></td>
+                                            <td>
+                                                <div><strong><?= htmlspecialchars($row['wire_crimper_output']) ?></strong> / 1.5M</div>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill" style="width: 42%;"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div><strong><?= htmlspecialchars($row['wire_anvil_output']) ?></strong> / 1.5M</div>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill" style="width: 38%;"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div><strong><?= htmlspecialchars($row['insulation_crimper_output']) ?></strong> / 1.5M</div>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill" style="width: 51%;"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div><strong><?= htmlspecialchars($row['insulation_anvil_output']) ?></strong> / 1.5M</div>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill" style="width: 46%;"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div><strong><?= htmlspecialchars($row['slide_cutter_output']) ?></strong> / 1.5M</div>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill" style="width: 55%;"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div><strong><?= htmlspecialchars($row['cutter_holder_output']) ?></strong> / 1.5M</div>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill" style="width: 30%;"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div><strong><?= htmlspecialchars($row['shear_blade_output']) ?></strong> / 1.5M</div>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill" style="width: 26%;"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div><?= htmlspecialchars($row['cutter_a_output']) ?> / 1.5M</div>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill" style="width: 26%;"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div><strong><?= htmlspecialchars($row['cutter_b_output']) ?></strong> / 1.5M</div>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill" style="width: 21%;"></div>
+                                                </div>
+                                            </td>
+                                            <?php foreach ($part_names_array as $part_name): ?>
+                                                <td>
+                                                    <div><strong><?= htmlspecialchars($row['custom_parts_output'][$part_name] ?? 0) ?></strong> / 1.5M</div>
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill" style="width: 26%;"></div>
+                                                    </div>
+                                                </td>
+                                            <?php endforeach; ?>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -267,6 +312,7 @@
             </div>
         </div>
     </div>
+
     <!-- Applicator Modal -->
     <div id="applicatorModalDashboardApplicator" class="modal-overlay">
         <div class="modal">
