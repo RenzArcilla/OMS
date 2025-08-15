@@ -353,7 +353,7 @@ if (!isset($_SESSION['user_id'])) {
 
                 <div class="modal-footer">
                     <button type="button" class="btn-secondary" onclick="closeAddApplicatorModal()">Cancel</button>
-                    <button type="submit" id="applicatorActionBtn" class="btn-primary">Add Applicator</button>
+                    <button type="submit" id="applicatorActionBtn" class="btn-primary" onclick="saveApplicator()">Add Applicator</button>
                 </div>
 
             </div>
