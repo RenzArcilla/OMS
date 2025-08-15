@@ -39,3 +39,26 @@ function closeAddApplicatorModal() {
 function closeAddMachineModal() {
     document.getElementById('addMachineModal').style.display = 'none';
 }
+
+// Close modal when clicking outside of it
+document.addEventListener('click', function(event) {
+    const modals = document.querySelectorAll('.modal-overlay');
+    modals.forEach(modal => {
+        if (event.target === modal) {
+            closeAddApplicatorModal();
+            closeAddMachineModal();
+            closeApplicatorModal();
+            closeMachineModal();
+        }
+    });
+});
+
+// Close modal when pressing Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeAddApplicatorModal();
+        closeAddMachineModal();
+        closeApplicatorModal();
+        closeMachineModal();
+    }
+});

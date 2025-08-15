@@ -411,7 +411,7 @@ if (!isset($_SESSION['user_id'])) {
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="button" class="btn-secondary" onclick="closeMachineModal()">Cancel</button>
                 <button type="submit" form="editMachineForm" class="btn-primary">Save Changes</button>
             </div>
         </div>
