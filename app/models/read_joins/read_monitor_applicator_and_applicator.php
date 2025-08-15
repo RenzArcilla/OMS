@@ -237,4 +237,53 @@ function getPartsOrderedByOutput($part_names_array): array {
     
     return $parts_data;
 }
-?>
+
+function searchApplicatorByHpNo($hp_no, $part_names_array): ?array {
+    /*
+    Function to search for a specific applicator by HP number.
+    
+    Args:
+    - $hp_no: The HP number to search for
+    - $part_names_array: Array of custom part names
+    
+    Returns:
+    - Array with applicator data if found, null if not found
+    */
+    
+    global $pdo;
+    
+    $sql = "
+        SELECT *
+        FROM monitor_applicator
+        LEFT JOIN applicators
+            USING (applicator_id)
+        WHERE LOWER(hp_no) = LOWER(:hp_no)
+        LIMIT 1
+    ";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':hp_no', trim($hp_no), PDO::PARAM_STR);
+    $stmt->execute();
+    
+    $record = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($record) {
+        // Process custom parts output (same logic as getRecordsAndOutputs)
+        if (!empty($record['custom_parts_output'])) {
+            if (is_string($record['custom_parts_output'])) {
+                $decoded = json_decode($record['custom_parts_output'], true);
+                $record['custom_parts_output'] = is_array($decoded) ? $decoded : [];
+            } elseif (is_array($record['custom_parts_output'])) {
+                $record['custom_parts_output'] = $record['custom_parts_output'];
+            } else {
+                $record['custom_parts_output'] = [];
+            }
+        } else {
+            $record['custom_parts_output'] = [];
+        }
+        
+        return $record;
+    }
+    
+    return null;
+}
