@@ -133,7 +133,7 @@ function monitorApplicatorOutput($applicator_data, $applicator_output, $directio
 
 
 
-function resetApplicatorOutput($applicator_id, $part_name) {
+function resetApplicatorPartOutput($applicator_id, $part_name) {
     /*
         Resets the output for a specific part of an applicator in the monitor_applicator table.
         Includes part reset for defined and custom parts.
@@ -170,26 +170,25 @@ function resetApplicatorOutput($applicator_id, $part_name) {
     }
 
     // Check if given part_name is accepted 
-    if (!in_array($accepted_part_names)) {
-        return "Reset cancelled: invalid part name!"
+    if (!in_array($part_name, $accepted_part_names, true)) {
+        return "Reset cancelled: invalid part name!";
     }
 
     // Execute main logic 
     try {
         $stmt = $pdo->prepare("
-            UPDATE monitor applicators
-            SET $part_name = 0,
+            UPDATE monitor_applicator
+            SET $part_name = 0
             WHERE applicator_id = :applicator_id
-        ")
+        ");
 
-        $stmt->bindParam(':applicator_id', $applicator_id);
+        $stmt->bindParam(':applicator_id', $applicator_id, PDO::PARAM_INT);
         $stmt->execute();
 
         return true;
 
     } catch (PDOException $e) {
-        // Log error and return an error message on failure
-        error_log("Database Error in resetApplicatorOutput: " . $e->getMessage());
-        return "Database error in resetApplicatorOutput: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        error_log("Database Error in resetApplicatorPartOutput: " . $e->getMessage());
+        return "Database error in resetApplicatorPartOutput: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
