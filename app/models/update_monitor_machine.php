@@ -95,3 +95,66 @@ function monitorMachineOutput($machine_data, $machine_output, $operation = 'incr
         return "Database error: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
+
+
+function resetMachinePartOutput($machine_id, $part_name) {
+    /*
+        Resets the output for a specific part of a machine in the monitor_machine table.
+        Includes part reset for defined and custom parts.
+
+        Returns:
+        - true on success 
+        - error string
+    */
+
+    global $pdo;
+    
+    $accepted_part_names = [
+        'wire_crimper_output',
+        'wire_anvil_output',
+        'insulation_crimper_output',
+        'insulation_anvil_output',
+        'slide_cutter_output',
+        'cutter_holder_output',
+        'shear_blade_output',
+        'cutter_a_output',
+        'cutter_b_output'
+    ];
+    
+    // Get custom machine parts 
+    require_once "read_custom_parts.php";
+    $custom_parts = getCustomParts("MACHINE");
+
+    // Return error message if any issue occurs
+    if (is_string($custom_parts)) {
+        return $custom_parts;
+    }
+
+    foreach ($custom_parts as $row) {
+        $accepted_part_names[] = $row["part_name"];
+    }
+
+    // Check if given part_name is accepted 
+    if (!in_array($part_name, $accepted_part_names)) {
+        return "Reset cancelled: invalid part name!";
+    }
+
+    // Execute main logic 
+    try {
+        $stmt = $pdo->prepare("
+            UPDATE monitor_machine
+            SET $part_name = 0
+            WHERE machine_id = :machine_id
+        ");
+
+        $stmt->bindParam(':machine_id', $machine_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return true;
+
+    } catch (PDOException $e) {
+        // Log error and return an error message on failure
+        error_log("Database Error in resetMachinePartOutput: " . $e->getMessage());
+        return "Database error in resetMachinePartOutput: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}
