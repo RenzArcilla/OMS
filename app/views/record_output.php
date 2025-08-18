@@ -199,6 +199,7 @@ if (!isset($_SESSION['user_id'])) {
                     <table class="data-table"id="data-table" >
                         <thead>
                             <tr>
+                                <th>Actions</th>
                                 <th>Record ID</th>
                                 <th>Date Inspected</th>
                                 <th>Date Encoded</th>
@@ -210,8 +211,6 @@ if (!isset($_SESSION['user_id'])) {
                                 <th>App2 Output</th>
                                 <th>Machine</th>
                                 <th>Machine Output</th>
-                                <th>Actions</th>
-                            </tr>
                         </thead>
 
                         <?php   
@@ -227,17 +226,6 @@ if (!isset($_SESSION['user_id'])) {
                             <!-- Render fetched machine data as table rows -->
                             <?php foreach ($records as $row): ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($row['record_id']) ?></td>
-                                    <td><?= htmlspecialchars($row['date_inspected']) ?></td>
-                                    <td><?= htmlspecialchars(explode(' ', $row['date_encoded'])[0]) ?></td>
-                                    <td><?= htmlspecialchars(explode(' ', $row['last_updated'])[0]) ?></td>
-                                    <td><?= htmlspecialchars($row['shift']) ?></td>
-                                    <td><?= htmlspecialchars($row['hp1_no']) ?></td>
-                                    <td><?= htmlspecialchars($row['app1_output']) ?></td>
-                                    <td><?= htmlspecialchars($row['hp2_no']) ?></td>
-                                    <td><?= htmlspecialchars($row['app2_output']) ?></td>
-                                    <td><?= htmlspecialchars($row['control_no']) ?></td>
-                                    <td><?= htmlspecialchars($row['machine_output']) ?></td>
                                     <td>
                                         <a href="#" onclick="openRecordEditModalSafe(this); return false;" 
                                             data-id="<?= htmlspecialchars($row['record_id']) ?>"
@@ -258,6 +246,18 @@ if (!isset($_SESSION['user_id'])) {
                                             <button type="submit" title="Delete Record" class="btn-small btn-delete">🗑️</button>
                                         </form>
                                     </td>
+                                    <td><?= htmlspecialchars($row['record_id']) ?></td>
+                                    <td><?= htmlspecialchars($row['date_inspected']) ?></td>
+                                    <td><?= htmlspecialchars(explode(' ', $row['date_encoded'])[0]) ?></td>
+                                    <td><?= htmlspecialchars(explode(' ', $row['last_updated'])[0]) ?></td>
+                                    <td><?= htmlspecialchars($row['shift']) ?></td>
+                                    <td><?= htmlspecialchars($row['hp1_no']) ?></td>
+                                    <td><?= htmlspecialchars($row['app1_output']) ?></td>
+                                    <td><?= htmlspecialchars($row['hp2_no']) ?></td>
+                                    <td><?= htmlspecialchars($row['app2_output']) ?></td>
+                                    <td><?= htmlspecialchars($row['control_no']) ?></td>
+                                    <td><?= htmlspecialchars($row['machine_output']) ?></td>
+                                    
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
