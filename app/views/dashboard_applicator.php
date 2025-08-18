@@ -167,7 +167,6 @@
                                     <tr>
                                         <th>Actions</th>
                                         <th><a href="?filter_by=hp_no">HP Number</a></th>
-                                        <th>Status</th>
                                         <th><a href="?filter_by=last_updated">Last Updated</a></th>
                                         <th><a href="?filter_by=total_output">Total Output</a></th>
                                         <th><a href="?filter_by=wire_crimper_output">Wire Crimper</a></th>
@@ -292,15 +291,15 @@
                         <input type="hidden" name="applicator_id" id="reset_applicator_id">
                         <select id="resetWireType" name="part_name" class="form-input">
                             <option value="">Select Part</option>
-                            <option value="wire_crimper">Wire Crimper</option>
-                            <option value="wire_anvil">Wire Anvil</option>
-                            <option value="insulation_crimper">Insulation Crimper</option>
-                            <option value="insulation_anvil">Insulation Anvil</option>
-                            <option value="slide_cutter">Slide Cutter</option>
-                            <option value="cutter_holder">Cutter Holder</option>
-                            <option value="shear_blade">Shear Blade</option>
-                            <option value="cutter_a">Cutter A</option>
-                            <option value="cutter_b">Cutter B</option>
+                            <option value="wire_crimper_output">Wire Crimper</option>
+                            <option value="wire_anvil_output">Wire Anvil</option>
+                            <option value="insulation_crimper_output">Insulation Crimper</option>
+                            <option value="insulation_anvil_output">Insulation Anvil</option>
+                            <option value="slide_cutter_output">Slide Cutter</option>
+                            <option value="cutter_holder_output">Cutter Holder</option>
+                            <option value="shear_blade_output">Shear Blade</option>
+                            <option value="cutter_a_output">Cutter A</option>
+                            <option value="cutter_b_output">Cutter B</option>
                             <?php foreach ($custom_applicator_parts as $row): ?>
                                 <option value="<?= htmlspecialchars($row['part_name']) ?>">
                                     <?= ucwords(str_replace('_', ' ', htmlspecialchars($row['part_name']))) ?>
