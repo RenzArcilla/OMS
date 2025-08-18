@@ -189,8 +189,9 @@ if (!isset($_SESSION['user_id'])) {
             <div class="search-filter">
                 <input type="text" class="search-input" placeholder="Search records..." onkeyup="filterTable(this.value)">
                 <button class="filter-btn active" onclick="filterByStatus(this, 'all')">All</button>
-                <button class="filter-btn" onclick="filterByStatus(this, 'recent')">Recent</button>
-                <button class="filter-btn" onclick="filterByStatus(this, 'today')">Today</button>
+                <button class="filter-btn" onclick="filterByStatus(this, 'recent')">First Shift</button>
+                <button class="filter-btn" onclick="filterByStatus(this, 'recent')">Second Shift</button>
+                <button class="filter-btn" onclick="filterByStatus(this, 'recent')">Night Shift</button>
             </div>
 
             <div class="section-content expanded" id="table-container" style="height: 500px; overflow-y: auto;">
