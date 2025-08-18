@@ -28,11 +28,14 @@ if (!isset($_SESSION['user_id'])) {
 
 <body>
     <div class="container">
-        <!-- Add Record Button -->
-        <div class="tab-section">
-            <button class="tab-btn" onclick="openModal()">
-                ➕ Add New Record
-            </button>
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">📊 Production Records</h1>
+            <div class="header-actions">
+                <button type="button" class="btn btn-primary" onclick="openModal()">
+                    ➕ Add New Record
+                </button>
+            </div>
         </div>
 
         <!-- Modal Overlay -->
