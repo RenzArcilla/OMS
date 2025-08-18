@@ -54,10 +54,10 @@ function loadMachines() {
                 actionsDiv.className = 'actions';
 
                 // Edit link
-                    const editButton = document.createElement('button');
-                    editButton.textContent = '✏️';
-                    editButton.setAttribute('type', 'button');
-                    editButton.setAttribute('class', 'edit-machine-button');
+                                         const editButton = document.createElement('button');
+                     editButton.textContent = '✏️';
+                     editButton.setAttribute('type', 'button');
+                     editButton.setAttribute('class', 'action-btn edit-btn');
 
                     // Set data attributes
                     editButton.dataset.id = row.machine_id;
@@ -89,10 +89,11 @@ function loadMachines() {
                     hiddenId.value = row.machine_id;
                     deleteForm.appendChild(hiddenId);
 
-                    const deleteButton = document.createElement('button');
-                    deleteButton.type = 'submit';
-                    deleteButton.textContent = '🗑️';
-                    deleteForm.appendChild(deleteButton);
+                                         const deleteButton = document.createElement('button');
+                     deleteButton.type = 'submit';
+                     deleteButton.textContent = '🗑️';
+                     deleteButton.className = 'action-btn delete-btn';
+                     deleteForm.appendChild(deleteButton);
 
                     actionsDiv.appendChild(deleteForm);
                     tdActions.appendChild(actionsDiv);
