@@ -1,6 +1,6 @@
 <?php
 /*
-    This file contains functions that updaates the monitoring data for applicators.
+    This file contains functions that updates the monitoring data for applicators.
 */
 
 
@@ -209,13 +209,14 @@ function resetApplicatorPartOutput($applicator_id, $part_name) {
             }
 
             // Save back JSON
-            $updatedJson = json_encode($decoded);
+            $updatedJson = empty($decoded) ? null : json_encode((object) $decoded);
             $updateStmt = $pdo->prepare("
                 UPDATE monitor_applicator
                 SET custom_parts_output = :json
                 WHERE applicator_id = :applicator_id
             ");
-            $updateStmt->bindParam(':json', $updatedJson, PDO::PARAM_STR);
+
+            $updateStmt->bindValue(':json', $updatedJson, is_null($updatedJson) ? PDO::PARAM_NULL : PDO::PARAM_STR);
             $updateStmt->bindParam(':applicator_id', $applicator_id, PDO::PARAM_INT);
             $updateStmt->execute();
 
@@ -230,3 +231,109 @@ function resetApplicatorPartOutput($applicator_id, $part_name) {
     return "Reset cancelled: invalid part name!";
 }
 
+
+function editPartOutputValue($applicator_id, $part_name, $value) {
+    /*
+    Reverts the output to previous value for a specific part of an applicator in the monitor_applicator table.
+    Handles both defined (columns) and custom (JSON) parts.
+
+    Parameters:
+    - $applicator_id: int, pertains to an applicator
+    - $part_name: str, name of the part to revert output (defined/custom)
+    - $value: int, value to revert back to 
+
+    Returns:
+    - true on success 
+    - error string
+    */
+
+    global $pdo;
+    
+    $defined_parts = [
+        'wire_crimper_output',
+        'wire_anvil_output',
+        'insulation_crimper_output',
+        'insulation_anvil_output',
+        'slide_cutter_output',
+        'cutter_holder_output',
+        'shear_blade_output',
+        'cutter_a_output',
+        'cutter_b_output'
+    ];
+    
+    // Get custom applicator parts 
+    require_once "read_custom_parts.php";
+    $custom_parts = getCustomParts("APPLICATOR");
+
+    if (is_string($custom_parts)) {
+        return $custom_parts; // error message
+    }
+
+    $custom_part_names = array_column($custom_parts, "part_name");
+
+    // Case 1: part is a defined DB column
+    if (in_array($part_name, $defined_parts, true)) {
+        try {
+            $stmt = $pdo->prepare("
+                UPDATE monitor_applicator
+                SET $part_name = :value
+                WHERE applicator_id = :applicator_id
+            ");
+
+            $stmt->bindParam(':value', $value, PDO::PARAM_INT);
+            $stmt->bindParam(':applicator_id', $applicator_id, PDO::PARAM_INT);
+            $stmt->execute();
+            return true;
+
+        } catch (PDOException $e) {
+            error_log("Database Error in editPartOutputValue (defined): " . $e->getMessage());
+            return "Database error in editPartOutputValue (defined): " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        }
+    }
+
+    // Case 2: part is a custom JSON field
+    if (in_array($part_name, $custom_part_names, true)) {
+        try {
+            // Fetch current JSON
+            $stmt = $pdo->prepare("
+                SELECT custom_parts_output
+                FROM monitor_applicator
+                WHERE applicator_id = :applicator_id
+                LIMIT 1
+            ");
+            $stmt->bindParam(':applicator_id', $applicator_id, PDO::PARAM_INT);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$row) return "Applicator not found";
+
+            $decoded = json_decode($row["custom_parts_output"], true) ?: [];
+
+            // Reset just the requested part
+            if (!array_key_exists($part_name, $decoded)) {
+                return "Part not found in custom JSON!";
+            }
+            $decoded[$part_name] = $value;
+
+            // Save back JSON
+            $updatedJson = empty($decoded) ? null : json_encode((object) $decoded);
+            $updateStmt = $pdo->prepare("
+                UPDATE monitor_applicator
+                SET custom_parts_output = :json
+                WHERE applicator_id = :applicator_id
+            ");
+            
+            $updateStmt->bindValue(':json', $updatedJson, is_null($updatedJson) ? PDO::PARAM_NULL : PDO::PARAM_STR);
+            $updateStmt->bindParam(':applicator_id', $applicator_id, PDO::PARAM_INT);
+            $updateStmt->execute();
+
+            return true;
+
+        } catch (PDOException $e) {
+            error_log("Database Error in editPartOutputValue (custom): " . $e->getMessage());
+            return "Database error in editPartOutputValue (custom): " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        }
+    }
+
+    return "Revert cancelled: invalid part name!";
+}
