@@ -36,7 +36,6 @@ if (!isset($_SESSION['user_id'])) {
     <!-- Load modal logic for editing applicators -->
     <script src="../../public/assets/js/edit_applicator_modal.js" defer></script>
     <!-- Load cancel forms of add modals form -->
-    <script scr="../../public/assets/js/cancel_add_modal_form.js" defer></script>
 </head>
 <body>
     <?php // include '../includes/side_bar.php'; ?>
@@ -117,18 +116,15 @@ if (!isset($_SESSION['user_id'])) {
                     </tr>
                 </thead>
 
-
-                    <?php
-                    // Include database connection and machine reader logic
-                    require_once __DIR__ . '/../includes/db.php';
-                    require_once __DIR__ . '/../models/read_machines.php';
-
-
-                    // Fetch initial set of machines (first 10 entries)
-                    $machines = getMachines($pdo, 10, 0);
-                    ?>
-
                     <tbody id="machine-body">
+                        <?php
+                        // Include database connection and machine reader logic
+                        require_once __DIR__ . '/../includes/db.php';
+                        require_once __DIR__ . '/../models/read_machines.php';
+
+                        // Fetch initial set of machines (first 10 entries)
+                        $machines = getMachines($pdo, 10, 0);
+                        ?>
                         <!-- Render fetched machine data as table rows -->
                         <?php foreach ($machines as $row): ?>
                             <tr>
@@ -277,13 +273,13 @@ if (!isset($_SESSION['user_id'])) {
                                 <input type="text" id="machine_invoice_no" name="invoice_no" placeholder="Enter invoice no."><br><br>
                             </div>
                         </div>
-                    </form>
-                </div>
                 
                             <div class="modal-footer">
                                 <button type="button" class="btn-secondary" onclick="closeAddMachineModal()">Cancel</button>
-                                <button type="submit" id="machineActionBtn" class="btn-primary" onclick="saveMachine()">Add Machine</button>
+                                <button type="submit" id="machineActionBtn" class="btn-primary" >Add Machine</button>
                             </div>
+                    </form>
+                </div>
             </div>
         </div>
 
