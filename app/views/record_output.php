@@ -22,8 +22,8 @@ if (!isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <title>Record Output</title>
     <link rel="stylesheet" href="../../public/assets/css/base/base.css">
-    <link rel="stylesheet" href="../../public/assets/css/record_output.css" >
-    <link rel="stylesheet" href="../../public/assets/css/add_entry.css" >
+    <link rel="stylesheet" href="../../public/assets/css/record_output.css">
+    <link rel="stylesheet" href="../../public/assets/css/add_entry.css">
 </head> 
 
 <body>
@@ -57,7 +57,7 @@ if (!isset($_SESSION['user_id'])) {
 
             <!-- Form for recording outputs -->
                 <form action="../controllers/record_output.php" method="POST">
-                    <div class="form-section active">
+                    <div class="form-section">
                         <div class="section-header">
                             <div class="section-icon">📅</div>
                             <div class="section-info">
@@ -91,7 +91,7 @@ if (!isset($_SESSION['user_id'])) {
                         </div>
                     </div>
 
-                    <div class="form-section active">
+                    <div class="form-section">
                         <div class="section-header">
                             <div class="section-icon">🔧</div>
                             <div class="section-info">
