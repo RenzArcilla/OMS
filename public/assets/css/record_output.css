@@ -55,6 +55,62 @@
     transform: translateY(-2px);
     box-shadow: 0 12px 32px rgba(47, 128, 237, 0.35);
 }
+/* Data Section */
+.data-section {
+    background: linear-gradient(135deg, #FFFFFF 0%, #F9FAFB 100%);
+    border-radius: 24px;
+    box-shadow: 0 12px 40px rgba(47, 128, 237, 0.1), 0 6px 20px rgba(0, 0, 0, 0.05);
+    margin-bottom: 32px;
+    overflow: hidden;
+    border: 1px solid rgba(229, 231, 235, 0.6);
+    backdrop-filter: blur(10px);
+    animation: slideInUp 1s ease-out;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 32px;
+    background: linear-gradient(135deg, #F8FAFC, #F1F5F9);
+    border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+.section-title {
+    font-size: 20px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #1e293b, #334155);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.section-badge {
+    background: #2F80ED;
+    color: #FFFFFF;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 10px;
+}
+
+.expand-icon {
+    width: 16px;
+    height: 16px;
+    color: #6B7280;
+    transition: transform 0.2s ease;
+}
+
+.section-header.expanded .expand-icon {
+    transform: rotate(180deg);
+}
+
 /* Modal Overlay */
 .modal-overlay {
     position: fixed;
@@ -464,22 +520,25 @@ select.form-input {
     border-radius: 12px;
 }
 
+/* Search Filter */
 .search-filter {
     display: flex;
-    gap: 12px;
-    padding: 20px 32px;
-    background: #F9FAFB;
-    border-bottom: 1px solid #E5E7EB;
+    gap: 16px;
+    padding: 24px 32px;
+    background: linear-gradient(135deg, #F9FAFB, #F3F4F6);
+    border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+    backdrop-filter: blur(10px);
 }
 
 .search-input {
     flex: 1;
-    padding: 14px 18px; /* Increase from 12px 16px */
-    border: 1px solid #E5E7EB;
-    border-radius: 8px;
-    font-size: 16px; /* Increase from 14px */
-    background: #FFFFFF;
-    transition: all 0.2s ease;
+    padding: 12px 20px;
+    border: 2px solid rgba(229, 231, 235, 0.8);
+    border-radius: 16px;
+    font-size: 14px;
+    background: linear-gradient(135deg, #FFFFFF, #F9FAFB);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
 .search-input:focus {
@@ -489,15 +548,16 @@ select.form-input {
 }
 
 .filter-btn {
-    padding: 14px 18px; /* Increase from 12px 16px */
-    background: #FFFFFF;
-    border: 1px solid #E5E7EB;
-    border-radius: 8px;
-    font-size: 14px; /* Increase from 12px */
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #FFFFFF, #F9FAFB);
+    border: 2px solid rgba(229, 231, 235, 0.8);
+    border-radius: 16px;
+    font-size: 13px;
     font-weight: 600;
     color: #6B7280;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
 .filter-btn:hover, .filter-btn.active {
@@ -602,4 +662,41 @@ select.form-input {
 .metric-value {
     font-weight: 600;
     color: #2F80ED;
+}
+
+
+
+
+
+
+/* Action Buttons */
+.btn-small {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    margin-right: 4px;
+    transition: all 0.2s ease;
+}
+
+.btn-edit { 
+    background: #3b82f6; 
+    color: white; 
+}
+
+.btn-edit:hover {
+    background: #2563eb;
+    transform: scale(1.05);
+}
+
+.btn-delete { 
+    background: #ef4444; 
+    color: white; 
+}
+
+.btn-delete:hover {
+    background: #dc2626;
+    transform: scale(1.05);
 }
