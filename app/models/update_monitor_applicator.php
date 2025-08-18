@@ -136,7 +136,7 @@ function monitorApplicatorOutput($applicator_data, $applicator_output, $directio
 function resetApplicatorPartOutput($applicator_id, $part_name) {
     /*
         Resets the output for a specific part of an applicator in the monitor_applicator table.
-        Includes part reset for defined and custom parts.
+        Handles both defined (columns) and custom (JSON) parts.
 
         Returns:
         - true on success 
@@ -145,7 +145,7 @@ function resetApplicatorPartOutput($applicator_id, $part_name) {
 
     global $pdo;
     
-    $accepted_part_names = [
+    $defined_parts = [
         'wire_crimper_output',
         'wire_anvil_output',
         'insulation_crimper_output',
@@ -154,41 +154,79 @@ function resetApplicatorPartOutput($applicator_id, $part_name) {
         'cutter_holder_output',
         'shear_blade_output',
         'cutter_a_output',
-        'cutter_b_output'];
+        'cutter_b_output'
+    ];
     
     // Get custom applicator parts 
     require_once "read_custom_parts.php";
     $custom_parts = getCustomParts("APPLICATOR");
 
-    // Return error message if any issue occurs
     if (is_string($custom_parts)) {
-        return $custom_parts;
+        return $custom_parts; // error message
     }
 
-    foreach ($custom_parts as $row) {
-        $accepted_part_names[] = $row["part_name"];
+    $custom_part_names = array_column($custom_parts, "part_name");
+
+    // Case 1: part is a defined DB column
+    if (in_array($part_name, $defined_parts, true)) {
+        try {
+            $stmt = $pdo->prepare("
+                UPDATE monitor_applicator
+                SET $part_name = 0
+                WHERE applicator_id = :applicator_id
+            ");
+            $stmt->bindParam(':applicator_id', $applicator_id, PDO::PARAM_INT);
+            $stmt->execute();
+            return true;
+
+        } catch (PDOException $e) {
+            error_log("Database Error in resetApplicatorPartOutput: " . $e->getMessage());
+            return "Database error: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        }
     }
 
-    // Check if given part_name is accepted 
-    if (!in_array($part_name, $accepted_part_names, true)) {
-        return "Reset cancelled: invalid part name!";
+    // Case 2: part is a custom JSON field
+    if (in_array($part_name, $custom_part_names, true)) {
+        try {
+            // Fetch current JSON
+            $stmt = $pdo->prepare("
+                SELECT custom_parts_output
+                FROM monitor_applicator
+                WHERE applicator_id = :applicator_id
+                LIMIT 1
+            ");
+            $stmt->bindParam(':applicator_id', $applicator_id, PDO::PARAM_INT);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$row) return "Applicator not found";
+
+            $decoded = json_decode($row["custom_parts_output"], true) ?: [];
+
+            // Reset just the requested part
+            if (isset($decoded[$part_name])) {
+                $decoded[$part_name] = 0;
+            }
+
+            // Save back JSON
+            $updatedJson = json_encode($decoded);
+            $updateStmt = $pdo->prepare("
+                UPDATE monitor_applicator
+                SET custom_parts_output = :json
+                WHERE applicator_id = :applicator_id
+            ");
+            $updateStmt->bindParam(':json', $updatedJson, PDO::PARAM_STR);
+            $updateStmt->bindParam(':applicator_id', $applicator_id, PDO::PARAM_INT);
+            $updateStmt->execute();
+
+            return true;
+
+        } catch (PDOException $e) {
+            error_log("Database Error in resetApplicatorPartOutput (custom): " . $e->getMessage());
+            return "Database error: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        }
     }
 
-    // Execute main logic 
-    try {
-        $stmt = $pdo->prepare("
-            UPDATE monitor_applicator
-            SET $part_name = 0
-            WHERE applicator_id = :applicator_id
-        ");
-
-        $stmt->bindParam(':applicator_id', $applicator_id, PDO::PARAM_INT);
-        $stmt->execute();
-
-        return true;
-
-    } catch (PDOException $e) {
-        error_log("Database Error in resetApplicatorPartOutput: " . $e->getMessage());
-        return "Database error in resetApplicatorPartOutput: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
-    }
+    return "Reset cancelled: invalid part name!";
 }
+
