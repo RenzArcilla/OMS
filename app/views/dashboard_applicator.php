@@ -199,7 +199,13 @@
                                                     data-id="<?= $row['applicator_id'] ?>">
                                                     Reset
                                                 </button>
-                                                <button class="btn-small btn-edit" onclick="openUndoModal()">Undo</button>
+                                                <button
+                                                    class="btn-small btn-edit"
+                                                    type="button"
+                                                    onclick="openUndoModal(this)"
+                                                    data-id="<?= $row['applicator_id'] ?>">
+                                                    Undo
+                                                </button>
                                             </td>
                                             <td><?= htmlspecialchars($row['hp_no']) ?></td>
                                             <td><strong><?= htmlspecialchars(explode(' ', $row['last_updated'])[0]) ?></strong></td>
@@ -310,7 +316,7 @@
                     <div class="form-group">
                         <label class="form-label">⚠️ Are you sure you want to reset the applicator?</label>
                         <p style="color: #6b7280; font-size: 0.9rem; margin-top: 8px;">
-                            This action will reset the selected component's usage counter to zero. This cannot be undone.
+                            This action will reset the selected component's usage counter to zero!
                         </p>
                     </div>
                     <div class="modal-footer">
@@ -326,45 +332,52 @@
     <div id="undoModalDashboardApplicator" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
-                <h2 class="modal-title">Undo Applicator<span id="editHpNumber"></span></h2>
+                <h2 class="modal-title">Undo Reset<span id="editHpNumber"></span></h2>
             </div>
             <div class="modal-body">
                 <form id="editForm" action="">
                     <div class="form-group">
-                        <label class="form-label">Select Applicator Part to Reset</label>
+                        <!-- Hidden Input for applicator_id -->
+                        <input type="hidden" name="applicator_id" id="undo_applicator_id">
+
+                        <label class="form-label">Select Applicator Part to Undo</label>
                         <select id="editWireType" class="form-input">
-                            <option>Select Part</option>
-                            <option>Wire Crimper</option>
-                            <option>Wire Anvil</option>
-                            <option>Insulation Crimper</option>
-                            <option>Insulation Anvil</option>
-                            <option>Slide Cutter</option>
-                            <option>Cutter Holder</option>
-                            <option>Shear Blade</option>
-                            <option>Cutter A</option>
-                            <option>Cutter B</option>
+                            <option value="">Select Part</option>
+                            <option value="wire_crimper_output">Wire Crimper</option>
+                            <option value="wire_anvil_output">Wire Anvil</option>
+                            <option value="insulation_crimper_output">Insulation Crimper</option>
+                            <option value="insulation_anvil_output">Insulation Anvil</option>
+                            <option value="slide_cutter_output">Slide Cutter</option>
+                            <option value="cutter_holder_output">Cutter Holder</option>
+                            <option value="shear_blade_output">Shear Blade</option>
+                            <option value="cutter_a_output">Cutter A</option>
+                            <option value="cutter_b_output">Cutter B</option>
+                            <?php foreach ($custom_applicator_parts as $row): ?>
+                                <option value="<?= htmlspecialchars($row['part_name']) ?>">
+                                    <?= ucwords(str_replace('_', ' ', htmlspecialchars($row['part_name']))) ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     
                     <div class="form-group">
                         <label class="form-label">Dates Replaced</label>
                         <select id="editStatus" class="form-input">
-                            <option value="07/21/2025">07/21/2025</option>
-                            <option value="07/22/2025">07/22/2025</option>
-                            <option value="07/23/2025">07/23/2025</option>
-                            <option value="07/24/2025">07/24/2025</option>
-                            <option value="07/25/2025">07/25/2025</option>
-                            <option value="07/26/2025">07/26/2025</option>
-                            <option value="07/27/2025">07/27/2025</option>
-                            <option value="07/28/2025">07/28/2025</option>
-                            <option value="07/29/2025">07/29/2025</option>
+                            <option value="">Select a part first</option>
                         </select>
                     </div>
+
+                    <div>
+                        ⚠️⚠️PROCEED WITH CAUTIION⚠️⚠️ 
+                    </div>
+                    <div>
+                        Reverting to previous timestamp will delete all records encoded later than the timestamp! 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-cancel" onclick="closeUndoModal()">Cancel</button>
+                        <button type="button" class="btn-confirm" onclick="saveUndo()">Confirm</button>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-cancel" onclick="closeUndoModal()">Cancel</button>
-                <button type="button" class="btn-confirm" onclick="saveUndo()">Confirm</button>
             </div>
         </div>
     </div>
