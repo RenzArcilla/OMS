@@ -344,13 +344,14 @@ if (!isset($_SESSION['user_id'])) {
                                 <input type="text" id="add_applicator_invoice_no" name="invoice_no"><br><br>
                             </div>
                         </div>
-                    </form>
+                    
                 </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn-secondary" onclick="closeAddApplicatorModal()">Cancel</button>
-                    <button type="submit" id="applicatorActionBtn" class="btn-primary" onclick="saveApplicator()">Add Applicator</button>
-                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn-secondary" onclick="closeAddApplicatorModal()">Cancel</button>
+                                <button type="submit" id="applicatorActionBtn" class="btn-primary" >Add Applicator</button>
+                            </div>
+                    </form>
 
             </div>
         </div>
