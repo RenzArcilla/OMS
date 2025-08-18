@@ -56,7 +56,7 @@ try {
     $result = resetApplicatorPartOutput($applicator_id, $part_name);
     if ($result === true) {
         $pdo->commit();
-        jsAlertRedirect("Part output reset successful!", $redirect_url);
+        jsAlertRedirect("Part output reset successful!", $redirect_url . "?filter_by=last_updated");
         exit;
     } elseif (is_string($result)) {
         $pdo->rollBack();
