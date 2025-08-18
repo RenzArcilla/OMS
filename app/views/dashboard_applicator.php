@@ -1,10 +1,9 @@
-<!DOCTYPE html>
+`    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Admin Dashboard</title>
-    <link rel="stylesheet" href="../../public/assets/css/base.css">
     <link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
 </head>
 <body>
@@ -194,11 +193,16 @@
                                     <?php foreach ($applicator_total_outputs as $row): ?>
                                         <tr>
                                             <td>
+                                                <button
+                                                    class="btn-small btn-reset"
+                                                    type="button"
+                                                    onclick="openResetModal(this)"
+                                                    data-id="<?= $row['applicator_id'] ?>">
+                                                    Reset
+                                                </button>
                                                 <button class="btn-small btn-edit" onclick="openUndoModal()">Undo</button>
-                                                <button class="btn-small btn-reset" onclick="openResetModal()">Reset</button>
                                             </td>
                                             <td><?= htmlspecialchars($row['hp_no']) ?></td>
-                                            <td><span class="status-badge status-good">Good</span></td>
                                             <td><strong><?= htmlspecialchars(explode(' ', $row['last_updated'])[0]) ?></strong></td>
                                             <td><strong><?= htmlspecialchars($row['total_output']) ?></strong></td>
                                             <td>
@@ -274,14 +278,59 @@
         </div>
     </div>
 
-    <!-- Undo Modal -->
+    <!-- Reset Modal -->
+    <div id="resetModalDashboardApplicator" class="modal-overlay">
+        <div class="modal modal-reset">
+            <div class="modal-header">
+                <h2 class="modal-title">Reset Applicator<span id="editHpNumber"></span></h2>
+            </div>
+            <div class="modal-body">
+                <form id="resetForm" method="POST" action="../controllers/reset_applicator.php">
+                    <div class="form-group">
+                        <label class="form-label">Select Applicator Part to Reset</label>
+                        <!-- Hidden Input for applicator_id -->
+                        <input type="hidden" name="applicator_id" id="reset_applicator_id">
+                        <select id="resetWireType" name="part_name" class="form-input">
+                            <option value="">Select Part</option>
+                            <option value="wire_crimper">Wire Crimper</option>
+                            <option value="wire_anvil">Wire Anvil</option>
+                            <option value="insulation_crimper">Insulation Crimper</option>
+                            <option value="insulation_anvil">Insulation Anvil</option>
+                            <option value="slide_cutter">Slide Cutter</option>
+                            <option value="cutter_holder">Cutter Holder</option>
+                            <option value="shear_blade">Shear Blade</option>
+                            <option value="cutter_a">Cutter A</option>
+                            <option value="cutter_b">Cutter B</option>
+                            <?php foreach ($custom_applicator_parts as $row): ?>
+                                <option value="<?= htmlspecialchars($row['part_name']) ?>">
+                                    <?= ucwords(str_replace('_', ' ', htmlspecialchars($row['part_name']))) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">⚠️ Are you sure you want to reset the applicator?</label>
+                        <p style="color: #6b7280; font-size: 0.9rem; margin-top: 8px;">
+                            This action will reset the selected component's usage counter to zero. This cannot be undone.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-cancel" onclick="closeResetModal()">Cancel</button>
+                        <button type="submit" class="btn-confirm">Confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+        <!-- Undo Modal -->
     <div id="undoModalDashboardApplicator" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
                 <h2 class="modal-title">Undo Applicator<span id="editHpNumber"></span></h2>
             </div>
             <div class="modal-body">
-                <form id="editForm">
+                <form id="editForm" action="">
                     <div class="form-group">
                         <label class="form-label">Select Applicator Part to Reset</label>
                         <select id="editWireType" class="form-input">
@@ -317,44 +366,6 @@
             <div class="modal-footer">
                 <button type="button" class="btn-cancel" onclick="closeUndoModal()">Cancel</button>
                 <button type="button" class="btn-confirm" onclick="saveUndo()">Confirm</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Reset Modal -->
-    <div id="resetModalDashboardApplicator" class="modal-overlay">
-        <div class="modal modal-reset">
-            <div class="modal-header">
-                <h2 class="modal-title">Reset Applicator<span id="editHpNumber"></span></h2>
-            </div>
-            <div class="modal-body">
-                <form id="resetForm">
-                    <div class="form-group">
-                        <label class="form-label">Select Applicator Part to Reset</label>
-                        <select id="resetWireType" class="form-input">
-                            <option>Select Part</option>
-                            <option>Wire Crimper</option>
-                            <option>Wire Anvil</option>
-                            <option>Insulation Crimper</option>
-                            <option>Insulation Anvil</option>
-                            <option>Slide Cutter</option>
-                            <option>Cutter Holder</option>
-                            <option>Shear Blade</option>
-                            <option>Cutter A</option>
-                            <option>Cutter B</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">⚠️ Are you sure you want to reset the applicator?</label>
-                        <p style="color: #6b7280; font-size: 0.9rem; margin-top: 8px;">
-                            This action will reset the selected component's usage counter to zero. This cannot be undone.
-                        </p>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-cancel" onclick="closeResetModal()">Cancel</button>
-                <button type="button" class="btn-confirm" onclick="saveReset()">Confirm</button>
             </div>
         </div>
     </div>
