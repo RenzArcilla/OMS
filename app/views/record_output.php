@@ -195,7 +195,7 @@ if (!isset($_SESSION['user_id'])) {
 
             <div class="section-content expanded" id="table-container" style="height: 500px; overflow-y: auto;">
                 <div class="table-container">
-                    <table id="data-table">
+                    <table class="data-table"id="data-table" >
                         <thead>
                             <tr>
                                 <th>Record ID</th>
