@@ -335,7 +335,7 @@
                 <h2 class="modal-title">Undo Reset<span id="editHpNumber"></span></h2>
             </div>
             <div class="modal-body">
-                <form id="editForm" action="">
+                <form id="editForm" action="../controllers/undo_reset_applicator.php">
                     <div class="form-group">
                         <!-- Hidden Input for applicator_id -->
                         <input type="hidden" name="applicator_id" id="undo_applicator_id">
@@ -375,7 +375,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn-cancel" onclick="closeUndoModal()">Cancel</button>
-                        <button type="button" class="btn-confirm" onclick="saveUndo()">Confirm</button>
+                        <button type="button" class="btn-confirm">Confirm</button>
                     </div>
                 </form>
             </div>
