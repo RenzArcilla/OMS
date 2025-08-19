@@ -24,8 +24,8 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="../../public/assets/css/base/base.css">
     <link rel="stylesheet" href="../../public/assets/css/record_output.css">
     <link rel="stylesheet" href="../../public/assets/css/add_entry.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
 </head> 
-
 <body>
     <div class="container">
         <!-- Page Header -->
@@ -268,133 +268,136 @@ if (!isset($_SESSION['user_id'])) {
 
 <!-- Edit Record Modal -->
 <div id="editRecordModal" class="modal-overlay" style="display: none;">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2 class="modal-title">Edit Record</h2>
-            <button type="button" class="modal-close-btn" onclick="closeRecordModal()">×</button>
+    <div class="form-container">
+        <button type="button" class="modal-close-btn" onclick="closeRecordModal()">×</button>
+        
+        <div class="form-header">
+            <h1 class="form-title">✏️ Edit Record</h1>
+            <p class="form-subtitle">Update production record information</p>
         </div>
         
-        <div class="modal-body">
-            <form id="editRecordForm" action="../controllers/edit_record.php" method="POST" onsubmit="return validateEditForm()">
-                <!-- Hidden inputs for tracking previous values -->
-                <input type="hidden" name="record_id" id="edit_record_id" required>
-                <input type="hidden" name="prev_date_inspected" id="edit_prev_date_inspected">
-                <input type="hidden" name="prev_shift" id="edit_prev_shift">
-                <input type="hidden" name="prev_app1" id="edit_prev_app1">
-                <input type="hidden" name="prev_app2" id="edit_prev_app2">
-                <input type="hidden" name="prev_machine" id="edit_prev_machine">
-                <input type="hidden" name="prev_app1_output" id="edit_prev_app1_output">
-                <input type="hidden" name="prev_app2_output" id="edit_prev_app2_output">
-                <input type="hidden" name="prev_machine_output" id="edit_prev_machine_output">
+        <form id="editRecordForm" action="../controllers/edit_record.php" method="POST" onsubmit="return validateEditForm()">
+            <!-- Hidden inputs for tracking previous values -->
+            <input type="hidden" name="record_id" id="edit_record_id" required>
+            <input type="hidden" name="prev_date_inspected" id="edit_prev_date_inspected">
+            <input type="hidden" name="prev_shift" id="edit_prev_shift">
+            <input type="hidden" name="prev_app1" id="edit_prev_app1">
+            <input type="hidden" name="prev_app2" id="edit_prev_app2">
+            <input type="hidden" name="prev_machine" id="edit_prev_machine">
+            <input type="hidden" name="prev_app1_output" id="edit_prev_app1_output">
+            <input type="hidden" name="prev_app2_output" id="edit_prev_app2_output">
+            <input type="hidden" name="prev_machine_output" id="edit_prev_machine_output">
 
-                <div class="form-section">
-                    <div class="section-header">
-                        <div class="section-icon">📅</div>
-                        <div class="section-info">
-                            <div class="section-title">Basic Information</div>
-                        </div>
-                    </div>
-
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="edit_date_inspected" class="form-label">
-                                Date Inspected
-                                <span class="required-badge">Required</span>
-                            </label>
-                            <input type="date" name="date_inspected" id="edit_date_inspected" class="form-input" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="edit_shift" class="form-label">
-                                Work Shift
-                                <span class="required-badge">Required</span>
-                            </label>
-                            <select name="shift" id="edit_shift" class="form-input" required>
-                                <option value="">Choose your work shift</option>
-                                <option value="1st">First Shift (Morning)</option>
-                                <option value="2nd">Second Shift (Afternoon)</option>
-                                <option value="NIGHT">Night Shift (Overnight)</option>
-                            </select>
-                        </div>
+            <div class="form-section">
+                <div class="section-header">
+                    <div class="section-icon">📅</div>
+                    <div class="section-info">
+                        <div class="section-title">Basic Information</div>
+                        <div class="section-description">Update date and shift information</div>
                     </div>
                 </div>
 
-                <div class="form-section">
-                    <div class="section-header">
-                        <div class="section-icon">🔧</div>
-                        <div class="section-info">
-                            <div class="section-title">Applicators</div>
-                        </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="edit_date_inspected" class="form-label">
+                            Date Inspected
+                            <span class="required-badge">Required</span>
+                        </label>
+                        <input type="date" name="date_inspected" id="edit_date_inspected" class="form-input" required>
                     </div>
+                    
+                    <div class="form-group">
+                        <label for="edit_shift" class="form-label">
+                            Work Shift
+                            <span class="required-badge">Required</span>
+                        </label>
+                        <select name="shift" id="edit_shift" class="form-input" required>
+                            <option value="">Choose your work shift</option>
+                            <option value="1st">First Shift (Morning)</option>
+                            <option value="2nd">Second Shift (Afternoon)</option>
+                            <option value="NIGHT">Night Shift (Overnight)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
 
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="edit_app1" class="form-label">
-                                Applicator 1
-                                <span class="required-badge">Required</span>
-                            </label>
-                            <input type="text" name="app1" id="edit_app1" class="form-input" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="edit_app1_output" class="form-label">
-                                Applicator 1 Output
-                                <span class="required-badge">Required</span>
-                            </label>
-                            <input type="number" name="app1_output" id="edit_app1_output" class="form-input" min="0" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="edit_app2" class="form-label">
-                                Applicator 2
-                                <span class="optional-badge">Optional</span>
-                            </label>
-                            <input type="text" name="app2" id="edit_app2" class="form-input">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="edit_app2_output" class="form-label">
-                                Applicator 2 Output
-                                <span class="optional-badge">Optional</span>
-                            </label>
-                            <input type="number" name="app2_output" id="edit_app2_output" class="form-input" min="0">
-                        </div>
+            <div class="form-section">
+                <div class="section-header">
+                    <div class="section-icon">🔧</div>
+                    <div class="section-info">
+                        <div class="section-title">Applicators</div>
+                        <div class="section-description">Update applicator information and output values</div>
                     </div>
                 </div>
 
-                <div class="form-section">
-                    <div class="section-header">
-                        <div class="section-icon">🏭</div>
-                        <div class="section-info">
-                            <div class="section-title">Machine Data</div>
-                        </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="edit_app1" class="form-label">
+                            Applicator 1
+                            <span class="required-badge">Required</span>
+                        </label>
+                        <input type="text" name="app1" id="edit_app1" class="form-input" required>
                     </div>
 
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="edit_machine" class="form-label">
-                                Machine Number
-                                <span class="required-badge">Required</span>
-                            </label>
-                            <input type="text" name="machine" id="edit_machine" class="form-input" required>
-                        </div>
+                    <div class="form-group">
+                        <label for="edit_app1_output" class="form-label">
+                            Applicator 1 Output
+                            <span class="required-badge">Required</span>
+                        </label>
+                        <input type="number" name="app1_output" id="edit_app1_output" class="form-input" min="0" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit_app2" class="form-label">
+                            Applicator 2
+                            <span class="optional-badge">Optional</span>
+                        </label>
+                        <input type="text" name="app2" id="edit_app2" class="form-input">
+                    </div>
 
-                        <div class="form-group">
-                            <label for="edit_machine_output" class="form-label">
-                                Machine Output
-                                <span class="required-badge">Required</span>
-                            </label>
-                            <input type="number" name="machine_output" id="edit_machine_output" class="form-input" min="0" required>
-                        </div>
+                    <div class="form-group">
+                        <label for="edit_app2_output" class="form-label">
+                            Applicator 2 Output
+                            <span class="optional-badge">Optional</span>
+                        </label>
+                        <input type="number" name="app2_output" id="edit_app2_output" class="form-input" min="0">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-header">
+                    <div class="section-icon">🏭</div>
+                    <div class="section-info">
+                        <div class="section-title">Machine Data</div>
+                        <div class="section-description">Update machine information and output values</div>
                     </div>
                 </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="cancel-btn" onclick="closeRecordModal()">Cancel</button>
-                    <button type="submit" class="submit-btn">Save Changes</button>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="edit_machine" class="form-label">
+                            Machine Number
+                            <span class="required-badge">Required</span>
+                        </label>
+                        <input type="text" name="machine" id="edit_machine" class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit_machine_output" class="form-label">
+                            Machine Output
+                            <span class="required-badge">Required</span>
+                        </label>
+                        <input type="number" name="machine_output" id="edit_machine_output" class="form-input" min="0" required>
+                    </div>
                 </div>
-            </form>
-        </div>
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="cancel-btn" onclick="closeRecordModal()">Cancel</button>
+                <button type="submit" class="submit-btn">Save Changes</button>
+            </div>
+        </form>
     </div>
 </div>
 
