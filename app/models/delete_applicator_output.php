@@ -44,6 +44,37 @@ function deleteApplicatorOutputs($applicator_id, $record_id) {
 }
 
 
+function disableApplicatorOutput($record_id): bool|string {
+    /*
+    Disable (soft delete) applicator outputs by record_id.
+
+    Args:
+    - $record_id: ID of the record to disable
+    
+    Returns:
+    - true on success
+    - string containing error message on failure
+    */
+
+    global $pdo;
+
+    try {
+        $stmt = $pdo->prepare("
+            UPDATE applicator_outputs
+            SET is_active = 0
+            WHERE record_id = :record_id
+        ");
+        $stmt->bindValue(':record_id', $record_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return true;
+    } catch (PDOException $e) {
+        error_log("Database Error in disableApplicatorOutput(): " . $e->getMessage());
+        return "Database Error: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}
+
+
 function disableApplicatorOutputsByRecordIds(array $record_ids): bool|string {
     /*
     Disable applicator_outputs by multiple record_ids in one query.

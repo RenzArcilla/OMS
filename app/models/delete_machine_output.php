@@ -4,6 +4,37 @@
 */
 
 
+function disableMachineOutput($record_id): bool|string {
+    /*
+    Disable (soft delete) a machine output by record_id.
+
+    Args:
+    - $record_id: ID of the record to disable
+    
+    Returns:
+    - true on success
+    - string containing error message on failure
+    */
+
+    global $pdo;
+
+    try {
+        $stmt = $pdo->prepare("
+            UPDATE machine_outputs
+            SET is_active = 0
+            WHERE record_id = :record_id
+        ");
+        $stmt->bindValue(':record_id', $record_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return true;
+    } catch (PDOException $e) {
+        error_log("Database Error in disableMachine(): " . $e->getMessage());
+        return "Database Error: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}
+
+
 function disableMachineOutputsByRecordIds(array $record_ids): bool|string {
     /*
     Function to disable (soft delete) multiple machine outputs in the database.
