@@ -1,4 +1,4 @@
-`    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -157,6 +157,7 @@
                                         <?php endforeach; ?>
                                     </tr>   
                                 </thead>
+
                                 <!-- Table Rows -->
                                 <tbody id="metricsBody">
                                     <?php foreach ($applicator_total_outputs as $row): ?>
