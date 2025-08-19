@@ -3,12 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HEPC - Admin Dashboard</title>
-    <link rel="stylesheet" href="../../public/assets/css/base.css">
+    <title>HEPC - Machine Dashboard</title>
     <link rel="stylesheet" href="../../public/assets/css/dashboard_machine.css">
 </head>
 <body>
-    <?php include '../includes/side_bar.php'; ?>
+    <?php
+    // First, get custom parts
+    require_once "../models/read_custom_parts.php";
+    $custom_machine_parts = getCustomParts("MACHINE");
+
+    // Initialize part names array
+    $part_names_array = [];
+    foreach ($custom_machine_parts as $part) {
+        $part_names_array[] = $part['part_name'];
+    }
+    ?>
     <div class="admin-container">
         <!-- Main Content -->
         <div class="main-content">
@@ -35,36 +44,8 @@
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
-                    <div class="stat-card status-warning" onclick="openMachineModal()">
-                        <div class="stat-value">12,847</div>
-                        <div class="stat-label">HP-001</div>
-                    </div>
-                    <div class="stat-card status-good" onclick="openMachineModal()">
-                        <div class="stat-value">12,847</div>
-                        <div class="stat-label">HP-001</div>
-                    </div>
-                    <div class="stat-card status-good" onclick="openMachineModal()">
-                        <div class="stat-value">12,847</div>
-                        <div class="stat-label">HP-001</div>
-                    </div>
-                    <div class="stat-card status-warning" onclick="openMachineModal()">
-                        <div class="stat-value">12,847</div>
-                        <div class="stat-label">HP-001</div>
-                    </div>
-                    <div class="stat-card status-good" onclick="openMachineModal()">
-                        <div class="stat-value">12,847</div>
-                        <div class="stat-label">HP-001</div>
-                    </div>
-                    <div class="stat-card status-good" onclick="openMachineModal()">
-                        <div class="stat-value">12,847</div>
-                        <div class="stat-label">HP-001</div>
-                    </div>
-                    <div class="stat-card status-critical" onclick="openMachineModal()">
-                        <div class="stat-value">12,847</div>
-                        <div class="stat-label">HP-001</div>
-                    </div>
-                    
                 </div>
+
                 <!-- Machine Status Section -->
                 <div class="data-section">
                     <div class="section-header expanded" onclick="toggleSection(this)">
@@ -89,14 +70,20 @@
                             <table class="data-table" id="metricsTable">
                                 <thead>
                                     <tr>
-                                        <th>AM No.</th>
-                                        <th>Status</th>
-                                        <th>Last Encoded</th>
+                                        <th>Actions</th>
+                                        <th>Machine Number</th>
+                                        <th>Last Updated</th>
                                         <th>Total Output</th>
-                                        <th>Cut Blade</th>
-                                        <th>Strip Blade A</th>
-                                        <th>Strip Blade B</th>
-                                        <th>Action</th>
+                                        <th>Cut Blade Output</th>
+                                        <th>Strip Blade A Output</th>
+                                        <th>Strip Blade B Output</th>
+                                        <?php foreach ($custom_machine_parts as $part): ?>
+                                            <th>
+                                                <a href="?filter_by=<?= urlencode($part['part_name']) ?>">
+                                                    <?= htmlspecialchars(ucwords(str_replace('_', ' ', $part['part_name']))) ?>
+                                                </a>
+                                            </th>
+                                        <?php endforeach; ?>
                                     </tr>
                                 </thead>
                                 
