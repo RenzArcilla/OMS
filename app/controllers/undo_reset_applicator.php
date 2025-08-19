@@ -85,5 +85,5 @@ if (is_string($result)) {
 
 // No failures occured, undo operation successful
 $pdo->commit();
-jsAlertRedirect("Applicator part output - reset undone! All records later than the timestamp have been deleted.", $redirect_url . "?filter_by=last_updated");
+jsAlertRedirect("Reset undone! All records later than the timestamp have been deleted.", $redirect_url . "?filter_by=last_updated");
 exit;
