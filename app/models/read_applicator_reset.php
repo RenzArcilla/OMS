@@ -51,6 +51,7 @@ function getApplicatorResetOnTimeStamp($applicator_id, $part_name, $reset_time) 
     - string: contains error message
     */
 
+    global $pdo;
 
     try {
         // Prepare SQL select query with first_name and last_name

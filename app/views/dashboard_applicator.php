@@ -335,13 +335,13 @@
                 <h2 class="modal-title">Undo Reset<span id="editHpNumber"></span></h2>
             </div>
             <div class="modal-body">
-                <form id="editForm" action="../controllers/undo_reset_applicator.php">
+                <form id="editForm" method="POST" action="../controllers/undo_reset_applicator.php">
                     <div class="form-group">
                         <!-- Hidden Input for applicator_id -->
                         <input type="hidden" name="applicator_id" id="undo_applicator_id">
 
                         <label class="form-label">Select Applicator Part to Undo</label>
-                        <select id="editWireType" class="form-input">
+                        <select id="editWireType" name="part_name" class="form-input">
                             <option value="">Select Part</option>
                             <option value="wire_crimper_output">Wire Crimper</option>
                             <option value="wire_anvil_output">Wire Anvil</option>
@@ -362,7 +362,7 @@
                     
                     <div class="form-group">
                         <label class="form-label">Dates Replaced</label>
-                        <select id="editStatus" class="form-input">
+                        <select id="editStatus" name="reset_time" class="form-input">
                             <option value="">Select a part first</option>
                         </select>
                     </div>
@@ -375,7 +375,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn-cancel" onclick="closeUndoModal()">Cancel</button>
-                        <button type="button" class="btn-confirm">Confirm</button>
+                        <button type="submit" class="btn-confirm">Confirm</button>
                     </div>
                 </form>
             </div>
