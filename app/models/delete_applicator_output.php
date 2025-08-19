@@ -42,3 +42,42 @@ function deleteApplicatorOutputs($applicator_id, $record_id) {
         return "Database Error: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
+
+
+function disableApplicatorOutputsByRecordIds(array $record_ids): bool|string {
+    /*
+    Disable applicator_outputs by multiple record_ids in one query.
+
+    Args:
+    - $record_ids: array of record IDs
+
+    Returns:
+    - true on success
+    - error message string on failure
+    */
+    global $pdo;
+
+    try {
+        if (empty($record_ids)) {
+            return true; // nothing to disable
+        }
+
+        // Generate placeholders like ?, ?, ? based on number of IDs
+        $placeholders = implode(',', array_fill(0, count($record_ids), '?'));
+
+        $sql = "UPDATE applicator_outputs SET is_active = 0 WHERE record_id IN ($placeholders)";
+        $stmt = $pdo->prepare($sql);
+
+        // Bind all IDs
+        foreach ($record_ids as $i => $id) {
+            $stmt->bindValue($i + 1, $id, PDO::PARAM_INT);
+        }
+
+        $stmt->execute();
+        return true;
+
+    } catch (PDOException $e) {
+        error_log("Database Error on disableApplicatorOutputsByRecordIds: " . $e->getMessage());
+        return "Database Error on disableApplicatorOutputsByRecordIds: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}

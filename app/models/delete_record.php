@@ -68,3 +68,39 @@ function deleteRecordEncodedLaterThan($timestamp): bool|string {
         return "Database Error on deleteRecordEncodedLaterThan: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
+
+
+function disableRecordEncodedLaterThan($timestamp): bool|string {
+    /*
+    Function to disable (soft delete) all records encoded later than a timestamp in the database.
+
+    Args:
+    - $timestamp: date_time
+
+    Returns:
+    - true on success
+    - string containing error message on failure
+    */
+    global $pdo;
+
+    try {
+        // Prepare the SQL statement
+        $stmt = $pdo->prepare("
+            UPDATE records 
+            SET is_active = 0
+            WHERE date_encoded > :timestamp
+        ");
+
+        $stmt->bindValue(':timestamp', $timestamp);
+
+        // Execute the statement
+        $stmt->execute();
+
+        return true;
+
+    } catch (PDOException $e) {
+        // Log error
+        error_log("Database Error on disableRecordEncodedLaterThan: " . $e->getMessage());
+        return "Database Error on disableRecordEncodedLaterThan: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}
