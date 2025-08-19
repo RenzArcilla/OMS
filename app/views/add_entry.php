@@ -414,28 +414,42 @@ if (!isset($_SESSION['user_id'])) {
         </div>
 
             <!-- Edit Machine Modal -->
-    <div id="editModal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">
-                    <span class="modal-icon">🔧</span>
-                    Edit Machine
-                </h2>
-                <button class="close-btn" onclick="closeModal()">✖️</button>
-            </div>
+<div id="editModal" class="modal-overlay">
+    <div class="form-container">
+        <button class="modal-close-btn" onclick="closeModal()">×</button>
+        
+        <div class="form-header">
+            <h1 class="form-title">🔧 Edit Machine</h1>
+            <p class="form-subtitle">Update machine information</p>
+        </div>
 
-            <div class="modal-body">
-                <form id="editMachineForm" action="../controllers/edit_machine.php" method="POST">
-                    <input type="hidden" name="machine_id" id="edit_machine_id">
+        <form id="editMachineForm" action="../controllers/edit_machine.php" method="POST">
+            <input type="hidden" name="machine_id" id="edit_machine_id">
+            
+            <div class="form-section">
+                <div class="section-header">
+                    <div class="section-icon">✏️</div>
+                    <div class="section-info">
+                        <div class="section-title">Machine Details</div>
+                        <div class="section-description">Update machine information</div>
+                    </div>
+                </div>
 
+                <div class="form-grid">
                     <div class="form-group">
-                        <label>Control No:</label>
-                        <input type="text" name="control_no" id="edit_control_no" required>
+                        <label for="edit_control_no" class="form-label">
+                            Control No
+                            <span class="required-badge">Required</span>
+                        </label>
+                        <input type="text" name="control_no" id="edit_control_no" class="form-input" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Description:</label>
-                        <select name="description" id="edit_description" required>
+                        <label for="edit_description" class="form-label">
+                            Description
+                            <span class="required-badge">Required</span>
+                        </label>
+                        <select name="description" id="edit_description" class="form-input" required>
                             <option value="">--Select--</option>
                             <option value="AUTOMATIC">AUTOMATIC</option>
                             <option value="SEMI-AUTOMATIC">SEMI-AUTOMATIC</option>
@@ -443,33 +457,46 @@ if (!isset($_SESSION['user_id'])) {
                     </div>
 
                     <div class="form-group">
-                        <label>Model:</label>
-                        <input type="text" name="model" id="edit_model" required>
+                        <label for="edit_model" class="form-label">
+                            Model
+                            <span class="required-badge">Required</span>
+                        </label>
+                        <input type="text" name="model" id="edit_model" class="form-input" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Maker:</label>
-                        <input type="text" name="machine_maker" id="edit_maker" required>
+                        <label for="edit_maker" class="form-label">
+                            Maker
+                            <span class="required-badge">Required</span>
+                        </label>
+                        <input type="text" name="machine_maker" id="edit_maker" class="form-input" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Serial No:</label>
-                        <input type="text" name="serial_no" id="edit_serial_no">
+                        <label for="edit_serial_no" class="form-label">
+                            Serial No
+                            <span class="optional-badge">Optional</span>
+                        </label>
+                        <input type="text" name="serial_no" id="edit_serial_no" class="form-input">
                     </div>
 
                     <div class="form-group">
-                        <label>Invoice No:</label>
-                        <input type="text" name="invoice_no" id="edit_invoice_no">
+                        <label for="edit_invoice_no" class="form-label">
+                            Invoice No
+                            <span class="optional-badge">Optional</span>
+                        </label>
+                        <input type="text" name="invoice_no" id="edit_invoice_no" class="form-input">
                     </div>
-                </form>
+                </div>
             </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn-secondary" onclick="closeMachineModal()">Cancel</button>
-                <button type="submit" form="editMachineForm" class="btn-primary">Save Changes</button>
+            <div class="button-group">
+                <button type="button" class="cancel-btn" onclick="closeMachineModal()">Cancel</button>
+                <button type="submit" class="submit-btn">Save Changes</button>
             </div>
-        </div>
+        </form>
     </div>
+</div>
 
     <!-- Edit Applicator Modal -->
     <div id="editApplicatorModal" class="modal-overlay">
