@@ -320,20 +320,35 @@
         </div>
     </div>
 
-        <!-- Undo Modal -->
-    <div id="undoModalDashboardApplicator" class="modal-overlay">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">Undo Reset<span id="editHpNumber"></span></h2>
-            </div>
-            <div class="modal-body">
-                <form id="editForm" method="POST" action="../controllers/undo_reset_applicator.php">
-                    <div class="form-group">
-                        <!-- Hidden Input for applicator_id -->
-                        <input type="hidden" name="applicator_id" id="undo_applicator_id">
+        <!-- Undo Reset Modal -->
+<div id="undoModalDashboardApplicator" class="modal-overlay">
+    <div class="form-container">
+        <button class="modal-close-btn" onclick="closeUndoModal()">×</button>
+        
+        <div class="form-header">
+            <h1 class="form-title">↩️ Undo Reset</h1>
+            <p class="form-subtitle">Revert applicator reset to previous state</p>
+        </div>
 
-                        <label class="form-label">Select Applicator Part to Undo</label>
-                        <select id="editWireType" name="part_name" class="form-input">
+        <form id="editForm" method="POST" action="../controllers/undo_reset_applicator.php">
+            <input type="hidden" name="applicator_id" id="undo_applicator_id">
+            
+            <div class="form-section">
+                <div class="section-header">
+                    <div class="section-icon">🕒</div>
+                    <div class="section-info">
+                        <div class="section-title">Undo Selection</div>
+                        <div class="section-description">Select the part and timestamp to revert to</div>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Select Applicator Part to Undo
+                            <span class="required-badge">Required</span>
+                        </label>
+                        <select id="editWireType" name="part_name" class="form-input" required>
                             <option value="">Select Part</option>
                             <option value="wire_crimper_output">Wire Crimper</option>
                             <option value="wire_anvil_output">Wire Anvil</option>
@@ -353,23 +368,34 @@
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">Dates Replaced</label>
-                        <select id="editStatus" name="reset_time" class="form-input">
+                        <label class="form-label">
+                            Dates Replaced
+                            <span class="required-badge">Required</span>
+                        </label>
+                        <select id="editStatus" name="reset_time" class="form-input" required>
                             <option value="">Select a part first</option>
                         </select>
                     </div>
-
-                    <div>
-                        ⚠️ Reverting to previous timestamp will disable all records encoded later than the timestamp! Proceed with caution! 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-cancel" onclick="closeUndoModal()">Cancel</button>
-                        <button type="submit" class="btn-confirm">Confirm</button>
-                    </div>
-                </form>
+                </div>
             </div>
-        </div>
+
+            <div class="warning-section">
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <span class="warning-icon">⚠️</span>
+                    <div>
+                        <strong>Caution: Data Loss Warning</strong>
+                        <p>Reverting to previous timestamp will disable all records encoded later than the timestamp! Proceed with caution!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="btn-cancel" onclick="closeUndoModal()">Cancel</button>
+                <button type="submit" class="btn-confirm-dashboard">Confirm Undo</button>
+            </div>
+        </form>
     </div>
+</div>
 
     <!-- Applicator Modal -->
     <div id="applicatorModalDashboardApplicator" class="modal-overlay">
