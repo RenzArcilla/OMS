@@ -27,6 +27,7 @@ if (!isset($_SESSION['user_id'])) {
     <title>Add Machine or Applicator</title>4
     <link rel="stylesheet" href="../../public/assets/css/base/base.css">
     <link rel="stylesheet" href="../../public/assets/css/add_entry.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
     <!-- Load machine infinite scroll logic -->
     <script src="../../public/assets/js/load_machines.js" defer></script>
     <!-- Load applicator infinite scroll logic -->
@@ -228,58 +229,84 @@ if (!isset($_SESSION['user_id'])) {
 
         <!-- Add Machine Form Modal-->
         <div id="addMachineModal" class="modal-overlay">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="machineModalTitle" class="modal-title">
-                        <span class="modal-icon">🔧</span>
-                        <span id="machineModalTitleText">Add Machine</span>
-                    </h2>
+            <div class="form-container">
+                <button class="modal-close-btn" onclick="closeAddMachineModal()">×</button>
+                
+                <div class="form-header">
+                    <h1 class="form-title">🔧 Add Machine</h1>
+                    <p class="form-subtitle">Enter new machine information</p>
                 </div>
-                    
-                <div class="modal-body">
-                    <form id="addMachineForm" action="../controllers/add_machine.php" method="POST">
+
+                <form id="addMachineForm" action="../controllers/add_machine.php" method="POST">
+                    <div class="form-section">
+                        <div class="section-header">
+                            <div class="section-icon">📋</div>
+                            <div class="section-info">
+                                <div class="section-title">Machine Details</div>
+                                <div class="section-description">Enter basic machine information</div>
+                            </div>
+                        </div>
+
                         <div class="form-grid">
                             <div class="form-group">
-                                <label for="machine_ctrl_no">Control No <span class="required">*</span></label>
-                                <input type="text" id="machine_ctrl_no" name="control_no" required placeholder="Enter control number"><br><br>
+                                <label for="machine_ctrl_no" class="form-label">
+                                    Control No
+                                    <span class="required-badge">Required</span>
+                                </label>
+                                <input type="text" id="machine_ctrl_no" name="control_no" class="form-input" required placeholder="Enter control number">
                             </div>
                             
                             <div class="form-group">
-                                <label for="description">Description <span class="required">*</span></label>
-                                <select id="description" name="description" class="form-select" required>
+                                <label for="description" class="form-label">
+                                    Description
+                                    <span class="required-badge">Required</span>
+                                </label>
+                                <select id="description" name="description" class="form-input" required>
                                     <option value="">--Select--</option>
                                     <option value="AUTOMATIC">AUTOMATIC</option>
                                     <option value="SEMI-AUTOMATIC">SEMI-AUTOMATIC</option>
-                                </select><br><br>
+                                </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="model">Model<span class="required">*</span></label>
-                                <input type="text" id="model" name="model" required placeholder="Enter model"><br><br>
+                                <label for="model" class="form-label">
+                                    Model
+                                    <span class="required-badge">Required</span>
+                                </label>
+                                <input type="text" id="model" name="model" class="form-input" required placeholder="Enter model">
                             </div>
 
                             <div class="form-group">
-                                <label for="machine_maker">Machine Maker:</label>
-                                <input type="text" id="machine_maker" name="machine_maker" required placeholder="Enter machine maker"><br><br>
+                                <label for="machine_maker" class="form-label">
+                                    Machine Maker
+                                    <span class="required-badge">Required</span>
+                                </label>
+                                <input type="text" id="machine_maker" name="machine_maker" class="form-input" required placeholder="Enter machine maker">
                             </div>
 
                             <div class="form-group">
-                                <label for="machine_serial_no">Serial No:</label>
-                                <input type="text" id="machine_serial_no" name="serial_no" placeholder="Enter serial number"><br><br>
+                                <label for="machine_serial_no" class="form-label">
+                                    Serial No
+                                    <span class="optional-badge">Optional</span>
+                                </label>
+                                <input type="text" id="machine_serial_no" name="serial_no" class="form-input" placeholder="Enter serial number">
                             </div>
 
                             <div class="form-group">
-                                <label for="machine_invoice_no">Invoice No:</label>
-                                <input type="text" id="machine_invoice_no" name="invoice_no" placeholder="Enter invoice no."><br><br>
+                                <label for="machine_invoice_no" class="form-label">
+                                    Invoice No
+                                    <span class="optional-badge">Optional</span>
+                                </label>
+                                <input type="text" id="machine_invoice_no" name="invoice_no" class="form-input" placeholder="Enter invoice no.">
                             </div>
                         </div>
-                
-                            <div class="modal-footer">
-                                <button type="button" class="btn-secondary" onclick="closeAddMachineModal()">Cancel</button>
-                                <button type="submit" id="machineActionBtn" class="btn-primary" >Add Machine</button>
-                            </div>
-                    </form>
-                </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="cancel-btn" onclick="closeAddMachineModal()">Cancel</button>
+                        <button type="submit" id="machineActionBtn" class="submit-btn">Add Machine</button>
+                    </div>
+                </form>
             </div>
         </div>
 
