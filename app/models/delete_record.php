@@ -64,7 +64,7 @@ function deleteRecordEncodedLaterThan($timestamp): bool|string {
 
     } catch (PDOException $e) {
         // Log error
-        error_log("Database Error on deleteRecordLaterThan: " . $e->getMessage());
-        return "Database Error on deleteRecordLaterThan: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        error_log("Database Error on deleteRecordEncodedLaterThan: " . $e->getMessage());
+        return "Database Error on deleteRecordEncodedLaterThan: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
