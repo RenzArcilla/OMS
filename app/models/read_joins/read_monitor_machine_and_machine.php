@@ -25,12 +25,13 @@ function getRecordsAndOutputs(int $limit = 10, int $offset = 0, $part_names_arra
 
     // Define allowed filter columns for security (excluding total_output)
     $standard_filters = [
-        'machine_id', 'cut_blade_output', 'strip_blade_a_output',
-        'strip_blade_b_output'
+        'control_no', 'last_updated', 
+        'total_machine_output', 'cut_blade_output', 
+        'strip_blade_a_output', 'strip_blade_b_output'
     ];
     
     // Define which columns should be sorted in ascending order
-    $ascending_columns = ['machine_id'];
+    $ascending_columns = ['machine_id', 'control_no'];
     
     // Get filter parameter
     $filter_by = $_GET['filter_by'] ?? null;

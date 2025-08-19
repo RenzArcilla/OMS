@@ -22,8 +22,47 @@
     require_once __DIR__ . '/../models/read_joins/read_monitor_machine_and_machine.php';
     require_once __DIR__ . '/../includes/js_alert.php';
 
-    $applicator_total_outputs = getRecordsAndOutputs(10, 0, $part_names_array);
+    // Handle search if control number is provided
+    $search_ctrl = $_GET['search_ctrl'] ?? '';
+    $search_result = null;
+    $is_searching = false;
+    
+    if (!empty(trim($search_ctrl))) {
+        $is_searching = true;
+        $search_result = searchMachineByControlNo(trim($search_ctrl), $part_names_array);
+        
+        // CHECK FOR SEARCH RESULT AND REDIRECT IMMEDIATELY IF NOT FOUND
+        if (!$search_result) {
+            jsAlertRedirect("Machine not found!", $_SERVER['PHP_SELF']);
+            exit(); // Stop execution to prevent any further output
+        }
+        
+        // If searching, use search result instead of all records
+        $machine_total_outputs = [$search_result]; // Single result in array
+    } else {
+        // Use existing logic for all records
+        $machine_total_outputs = getRecordsAndOutputs(10, 0, $part_names_array);
+    }
+    
+    // Get current filter info (only if not searching)
+    if (!$is_searching) {
+        $current_filter = $_GET['filter_by'] ?? null;
+        if (!$current_filter) {
+            // Get the auto-selected highest output part
+            $current_filter = findHighestOutputPart($part_names_array);
+            $filter_display = "Auto-sorted by: " . str_replace('_output', '', ucwords(str_replace('_', ' ', $current_filter)));
+        } else {
+            $filter_display = "Filtered by: " . str_replace('_output', '', ucwords(str_replace('_', ' ', $current_filter)));
+        }
+    } else {
+        $filter_display = "Search Results";
+    }
+    
+    // Get parts priority data
+    $parts_ordered = getPartsOrderedByOutput($part_names_array);
+    $top_3_parts = array_slice($parts_ordered, 0, 3);
     ?>
+
     <div class="admin-container">
         <!-- Main Content -->
         <div class="main-content">
@@ -56,20 +95,37 @@
                 <div class="data-section">
                     <div class="section-header expanded" onclick="toggleSection(this)">
                         <div class="section-title">
-                            Machine Status
-                            <span class="section-badge">1648</span>
+                            <span class="filter-info">
+                                <?= htmlspecialchars($filter_display) ?>
+                            </span>
                         </div>
-                        <svg class="expand-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
                     </div>
                     
-                        <div class="search-filter">
-                            <input type="text" class="search-input" placeholder="Search machine..." onkeyup="filterTable(this.value)">
+                    <div class="search-filter">
+                        <!-- Search form -->
+                        <form method="GET" style="display: inline;">
+                            <!-- Preserve existing filter parameter if present -->
+                            <?php if (isset($_GET['filter_by']) && !$is_searching): ?>
+                                <input type="hidden" name="filter_by" value="<?= htmlspecialchars($_GET['filter_by']) ?>">
+                            <?php endif; ?>
+                            
+                            <input type="text" 
+                                    name="search_ctrl" 
+                                    class="search-input" 
+                                    placeholder="Search by HP number..." 
+                                    value="<?= htmlspecialchars($search_ctrl) ?>"
+                                    onkeyup="if(event.key==='Enter') this.form.submit()">
+                            <button type="submit" class="filter-btn">Search</button>
+                        </form>
+                        
+                        <?php if (!$is_searching): ?>
                             <button class="filter-btn active" onclick="filterByStatus(this, 'all')">All</button>
-                            <button class="filter-btn" onclick="filterByStatus(this, 'success')">Active</button>
-                            <button class="filter-btn" onclick="filterByStatus(this, 'warning')">⚠️ Warning</button>
-                        </div>
+                        <?php endif; ?>
+                        
+                        <button class="auto-filter-btn" onclick="window.location.href = window.location.pathname;">
+                            🔄 Auto-Filter
+                        </button>
+                    </div>
 
                     <div class="section-content expanded">
                         <div class="table-container">
@@ -77,12 +133,12 @@
                                 <thead>
                                     <tr>
                                         <th>Actions</th>
-                                        <th>Machine Number</th>
-                                        <th>Last Updated</th>
-                                        <th>Total Output</th>
-                                        <th>Cut Blade Output</th>
-                                        <th>Strip Blade A Output</th>
-                                        <th>Strip Blade B Output</th>
+                                        <th><a href="?filter_by=control_no">Machine Number</a></th>
+                                        <th><a href="?filter_by=last_updated">Last Updated</a></th>
+                                        <th><a href="?filter_by=total_machine_output">Total Output</a></th>
+                                        <th><a href="?filter_by=cut_blade_output">Cut Blade</a></th>
+                                        <th><a href="?filter_by=strip_blade_a_output">Strip Blade A</a></th>
+                                        <th><a href="?filter_by=strip_blade_b_output">Strip Blade B</a></th>
                                         <?php foreach ($custom_machine_parts as $part): ?>
                                             <th>
                                                 <a href="?filter_by=<?= urlencode($part['part_name']) ?>">
@@ -92,9 +148,10 @@
                                         <?php endforeach; ?>
                                     </tr>
                                 </thead>
-                                
+
+                                <!-- Table Rows -->
                                 <tbody id="metricsBody">
-                                    <?php foreach ($applicator_total_outputs as $row): ?>
+                                    <?php foreach ($machine_total_outputs as $row): ?>
                                         <tr>
                                             <td>
                                                 <button class="btn-small btn-edit" onclick="openUndoModalDashboardMachine()">Undo</button>
