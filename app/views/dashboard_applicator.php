@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HEPC - Admin Dashboard</title>
+    <title>HEPC - Applicator Dashboard</title>
     <link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
 </head>
 <body>
     <?php 
-    // Move all PHP logic to the top, before any HTML output
-    
     // First, get custom parts
     require_once "../models/read_custom_parts.php";
     $custom_applicator_parts = getCustomParts("APPLICATOR");
@@ -65,7 +63,6 @@
     $top_3_parts = array_slice($parts_ordered, 0, 3);
     ?>
 
-    <?php // include '../includes/side_bar.php'; ?>
     <div class="admin-container">
         <!-- Main Content -->
         <div class="main-content">
@@ -89,34 +86,6 @@
                         <div class="stat-label">HP-001</div>
                     </div>
                     <div class="stat-card status-good" onclick="openApplicatorModal()">
-                        <div class="stat-value">12,847</div>
-                        <div class="stat-label">HP-001</div>
-                    </div>
-                    <div class="stat-card status-warning" onclick="openApplicatorModal()">
-                        <div class="stat-value">12,847</div>
-                        <div class="stat-label">HP-001</div>
-                    </div>
-                    <div class="stat-card status-good" onclick="openApplicatorModal()">
-                        <div class="stat-value">12,847</div>
-                        <div class="stat-label">HP-001</div>
-                    </div>
-                    <div class="stat-card status-good" onclick="openApplicatorModal()">
-                        <div class="stat-value">12,847</div>
-                        <div class="stat-label">HP-001</div>
-                    </div>
-                    <div class="stat-card status-warning" onclick="openApplicatorModal()">
-                        <div class="stat-value">12,847</div>
-                        <div class="stat-label">HP-001</div>
-                    </div>
-                    <div class="stat-card status-good" onclick="openApplicatorModal()">
-                        <div class="stat-value">12,847</div>
-                        <div class="stat-label">HP-001</div>
-                    </div>
-                    <div class="stat-card status-good" onclick="openApplicatorModal()">
-                        <div class="stat-value">12,847</div>
-                        <div class="stat-label">HP-001</div>
-                    </div>
-                    <div class="stat-card status-critical" onclick="openApplicatorModal()">
                         <div class="stat-value">12,847</div>
                         <div class="stat-label">HP-001</div>
                     </div>
@@ -368,10 +337,7 @@
                     </div>
 
                     <div>
-                        ⚠️⚠️PROCEED WITH CAUTIION⚠️⚠️ 
-                    </div>
-                    <div>
-                        Reverting to previous timestamp will delete all records encoded later than the timestamp! 
+                        ⚠️ Reverting to previous timestamp will disable all records encoded later than the timestamp! Proceed with caution! 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn-cancel" onclick="closeUndoModal()">Cancel</button>
