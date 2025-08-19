@@ -310,32 +310,49 @@ if (!isset($_SESSION['user_id'])) {
             </div>
         </div>
 
-        <!-- Add Applicator Form Modal -->
+        <!-- Add Applicator Modal -->
         <div id="addApplicatorModal" class="modal-overlay">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="applicatorModalTitle" class="modal-title">
-                        <span class="modal-icon">⚡</span>
-                        <span>Add Applicator</span>
-                    </h2>
+            <div class="form-container">
+                <button class="modal-close-btn" onclick="closeAddApplicatorModal()">×</button>
+                
+                <div class="form-header">
+                    <h1 class="form-title">⚡ Add Applicator</h1>
+                    <p class="form-subtitle">Enter new applicator information</p>
                 </div>
 
-                <div class="modal-body">
-                    <form id="applicatorForm" action="../controllers/add_applicator.php" method="POST">
+                <form id="applicatorForm" action="../controllers/add_applicator.php" method="POST">
+                    <div class="form-section">
+                        <div class="section-header">
+                            <div class="section-icon">🔧</div>
+                            <div class="section-info">
+                                <div class="section-title">Applicator Details</div>
+                                <div class="section-description">Enter basic applicator information</div>
+                            </div>
+                        </div>
+
                         <div class="form-grid">
                             <div class="form-group">
-                                <label for="applicator_ctrl_no">Control No:</label>
-                                <input type="text" id="add_applicator_ctrl_no" name="control_no" required><br><br>
+                                <label for="add_applicator_ctrl_no" class="form-label">
+                                    Control No
+                                    <span class="required-badge">Required</span>
+                                </label>
+                                <input type="text" id="add_applicator_ctrl_no" name="control_no" class="form-input" required>
                             </div>
                             
                             <div class="form-group">
-                                <label for="terminal_no">Terminal No:</label>
-                                <input type="text" id="add_applicator_terminal_no" name="terminal_no" required><br><br>
+                                <label for="add_applicator_terminal_no" class="form-label">
+                                    Terminal No
+                                    <span class="required-badge">Required</span>
+                                </label>
+                                <input type="text" id="add_applicator_terminal_no" name="terminal_no" class="form-input" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="description">Description:</label>
-                                <select id="add_applicator_description" name="description" required>
+                                <label for="add_applicator_description" class="form-label">
+                                    Description
+                                    <span class="required-badge">Required</span>
+                                </label>
+                                <select id="add_applicator_description" name="description" class="form-input" required>
                                     <option value="">--Select--</option>
                                     <option value="SIDE">SIDE</option>
                                     <option value="END">END</option>
@@ -343,43 +360,56 @@ if (!isset($_SESSION['user_id'])) {
                             </div>
 
                             <div class="form-group">
-                                <label for="wire_type">Wire Type:</label>
-                                <select id="add_applicator_wire_type" name="wire_type" required>
+                                <label for="add_applicator_wire_type" class="form-label">
+                                    Wire Type
+                                    <span class="required-badge">Required</span>
+                                </label>
+                                <select id="add_applicator_wire_type" name="wire_type" class="form-input" required>
                                     <option value="">--Select--</option>
                                     <option value="BIG">BIG</option>
                                     <option value="SMALL">SMALL</option>
-                                </select><br><br>
+                                </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="terminal_maker">Terminal Maker:</label>
-                                <input type="text" id="add_terminal_maker" name="terminal_maker" required><br><br>
+                                <label for="add_terminal_maker" class="form-label">
+                                    Terminal Maker
+                                    <span class="required-badge">Required</span>
+                                </label>
+                                <input type="text" id="add_terminal_maker" name="terminal_maker" class="form-input" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="applicator_maker">Applicator Maker:</label>
-                                <input type="text" id="add_applicator_maker" name="applicator_maker" required><br><br>
+                                <label for="add_applicator_maker" class="form-label">
+                                    Applicator Maker
+                                    <span class="required-badge">Required</span>
+                                </label>
+                                <input type="text" id="add_applicator_maker" name="applicator_maker" class="form-input" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="applicator_serial_no">Serial No:</label>
-                                <input type="text" id="add_applicator_serial_no" name="serial_no"><br><br>
+                                <label for="add_applicator_serial_no" class="form-label">
+                                    Serial No
+                                    <span class="optional-badge">Optional</span>
+                                </label>
+                                <input type="text" id="add_applicator_serial_no" name="serial_no" class="form-input">
                             </div>
 
                             <div class="form-group">
-                                <label for="applicator_invoice_no">Invoice No:</label>
-                                <input type="text" id="add_applicator_invoice_no" name="invoice_no"><br><br>
+                                <label for="add_applicator_invoice_no" class="form-label">
+                                    Invoice No
+                                    <span class="optional-badge">Optional</span>
+                                </label>
+                                <input type="text" id="add_applicator_invoice_no" name="invoice_no" class="form-input">
                             </div>
                         </div>
-                    
-                </div>
+                    </div>
 
-                            <div class="modal-footer">
-                                <button type="button" class="btn-secondary" onclick="closeAddApplicatorModal()">Cancel</button>
-                                <button type="submit" id="applicatorActionBtn" class="btn-primary" >Add Applicator</button>
-                            </div>
-                    </form>
-
+                    <div class="button-group">
+                        <button type="button" class="cancel-btn" onclick="closeAddApplicatorModal()">Cancel</button>
+                        <button type="submit" id="applicatorActionBtn" class="submit-btn">Add Applicator</button>
+                    </div>
+                </form>
             </div>
         </div>
 
