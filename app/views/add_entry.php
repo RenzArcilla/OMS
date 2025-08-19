@@ -500,74 +500,106 @@ if (!isset($_SESSION['user_id'])) {
 
     <!-- Edit Applicator Modal -->
     <div id="editApplicatorModal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">
-                    <span class="modal-icon">⚡</span>
-                    Edit Applicator
-                </h2>
-                <button class="close-btn" onclick="closeModal()">✖️</button>
+        <div class="form-container">
+            <button class="modal-close-btn" onclick="closeModal()">×</button>
+            
+            <div class="form-header">
+                <h1 class="form-title">⚡ Edit Applicator</h1>
+                <p class="form-subtitle">Update applicator information</p>
             </div>
 
-            <div class="modal-body">
-                <form id="editApplicatorForm" action="../controllers/edit_applicator.php" method="POST">
-                    <!-- Hidden input to store applicator ID -->
-                    <input type="hidden" name="applicator_id" id="edit_applicator_id">
-
-                    <div class="form-group">
-                        <label>HP No:</label>
-                        <input type="text" name="control_no" id="edit_applicator_control" required>
+            <form id="editApplicatorForm" action="../controllers/edit_applicator.php" method="POST">
+                <input type="hidden" name="applicator_id" id="edit_applicator_id">
+                
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon">✏️</div>
+                        <div class="section-info">
+                            <div class="section-title">Applicator Details</div>
+                            <div class="section-description">Update applicator information</div>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label>Terminal No:</label>
-                        <input type="text" name="terminal_no" id="edit_terminal_no" required>
-                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="edit_applicator_control" class="form-label">
+                                HP No
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input type="text" name="control_no" id="edit_applicator_control" class="form-input" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Description:</label>
-                        <select name="description" id="edit_applicator_description" required>
-                            <option value="">--Select--</option>
-                            <option value="SIDE">SIDE</option>
-                            <option value="END">END</option>
-                        </select>
-                    </div>
+                        <div class="form-group">
+                            <label for="edit_terminal_no" class="form-label">
+                                Terminal No
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input type="text" name="terminal_no" id="edit_terminal_no" class="form-input" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Wire Type:</label>
-                        <select name="wire_type" id="edit_wire_type" required>
-                            <option value="">--Select--</option>
-                            <option value="BIG">BIG</option>
-                            <option value="SMALL">SMALL</option>
-                        </select>
-                    </div>
+                        <div class="form-group">
+                            <label for="edit_applicator_description" class="form-label">
+                                Description
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <select name="description" id="edit_applicator_description" class="form-input" required>
+                                <option value="">--Select--</option>
+                                <option value="SIDE">SIDE</option>
+                                <option value="END">END</option>
+                            </select>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Terminal Maker:</label>
-                        <input type="text" name="terminal_maker" id="edit_terminal_maker" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="edit_wire_type" class="form-label">
+                                Wire Type
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <select name="wire_type" id="edit_wire_type" class="form-input" required>
+                                <option value="">--Select--</option>
+                                <option value="BIG">BIG</option>
+                                <option value="SMALL">SMALL</option>
+                            </select>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Applicator Maker:</label>
-                        <input type="text" name="applicator_maker" id="edit_applicator_maker" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="edit_terminal_maker" class="form-label">
+                                Terminal Maker
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input type="text" name="terminal_maker" id="edit_terminal_maker" class="form-input" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Serial No:</label>
-                        <input type="text" name="serial_no" id="edit_applicator_serial_no">
-                    </div>
+                        <div class="form-group">
+                            <label for="edit_applicator_maker" class="form-label">
+                                Applicator Maker
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input type="text" name="applicator_maker" id="edit_applicator_maker" class="form-input" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Invoice No:</label>
-                        <input type="text" name="invoice_no" id="edit_applicator_invoice_no">
+                        <div class="form-group">
+                            <label for="edit_applicator_serial_no" class="form-label">
+                                Serial No
+                                <span class="optional-badge">Optional</span>
+                            </label>
+                            <input type="text" name="serial_no" id="edit_applicator_serial_no" class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edit_applicator_invoice_no" class="form-label">
+                                Invoice No
+                                <span class="optional-badge">Optional</span>
+                            </label>
+                            <input type="text" name="invoice_no" id="edit_applicator_invoice_no" class="form-input">
+                        </div>
                     </div>
-                </form>
-            </div>
-        
-            <div class="modal-footer">
-                <button type="button" class="btn-secondary" onclick="closeApplicatorModal()">Cancel</button>
-                <button type="submit" form="editApplicatorForm" class="btn-primary">Save Changes</button>
-            </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="cancel-btn" onclick="closeApplicatorModal()">Cancel</button>
+                    <button type="submit" class="submit-btn">Save Changes</button>
+                </div>
+            </form>
         </div>
     </div>
     <script src="../../public/assets/js/add_entry.js"></script>
