@@ -35,7 +35,7 @@
     animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid rgba(229, 231, 235, 0.8);
     margin: auto;
-    margin-top: 60%;
+    margin-top: 60px;
 }
 
 .modal-close-btn {
