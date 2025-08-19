@@ -17,6 +17,12 @@
     foreach ($custom_machine_parts as $part) {
         $part_names_array[] = $part['part_name'];
     }
+
+    // Include the read join function and the alert function
+    require_once __DIR__ . '/../models/read_joins/read_monitor_machine_and_machine.php';
+    require_once __DIR__ . '/../includes/js_alert.php';
+
+    $applicator_total_outputs = getRecordsAndOutputs(10, 0, $part_names_array);
     ?>
     <div class="admin-container">
         <!-- Main Content -->
@@ -88,36 +94,43 @@
                                 </thead>
                                 
                                 <tbody id="metricsBody">
-                                    <tr>
-                                        <td><strong>HP-001</strong></td>
-                                        <td><span class="status-badge status-good">Good</span></td>
-                                        <td>07/21/2025</td>
-                                        <td>847</td>
-                                        <td>
-                                            <div>630K / 1.5M</div>
-                                            <div class="progress-bar">
-                                                <div class="progress-fill" style="width: 42%;"></div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>630K / 1.5M</div>
-                                            <div class="progress-bar">
-                                                <div class="progress-fill" style="width: 42%;"></div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>570K / 1.5M</div>
-                                            <div class="progress-bar">
-                                                <div class="progress-fill" style="width: 38%;"></div>
-                                            </div>
-                                        </td>
-                                        
-                                        </td>
-                                        <td>
-                                            <button class="btn-small btn-edit" onclick="openUndoModalDashboardMachine()">Undo</button>
-                                            <button class="btn-small btn-reset" onclick="openResetModal()">Reset</button>
-                                        </td>
-                                    </tr>
+                                    <?php foreach ($applicator_total_outputs as $row): ?>
+                                        <tr>
+                                            <td>
+                                                <button class="btn-small btn-edit" onclick="openUndoModalDashboardMachine()">Undo</button>
+                                                <button class="btn-small btn-reset" onclick="openResetModal()">Reset</button>
+                                            </td>
+                                            <td><?= htmlspecialchars($row['control_no']) ?></td>
+                                            <td><strong><?= htmlspecialchars(explode(' ', $row['last_updated'])[0]) ?></strong></td>
+                                            <td><strong><?= htmlspecialchars($row['total_machine_output']) ?></strong></td>
+                                            <td>
+                                                <div><strong><?= htmlspecialchars($row['cut_blade_output']) ?></strong> / 1.5M</div>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill" style="width: 42%;"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div><strong><?= htmlspecialchars($row['strip_blade_a_output']) ?></strong> / 1.5M</div>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill" style="width: 42%;"></div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div><strong><?= htmlspecialchars($row['strip_blade_b_output']) ?></strong> / 1.5M</div>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill" style="width: 38%;"></div>
+                                                </div>
+                                            </td>
+                                            <?php foreach ($part_names_array as $part_name): ?>
+                                                <td>
+                                                    <div><strong><?= htmlspecialchars($row['custom_parts_output'][$part_name] ?? 0) ?></strong> / 1.5M</div>
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill" style="width: 26%;"></div>
+                                                    </div>
+                                                </td>
+                                            <?php endforeach; ?>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>

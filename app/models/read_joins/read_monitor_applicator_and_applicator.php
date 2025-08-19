@@ -18,7 +18,7 @@ function getRecordsAndOutputs(int $limit = 10, int $offset = 0, $part_names_arra
     - $offset: Number of rows to skip (default is 0), used for pagination.
 
     Returns:
-    - Array of machines (associative arrays) on success.
+    - Array of applicators (associative arrays) on success.
     */
 
     global $pdo;
