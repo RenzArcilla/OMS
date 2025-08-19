@@ -331,3 +331,42 @@ textarea.form-input {
     background: #E5E7EB;
     border-color: #D1D5DB;
 }
+/* Warning Section */
+.warning-section {
+    background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+    border: 1px solid #F59E0B;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.warning-section p {
+    color: #92400E;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 8px 0 0 0;
+}
+
+.warning-icon {
+    color: #F59E0B;
+    font-size: 1.2rem;
+    margin-right: 8px;
+}
+/* Undo Reset Button */
+.btn-confirm-dashboard {
+    background: linear-gradient(135deg, #EB5757 0%, #DC2626 100%);
+    color: #FFFFFF;
+    border: none;
+    padding: 18px 40px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(235, 87, 87, 0.3);
+}
+
+.btn-confirm-dashboard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(235, 87, 87, 0.4);
+}

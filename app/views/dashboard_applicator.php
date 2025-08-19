@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Applicator Dashboard</title>
     <link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
+    <link rel="stylesheet" href="../../public/assets/css/components/modal.css">
 </head>
 <body>
     <?php 
@@ -252,48 +253,70 @@
         </div>
     </div>
 
-    <!-- Reset Modal -->
+    <!-- Reset Applicator Modal -->
     <div id="resetModalDashboardApplicator" class="modal-overlay">
-        <div class="modal modal-reset">
-            <div class="modal-header">
-                <h2 class="modal-title">Reset Applicator<span id="editHpNumber"></span></h2>
+        <div class="form-container">
+            <button class="modal-close-btn" onclick="closeResetModal()">×</button>
+            
+            <div class="form-header">
+                <h1 class="form-title">🔄 Reset Applicator</h1>
+                <p class="form-subtitle">Reset applicator component usage counter</p>
             </div>
-            <div class="modal-body">
-                <form id="resetForm" method="POST" action="../controllers/reset_applicator.php">
-                    <div class="form-group">
-                        <label class="form-label">Select Applicator Part to Reset</label>
-                        <!-- Hidden Input for applicator_id -->
-                        <input type="hidden" name="applicator_id" id="reset_applicator_id">
-                        <select id="resetWireType" name="part_name" class="form-input">
-                            <option value="">Select Part</option>
-                            <option value="wire_crimper_output">Wire Crimper</option>
-                            <option value="wire_anvil_output">Wire Anvil</option>
-                            <option value="insulation_crimper_output">Insulation Crimper</option>
-                            <option value="insulation_anvil_output">Insulation Anvil</option>
-                            <option value="slide_cutter_output">Slide Cutter</option>
-                            <option value="cutter_holder_output">Cutter Holder</option>
-                            <option value="shear_blade_output">Shear Blade</option>
-                            <option value="cutter_a_output">Cutter A</option>
-                            <option value="cutter_b_output">Cutter B</option>
-                            <?php foreach ($custom_applicator_parts as $row): ?>
-                                <option value="<?= htmlspecialchars($row['part_name']) ?>">
-                                    <?= ucwords(str_replace('_', ' ', htmlspecialchars($row['part_name']))) ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
+
+            <form id="resetForm" method="POST" action="../controllers/reset_applicator.php">
+                <input type="hidden" name="applicator_id" id="reset_applicator_id">
+                
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon">⚙️</div>
+                        <div class="section-info">
+                            <div class="section-title">Component Selection</div>
+                            <div class="section-description">Choose the applicator part to reset</div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">⚠️ Are you sure you want to reset the applicator?</label>
-                        <p style="color: #6b7280; font-size: 0.9rem; margin-top: 8px;">
-                            This action will reset the selected component's usage counter to zero!
-                        </p>
+
+                    <div class="form-grid-single">
+                        <div class="form-group">
+                            <label class="form-label">
+                                Select Applicator Part to Reset
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <select id="resetWireType" name="part_name" class="form-input" required>
+                                <option value="">Select Part</option>
+                                <option value="wire_crimper_output">Wire Crimper</option>
+                                <option value="wire_anvil_output">Wire Anvil</option>
+                                <option value="insulation_crimper_output">Insulation Crimper</option>
+                                <option value="insulation_anvil_output">Insulation Anvil</option>
+                                <option value="slide_cutter_output">Slide Cutter</option>
+                                <option value="cutter_holder_output">Cutter Holder</option>
+                                <option value="shear_blade_output">Shear Blade</option>
+                                <option value="cutter_a_output">Cutter A</option>
+                                <option value="cutter_b_output">Cutter B</option>
+                                <?php foreach ($custom_applicator_parts as $row): ?>
+                                    <option value="<?= htmlspecialchars($row['part_name']) ?>">
+                                        <?= ucwords(str_replace('_', ' ', htmlspecialchars($row['part_name']))) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-cancel" onclick="closeResetModal()">Cancel</button>
-                        <button type="submit" class="btn-confirm">Confirm</button>
+                </div>
+
+                <div class="warning-section">
+                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <span class="warning-icon">⚠️</span>
+                        <div>
+                            <strong>Are you sure you want to reset the applicator?</strong>
+                            <p>This action will reset the selected component's usage counter to zero!</p>
+                        </div>
                     </div>
-                </form>
-            </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn-cancel" onclick="closeResetModal()">Cancel</button>
+                    <button type="submit" class="btn-confirm-dashboard">Confirm Reset</button>
+                </div>
+            </form>
         </div>
     </div>
 
