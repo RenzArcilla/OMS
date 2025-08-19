@@ -150,7 +150,7 @@
                                         <?php foreach ($custom_applicator_parts as $part): ?>
                                             <th>
                                                 <a href="?filter_by=<?= urlencode($part['part_name']) ?>">
-                                                    <?= htmlspecialchars($part['part_name']) ?>
+                                                    <?= htmlspecialchars(ucwords(str_replace('_', ' ', $part['part_name']))) ?>
                                                 </a>
                                             </th>
                                         <?php endforeach; ?>
