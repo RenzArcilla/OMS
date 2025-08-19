@@ -321,82 +321,82 @@
         </div>
     </div>
 
-        <!-- Undo Reset Modal -->
-<div id="undoModalDashboardApplicator" class="modal-overlay">
-    <div class="form-container">
-        <button class="modal-close-btn" onclick="closeUndoModal()">×</button>
-        
-        <div class="form-header">
-            <h1 class="form-title">↩️ Undo Reset</h1>
-            <p class="form-subtitle">Revert applicator reset to previous state</p>
-        </div>
-
-        <form id="editForm" method="POST" action="../controllers/undo_reset_applicator.php">
-            <input type="hidden" name="applicator_id" id="undo_applicator_id">
+    <!-- Undo Reset Modal -->
+    <div id="undoModalDashboardApplicator" class="modal-overlay">
+        <div class="form-container">
+            <button class="modal-close-btn" onclick="closeUndoModal()">×</button>
             
-            <div class="form-section">
-                <div class="section-header">
-                    <div class="section-icon">🕒</div>
-                    <div class="section-info">
-                        <div class="section-title">Undo Selection</div>
-                        <div class="section-description">Select the part and timestamp to revert to</div>
+            <div class="form-header">
+                <h1 class="form-title">↩️ Undo Reset</h1>
+                <p class="form-subtitle">Revert applicator reset to previous state</p>
+            </div>
+
+            <form id="editForm" method="POST" action="../controllers/undo_reset_applicator.php">
+                <input type="hidden" name="applicator_id" id="undo_applicator_id">
+                
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon">🕒</div>
+                        <div class="section-info">
+                            <div class="section-title">Undo Selection</div>
+                            <div class="section-description">Select the part and timestamp to revert to</div>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">
+                                Select Applicator Part to Undo
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <select id="editWireType" name="part_name" class="form-input" required>
+                                <option value="">Select Part</option>
+                                <option value="wire_crimper_output">Wire Crimper</option>
+                                <option value="wire_anvil_output">Wire Anvil</option>
+                                <option value="insulation_crimper_output">Insulation Crimper</option>
+                                <option value="insulation_anvil_output">Insulation Anvil</option>
+                                <option value="slide_cutter_output">Slide Cutter</option>
+                                <option value="cutter_holder_output">Cutter Holder</option>
+                                <option value="shear_blade_output">Shear Blade</option>
+                                <option value="cutter_a_output">Cutter A</option>
+                                <option value="cutter_b_output">Cutter B</option>
+                                <?php foreach ($custom_applicator_parts as $row): ?>
+                                    <option value="<?= htmlspecialchars($row['part_name']) ?>">
+                                        <?= ucwords(str_replace('_', ' ', htmlspecialchars($row['part_name']))) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">
+                                Dates Replaced
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <select id="editStatus" name="reset_time" class="form-input" required>
+                                <option value="">Select a part first</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label class="form-label">
-                            Select Applicator Part to Undo
-                            <span class="required-badge">Required</span>
-                        </label>
-                        <select id="editWireType" name="part_name" class="form-input" required>
-                            <option value="">Select Part</option>
-                            <option value="wire_crimper_output">Wire Crimper</option>
-                            <option value="wire_anvil_output">Wire Anvil</option>
-                            <option value="insulation_crimper_output">Insulation Crimper</option>
-                            <option value="insulation_anvil_output">Insulation Anvil</option>
-                            <option value="slide_cutter_output">Slide Cutter</option>
-                            <option value="cutter_holder_output">Cutter Holder</option>
-                            <option value="shear_blade_output">Shear Blade</option>
-                            <option value="cutter_a_output">Cutter A</option>
-                            <option value="cutter_b_output">Cutter B</option>
-                            <?php foreach ($custom_applicator_parts as $row): ?>
-                                <option value="<?= htmlspecialchars($row['part_name']) ?>">
-                                    <?= ucwords(str_replace('_', ' ', htmlspecialchars($row['part_name']))) ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">
-                            Dates Replaced
-                            <span class="required-badge">Required</span>
-                        </label>
-                        <select id="editStatus" name="reset_time" class="form-input" required>
-                            <option value="">Select a part first</option>
-                        </select>
+                <div class="warning-section">
+                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <span class="warning-icon">⚠️</span>
+                        <div>
+                            <strong>Caution: Data Loss Warning</strong>
+                            <p>Reverting to previous timestamp will disable all records encoded later than the timestamp! Proceed with caution!</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="warning-section">
-                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                    <span class="warning-icon">⚠️</span>
-                    <div>
-                        <strong>Caution: Data Loss Warning</strong>
-                        <p>Reverting to previous timestamp will disable all records encoded later than the timestamp! Proceed with caution!</p>
-                    </div>
+                <div class="button-group">
+                    <button type="button" class="btn-cancel" onclick="closeUndoModal()">Cancel</button>
+                    <button type="submit" class="btn-confirm-dashboard">Confirm Undo</button>
                 </div>
-            </div>
-
-            <div class="button-group">
-                <button type="button" class="btn-cancel" onclick="closeUndoModal()">Cancel</button>
-                <button type="submit" class="btn-confirm-dashboard">Confirm Undo</button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 
     <!-- Applicator Modal -->
     <div id="applicatorModalDashboardApplicator" class="modal-overlay">
