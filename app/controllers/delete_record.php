@@ -1,6 +1,6 @@
 <?php
 /*
-    This script handles the deletion (soft delete) of a records on the database.
+    This script handles the deletion (soft delete) of a record in the database.
     It retrieves form data, sanitizes it, and updates the status in the database.
 */
 
@@ -13,7 +13,9 @@ if (!isset($_SESSION['user_id'])) {
 
 // Include necessary files
 require_once '../includes/js_alert.php';
-include_once '../models/delete_record.php';
+require_once '../models/delete_record.php';
+require_once '../models/delete_applicator_output.php';
+require_once '../models/delete_machine_output.php';
 
 // Redirect url
 $redirect_url = "../views/record_output.php";
@@ -34,20 +36,29 @@ if (empty($record_id)) {
 }
 
 // 3. Database operation
-$pdo->beginTransaction();
-$result = disableRecord($record_id);
+try {
+    $pdo->beginTransaction();
 
-// Check if machine deletion was successful
-if ($result === true) {
+    // Disable the record
+    $result = disableRecord($record_id);
+    if (is_string($result)) throw new Exception($result);
+
+    // Disable applicator_outputs pertaining to the record
+    $result = disableApplicatorOutput($record_id);
+    if (is_string($result)) throw new Exception($result);
+
+    // Disable machine_output pertaining to the record
+    $result = disableMachineOutput($record_id);
+    if (is_string($result)) throw new Exception($result);
+
+    // Commit transaction
     $pdo->commit();
     jsAlertRedirect("Record deleted successfully!", $redirect_url);
     exit;
-} elseif (is_string($result)) {
-    $pdo->rollBack(); // Rollback transaction in case of error
-    jsAlertRedirect($result, $redirect_url);
-    exit;
-} else {
+
+} catch (Exception $e) {
+    // Rollback on any error
     $pdo->rollBack();
-    jsAlertRedirect("Failed to delete record. Please try again.", $redirect_url);
+    jsAlertRedirect("Database Error: " . $e->getMessage(), $redirect_url);
     exit;
 }
