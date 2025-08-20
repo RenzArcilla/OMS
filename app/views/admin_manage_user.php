@@ -357,34 +357,34 @@
                     <div class="form-grid-vertical">
                         <div class="form-group">
                             <label for="editUserName" class="form-label">
-                                Full Name
+                                Username
                                 <span class="required-badge">Required</span>
                             </label>
-                            <input type="text" id="editUserName" name="name" class="form-input" placeholder="Enter full name" required>
+                            <input type="text" id="editUserName" name="name" class="form-input" placeholder="RenzngOdnum" required>
                         </div>
                         
                         <div class="form-group">
-                            <label for="editUserEmail" class="form-label">
-                                Email Address
+                            <label for="editUserFirstName" class="form-label">
+                                First Name
                                 <span class="required-badge">Required</span>
                             </label>
-                            <input type="email" id="editUserEmail" name="email" class="form-input" placeholder="Enter email address" required>
+                            <input type="text" id="editUserFirstName" name="first_name" class="form-input" placeholder="Renz" required>
                         </div>
                         
                         <div class="form-group">
-                            <label for="editUserPhone" class="form-label">
-                                Phone Number
+                            <label for="editUserLastName" class="form-label">
+                                Last Name
                                 <span class="required-badge">Required</span>
                             </label>
-                            <input type="tel" id="editUserPhone" name="phone" class="form-input" placeholder="Enter phone number" required>
+                            <input type="text" id="editUserLastName" name="last_name" class="form-input" placeholder="Ng Mundo" required>
                         </div>
                         
                         <div class="form-group">
-                            <label for="editUserDepartment" class="form-label">
-                                Department
+                            <label for="editUserPassword" class="form-label">
+                                Password
                                 <span class="required-badge">Required</span>
                             </label>
-                            <input type="text" id="editUserDepartment" name="department" class="form-input" placeholder="Enter department" required>
+                            <input type="password" id="editUserPassword" name="password" class="form-input" placeholder="Hatdog123" required>
                         </div>
                     </div>
                 </div>
@@ -429,20 +429,12 @@
                             <div id="editUserFilesUploaded" class="stat-number">0</div>
                             <div class="stat-label">Files Uploaded</div>
                         </div>
-                        <div class="activity-stat">
-                            <div id="editUserDaysActive" class="stat-number">0</div>
-                            <div class="stat-label">Days Active</div>
-                        </div>
-                        <div class="activity-stat">
-                            <div class="stat-number">5</div>
-                            <div class="stat-label">Login Sessions</div>
-                        </div>
                     </div>
                 </div>
 
                 <!-- Submit Buttons -->
                 <div class="button-group">
-                    <button type="button" class="cancel-btn" onclick="closeModal('editUserModal')">
+                    <button type="button" class="cancel-btn" onclick="closeEditUserModal()">
                         Cancel
                     </button>
                     <button type="submit" class="submit-btn">
