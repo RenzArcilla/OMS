@@ -56,6 +56,7 @@ function openApplicatorModal() {
     }
 }
 
+// Close the machine modal
 function closeApplicatorModal() {
     document.getElementById('applicatorModalDashboardApplicator').style.display = 'none';
 }
