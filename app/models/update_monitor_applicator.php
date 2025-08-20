@@ -3,6 +3,7 @@
     This file contains functions that updates the monitoring data for applicators.
 */
 
+require_once __DIR__ . '/../includes/db.php';
 
 function monitorApplicatorOutput($applicator_data, $applicator_output, $direction = "increment") {
     /*
