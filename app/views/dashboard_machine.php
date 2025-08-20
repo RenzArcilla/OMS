@@ -161,7 +161,7 @@
                                                 </button>
                                                 <button class="btn-small btn-edit"
                                                         data-id="<?= htmlspecialchars($row['machine_id']) ?>"
-                                                        onclick="openUndoModal()">
+                                                        onclick="openUndoModal(this)">
                                                         Undo
                                                 </button>
                                             </td>
@@ -254,41 +254,72 @@
 
     <!-- Undo Reset Modal -->
     <div id="undoModalDashboardMachine" class="modal-overlay">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 class="modal-title">Undo Machine<span id="editHpNumber"></span></h2>
+        <div class="form-container">
+            <button class="modal-close-btn" onclick="closeUndoModal()">×</button>
+
+            <div class="form-header">
+                <h1 class="form-title">↩️ Undo Reset</h1>
+                <p class="form-subtitle">Revert machine reset to previous state</p>
             </div>
-            <div class="modal-body">
-                <form id="editForm">
-                    <div class="form-group">
-                        <label class="form-label">Select Machine Part to Undo</label>
-                        <select id="editWireType" class="form-input">
-                            <option>Cut Blade</option>
-                            <option>Strip Blade A</option>
-                            <option>Strip Blade B</option>
-                        </select>
+
+            <form id="editForm" method="POST" action="../controllers/undo_reset_machine.php">
+                <input type="hidden" name="machine_id" id="undo_machine_id">
+
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon">🕒</div>
+                        <div class="section-info">
+                            <div class="section-title">Undo Selection</div>
+                            <div class="section-description">Select the part and timestamp to revert to</div>
+                        </div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Dates Replaced</label>
-                        <select id="editStatus" class="form-input">
-                            <option value="07/21/2025">07/21/2025</option>
-                            <option value="07/22/2025">07/22/2025</option>
-                            <option value="07/23/2025">07/23/2025</option>
-                            <option value="07/24/2025">07/24/2025</option>
-                            <option value="07/25/2025">07/25/2025</option>
-                            <option value="07/26/2025">07/26/2025</option>
-                            <option value="07/27/2025">07/27/2025</option>
-                            <option value="07/28/2025">07/28/2025</option>
-                            <option value="07/29/2025">07/29/2025</option>
-                        </select>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">
+                                Select Machine Part to Undo
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <select id="undoPartSelect" name="part_name" class="form-input" required>
+                                <option value="">Select Part</option>
+                                <option value="cut_blade_output">Cut Blade</option>
+                                <option value="strip_blade_a_output">Strip Blade A</option>
+                                <option value="strip_blade_b_output">Strip Blade B</option>
+                                <?php foreach ($custom_machine_parts as $row): ?>
+                                    <option value="<?= htmlspecialchars($row['part_name']) ?>">
+                                        <?= ucwords(str_replace('_', ' ', htmlspecialchars($row['part_name']))) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">
+                                Dates Replaced
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <select id="editStatus" name="reset_time" class="form-input" required>
+                                <option value="">Select a part first</option>
+                            </select>
+                        </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-cancel" onclick="closeUndoModalDashboardMachine()">Cancel</button>
-                <button type="button" class="btn-confirm" onclick="saveChanges()">Confirm</button>
-            </div>
+                </div>
+
+                <div class="warning-section">
+                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <span class="warning-icon">⚠️</span>
+                        <div>
+                            <strong>Caution: Data Loss Warning</strong>
+                            <p>Reverting to previous timestamp will disable all records encoded later than the timestamp! Proceed with caution!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" onclick="closeUndoModal()">Cancel</button>
+                    <button type="button" class="btn-confirm" onclick="saveChanges()">Confirm</button>
+                </div>
+            </form>
         </div>
     </div>
 
