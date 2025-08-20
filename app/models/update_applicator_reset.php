@@ -1,7 +1,7 @@
 <?php
 /*
-    This script handles the UPDATE operation for the applicator_reset in the database.
-    It includes a function to update applicator reset data in the database.
+    This file handles the UPDATE operation for applicator resets.
+    Updates an applicator_reset record by marking it undone with a user and timestamp.
 */
 
 // Include the database connection
@@ -10,17 +10,17 @@ require_once __DIR__ . '/../includes/db.php';
 function updateApplicatorReset($applicator_id, $part_reset, $reset_time, 
                         $undone_by) {
     /*
-    Function to update applicator reset data in the database.
+        Update an applicator_reset record to mark it as undone.
 
-    Args:
-    - $applicator_id: int pertaining to an applicator.
-    - $part_reset: name of part that was reset.
-    - $reset_time: timestamp of reset.
-    - $undone_by: user_id pertaining to who reverted the reset.
+        Args:
+        - $applicator_id: int, ID of the applicator
+        - $part_reset: string, name of the part that was reset
+        - $reset_time: string, timestamp of the original reset
+        - $undone_by: int, user ID who reverted the reset
 
-    Returns:
-    - true on successful operation.
-    - string containing error message.
+        Returns:
+        - true on successful update
+        - string containing error message if failed
     */
 
     global $pdo;

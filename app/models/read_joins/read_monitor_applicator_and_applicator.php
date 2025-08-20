@@ -1,7 +1,15 @@
 <?php
 /*
-    This file defines a function that queries a list of cumulative applicator outputs from the database.
-    Used in the applicator dashboard table.
+    This file contains functions for querying and processing applicator output records 
+    from the database. It supports:
+
+    - Fetching applicator records with pagination and sorting (standard & custom parts).
+    - Finding parts with the highest average output.
+    - Listing parts ordered by output for analytics.
+    - Searching applicators by HP number.
+    
+    Used primarily in the Applicator Dashboard for displaying and analyzing 
+    applicator usage and part output data.
 */
 
 // Include the database connection
@@ -9,16 +17,16 @@ require_once __DIR__ . '/../../includes/db.php';
 
 function getRecordsAndOutputs(int $limit = 10, int $offset = 0, $part_names_array): array {
     /*
-    Function to fetch a list of cumulative applicator outputs from the database with pagination.
-    It prepares and executes a SELECT query that fetches applicators ordered by highest output,
-    and returns them as an associative array.
+        Function to fetch a list of cumulative applicator outputs from the database with pagination.
+        It prepares and executes a SELECT query that fetches applicators ordered by highest output,
+        and returns them as an associative array.
 
-    Args:
-    - $limit: Maximum number of rows to fetch (default is 10).
-    - $offset: Number of rows to skip (default is 0), used for pagination.
+        Args:
+        - $limit: Maximum number of rows to fetch (default is 10).
+        - $offset: Number of rows to skip (default is 0), used for pagination.
 
-    Returns:
-    - Array of applicators (associative arrays) on success.
+        Returns:
+        - Array of applicators (associative arrays) on success.
     */
 
     global $pdo;
@@ -106,11 +114,11 @@ function getRecordsAndOutputs(int $limit = 10, int $offset = 0, $part_names_arra
 
 function findHighestOutputPart($part_names_array): string {
     /*
-    Function to find the part with the highest average output across all applicators.
-    This helps identify which parts are most likely to need replacement.
-    
-    Returns:
-    - String: The column name of the part with the highest average output
+        Function to find the part with the highest average output across all applicators.
+        This helps identify which parts are most likely to need replacement.
+        
+        Returns:
+        - String: The column name of the part with the highest average output
     */
     
     global $pdo;
@@ -165,11 +173,11 @@ function findHighestOutputPart($part_names_array): string {
 
 function getPartsOrderedByOutput($part_names_array): array {
     /*
-    Function to get all parts ordered by their average output.
-    Useful for dashboard analytics and identifying replacement priorities.
-    
-    Returns:
-    - Array: Parts ordered by average output (highest first)
+        Function to get all parts ordered by their average output.
+        Useful for dashboard analytics and identifying replacement priorities.
+        
+        Returns:
+        - Array: Parts ordered by average output (highest first)
     */
     
     global $pdo;
@@ -240,14 +248,14 @@ function getPartsOrderedByOutput($part_names_array): array {
 
 function searchApplicatorByHpNo($hp_no, $part_names_array): ?array {
     /*
-    Function to search for a specific applicator by HP number.
-    
-    Args:
-    - $hp_no: The HP number to search for
-    - $part_names_array: Array of custom part names
-    
-    Returns:
-    - Array with applicator data if found, null if not found
+        Function to search for a specific applicator by HP number.
+        
+        Args:
+        - $hp_no: The HP number to search for
+        - $part_names_array: Array of custom part names
+        
+        Returns:
+        - Array with applicator data if found, null if not found
     */
     
     global $pdo;

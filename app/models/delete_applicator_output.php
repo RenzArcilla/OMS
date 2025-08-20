@@ -1,7 +1,12 @@
 <?php
 /*
-    This file defines a function that deletes an applicator output row in the database.
-    Used in features like machine listing with pagination (e.g., infinite scroll).
+    This file contains functions for DELETE-ing and disabling applicator outputs in the database.
+    It supports hard deletion, soft deletion, and bulk disabling of records.
+
+    Functions:
+    - deleteApplicatorOutputs(): Permanently deletes an applicator output.
+    - disableApplicatorOutput(): Soft deletes a single applicator output by record_id.
+    - disableApplicatorOutputsByRecordIds(): Soft deletes multiple applicator outputs at once.
 */
 
 // Include the database connection
@@ -10,14 +15,14 @@ require_once __DIR__ . '/../includes/db.php';
 
 function deleteApplicatorOutputs($applicator_id, $record_id) {
     /*
-    Function to delete an applicator output in the database.
+        Function to delete an applicator output in the database.
 
-    Args:
-    - $applicator_id: ID of the applicator to delete.
-    - $record_id: record ID of the applicator to delete
-    
-    Returns:
-    - True on success, string containing error message on failure.
+        Args:
+        - $applicator_id: ID of the applicator to delete.
+        - $record_id: record ID of the applicator to delete
+        
+        Returns:
+        - True on success, string containing error message on failure.
     */
 
     global $pdo;
@@ -46,14 +51,14 @@ function deleteApplicatorOutputs($applicator_id, $record_id) {
 
 function disableApplicatorOutput($record_id): bool|string {
     /*
-    Disable (soft delete) applicator outputs by record_id.
+        Disable (soft delete) applicator outputs by record_id.
 
-    Args:
-    - $record_id: ID of the record to disable
-    
-    Returns:
-    - true on success
-    - string containing error message on failure
+        Args:
+        - $record_id: ID of the record to disable
+        
+        Returns:
+        - true on success
+        - string containing error message on failure
     */
 
     global $pdo;
@@ -77,14 +82,14 @@ function disableApplicatorOutput($record_id): bool|string {
 
 function disableApplicatorOutputsByRecordIds(array $record_ids): bool|string {
     /*
-    Disable applicator_outputs by multiple record_ids in one query.
+        Disable applicator_outputs by multiple record_ids in one query.
 
-    Args:
-    - $record_ids: array of record IDs
+        Args:
+        - $record_ids: array of record IDs
 
-    Returns:
-    - true on success
-    - error message string on failure
+        Returns:
+        - true on success
+        - error message string on failure
     */
     global $pdo;
 

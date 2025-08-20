@@ -1,7 +1,8 @@
 <?php
 /*
-    This script handles the CREATE operation for submitting a new output record in the machine_outputs database.
-    It includes a function to insert machine output data into the database.
+    This script handles the CREATE operation for machine outputs in the database.
+    It includes a function to insert a new machine output record, setting all 
+    component values (including custom parts) to the specified output value.
 */
 
 // Include the database connection
@@ -9,17 +10,17 @@ require_once __DIR__ . '/../includes/db.php';
 
 function submitMachineOutput($machine_data, $machine_output, $record_id) {
     /*
-    Function to submit machine output data to the database.
-    The machine_output value is used to set all component values for this machine.
-    
-    Args:
-    - $machine_data: Array containing machine information from database
-    - $machine_output: Integer value to set for all component values
-    - $record_id: ID of the record to associate this output with
-    
-    Returns:
-    - Boolean true on success
-    - String containing error message and redirect using JS <alert> on failure
+        Function to submit machine output data to the database.
+        The machine_output value is used to set all component values for this machine.
+        
+        Args:
+        - $machine_data: Array containing machine information from database
+        - $machine_output: Integer value to set for all component values
+        - $record_id: ID of the record to associate this output with
+        
+        Returns:
+        - Boolean true on success
+        - String containing error message 
     */
     
     global $pdo;

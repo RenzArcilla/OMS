@@ -1,6 +1,7 @@
 <?php 
-/* 
-    This file contains functiions to create an entry on the applicator_reset table.
+/*
+    This file defines a function to CREATE entries in the applicator_reset table.
+    Used to log part resets performed on applicators.
 */
 
 

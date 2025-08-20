@@ -1,6 +1,7 @@
 <?php
 /*
-    This file defines a function that disables a row in the records table in the database.
+    This file contains functions for disabling (soft DELETE-ing) rows 
+    in the records table of the database.
 */
 
 // Include the database connection
@@ -8,13 +9,13 @@ require_once __DIR__ . '/../includes/db.php';
 
 function disableRecord($record_id): bool|string {
     /*
-    Function to disable a record in the database.
+        Function to disable a record in the database.
 
-    Args:
-    - $record_id: ID of the record to disable.
+        Args:
+        - $record_id: ID of the record to disable.
 
-    Returns:
-    - True on success, string containing error message on failure.
+        Returns:
+        - True on success, string containing error message on failure.
     */
     global $pdo;
 
@@ -37,14 +38,14 @@ function disableRecord($record_id): bool|string {
 
 function disableRecordEncodedLaterThan($timestamp): bool|string {
     /*
-    Function to disable (soft delete) all records encoded later than a timestamp in the database.
+        Function to disable (soft delete) all records encoded later than a timestamp in the database.
 
-    Args:
-    - $timestamp: date_time
+        Args:
+        - $timestamp: date_time
 
-    Returns:
-    - true on success
-    - string containing error message on failure
+        Returns:
+        - true on success
+        - string containing error message on failure
     */
     global $pdo;
 

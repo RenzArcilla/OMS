@@ -1,7 +1,6 @@
 <?php
 /*
-    This file is part of log in operation for user accounts.
-    This is a READ operation for user accounts.
+    This file defines a READ operation for user login.
     It retrieves user data from the database and checks if the user account exists.
 */
 
@@ -11,16 +10,16 @@ require_once __DIR__ . '/../includes/db.php';
 
 function loginUser($username, $password) {
     /*
-    Function to log in a user by checking the username and password.
+        Function to log in a user by checking the username and password.
 
-    Args:
-    - $username: The username of the user.
-    - $password: The password of the user.
+        Args:
+        - $username: string, the username of the user.
+        - $password: string, the password of the user.
 
-    Returns:
-    - False if the user does not exist or the password is incorrect.
-    - User data array if the login is successful.
-    - String containing error message and redirect using JS <alert>.
+        Returns:
+        - array: user data if login is successful.
+        - false: if user does not exist or password is incorrect.
+        - string: error message on database failure.
     */
 
     global $pdo;

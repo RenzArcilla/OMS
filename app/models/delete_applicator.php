@@ -1,7 +1,8 @@
 <?php
 /*
-    This file defines a function that disables a machine row in the database.
-    Used in the machine listing with pagination, such as in infinite scroll.
+    This file contains a function for disabling (soft DELETE-ing) a machine record 
+    in the database. It is typically used in machine listings with pagination 
+    (e.g., infinite scroll).
 */
 
 // Include the database connection
@@ -9,13 +10,13 @@ require_once __DIR__ . '/../includes/db.php';
 
 function disableApplicator($applicator_id): bool {
     /*
-    Function to disable an applicator in the database.
+        Function to disable an applicator in the database.
 
-    Args:
-    - $applicator_id: ID of the applicator to disable.
+        Args:
+        - $applicator_id: ID of the applicator to disable.
 
-    Returns:
-    - True on success, string containing error message on failure.
+        Returns:
+        - True on success, string containing error message on failure.
     */
     global $pdo;
 

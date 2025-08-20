@@ -1,8 +1,7 @@
 <?php
 /*
     This file is part of the application for user registration.
-    It handles the CREATE operation for user accounts.
-
+    It handles the CREATE operation for user accounts in the database.
 */
 
 // Include the database connection
@@ -11,19 +10,19 @@ require_once __DIR__ . '/../includes/db.php';
 
 function createUser($first_name, $last_name, $username, $password) {
     /*
-    Function to create a new user in the database.
-    It verifies that password and confirm_password match,
-    hashes the password, and inserts the user data into the 'users' table.
+        Function to create a new user in the database.
+        It verifies that password and confirm_password match,
+        hashes the password, and inserts the user data into the 'users' table.
 
-    Args:
-    - $first_name: The user's first name.
-    - $last_name: The user's last name.
-    - $password: The password of the user (to be hashed).
-    - $confirm_password: The confirmation password, must match $password.
+        Args:
+        - $first_name: The user's first name.
+        - $last_name: The user's last name.
+        - $password: The password of the user (to be hashed).
+        - $confirm_password: The confirmation password, must match $password.
 
-    Returns:
-    - User data array if the login is successful.
-    - String containing error message and redirect using JS <alert>.
+        Returns:
+        - User data array if the login is successful.
+        - String containing error message.
     */
 
     global $pdo;

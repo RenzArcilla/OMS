@@ -1,7 +1,10 @@
 <?php
 /*
-    This file defines a function that queries a list of machines from the database.
-    Used in the machine listing with pagination, such as in infinite scroll.
+    This file defines a function for fetching a paginated list of machines 
+    and their outputs from the database. 
+
+    Used in the machine listing with pagination features 
+    (e.g., infinite scroll).
 */
 
 // Include the database connection
@@ -9,17 +12,17 @@ require_once __DIR__ . '/../../includes/db.php';
 
 function getRecordsAndOutputs(int $limit = 20, int $offset = 0): array {
     /*
-    Function to fetch a list of machines from the database with pagination.
-    It prepares and executes a SELECT query that fetches machines ordered by most recent,
-    and returns them as an associative array.
+        Function to fetch a list of machines from the database with pagination.
+        It prepares and executes a SELECT query that fetches machines ordered by most recent,
+        and returns them as an associative array.
 
-    Args:
-    - $pdo: PDO database connection object.
-    - $limit: Maximum number of rows to fetch (default is 10).
-    - $offset: Number of rows to skip (default is 0), used for pagination.
+        Args:
+        - $pdo: PDO database connection object.
+        - $limit: Maximum number of rows to fetch (default is 10).
+        - $offset: Number of rows to skip (default is 0), used for pagination.
 
-    Returns:
-    - Array of machines (associative arrays) on success.
+        Returns:
+        - Array of machines (associative arrays) on success.
     */
 
     global $pdo;

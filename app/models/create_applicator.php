@@ -1,7 +1,7 @@
 <?php
 /*
-    This script handles the CREATE operation for applicators in the database.
-    It includes a function to insert applicator data into the database.
+    This file defines a function to CREATE applicator entries in the database.
+    Handles inserting applicator details into the applicators table.
 */
 
 // Include the database connection
@@ -11,21 +11,21 @@ function createApplicator($control_no, $terminal_no, $description,
                         $wire_type, $terminal_maker, $applicator_maker, 
                         $serial_no, $invoice_no) {
     /*
-    Function to create a new applicator in the database.
-    
-    Args:
-    - $control_no: Control number of the applicator.
-    - $terminal_no: Terminal number of the applicator.
-    - $description: Description of the applicator (SIDE/END).
-    - $wire_type: Type of wire used in the applicator (BIG/SMALL).
-    - $terminal_maker: Maker of the terminal.
-    - $applicator_maker: Maker of the applicator.
-    - $serial_no: Serial number of the applicator.
-    - $invoice_no: Invoice number associated with the applicator.
-                
-    Returns:
-    - true on successful operation.
-    - string containing error message and redirect using JS <alert>.
+        Function to create a new applicator in the database.
+        
+        Args:
+        - $control_no: Control number of the applicator.
+        - $terminal_no: Terminal number of the applicator.
+        - $description: Description of the applicator (SIDE/END).
+        - $wire_type: Type of wire used in the applicator (BIG/SMALL).
+        - $terminal_maker: Maker of the terminal.
+        - $applicator_maker: Maker of the applicator.
+        - $serial_no: Serial number of the applicator.
+        - $invoice_no: Invoice number associated with the applicator.
+                    
+        Returns:
+        - true on successful operation.
+        - string containing error message.
     */
 
     global $pdo;

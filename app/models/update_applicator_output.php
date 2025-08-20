@@ -1,7 +1,7 @@
 <?php
 /*
-    This script handles the UPDATE operation for updating an output record in the applicator_outputs table in the db.
-    It includes a function to update an applicator output data into the database.
+    This file handles the UPDATE operation for applicator outputs.
+    It updates existing records or inserts new ones in the `applicator_outputs` table.
 */
 
 // Include the database connection
@@ -10,18 +10,17 @@ require_once __DIR__ . '/read_custom_parts.php';
 
 function updateApplicatorOutput($applicator_data, $applicator_output, $record_id, $prev_applicator_data) {
     /*
-    Function to update applicator output data in the database.
-    Updates the output if exists; creates a new row if an output with the same record does not exist.
-    The applicator_output value is added to all existing component values for this applicator.
-    
-    Args:
-    - $applicator_data: Array containing applicator information from database
-    - $applicator_output: Integer value to add to all existing component values
-    - $record_id: ID of the record to associate this output with
-    
-    Returns:
-    - Boolean true on success
-    - String containing error message and redirect using JS <alert> on failure
+        Update or insert applicator output data in the database.
+
+        Args:
+        - $applicator_data: array, applicator info from database
+        - $applicator_output: int, value to set for all components
+        - $record_id: int, ID of the associated record
+        - $prev_applicator_data: array|null, previous applicator info for update
+
+        Returns:
+        - true on success
+        - string with error message on failure
     */
     
     global $pdo;

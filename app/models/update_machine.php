@@ -1,7 +1,7 @@
 <?php
 /*
-    This script handles the UPDATE operation for machines in the database.
-    It includes a function to update machine data in the database.
+    This file handles the UPDATE operation for machines.
+    Updates an existing machine record in the database.
 */
 
 // Include the database connection
@@ -10,20 +10,20 @@ require_once __DIR__ . '/../includes/db.php';
 function updateMachine($machine_id, $control_no, $description, $model,  
                         $machine_maker, $serial_no, $invoice_no) {
     /*
-    Function to update an existing machine in the database.
+        Update an existing machine in the database.
 
-    Args:
-    - $machine_id: ID of the machine to update.
-    - $control_no: Control number of the machine.
-    - $description: Description of the machine (AUTOMATIC/SEMI-AUTOMATIC).
-    - $model: Model of the machine.
-    - $machine_maker: Maker of the machine.
-    - $serial_no: Serial number of the machine.
-    - $invoice_no: Invoice number associated with the machine.
+        Args:
+        - $machine_id: int, ID of the machine
+        - $control_no: string, control number of the machine
+        - $description: string, description (AUTOMATIC/SEMI-AUTOMATIC)
+        - $model: string, model of the machine
+        - $machine_maker: string, maker of the machine
+        - $serial_no: string|null, serial number of the machine
+        - $invoice_no: string|null, invoice number of the machine
 
-    Returns:
-    - true on successful operation.
-    - string containing error message and redirect using JS <alert>.
+        Returns:
+        - true on successful update
+        - string containing error message on failure
     */
 
     global $pdo;

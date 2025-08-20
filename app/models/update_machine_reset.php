@@ -1,7 +1,7 @@
 <?php
 /*
-    This script handles the UPDATE operation for the machine_reset in the database.
-    It includes a function to update machine reset data in the database.
+    This file handles the UPDATE operation for machine resets.
+    Updates an existing machine reset record in the database.
 */
 
 // Include the database connection
@@ -10,17 +10,17 @@ require_once __DIR__ . '/../includes/db.php';
 function updateMachineReset($machine_id, $part_reset, $reset_time, 
                         $undone_by) {
     /*
-    Function to update machine reset data in the database.
+        Update machine reset data in the database.
 
-    Args:
-    - $machine_id: int pertaining to a machine.
-    - $part_reset: name of part that was reset.
-    - $reset_time: timestamp of reset.
-    - $undone_by: user_id pertaining to who reverted the reset.
+        Args:
+        - $machine_id: int, ID of the machine
+        - $part_reset: string, name of part that was reset
+        - $reset_time: string, timestamp of the reset
+        - $undone_by: int, user_id of who reverted the reset
 
-    Returns:
-    - true on successful operation.
-    - string containing error message.
+        Returns:
+        - true on successful update
+        - string containing error message on failure
     */
 
     global $pdo;

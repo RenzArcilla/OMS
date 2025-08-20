@@ -1,24 +1,26 @@
 <?php
 /*
-    This script updates the cumulative sum of machine outputs.
-    Supports incrementing or decrementing standard counters and JSON values for custom parts.
+    Contains functions to monitor, reset, and edit machine outputs.
+    Handles standard columns and custom JSON parts for each machine.
 */
 
 require_once __DIR__ . '/../includes/db.php';
 
 function monitorMachineOutput($machine_data, $machine_output, $operation = 'increment') {
     /*
-    Function to update machine outputs (increment or decrement).
+        Updates or inserts machine monitoring data.
+        Supports incrementing or decrementing standard and custom outputs.
 
-    Args:
-    - $machine_data: Machine data array or just machine_id.
-    - $machine_output: Output value to adjust by.
-    - $operation: 'increment' or 'decrement'.
+        Args:
+        - $machine_data: array|int, machine info array or just machine_id
+        - $machine_output: int, output value to adjust
+        - $operation: string, "increment" or "decrement" (default "increment")
 
-    Returns:
-    - True if successful.
-    - String with error message if failed.
+        Returns:
+        - true on success
+        - string with error message on failure
     */
+    
     global $pdo;
 
     try {
@@ -99,12 +101,16 @@ function monitorMachineOutput($machine_data, $machine_output, $operation = 'incr
 
 function resetMachinePartOutput($machine_id, $part_name) {
     /*
-        Resets the output for a specific part of a machine in the monitor_machine table.
-        Includes part reset for defined and custom parts.
+        Resets output for a specific machine part.
+        Works for defined DB columns and custom JSON parts.
+
+        Args:
+        - $machine_id: int, ID of the machine
+        - $part_name: string, name of the part to reset
 
         Returns:
-        - true on success 
-        - error string
+        - true on success
+        - string with error message on failure
     */
 
     global $pdo;
@@ -192,17 +198,17 @@ function resetMachinePartOutput($machine_id, $part_name) {
 
 function editPartOutputValue($machine_id, $part_name, $value) {
     /*
-    Reverts the output to previous value for a specific part of a machine in the monitor_machine table.
-    Handles both defined (columns) and custom (JSON) parts.
+        Reverts a machine part output to a given value.
+        Supports both standard columns and custom JSON parts.
 
-    Parameters:
-    - $machine_id: int, pertains to an machine
-    - $part_name: str, name of the part to revert output (defined/custom)
-    - $value: int, value to revert back to 
+        Args:
+        - $machine_id: int, ID of the machine
+        - $part_name: string, name of the part
+        - $value: int, value to set for the part
 
-    Returns:
-    - true on success 
-    - error string
+        Returns:
+        - true on success
+        - string with error message on failure
     */
 
     global $pdo;

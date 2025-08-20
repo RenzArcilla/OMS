@@ -1,7 +1,7 @@
 <?php
 /*
-    This script handles the UPDATE operation for updating an output record in the machine_outputs table in the db.
-    It includes a function to insert machine output data into the database.
+    This file handles the UPDATE operation for machine outputs.
+    Updates an existing machine output record in the database.
 */
 
 // Include the database connection
@@ -9,17 +9,17 @@ require_once __DIR__ . '/../includes/db.php';
 
 function updateMachineOutput($machine_data, $machine_output, $record_id) {
     /*
-    Function to update machine output data to the database.
-    The machine_output value is used to set all component values for this machine.
-    
-    Args:
-    - $machine_data: Array containing machine information from database
-    - $machine_output: Integer value to set for all component values
-    - $record_id: ID of the record to associate this output with
-    
-    Returns:
-    - Boolean true on success
-    - String containing error message and redirect using JS <alert> on failure
+        Update machine output data in the database.
+        Sets all component values (defined + custom parts) to the given output value.
+
+        Args:
+        - $machine_data: array, machine information from database
+        - $machine_output: int, value to set for all components
+        - $record_id: int, ID of the record to update
+
+        Returns:
+        - true on successful update
+        - string containing error message on failure
     */
     
     global $pdo;
