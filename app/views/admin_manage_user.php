@@ -324,8 +324,7 @@
 
             <!-- Close Button -->
             <div class="button-group">
-                <div></div>
-                <button class="cancel-btn" onclick="closeViewUserModal()">
+                <button type="button" class="cancel-btn" onclick="closeViewUserModal()">
                     Close
                 </button>
             </div>
