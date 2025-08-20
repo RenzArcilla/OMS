@@ -188,3 +188,104 @@ function resetMachinePartOutput($machine_id, $part_name) {
 
     return "Reset cancelled: invalid part name!";
 }
+
+
+function editPartOutputValue($machine_id, $part_name, $value) {
+    /*
+    Reverts the output to previous value for a specific part of a machine in the monitor_machine table.
+    Handles both defined (columns) and custom (JSON) parts.
+
+    Parameters:
+    - $machine_id: int, pertains to an machine
+    - $part_name: str, name of the part to revert output (defined/custom)
+    - $value: int, value to revert back to 
+
+    Returns:
+    - true on success 
+    - error string
+    */
+
+    global $pdo;
+    
+    $defined_parts = [
+        'cut_blade_output',
+        'strip_blade_a_output',
+        'strip_blade_b_output'
+    ];
+    
+    // Get custom machine parts 
+    require_once "read_custom_parts.php";
+    $custom_parts = getCustomParts("MACHINE");
+
+    if (is_string($custom_parts)) {
+        return $custom_parts; // error message
+    }
+
+    $custom_part_names = array_column($custom_parts, "part_name");
+
+    // Case 1: part is a defined DB column
+    if (in_array($part_name, $defined_parts, true)) {
+        try {
+            $stmt = $pdo->prepare("
+                UPDATE monitor_machine
+                SET $part_name = :value
+                WHERE machine_id = :machine_id
+            ");
+
+            $stmt->bindParam(':value', $value, PDO::PARAM_INT);
+            $stmt->bindParam(':machine_id', $machine_id, PDO::PARAM_INT);
+            $stmt->execute();
+            return true;
+
+        } catch (PDOException $e) {
+            error_log("Database Error in editPartOutputValue (defined): " . $e->getMessage());
+            return "Database error in editPartOutputValue (defined): " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        }
+    }
+
+    // Case 2: part is a custom JSON field
+    if (in_array($part_name, $custom_part_names, true)) {
+        try {
+            // Fetch current JSON
+            $stmt = $pdo->prepare("
+                SELECT custom_parts_output
+                FROM monitor_machine
+                WHERE machine_id = :machine_id
+                LIMIT 1
+            ");
+            $stmt->bindParam(':machine_id', $machine_id, PDO::PARAM_INT);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$row) return "Machine not found";
+
+            $decoded = json_decode($row["custom_parts_output"], true) ?: [];
+
+            // Reset just the requested part
+            if (!array_key_exists($part_name, $decoded)) {
+                return "Part not found in custom JSON!";
+            }
+            $decoded[$part_name] = $value;
+
+            // Save back JSON
+            $updatedJson = empty($decoded) ? null : json_encode((object) $decoded);
+            $updateStmt = $pdo->prepare("
+                UPDATE monitor_machine
+                SET custom_parts_output = :json
+                WHERE machine_id = :machine_id
+            ");
+            
+            $updateStmt->bindValue(':json', $updatedJson, is_null($updatedJson) ? PDO::PARAM_NULL : PDO::PARAM_STR);
+            $updateStmt->bindParam(':machine_id', $machine_id, PDO::PARAM_INT);
+            $updateStmt->execute();
+
+            return true;
+
+        } catch (PDOException $e) {
+            error_log("Database Error in editPartOutputValue (custom): " . $e->getMessage());
+            return "Database error in editPartOutputValue (custom): " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        }
+    }
+
+    return "Revert cancelled: invalid part name!";
+}
