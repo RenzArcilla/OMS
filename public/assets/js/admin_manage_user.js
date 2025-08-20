@@ -25,3 +25,17 @@ function openEditUserModal() {
 function closeEditUserModal() {
     document.getElementById('editUserModal').style.display = 'none';
 }
+
+// Refresh the page
+function refreshData() {
+    // Add loading state
+    const btn = event.target;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '⏳ Refreshing...';
+    btn.disabled = true;
+    
+    // Add a small delay to show the loading state
+    setTimeout(() => {
+        window.location.reload();
+    }, 1000);
+}
