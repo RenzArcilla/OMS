@@ -74,7 +74,7 @@
                         <button type="button" class="btn btn-secondary" onclick="exportData()">
                             Export Report
                         </button>
-                        <button type="button" class="btn btn-primary" onclick="refreshPage()">
+                        <button type="button" class="btn btn-primary" onclick="refreshPage(this)">
                             Refresh Data
                         </button>
                     </div>
@@ -154,8 +154,16 @@
                                     <?php foreach ($machine_total_outputs as $row): ?>
                                         <tr>
                                             <td>
-                                                <button class="btn-small btn-edit" onclick="openUndoModalDashboardMachine()">Undo</button>
-                                                <button class="btn-small btn-reset" onclick="openResetModal()">Reset</button>
+                                                <button class="btn-small btn-edit"
+                                                        data-id="<?= htmlspecialchars($row['machine_id']) ?>"
+                                                        onclick="openUndoModal()">
+                                                        Undo
+                                                </button>
+                                                <button class="btn-small btn-reset"
+                                                        data-id="<?= htmlspecialchars($row['machine_id']) ?>"
+                                                        onclick="openResetModal(this)">
+                                                        Reset
+                                                </button>
                                             </td>
                                             <td><?= htmlspecialchars($row['control_no']) ?></td>
                                             <td><strong><?= htmlspecialchars(explode(' ', $row['last_updated'])[0]) ?></strong></td>
@@ -227,7 +235,6 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-
                 <div class="warning-section">
                     <div style="display: flex; align-items: flex-start; gap: 8px;">
                         <span class="warning-icon">⚠️</span>
@@ -237,9 +244,8 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="modal-footer">
-                    <button type="button" class="btn-cancel" onclick="closeResetModalDashboardMachine()">Cancel</button>
+                    <button type="button" class="btn-cancel" onclick="closeResetModal()">Cancel</button>
                     <button type="submit" class="btn-confirm">Confirm Reset</button>
                 </div>
             </form>
@@ -262,7 +268,6 @@
                             <option>Strip Blade B</option>
                         </select>
                     </div>
-                </form>
                     
                     <div class="form-group">
                         <label class="form-label">Dates Replaced</label>
