@@ -154,15 +154,15 @@
                                     <?php foreach ($machine_total_outputs as $row): ?>
                                         <tr>
                                             <td>
-                                                <button class="btn-small btn-edit"
-                                                        data-id="<?= htmlspecialchars($row['machine_id']) ?>"
-                                                        onclick="openUndoModal()">
-                                                        Undo
-                                                </button>
                                                 <button class="btn-small btn-reset"
                                                         data-id="<?= htmlspecialchars($row['machine_id']) ?>"
                                                         onclick="openResetModal(this)">
                                                         Reset
+                                                </button>
+                                                <button class="btn-small btn-edit"
+                                                        data-id="<?= htmlspecialchars($row['machine_id']) ?>"
+                                                        onclick="openUndoModal()">
+                                                        Undo
                                                 </button>
                                             </td>
                                             <td><?= htmlspecialchars($row['control_no']) ?></td>
