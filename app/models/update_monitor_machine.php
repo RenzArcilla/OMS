@@ -110,51 +110,81 @@ function resetMachinePartOutput($machine_id, $part_name) {
     global $pdo;
     
     $accepted_part_names = [
-        'wire_crimper_output',
-        'wire_anvil_output',
-        'insulation_crimper_output',
-        'insulation_anvil_output',
-        'slide_cutter_output',
-        'cutter_holder_output',
-        'shear_blade_output',
-        'cutter_a_output',
-        'cutter_b_output'
+        'cut_blade_output',
+        'strip_blade_a_output',
+        'strip_blade_b_output'
     ];
     
     // Get custom machine parts 
     require_once "read_custom_parts.php";
     $custom_parts = getCustomParts("MACHINE");
 
-    // Return error message if any issue occurs
     if (is_string($custom_parts)) {
-        return $custom_parts;
+        return $custom_parts; // error message
     }
 
-    foreach ($custom_parts as $row) {
-        $accepted_part_names[] = $row["part_name"];
+    $custom_part_names = array_column($custom_parts, "part_name");
+
+    // Case 1: part is a defined DB column
+    if (in_array($part_name, $defined_parts, true)) {
+        try {
+            $stmt = $pdo->prepare("
+                UPDATE monitor_machine
+                SET $part_name = 0
+                WHERE machine_id = :machine_id
+            ");
+            $stmt->bindParam(':machine_id', $machine_id, PDO::PARAM_INT);
+            $stmt->execute();
+            return true;
+
+        } catch (PDOException $e) {
+            error_log("Database Error in resetMachinePartOutput: " . $e->getMessage());
+            return "Database error: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        }
     }
 
-    // Check if given part_name is accepted 
-    if (!in_array($part_name, $accepted_part_names)) {
-        return "Reset cancelled: invalid part name!";
+    // Case 2: part is a custom JSON field
+    if (in_array($part_name, $custom_part_names, true)) {
+        try {
+            // Fetch current JSON
+            $stmt = $pdo->prepare("
+                SELECT custom_parts_output
+                FROM monitor_machine
+                WHERE machine_id = :machine_id
+                LIMIT 1
+            ");
+            $stmt->bindParam(':machine_id', $machine_id, PDO::PARAM_INT);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$row) return "Machine not found";
+
+            $decoded = json_decode($row["custom_parts_output"], true) ?: [];
+
+            // Reset just the requested part
+            if (isset($decoded[$part_name])) {
+                $decoded[$part_name] = 0;
+            }
+
+            // Save back JSON
+            $updatedJson = empty($decoded) ? null : json_encode((object) $decoded);
+            $updateStmt = $pdo->prepare("
+                UPDATE monitor_machine
+                SET custom_parts_output = :json
+                WHERE machine_id = :machine_id
+            ");
+
+            $updateStmt->bindValue(':json', $updatedJson, is_null($updatedJson) ? PDO::PARAM_NULL : PDO::PARAM_STR);
+            $updateStmt->bindParam(':machine_id', $machine_id, PDO::PARAM_INT);
+            $updateStmt->execute();
+
+            return true;
+
+        } catch (PDOException $e) {
+            error_log("Database Error in resetMachinePartOutput (custom): " . $e->getMessage());
+            return "Database error: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        }
     }
 
-    // Execute main logic 
-    try {
-        $stmt = $pdo->prepare("
-            UPDATE monitor_machine
-            SET $part_name = 0
-            WHERE machine_id = :machine_id
-        ");
-
-        $stmt->bindParam(':machine_id', $machine_id, PDO::PARAM_INT);
-        $stmt->execute();
-
-        return true;
-
-    } catch (PDOException $e) {
-        // Log error and return an error message on failure
-        error_log("Database Error in resetMachinePartOutput: " . $e->getMessage());
-        return "Database error in resetMachinePartOutput: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
-    }
+    return "Reset cancelled: invalid part name!";
 }
