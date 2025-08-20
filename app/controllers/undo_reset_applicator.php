@@ -1,6 +1,6 @@
 <?php
 /*
-    This script handles the deletion (soft delete) of a machine to the database.
+    This script handles the undoing of reset of an applicator part output.
     It retrieves form data, sanitizes it, and updates the status in the database.
 */
 

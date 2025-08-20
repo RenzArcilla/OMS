@@ -42,7 +42,7 @@ function getApplicatorResetOnTimeStamp($applicator_id, $part_name, $reset_time) 
     Retrieve an applicator_reset records for a specific applicator and part.
 
     Args:
-    - $applicator_id : int, 
+    - $applicator_id : int, pertains to an applicator
     - $part_name: string, name of applicator part
     - $reset_time: time of reset
 

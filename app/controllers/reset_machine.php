@@ -1,6 +1,7 @@
 <?php
 /*
-    This file is part of reset operation for machine parts.
+    This file is the controller file for setting the output of a machine part to zero (0).
+    It retrieves form data, sanitizes it, and updates the database record.
 */
 
 
