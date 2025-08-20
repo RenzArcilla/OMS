@@ -317,14 +317,14 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn-cancel" onclick="closeUndoModal()">Cancel</button>
-                    <button type="button" class="btn-confirm" onclick="saveChanges()">Confirm</button>
+                    <button type="submit" class="btn-confirm">Confirm</button>
                 </div>
             </form>
-        </div>
+        </div>      
     </div>
 
     <!-- Machine Modal -->
-    <div id="machineModalDashboardApplicator" class="modal-overlay">
+    <div id="machineModalDashboardMachine" class="modal-overlay">
         <div class="modal">
             <div class="parts-list">
                 <!-- Cut Blade -->
