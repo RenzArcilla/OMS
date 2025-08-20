@@ -193,16 +193,27 @@
 
     <!-- View User Modal -->
     <div id="viewUserModal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="viewModalTitle" class="modal-title">
-                    <span id="viewModalAvatar" class="modal-avatar">👤</span>
-                    <span id="viewModalTitleText">User Details</span>
-                </h2>
-                <button class="close-btn" onclick="closeModal('viewUserModal')">✕</button>
-            </div>
+        <div class="form-container">
+            <button class="modal-close-btn" onclick="closeModal('viewUserModal')">×</button>
             
-            <div class="modal-body">
+            <div class="form-header">
+                <h1 class="form-title">
+                    <span class="modal-avatar">👁️</span>
+                    User Details
+                </h1>
+                <p class="form-subtitle">Complete user information and activity summary</p>
+            </div>
+
+            <!-- Personal Information Section -->
+            <div class="form-section">
+                <div class="section-header">
+                    <div class="section-icon">👤</div>
+                    <div class="section-info">
+                        <div class="section-title">Personal Information</div>
+                        <div class="section-description">User contact details and basic information</div>
+                    </div>
+                </div>
+
                 <div class="form-grid">
                     <div class="form-group">
                         <label class="form-label">Full Name</label>
@@ -235,7 +246,20 @@
                             <span id="viewUserDepartment">-</span>
                         </div>
                     </div>
-                    
+                </div>
+            </div>
+
+            <!-- Account Information Section -->
+            <div class="form-section">
+                <div class="section-header">
+                    <div class="section-icon">⚙️</div>
+                    <div class="section-info">
+                        <div class="section-title">Account Information</div>
+                        <div class="section-description">Role, status, and account timeline</div>
+                    </div>
+                </div>
+
+                <div class="form-grid">
                     <div class="form-group">
                         <label class="form-label">Role</label>
                         <div class="form-field">
@@ -268,28 +292,33 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="activity-section">
-                    <h3 class="activity-title">Activity Summary</h3>
-                    <div class="activity-stats">
-                        <div class="activity-stat">
-                            <div id="viewUserFilesUploaded" class="stat-number">0</div>
-                            <div class="stat-label">Files Uploaded</div>
-                        </div>
-                        <div class="activity-stat">
-                            <div id="viewUserDaysActive" class="stat-number">0</div>
-                            <div class="stat-label">Days Active</div>
-                        </div>
-                        <div class="activity-stat">
-                            <div class="stat-number">5</div>
-                            <div class="stat-label">Login Sessions</div>
-                        </div>
+            </div>
+
+            <!-- Activity Summary -->
+            <div class="activity-section">
+                <h3 class="activity-title">📊 Activity Summary</h3>
+                <div class="activity-stats">
+                    <div class="activity-stat">
+                        <div id="viewUserFilesUploaded" class="stat-number">0</div>
+                        <div class="stat-label">Files Uploaded</div>
+                    </div>
+                    <div class="activity-stat">
+                        <div id="viewUserDaysActive" class="stat-number">0</div>
+                        <div class="stat-label">Days Active</div>
+                    </div>
+                    <div class="activity-stat">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">Login Sessions</div>
                     </div>
                 </div>
             </div>
-            
-            <div class="modal-footer">
-                <button class="btn-secondary" onclick="closeModal('viewUserModal')">Close</button>
+
+            <!-- Close Button -->
+            <div class="button-group">
+                <div></div>
+                <button class="cancel-btn" onclick="closeModal('viewUserModal')">
+                    Close
+                </button>
             </div>
         </div>
     </div>
