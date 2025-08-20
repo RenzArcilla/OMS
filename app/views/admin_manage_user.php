@@ -15,9 +15,6 @@
         <!-- Header -->
         <div class="header">
             <div class="header-left">
-                <button class="back-btn" onclick="window.history.back()">
-                    ←
-                </button>
                 <div>
                     <h1 class="title">Manage Users</h1>
                     <p class="subtitle">Manage user accounts, permissions, and access controls</p>
