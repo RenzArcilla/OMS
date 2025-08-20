@@ -245,30 +245,32 @@
 
                 <div class="form-grid-vertical">
                     <div class="form-group">
-                        <label class="form-label">Username</label>
-                        <div class="form-field">
-                            <span class="field-icon">👤</span>
-                            <span id="viewUserName">-</span>
-                        </div>
+                        <label for="viewUserName" class="form-label">
+                            Username
+                        </label>
+                        <input type="text" id="viewUserName" name="name" class="form-input" placeholder="RenzngOdnum" readonly>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">First Name</label>
-                        <div class="form-field">
-                            <span class="field-icon">#</span>
-                            <span id="viewUserEmail">-</span>
-                        </div>
+                        <label for="viewUserFirstName" class="form-label">
+                            First Name
+                        </label>
+                        <input type="text" id="viewUserFirstName" name="first_name" class="form-input" placeholder="Renz" readonly>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">Last Name</label>
-                        <div class="form-field">
-                            <span class="field-icon">#</span>
-                            <span id="viewUserPhone">-</span>
-                        </div>
+                        <label for="viewUserLastName" class="form-label">
+                            Last Name
+                        </label>
+                        <input type="text" id="viewUserLastName" name="last_name" class="form-input" placeholder="Ng Mundo" readonly>
                     </div>
                     
-                    
+                    <div class="form-group">
+                        <label for="viewUserPassword" class="form-label">
+                            Password
+                        </label>
+                        <input type="password" id="viewUserPassword" name="password" class="form-input" placeholder="Hatdog123" readonly>
+                    </div>
                 </div>
             </div>
 
