@@ -16,3 +16,12 @@ function openViewUserModal() {
 function closeViewUserModal() {
     document.getElementById('viewUserModal').style.display = 'none';
 }
+
+// Open the edit user modal
+function openEditUserModal() {
+    document.getElementById("editUserModal").style.display = "block";
+}
+
+function closeEditUserModal() {
+    document.getElementById('editUserModal').style.display = 'none';
+}

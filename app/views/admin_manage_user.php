@@ -91,7 +91,7 @@
                                 <button class="action-btn view-btn" onclick="openViewUserModal()" title="View Details">
                                     👁️
                                 </button>
-                                <button class="action-btn edit-btn" onclick="openModal()" title="Edit User">
+                                <button class="action-btn edit-btn" onclick="openEditUserModal()" title="Edit User">
                                     ✏️
                                 </button>
                                 <button class="action-btn delete-btn" onclick="openModal()" title="Delete User">
@@ -332,75 +332,98 @@
 
     <!-- Edit User Modal -->
     <div id="editUserModal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="editModalTitle" class="modal-title">
-                    <span id="editModalAvatar" class="modal-avatar">👤</span>
-                    <span id="editModalTitleText">Edit User</span>
-                </h2>
-                <button class="close-btn" onclick="closeModal('editUserModal')">✕</button>
+        <div class="form-container">
+                <button class="modal-close-btn" onclick="closeEditUserModal()">×</button>
+                
+            <div class="form-header">
+                <h1 class="form-title">
+                    <span class="modal-avatar">✏️</span>
+                    Edit User
+                </h1>
+                <p class="form-subtitle">Update user information and account settings</p>
             </div>
-            
-            <div class="modal-body">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label class="form-label">Full Name *</label>
-                        <input type="text" id="editUserName" class="form-input" placeholder="Enter full name">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Email Address *</label>
-                        <input type="email" id="editUserEmail" class="form-input" placeholder="Enter email address">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Phone Number *</label>
-                        <input type="tel" id="editUserPhone" class="form-input" placeholder="Enter phone number">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Department *</label>
-                        <input type="text" id="editUserDepartment" class="form-input" placeholder="Enter department">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Role</label>
-                        <select id="editUserRole" class="form-select">
-                            <option value="User">User</option>
-                            <option value="Moderator">Moderator</option>
-                            <option value="Admin">Admin</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Status</label>
-                        <select id="editUserStatus" class="form-select">
-                            <option value="Active">Active</option>
-                            <option value="Inactive">Inactive</option>
-                            <option value="Pending">Pending</option>
-                            <option value="Suspended">Suspended</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Join Date</label>
-                        <div class="form-field">
-                            <span class="field-icon">📅</span>
-                            <span id="editUserJoinDate">-</span>
+
+            <form id="editUserForm" onsubmit="saveUser(event)">
+                <!-- Personal Information Section -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon">👤</div>
+                        <div class="section-info">
+                            <div class="section-title">Personal Information</div>
+                            <div class="section-description">Update user contact details and basic information</div>
                         </div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Last Login</label>
-                        <div class="form-field">
-                            <span class="field-icon">🕒</span>
-                            <span id="editUserLastLogin">-</span>
+
+                    <div class="form-grid-vertical">
+                        <div class="form-group">
+                            <label for="editUserName" class="form-label">
+                                Full Name
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input type="text" id="editUserName" name="name" class="form-input" placeholder="Enter full name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="editUserEmail" class="form-label">
+                                Email Address
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input type="email" id="editUserEmail" name="email" class="form-input" placeholder="Enter email address" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="editUserPhone" class="form-label">
+                                Phone Number
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input type="tel" id="editUserPhone" name="phone" class="form-input" placeholder="Enter phone number" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="editUserDepartment" class="form-label">
+                                Department
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input type="text" id="editUserDepartment" name="department" class="form-input" placeholder="Enter department" required>
                         </div>
                     </div>
                 </div>
-                
+
+                <!-- Account Settings Section -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon">⚙️</div>
+                        <div class="section-info">
+                            <div class="section-title">Account Settings</div>
+                            <div class="section-description">Modify user role and account status</div>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="editUserRole" class="form-label">User Role</label>
+                            <select id="editUserRole" name="role" class="form-input">
+                                <option value="User">User</option>
+                                <option value="Moderator">Moderator</option>
+                                <option value="Admin">Admin</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="editUserStatus" class="form-label">Account Status</label>
+                            <select id="editUserStatus" name="status" class="form-input">
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Suspended">Suspended</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Summary -->
                 <div class="activity-section">
-                    <h3 class="activity-title">Activity Summary</h3>
+                    <h3 class="activity-title">📊 Activity Summary</h3>
                     <div class="activity-stats">
                         <div class="activity-stat">
                             <div id="editUserFilesUploaded" class="stat-number">0</div>
@@ -416,12 +439,17 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="modal-footer">
-                <button class="btn-secondary" onclick="closeModal('editUserModal')">Cancel</button>
-                <button id="editModalActionBtn" class="btn-primary" onclick="saveUser()">Save Changes</button>
-            </div>
+
+                <!-- Submit Buttons -->
+                <div class="button-group">
+                    <button type="button" class="cancel-btn" onclick="closeModal('editUserModal')">
+                        Cancel
+                    </button>
+                    <button type="submit" class="submit-btn">
+                        💾 Save Changes
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
     <script src="../../public/assets/js/admin_manage_user.js"></script>
