@@ -23,7 +23,7 @@
                     <p class="subtitle">Manage user accounts, permissions, and access controls</p>
                 </div>
             </div>
-            <button class="add-user-btn" onclick="openModal('create')">
+            <button class="add-user-btn" onclick="openAddUserModal('create')">
                 + Add New User
             </button>
         </div>
@@ -65,19 +65,48 @@
                         <th>Role</th>
                         <th>Status</th>
                         <th>Last Login</th>
-                        <th>Files</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody id="usersTableBody">
-                    <!-- Users will be populated by JavaScript -->
+                    <tr>
+                        <td>
+                            <div class="user-info">
+                                <div class="user-avatar">👤</div>
+                                <div class="user-details">
+                                    <div class="user-name">John Smith</div>
+                                    <div class="user-email">john.smith@hepc.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="role-badge admin">Admin</span>
+                        </td>
+                        <td>
+                            <span class="status-badge active">Active</span>
+                        </td>
+                        <td>2024-12-15 14:30</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn view-btn" onclick="openModal()" title="View Details">
+                                    👁️
+                                </button>
+                                <button class="action-btn edit-btn" onclick="openModal()" title="Edit User">
+                                    ✏️
+                                </button>
+                                <button class="action-btn delete-btn" onclick="openModal()" title="Delete User">
+                                    🗑️
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
 
             <!-- Pagination -->
             <div class="pagination">
                 <div class="pagination-info" id="paginationInfo">
-                    Showing 0 to 0 of 0 users
+                    Showing 1 to 1 of 1 users
                 </div>
                 <div class="pagination-controls">
                     <button id="prevBtn" class="pagination-btn" onclick="previousPage()" disabled>Previous</button>
@@ -90,7 +119,7 @@
     <!-- Add User Modal -->
     <div id="addUserModal" class="modal-overlay">
         <div class="form-container">
-            <button class="modal-close-btn" onclick="closeModal('addUserModal')">×</button>
+            <button class="modal-close-btn" onclick="closeAddUserModal()">×</button>
             
             <div class="form-header">
                 <h1 class="form-title">
@@ -111,7 +140,7 @@
                         </div>
                     </div>
 
-                    <div class="form-grid-ve">
+                    <div class="form-grid-vertical">
                         <div class="form-group">
                             <label for="addUserName" class="form-label">
                                 Username
@@ -180,7 +209,7 @@
 
                 <!-- Submit Buttons -->
                 <div class="button-group">
-                    <button type="button" class="cancel-btn" onclick="closeModal('addUserModal')">
+                    <button type="button" class="cancel-btn" onclick="closeAddUserModal()">
                         Cancel
                     </button>
                     <button type="submit" class="submit-btn">
@@ -194,7 +223,7 @@
     <!-- View User Modal -->
     <div id="viewUserModal" class="modal-overlay">
         <div class="form-container">
-            <button class="modal-close-btn" onclick="closeModal('viewUserModal')">×</button>
+            <button class="modal-close-btn" onclick="openUserModal()">×</button>
             
             <div class="form-header">
                 <h1 class="form-title">
@@ -214,9 +243,9 @@
                     </div>
                 </div>
 
-                <div class="form-grid">
+                <div class="form-grid-vertical">
                     <div class="form-group">
-                        <label class="form-label">Full Name</label>
+                        <label class="form-label">Username</label>
                         <div class="form-field">
                             <span class="field-icon">👤</span>
                             <span id="viewUserName">-</span>
@@ -224,28 +253,22 @@
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">Email Address</label>
+                        <label class="form-label">First Name</label>
                         <div class="form-field">
-                            <span class="field-icon">📧</span>
+                            <span class="field-icon">#</span>
                             <span id="viewUserEmail">-</span>
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">Phone Number</label>
+                        <label class="form-label">Last Name</label>
                         <div class="form-field">
-                            <span class="field-icon">📞</span>
+                            <span class="field-icon">#</span>
                             <span id="viewUserPhone">-</span>
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label class="form-label">Department</label>
-                        <div class="form-field">
-                            <span class="field-icon">🏢</span>
-                            <span id="viewUserDepartment">-</span>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
 
@@ -273,22 +296,6 @@
                         <div class="form-field">
                             <span class="field-icon">🟢</span>
                             <span id="viewUserStatus">-</span>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Join Date</label>
-                        <div class="form-field">
-                            <span class="field-icon">📅</span>
-                            <span id="viewUserJoinDate">-</span>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Last Login</label>
-                        <div class="form-field">
-                            <span class="field-icon">🕒</span>
-                            <span id="viewUserLastLogin">-</span>
                         </div>
                     </div>
                 </div>
