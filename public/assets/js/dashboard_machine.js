@@ -38,10 +38,15 @@ function closeUndoModal() {
     if (dropdown) dropdown.innerHTML = '<option value="">Select a part first</option>';
 }
 
-// Submit the undo form
-function saveChanges() {
-    const form = document.getElementById('editForm');
-    if (form) form.submit();
+// Open the machine modal
+function openMachineModal() {
+    document.getElementById('machineModalDashboardMachine').style.display = 'block';
+}
+
+// Close the machine modal
+function closeMachineModal() {
+    const modal = document.getElementById('machineModalDashboardMachine');
+    modal.style.display = 'none';
 }
 
 // Initialize event listeners when the DOM is fully loaded
@@ -88,7 +93,9 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('click', function (event) {
         const resetModal = document.getElementById('resetModalDashboardMachine');
         const undoModal = document.getElementById('undoModalDashboardMachine');
+        const machineModal = document.getElementById('machineModalDashboardMachine');
         if (event.target === resetModal) closeResetModal();
         if (event.target === undoModal) closeUndoModal();
+        if (event.target === machineModal) closeMachineModal();
     });
 });
