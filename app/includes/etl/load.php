@@ -1,4 +1,17 @@
 <?php
+/*
+    Controller: Handles the processing of uploaded production data.
+
+    Responsibilities:
+    - Ensures the user is authenticated before proceeding.
+    - Validates incoming POST requests.
+    - Extracts machine, applicator, shift, and output data.
+    - Validates existence of machines and applicators.
+    - Creates a production record in the database.
+    - Submits outputs for applicators and machines.
+    - Updates monitoring tables for real-time tracking.
+    - Returns appropriate success or error messages.
+*/
 
 // Ensure the user is logged in before proceeding
 session_start();
@@ -25,6 +38,20 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 
 function loadData($data) {
+    /*
+        Function: loadData
+        Purpose: Process and record production data from an uploaded file.
+                Handles validation, record creation, output submission,
+                and monitoring updates for machines and applicators.
+
+        Parameters:
+            - data (array): Production data rows.
+
+        Returns:
+            - string: Success message if all operations succeed,
+                    otherwise an error message describing the failure.
+    */
+                    
     foreach ($data as $data) {
         // Prepare relevant data for database operations
         $shift = $data['Shift'] ?? null;

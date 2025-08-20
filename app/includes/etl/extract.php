@@ -1,8 +1,32 @@
 <?php
+/*
+    This helper handles data extraction from Excel/CSV files.
+
+    - Uses PhpSpreadsheet to parse uploaded files.
+    - Detects the header row (scanning first three rows).
+    - Cleans up data by skipping blank rows and repeated headers.
+    - Returns structured data ready for transformation and loading.
+*/
+
 require_once __DIR__ . '/../../../vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 function extractData($filePath) {
+    /*
+        Helper: Extracts tabular data from an Excel/CSV file using PhpSpreadsheet.
+
+        - Attempts to detect the header row by scanning the first three rows.
+        - Skips blank rows and repeated header rows within the sheet.
+        - Returns data as an array of associative arrays with headers as keys.
+
+        Args:
+        - $filePath: string, path to the uploaded Excel/CSV file.
+
+        Returns:
+        - array containing extracted rows keyed by header names.
+        - string error message if row count is insufficient.
+    */
+
     $spreadsheet = IOFactory::load($filePath);     
     $sheet = $spreadsheet->getActiveSheet()->toArray();
 
