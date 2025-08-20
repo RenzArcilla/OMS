@@ -3,7 +3,6 @@ function refreshPage(btn) {
     const originalText = btn.innerHTML;
     btn.innerHTML = '⏳ Refreshing...';
     btn.disabled = true;
-    
     window.location.reload();
 }
 
@@ -23,8 +22,8 @@ function closeResetModal() {
 }
 
 // Open the undo modal
-function openUndoModal() {
-    const machineId = this.getAttribute("data-id");
+function openUndoModal(button) {
+    const machineId = button.getAttribute("data-id");
     document.getElementById("undo_machine_id").value = machineId;
     document.getElementById('undoModalDashboardMachine').style.display = 'block';
 }
@@ -32,19 +31,18 @@ function openUndoModal() {
 // Close the undo modal
 function closeUndoModal() {
     const modal = document.getElementById('undoModalDashboardMachine');
-
-    // Hide modal
     modal.style.display = 'none';
-
-    // Reset the form inside modal
     const form = modal.querySelector('form');
     if (form) form.reset();
-
-    // Clear the dates dropdown
     const dropdown = modal.querySelector('#editStatus');
     if (dropdown) dropdown.innerHTML = '<option value="">Select a part first</option>';
 }
 
+// Submit the undo form
+function saveChanges() {
+    const form = document.getElementById('editForm');
+    if (form) form.submit();
+}
 
 // Initialize event listeners when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function () {
@@ -58,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!partName || !machineId) return;
 
             // Fetch reset history for the selected part and machine
-            fetch("../controllers/get_reset_dates.php", {
+            fetch("../controllers/get_reset_dates_machine.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: `part_name=${encodeURIComponent(partName)}&machine_id=${encodeURIComponent(machineId)}`
@@ -67,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 const dropdown = document.getElementById("editStatus");
                 dropdown.innerHTML = "";
-                
                 // Populate dropdown with reset timestamps or show no history
                 if (Array.isArray(data) && data.length) {
                     data.forEach(row => {
@@ -94,16 +91,4 @@ document.addEventListener('DOMContentLoaded', function () {
         if (event.target === resetModal) closeResetModal();
         if (event.target === undoModal) closeUndoModal();
     });
-});
-
-// Set up the click outside to close functionality once
-document.addEventListener('DOMContentLoaded', function() {
-    const modal = document.getElementById('undoModalDashboardMachine');
-    if (modal) {
-        window.addEventListener('click', function(event) {
-            if (event.target === modal) {
-                closeUndoModalDashboardMachine();
-            }
-        });
-    }
 });
