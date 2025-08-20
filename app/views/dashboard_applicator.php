@@ -6,6 +6,7 @@
     <title>HEPC - Applicator Dashboard</title>
     <link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
     <link rel="stylesheet" href="../../public/assets/css/components/modal.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
 </head>
 <body>
     <?php 
@@ -314,7 +315,7 @@
                 </div>
 
                 <div class="button-group">
-                    <button type="button" class="btn-cancel" onclick="closeResetModal()">Cancel</button>
+                    <button type="button" class="cancel-btn" onclick="closeResetModal()">Cancel</button>
                     <button type="submit" class="btn-confirm-dashboard">Confirm Reset</button>
                 </div>
             </form>
@@ -391,7 +392,7 @@
                 </div>
 
                 <div class="button-group">
-                    <button type="button" class="btn-cancel" onclick="closeUndoModal()">Cancel</button>
+                    <button type="button" class="cancel-btn" onclick="closeUndoModal()">Cancel</button>
                     <button type="submit" class="btn-confirm-dashboard">Confirm Undo</button>
                 </div>
             </form>
