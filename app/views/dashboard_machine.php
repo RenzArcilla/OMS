@@ -69,7 +69,7 @@
             <!-- Dashboard Tab -->
             <div id="dashboard-tab" class="tab-content">
                 <div class="page-header">
-                    <h1 class="page-title">📊 Dashboard</h1>
+                    <h1 class="page-title">📊 Machine Dashboard</h1>
                     <div class="header-actions">
                         <button type="button" class="btn btn-secondary" onclick="exportData()">
                             Export Report
@@ -196,6 +196,57 @@
             </div>
         </div>
     </div>
+
+    <!-- Reset Machine Modal -->
+    <div id="resetModalDashboardMachine" class="modal-overlay">
+        <div class="modal modal-reset">
+            <button class="modal-close-btn" onclick="closeResetModal()">×</button>
+            
+            <div class="form-header">
+                <h1 class="form-title">🔄 Reset Machine</h1>
+                <p class="form-subtitle">Reset machine component usage counter</p>
+            </div>
+
+            <form id="resetForm" method="POST" action="../controllers/reset_machine.php">
+                <input type="hidden" name="machine_id" id="reset_machine_id">
+
+                <div class="form-group">
+                    <label class="form-label">
+                        Select Machine Part to Reset
+                        <span class="required-badge">Required</span>
+                    </label>
+                    <select id="editWireType" name="part_name" class="form-input">
+                        <option value="">Select Part</option>
+                        <option value="cut_blade_output">Cut Blade</option>
+                        <option value="strip_blade_a_output">Strip Blade A</option>
+                        <option value="strip_blade_b_output">Strip Blade B</option>
+                        <?php foreach ($custom_machine_parts as $row): ?>
+                            <option value="<?= htmlspecialchars($row['part_name']) ?>">
+                                <?= ucwords(str_replace('_', ' ', htmlspecialchars($row['part_name']))) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="warning-section">
+                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <span class="warning-icon">⚠️</span>
+                        <div>
+                            <strong>Are you sure you want to reset the machine?</strong>
+                            <p>This action will reset the selected component's usage counter to zero!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" onclick="closeResetModalDashboardMachine()">Cancel</button>
+                    <button type="submit" class="btn-confirm">Confirm Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Undo Reset Modal -->
     <div id="undoModalDashboardMachine" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
@@ -232,34 +283,6 @@
             <div class="modal-footer">
                 <button type="button" class="btn-cancel" onclick="closeUndoModalDashboardMachine()">Cancel</button>
                 <button type="button" class="btn-confirm" onclick="saveChanges()">Confirm</button>
-            </div>
-        </div>
-    </div>
-    <div id="resetModalDashboardMachine" class="modal-overlay">
-        <div class="modal modal-reset">
-            <div class="modal-header">
-                <h2 class="modal-title">Reset Machine<span id="editHpNumber"></span></h2>
-            </div>
-            <div class="modal-body">
-                <form id="editForm">
-                    <div class="form-group">
-                        <label class="form-label">Select Machine Part to Reset</label>
-                        <select id="editWireType" class="form-input">
-                            <option>Cut Blade</option>
-                            <option>Strip Blade A</option>
-                            <option>Strip Blade B</option>
-                        </select>
-                    </div>
-                </form>
-                <form id="editForm">
-                    <div class="form-group">
-                        <label class="form-label">Are you sure you want to reset the machine?</label>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-cancel" onclick="closeResetModalDashboardMachine()">Cancel</button>
-                <button type="button" class="btn-confirm" onclick="saveReset()">Confirm</button>
             </div>
         </div>
     </div>
