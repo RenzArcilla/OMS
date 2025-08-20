@@ -75,7 +75,7 @@
                                 <div class="user-avatar">👤</div>
                                 <div class="user-details">
                                     <div class="user-name">John Smith</div>
-                                    <div class="user-email">john.smith@hepc.com</div>
+                                    <div class="user-email">john.smith</div>
                                 </div>
                             </div>
                         </td>
