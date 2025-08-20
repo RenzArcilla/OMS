@@ -521,8 +521,8 @@
             <div class="contact-info">
                 <div class="contact-title">Need Help?</div>
                 <div class="contact-details">
-                    Contact our support team at <a href="mailto:support@company.com">support@company.com</a><br>
-                    or call us at <a href="tel:+1234567890">(123) 456-7890</a>
+                    Contact our support team at <a href="mailto:support@company.com">hayakawa@hepc.com</a><br>
+                    or call us at <a href="tel:+1234567890">(+63) 917 123 4567</a>
                 </div>
             </div>
         </div>
