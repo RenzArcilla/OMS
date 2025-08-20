@@ -1,6 +1,5 @@
 // Open the add user modal
 function openAddUserModal() {
-    console.log("openAddUserModal");
     document.getElementById("addUserModal").style.display = "block";
 }
 
@@ -12,4 +11,8 @@ function closeAddUserModal() {
 // Open the view user modal
 function openViewUserModal() {
     document.getElementById("viewUserModal").style.display = "block";
+}
+
+function closeViewUserModal() {
+    document.getElementById('viewUserModal').style.display = 'none';
 }

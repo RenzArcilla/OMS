@@ -23,7 +23,7 @@
                     <p class="subtitle">Manage user accounts, permissions, and access controls</p>
                 </div>
             </div>
-            <button class="add-user-btn" onclick="openAddUserModal('create')">
+            <button class="add-user-btn" onclick="openAddUserModal()">
                 + Add New User
             </button>
         </div>
@@ -88,7 +88,7 @@
                         <td>2024-12-15 14:30</td>
                         <td>
                             <div class="action-buttons">
-                                <button class="action-btn view-btn" onclick="openModal()" title="View Details">
+                                <button class="action-btn view-btn" onclick="openViewUserModal()" title="View Details">
                                     👁️
                                 </button>
                                 <button class="action-btn edit-btn" onclick="openModal()" title="Edit User">
@@ -223,7 +223,7 @@
     <!-- View User Modal -->
     <div id="viewUserModal" class="modal-overlay">
         <div class="form-container">
-            <button class="modal-close-btn" onclick="openUserModal()">×</button>
+            <button class="modal-close-btn" onclick="closeViewUserModal()">×</button>
             
             <div class="form-header">
                 <h1 class="form-title">
@@ -323,7 +323,7 @@
             <!-- Close Button -->
             <div class="button-group">
                 <div></div>
-                <button class="cancel-btn" onclick="closeModal('viewUserModal')">
+                <button class="cancel-btn" onclick="closeViewUserModal()">
                     Close
                 </button>
             </div>
