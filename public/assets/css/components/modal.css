@@ -1,3 +1,17 @@
+.form-grid-vertical {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px; /* Increased gap between grid items */
+}
+
+.form-grid-vertical .form-section {
+    margin-bottom: 10px; /* Additional spacing between sections */
+}
+
+.form-grid-vertical .form-group {
+    margin-bottom: 10px; /* Space between form groups */
+}
+/* Modal Overlay */
 .modal-overlay {
     position: fixed;
     top: 0;

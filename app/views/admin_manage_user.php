@@ -6,6 +6,8 @@
     <title>HEPC - Admin Manage User</title>
     <link rel="stylesheet" href="../../public/assets/css/base/base.css">
     <link rel="stylesheet" href="../../public/assets/css/admin_manage_user.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
+
 </head>
 <body>
     <?php include '../includes/side_bar.php'; ?>
@@ -85,63 +87,176 @@
         </div>
     </div>
 
-    <!-- User Modal -->
-    <div id="userModal" class="modal-overlay">
+    <!-- Add User Modal -->
+    <div id="addUserModal" class="modal-overlay">
+        <div class="form-container">
+            <button class="modal-close-btn" onclick="closeModal('addUserModal')">×</button>
+            
+            <div class="form-header">
+                <h1 class="form-title">
+                    <span class="modal-avatar">👤</span>
+                    Add New User
+                </h1>
+                <p class="form-subtitle">Enter user information to create a new account</p>
+            </div>
+
+            <form id="addUserForm" onsubmit="addUser(event)">
+                <!-- Personal Information Section -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon">👤</div>
+                        <div class="section-info">
+                            <div class="section-title">Personal Information</div>
+                            <div class="section-description">Basic user details and contact information</div>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-ve">
+                        <div class="form-group">
+                            <label for="addUserName" class="form-label">
+                                Username
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input type="text" id="addUserName" name="name" class="form-input" placeholder="Enter user name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="addUserFirstName" class="form-label">
+                                First Name
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input type="text" id="addUserFirstName" name="first_name" class="form-input" placeholder="Enter first name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="addUserLastName" class="form-label">
+                                Last Name
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input type="text" id="addUserLastName" name="last_name" class="form-input" placeholder="Enter last name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="addPassword" class="form-label">
+                                Password
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input type="password" id="addPassword" name="password" class="form-input" placeholder="Enter password" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account Settings Section -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon">⚙️</div>
+                        <div class="section-info">
+                            <div class="section-title">Account Settings</div>
+                            <div class="section-description">User role and account status configuration</div>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="addUserRole" class="form-label">User Role</label>
+                            <select id="addUserRole" name="role" class="form-input">
+                                <option value="User">User</option>
+                                <option value="Moderator">Moderator</option>
+                                <option value="Admin">Admin</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="addUserStatus" class="form-label">Account Status</label>
+                            <select id="addUserStatus" name="status" class="form-input">
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Suspended">Suspended</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Buttons -->
+                <div class="button-group">
+                    <button type="button" class="cancel-btn" onclick="closeModal('addUserModal')">
+                        Cancel
+                    </button>
+                    <button type="submit" class="submit-btn">
+                        ✨ Add User
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- View User Modal -->
+    <div id="viewUserModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="modalTitle" class="modal-title">
-                    <span id="modalAvatar" class="modal-avatar">👤</span>
-                    <span id="modalTitleText">User Details</span>
+                <h2 id="viewModalTitle" class="modal-title">
+                    <span id="viewModalAvatar" class="modal-avatar">👤</span>
+                    <span id="viewModalTitleText">User Details</span>
                 </h2>
-                <button class="close-btn" onclick="closeModal()">✕</button>
+                <button class="close-btn" onclick="closeModal('viewUserModal')">✕</button>
             </div>
             
             <div class="modal-body">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label class="form-label">Full Name *</label>
-                        <input type="text" id="userName" class="form-input" placeholder="Enter full name">
+                        <label class="form-label">Full Name</label>
+                        <div class="form-field">
+                            <span class="field-icon">👤</span>
+                            <span id="viewUserName">-</span>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">Email Address *</label>
-                        <input type="email" id="userEmail" class="form-input" placeholder="Enter email address">
+                        <label class="form-label">Email Address</label>
+                        <div class="form-field">
+                            <span class="field-icon">📧</span>
+                            <span id="viewUserEmail">-</span>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">Phone Number *</label>
-                        <input type="tel" id="userPhone" class="form-input" placeholder="Enter phone number">
+                        <label class="form-label">Phone Number</label>
+                        <div class="form-field">
+                            <span class="field-icon">📞</span>
+                            <span id="viewUserPhone">-</span>
+                        </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">Department *</label>
-                        <input type="text" id="userDepartment" class="form-input" placeholder="Enter department">
+                        <label class="form-label">Department</label>
+                        <div class="form-field">
+                            <span class="field-icon">🏢</span>
+                            <span id="viewUserDepartment">-</span>
+                        </div>
                     </div>
                     
                     <div class="form-group">
                         <label class="form-label">Role</label>
-                        <select id="userRole" class="form-select">
-                            <option value="User">User</option>
-                            <option value="Moderator">Moderator</option>
-                            <option value="Admin">Admin</option>
-                        </select>
+                        <div class="form-field">
+                            <span class="field-icon">🎭</span>
+                            <span id="viewUserRole">-</span>
+                        </div>
                     </div>
                     
                     <div class="form-group">
                         <label class="form-label">Status</label>
-                        <select id="userStatus" class="form-select">
-                            <option value="Active">Active</option>
-                            <option value="Inactive">Inactive</option>
-                            <option value="Pending">Pending</option>
-                            <option value="Suspended">Suspended</option>
-                        </select>
+                        <div class="form-field">
+                            <span class="field-icon">🟢</span>
+                            <span id="viewUserStatus">-</span>
+                        </div>
                     </div>
                     
                     <div class="form-group">
                         <label class="form-label">Join Date</label>
                         <div class="form-field">
                             <span class="field-icon">📅</span>
-                            <span id="userJoinDate">-</span>
+                            <span id="viewUserJoinDate">-</span>
                         </div>
                     </div>
                     
@@ -149,7 +264,7 @@
                         <label class="form-label">Last Login</label>
                         <div class="form-field">
                             <span class="field-icon">🕒</span>
-                            <span id="userLastLogin">-</span>
+                            <span id="viewUserLastLogin">-</span>
                         </div>
                     </div>
                 </div>
@@ -158,11 +273,11 @@
                     <h3 class="activity-title">Activity Summary</h3>
                     <div class="activity-stats">
                         <div class="activity-stat">
-                            <div id="userFilesUploaded" class="stat-number">0</div>
+                            <div id="viewUserFilesUploaded" class="stat-number">0</div>
                             <div class="stat-label">Files Uploaded</div>
                         </div>
                         <div class="activity-stat">
-                            <div id="userDaysActive" class="stat-number">0</div>
+                            <div id="viewUserDaysActive" class="stat-number">0</div>
                             <div class="stat-label">Days Active</div>
                         </div>
                         <div class="activity-stat">
@@ -174,8 +289,102 @@
             </div>
             
             <div class="modal-footer">
-                <button class="btn-secondary" onclick="closeModal()">Close</button>
-                <button id="modalActionBtn" class="btn-primary" style="display: none;" onclick="saveUser()">Save Changes</button>
+                <button class="btn-secondary" onclick="closeModal('viewUserModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div id="editUserModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="editModalTitle" class="modal-title">
+                    <span id="editModalAvatar" class="modal-avatar">👤</span>
+                    <span id="editModalTitleText">Edit User</span>
+                </h2>
+                <button class="close-btn" onclick="closeModal('editUserModal')">✕</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Full Name *</label>
+                        <input type="text" id="editUserName" class="form-input" placeholder="Enter full name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Email Address *</label>
+                        <input type="email" id="editUserEmail" class="form-input" placeholder="Enter email address">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Phone Number *</label>
+                        <input type="tel" id="editUserPhone" class="form-input" placeholder="Enter phone number">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Department *</label>
+                        <input type="text" id="editUserDepartment" class="form-input" placeholder="Enter department">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Role</label>
+                        <select id="editUserRole" class="form-select">
+                            <option value="User">User</option>
+                            <option value="Moderator">Moderator</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <select id="editUserStatus" class="form-select">
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Suspended">Suspended</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Join Date</label>
+                        <div class="form-field">
+                            <span class="field-icon">📅</span>
+                            <span id="editUserJoinDate">-</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Last Login</label>
+                        <div class="form-field">
+                            <span class="field-icon">🕒</span>
+                            <span id="editUserLastLogin">-</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="activity-section">
+                    <h3 class="activity-title">Activity Summary</h3>
+                    <div class="activity-stats">
+                        <div class="activity-stat">
+                            <div id="editUserFilesUploaded" class="stat-number">0</div>
+                            <div class="stat-label">Files Uploaded</div>
+                        </div>
+                        <div class="activity-stat">
+                            <div id="editUserDaysActive" class="stat-number">0</div>
+                            <div class="stat-label">Days Active</div>
+                        </div>
+                        <div class="activity-stat">
+                            <div class="stat-number">5</div>
+                            <div class="stat-label">Login Sessions</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('editUserModal')">Cancel</button>
+                <button id="editModalActionBtn" class="btn-primary" onclick="saveUser()">Save Changes</button>
             </div>
         </div>
     </div>
