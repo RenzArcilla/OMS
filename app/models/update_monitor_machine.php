@@ -126,7 +126,7 @@ function resetMachinePartOutput($machine_id, $part_name) {
     $custom_part_names = array_column($custom_parts, "part_name");
 
     // Case 1: part is a defined DB column
-    if (in_array($part_name, $defined_parts, true)) {
+    if (in_array($part_name, $accepted_part_names, true)) {
         try {
             $stmt = $pdo->prepare("
                 UPDATE monitor_machine
