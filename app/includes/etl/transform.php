@@ -1,5 +1,26 @@
 <?php
+/*
+    Helper: This file provides a function to transform raw production
+            data into a normalized format. It standardizes dates, machine
+            numbers, shift values, output quantities, and applicator names
+            for consistent storage and processing.
+*/
+
 function transformData($data) {
+    /*
+        Function: transformData
+        Purpose: Normalize and clean raw production data for consistent storage
+                and later processing. Handles date formatting, machine number
+                cleaning, shift normalization, output casting, and applicator
+                formatting.
+
+        Parameters:
+            - data (array): Raw production data rows to be transformed.
+
+        Returns:
+            - array: Transformed production data with standardized fields.
+    */
+
     foreach ($data as &$row) {
         // Normalize Production Date to Y-m-d
         $row['Date'] = date('Y-m-d', strtotime($row['Production Date'] ?? ''));

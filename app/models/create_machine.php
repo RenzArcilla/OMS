@@ -1,7 +1,7 @@
 <?php
 /*
     This script handles the CREATE operation for machines in the database.
-    It includes a function to insert machine data into the database.
+    It includes a function to insert a new machine record with its details.
 */
 
 // Include the database connection
@@ -10,19 +10,19 @@ require_once __DIR__ . '/../includes/db.php';
 function createMachine($control_no, $description, $model,
                         $machine_maker, $serial_no, $invoice_no) {
     /*
-    Function to create a new machine in the database.
-    
-    Args:
-    - $control_no: Control number of the machine.
-    - $description: Description of the machine (AUTOMATIC/SEMI-AUTOMATIC).
-    - $model: Model of the machine.
-    - $machine_maker: Maker of the machine.
-    - $serial_no: Serial number of the applicator.
-    - $invoice_no: Invoice number associated with the applicator.
-                
-    Returns:
-    - true on successful operation.
-    - string containing error message and redirect using JS <alert>.
+        Function to create a new machine in the database.
+        
+        Args:
+        - $control_no: Control number of the machine.
+        - $description: Description of the machine (AUTOMATIC/SEMI-AUTOMATIC).
+        - $model: Model of the machine.
+        - $machine_maker: Maker of the machine.
+        - $serial_no: Serial number of the applicator.
+        - $invoice_no: Invoice number associated with the applicator.
+                    
+        Returns:
+        - true on successful operation.
+        - string containing error message.
     */
 
     global $pdo;

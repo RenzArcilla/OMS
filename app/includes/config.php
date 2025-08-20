@@ -1,4 +1,5 @@
 <?php
+
 // Database settings
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'machine_and_applicator');

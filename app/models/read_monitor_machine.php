@@ -1,6 +1,7 @@
 <?php
 /*
-    Get the output of a machine part (defined or custom).
+    This file defines a function that retrieves the output of a machine part,
+    whether it is a fixed schema part or a custom part stored as JSON.
 */
 
 require_once __DIR__ . '/../includes/db.php';
@@ -8,9 +9,20 @@ require_once "read_custom_parts.php";
 
 function getMonitorMachinePartOutput($machine_id, $part_name) {
     /*
-    Returns the integer output for a given machine part.
-    If custom part, decode JSON and extract its value.
+        Retrieve the integer output of a specific machine part.
+
+        Handles both predefined parts (direct columns in monitor_machine table)
+        and custom parts (stored in JSON in custom_parts_output column).
+
+        Args:
+        - $machine_id: int, ID of the machine
+        - $part_name: string, name of the machine part
+
+        Returns:
+        - int: output value of the part
+        - string: error message if part not found or DB error occurs
     */
+        
     global $pdo;
 
     // Fixed schema parts (direct DB columns)

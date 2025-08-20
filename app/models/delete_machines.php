@@ -1,7 +1,8 @@
 <?php
 /*
-    This file defines a function that disables a machine row in the database.
-    Used in the machine listing with pagination, such as in infinite scroll.
+    This file contains a function for disabling (soft DELETE-ing) a machine row 
+    in the machines table. 
+    It is used in the machine listing with pagination (e.g., infinite scroll).
 */
 
 // Include the database connection
@@ -9,13 +10,14 @@ require_once __DIR__ . '/../includes/db.php';
 
 function disableMachine($machine_id): bool {
     /*
-    Function to disable a machine in the database.
+        Disable (soft delete) a machine in the database.
 
-    Args:
-    - $machine_id: ID of the machine to disable.
+        Args:
+        - $machine_id: ID of the machine to disable
 
-    Returns:
-    - True on success, string containing error message on failure.
+        Returns:
+        - true on success
+        - string containing error message on failure
     */
     global $pdo;
 

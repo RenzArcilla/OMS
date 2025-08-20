@@ -1,7 +1,15 @@
 <?php
 /*
-    This file defines a function that queries a list of cumulative machine outputs from the database.
-    Used in the machine dashboard table.
+    This file defines functions for querying and analyzing machine outputs from the database. 
+    It supports:
+
+    - Fetching machine records with cumulative outputs (with pagination & sorting).
+    - Identifying the part with the highest average output.
+    - Listing all parts ordered by average output (standard & custom).
+    - Searching machines by control number.
+
+    Used in the Machine Dashboard for displaying machine performance 
+    and monitoring part replacement priorities.
 */
 
 // Include the database connection
@@ -9,16 +17,16 @@ require_once __DIR__ . '/../../includes/db.php';
 
 function getRecordsAndOutputs(int $limit = 10, int $offset = 0, $part_names_array): array {
     /*
-    Function to fetch a list of cumulative machine outputs from the database with pagination.
-    It prepares and executes a SELECT query that fetches machines ordered by highest output,
-    and returns them as an associative array.
+        Function to fetch a list of cumulative machine outputs from the database with pagination.
+        It prepares and executes a SELECT query that fetches machines ordered by highest output,
+        and returns them as an associative array.
 
-    Args:
-    - $limit: Maximum number of rows to fetch (default is 10).
-    - $offset: Number of rows to skip (default is 0), used for pagination.
+        Args:
+        - $limit: Maximum number of rows to fetch (default is 10).
+        - $offset: Number of rows to skip (default is 0), used for pagination.
 
-    Returns:
-    - Array of machines (associative arrays) on success.
+        Returns:
+        - Array of machines (associative arrays) on success.
     */
 
     global $pdo;
@@ -103,11 +111,11 @@ function getRecordsAndOutputs(int $limit = 10, int $offset = 0, $part_names_arra
 
 function findHighestOutputPart($part_names_array): string {
     /*
-    Function to find the part with the highest average output across all machines.
-    This helps identify which parts are most likely to need replacement.
-    
-    Returns:
-    - String: The column name of the part with the highest average output
+        Function to find the part with the highest average output across all machines.
+        This helps identify which parts are most likely to need replacement.
+        
+        Returns:
+        - String: The column name of the part with the highest average output
     */
     
     global $pdo;
@@ -160,11 +168,11 @@ function findHighestOutputPart($part_names_array): string {
 
 function getPartsOrderedByOutput($part_names_array): array {
     /*
-    Function to get all parts ordered by their average output.
-    Useful for dashboard analytics and identifying replacement priorities.
-    
-    Returns:
-    - Array: Parts ordered by average output (highest first)
+        Function to get all parts ordered by their average output.
+        Useful for dashboard analytics and identifying replacement priorities.
+        
+        Returns:
+        - Array: Parts ordered by average output (highest first)
     */
     
     global $pdo;
@@ -229,14 +237,14 @@ function getPartsOrderedByOutput($part_names_array): array {
 
 function searchMachineByControlNo($control_no, $part_names_array): ?array {
     /*
-    Function to search for a specific machine by control number.
-    
-    Args:
-    - $control_no: The control number to search for
-    - $part_names_array: Array of custom part names
-    
-    Returns:
-    - Array with machine data if found, null if not found
+        Function to search for a specific machine by control number.
+        
+        Args:
+        - $control_no: The control number to search for
+        - $part_names_array: Array of custom part names
+        
+        Returns:
+        - Array with machine data if found, null if not found
     */
     
     global $pdo;

@@ -1,6 +1,7 @@
 <?php
 /*
-    This file defines functions that query (READ) the applicator_reset table from the database.
+    This file defines functions for querying (READ) data 
+    from the `applicator_reset` table in the database.
 */
 
 // Include the database connection
@@ -8,14 +9,14 @@ require_once __DIR__ . '/../includes/db.php';
 
 function getApplicatorReset($applicator_id, $part_name) {
     /*
-    Retrieve applicator_reset records for a specific applicator and part.
+        Retrieve applicator_reset records for a specific applicator and part.
 
-    Args:
-    - $applicator_id : int, 
-    - $part_name: string, name of applicator part
+        Args:
+        - $applicator_id : int, 
+        - $part_name: string, name of applicator part
 
-    Returns:
-    - array: Associative array of applicator_reset records (empty array if none)
+        Returns:
+        - array: Associative array of applicator_reset records (empty array if none)
     */
 
     global $pdo;
@@ -39,16 +40,16 @@ function getApplicatorReset($applicator_id, $part_name) {
 
 function getApplicatorResetOnTimeStamp($applicator_id, $part_name, $reset_time) {
     /*
-    Retrieve an applicator_reset records for a specific applicator and part.
+        Retrieve an applicator_reset records for a specific applicator and part.
 
-    Args:
-    - $applicator_id : int, 
-    - $part_name: string, name of applicator part
-    - $reset_time: time of reset
+        Args:
+        - $applicator_id : int, pertains to an applicator
+        - $part_name: string, name of applicator part
+        - $reset_time: time of reset
 
-    Returns:
-    - array: associative array of applicator_reset records (empty array if none)
-    - string: contains error message
+        Returns:
+        - array: associative array of applicator_reset records (empty array if none)
+        - string: contains error message
     */
 
     global $pdo;

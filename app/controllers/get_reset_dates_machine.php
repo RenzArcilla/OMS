@@ -1,6 +1,6 @@
 <?php
 /*
-    This file will be used to display available timestamps for machine part output reset via AJAX.
+    Helper: This file will be used to display available timestamps for machine part output reset via AJAX.
 */
 
 

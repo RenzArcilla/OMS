@@ -1,15 +1,24 @@
 <?php
 /*
-    This file contains functions that updates the monitoring data for applicators.
+    Contains functions to monitor, reset, and UPDATE applicator outputs.
+    Handles both standard and custom parts in the monitor_applicator table.
 */
 
 require_once __DIR__ . '/../includes/db.php';
 
 function monitorApplicatorOutput($applicator_data, $applicator_output, $direction = "increment") {
     /*
-        Updates or inserts applicator monitoring data into the `monitor_applicator` table.
-        Automatically handles both SIDE-type and END/CLAMP/STRIP AND CRIMP-type applicators,
-        including increment or decrement logic for outputs and updating custom parts.
+        Updates or inserts applicator monitoring data into the monitor_applicator table.
+        Handles SIDE-type and END/CLAMP/STRIP AND CRIMP-type applicators, including custom parts.
+        
+        Args:
+        - $applicator_data: array or int, applicator info or ID
+        - $applicator_output: int, output value to increment/decrement
+        - $direction: string, "increment" or "decrement" (default "increment")
+
+        Returns:
+        - true on success
+        - string containing error message
     */
 
     global $pdo;
@@ -136,12 +145,16 @@ function monitorApplicatorOutput($applicator_data, $applicator_output, $directio
 
 function resetApplicatorPartOutput($applicator_id, $part_name) {
     /*
-        Resets the output for a specific part of an applicator in the monitor_applicator table.
-        Handles both defined (columns) and custom (JSON) parts.
+        Resets the output for a specific part of an applicator.
+        Supports both defined columns and custom JSON parts.
+
+        Args:
+        - $applicator_id: int, the ID of the applicator
+        - $part_name: string, the name of the part to reset
 
         Returns:
-        - true on success 
-        - error string
+        - true on success
+        - string containing error message
     */
 
     global $pdo;
@@ -235,17 +248,17 @@ function resetApplicatorPartOutput($applicator_id, $part_name) {
 
 function editPartOutputValue($applicator_id, $part_name, $value) {
     /*
-    Reverts the output to previous value for a specific part of an applicator in the monitor_applicator table.
-    Handles both defined (columns) and custom (JSON) parts.
+        Reverts the output value for a specific part of an applicator.
+        Supports both defined columns and custom JSON parts.
 
-    Parameters:
-    - $applicator_id: int, pertains to an applicator
-    - $part_name: str, name of the part to revert output (defined/custom)
-    - $value: int, value to revert back to 
+        Args:
+        - $applicator_id: int, the ID of the applicator
+        - $part_name: string, the name of the part to revert
+        - $value: int, the value to set
 
-    Returns:
-    - true on success 
-    - error string
+        Returns:
+        - true on success
+        - string containing error message
     */
 
     global $pdo;

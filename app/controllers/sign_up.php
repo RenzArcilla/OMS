@@ -1,7 +1,7 @@
 <?php
 /*
-    This file is part of the application for user registration.
-    It handles the sign-in operation for user accounts.
+    This file is part of the sign-in operation for user accounts.
+    It includes the database connection and processes the signin/signup form submission.
 */
 
 require_once '../includes/js_alert.php'; // Include the JavaScript alert function

@@ -1,7 +1,7 @@
 <?php
 /*
-    This script handles the UPDATE operation for records in the database.
-    It includes a function to update record data in the database.
+    Handles UPDATE operations for records in the database.
+    Provides a function to update inspection date, shift, applicators, and machine.
 */
 
 // Include the database connection
@@ -9,16 +9,20 @@ require_once __DIR__ . '/../includes/db.php';
 
 function updateRecord($record_id, $date_inspected, $shift, $app1_id, $app2_id, $machine_id) {
     /*
-    Function to update an existing record in the database.
+        Updates an existing record in the database.
+        Handles date, shift, applicators, and machine fields.
+        
+        Args:
+        - $record_id: int, ID of the record to update
+        - $date_inspected: string, date of inspection
+        - $shift: string, work shift (FIRST, SECOND, NIGHT)
+        - $app1_id: int, ID of first applicator
+        - $app2_id: int, ID of second applicator
+        - $machine_id: int, ID of the machine
 
-    Args:
-    - $record_id: ID of the record to update.
-    - $date_inspected: Date of inspection.
-    - $shift: Work shift (1st, 2nd, NIGHT).
-
-    Returns:
-    - true on successful operation.
-    - string containing error message and redirect using JS <alert>.
+        Returns:
+        - true on success
+        - string with error message on failure
     */
 
     global $pdo;

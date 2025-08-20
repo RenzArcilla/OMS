@@ -1,7 +1,14 @@
 <?php
 /*
-    This file defines a function that queries a list of machines from the database.
-    Used in the machine listing with pagination, such as in infinite scroll.
+    This file defines functions that query the machines table from the database.
+    Used when fetching machine records for listing or validation, such as in
+    pagination or infinite scroll.
+
+    Functions included:
+    - getMachines(PDO $pdo, int $limit = 10, int $offset = 0): Fetches a paginated list of active machines.
+    - machineExists($control_no): Checks if a machine exists by control number.
+    - getInactiveMachineByControlNo($control_no): Checks if a machine exists and is inactive.
+    - getActiveMachineByControlNo($control_no): Checks if a machine exists and is active.
 */
 
 // Include the database connection
@@ -9,19 +16,18 @@ require_once __DIR__ . '/../includes/db.php';
 
 function getMachines(PDO $pdo, int $limit = 10, int $offset = 0): array {
     /*
-    Function to fetch a list of machines from the database with pagination.
-    It prepares and executes a SELECT query that fetches machines ordered by most recent,
-    and returns them as an associative array.
+        Function to fetch a list of machines from the database with pagination.
+        It prepares and executes a SELECT query that fetches machines ordered by most recent,
+        and returns them as an associative array.
 
-    Args:
-    - $pdo: PDO database connection object.
-    - $limit: Maximum number of rows to fetch (default is 10).
-    - $offset: Number of rows to skip (default is 0), used for pagination.
+        Args:
+        - $pdo: PDO database connection object.
+        - $limit: Maximum number of rows to fetch (default is 10).
+        - $offset: Number of rows to skip (default is 0), used for pagination.
 
-    Returns:
-    - Array of machines (associative arrays) on success.
+        Returns:
+        - Array of machines (associative arrays) on success.
     */
-
     
     // Prepare the SQL statement with placeholders for limit and offset
     $stmt = $pdo->prepare("
@@ -44,15 +50,15 @@ function getMachines(PDO $pdo, int $limit = 10, int $offset = 0): array {
 
 function machineExists($control_no){
     /*
-    Function to check if machine exists.
+        Function to check if machine exists.
 
-    Arg:
-    - $control_no: unique identifier of the machine
+        Arg:
+        - $control_no: unique identifier of the machine
 
-    Returns:
-    - Machine data if exists
-    - False if machine does not exist
-    - String containing error message and redirect using JS <alert>.
+        Returns:
+        - Machine data if exists
+        - False if machine does not exist
+        - String containing error message
     */
 
     global $pdo;
@@ -85,6 +91,18 @@ function machineExists($control_no){
 }
 
 function getInactiveMachineByControlNo($control_no) {
+    /*
+        Retrieve inactive machine by control number.
+
+        Args:
+        - $control_no: string, control number of the machine
+
+        Returns:
+        - true if inactive machine exists
+        - false if no inactive machine found
+        - string containing error message on failure
+    */
+
     global $pdo;
 
     try {
@@ -116,6 +134,18 @@ function getInactiveMachineByControlNo($control_no) {
 
 
 function getActiveMachineByControlNo($control_no) {
+    /*
+        Retrieve active machine by control number.
+
+        Args:
+        - $control_no: string, control number of the machine
+
+        Returns:
+        - true if active machine exists
+        - false if no active machine found
+        - string containing error message on failure
+    */
+
     global $pdo;
 
     try {

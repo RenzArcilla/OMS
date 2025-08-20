@@ -1,6 +1,6 @@
 <?php
 /*
-    This file is part of log in operation for user accounts.
+    This file is part of the log in operation for user accounts.
     It includes the database connection and processes the login form submission.
 */
 

@@ -1,7 +1,10 @@
 <?php
 /*
-    This script handles the CREATE operation for submitting a new output record in the applicator_output database.
-    It includes a function to insert output data into the database.
+    This script handles the CREATE operation for adding a new applicator output record 
+    into the applicator_outputs database table. 
+
+    It defines a function that inserts output data for a given applicator and record ID, 
+    including handling of custom applicator parts.
 */
 
 // Include the database connection
@@ -9,17 +12,17 @@ require_once __DIR__ . '/../includes/db.php';
 
 function submitApplicatorOutput($applicator_data, $applicator_output, $record_id) {
     /*
-    Function to submit applicator output data to the database.
-    The app_output value is added to all existing component values for this applicator.
-    
-    Args:
-    - $applicator_data: Array containing applicator information from database
-    - $app_output: Integer value to add to all existing component values
-    - $record_id: ID of the record to associate this output with
-    
-    Returns:
-    - Boolean true on success
-    - String containing error message and redirect using JS <alert> on failure
+        Function to submit applicator output data to the database.
+        The app_output value is added to all existing component values for this applicator.
+        
+        Args:
+        - $applicator_data: Array containing applicator information from database
+        - $app_output: Integer value to add to all existing component values
+        - $record_id: ID of the record to associate this output with
+        
+        Returns:
+        - true on success
+        - String containing error message and redirect using JS <alert> on failure
     */
     
     global $pdo;

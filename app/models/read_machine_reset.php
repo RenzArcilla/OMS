@@ -1,6 +1,11 @@
 <?php
 /*
-    This file defines functions that query (READ) the machine_reset table from the database.
+    This file defines functions that query the machine_reset table from the database.
+    Used when fetching reset records for machines, e.g., for reporting or logs.
+
+    Functions included:
+    - getMachineReset($machine_id, $part_name): Retrieves all reset records for a specific machine and part.
+    - getMachineResetOnTimeStamp($machine_id, $part_name, $reset_time): Retrieves a specific reset record by timestamp.
 */
 
 // Include the database connection
@@ -8,14 +13,14 @@ require_once __DIR__ . '/../includes/db.php';
 
 function getMachineReset($machine_id, $part_name) {
     /*
-    Retrieve machine_reset records for a specific machine and part.
+        Retrieve machine_reset records for a specific machine and part.
 
-    Args:
-    - $machine_id : int, 
-    - $part_name: string, name of machine part
+        Args:
+        - $machine_id : int, 
+        - $part_name: string, name of machine part
 
-    Returns:
-    - array: Associative array of machine_reset records (empty array if none)
+        Returns:
+        - array: Associative array of machine_reset records (empty array if none)
     */
 
     global $pdo;
@@ -36,20 +41,18 @@ function getMachineReset($machine_id, $part_name) {
 }
 
 
-
-
 function getMachineResetOnTimeStamp($machine_id, $part_name, $reset_time) {
     /*
-    Retrieve a machine_reset records for a specific machine and part.
+        Retrieve a machine_reset records for a specific machine and part.
 
-    Args:
-    - $machine_id : int, pertains to an machine
-    - $part_name: string, name of machine part
-    - $reset_time: time of reset
+        Args:
+        - $machine_id : int, pertains to an machine
+        - $part_name: string, name of machine part
+        - $reset_time: time of reset
 
-    Returns:
-    - array: associative array of machine_reset records (empty array if none)
-    - string: contains error message
+        Returns:
+        - array: associative array of machine_reset records (empty array if none)
+        - string: contains error message
     */
 
     global $pdo;

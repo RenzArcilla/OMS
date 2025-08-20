@@ -1,6 +1,7 @@
 <?php
 /*
-    This file contains READ operation the records table.
+    This file defines a function that queries the records table (READ).
+    Fetches all records encoded later than a given timestamp.
 */
 
 // Include the database connection
@@ -9,15 +10,16 @@ require_once __DIR__ . '/../includes/db.php';
 
 function getRecordsLaterThanTimestamp($timestamp) {
     /*
-    Fetches all records encoded later than a timestamp in the database.
+        Retrieve records from the database that were encoded after a specific timestamp.
 
-    Args:
-    - $timestamp: date_time
+        Args:
+        - $timestamp: string, date-time to compare
 
-    Returns:
-    - array of records (possibly empty) on success
-    - string containing error message on failure
+        Returns:
+        - array: associative array of records (empty array if none)
+        - string: error message on failure
     */
+    
     global $pdo;
 
     try {

@@ -8,19 +8,19 @@ require_once __DIR__ . '/../includes/db.php';
 
 function getApplicators(PDO $pdo, int $limit = 10, int $offset = 0): array {
     /*
-    Retrieve applicator records from the database with pagination.
-    Used in the applicator listing with pagination, such as in infinite scroll.
+        Retrieve applicator records from the database with pagination.
+        Used in the applicator listing with pagination, such as in infinite scroll.
 
-    This function fetches applicator rows ordered by latest ID, limited by
-    the given amount and offset. Used for infinite scroll in the frontend.
+        This function fetches applicator rows ordered by latest ID, limited by
+        the given amount and offset. Used for infinite scroll in the frontend.
 
-    Args:
-    - $pdo (PDO): PDO database connection object.
-    - $limit (int): Number of rows to fetch.
-    - $offset (int): Number of rows to skip.
+        Args:
+        - $pdo (PDO): PDO database connection object.
+        - $limit (int): Number of rows to fetch.
+        - $offset (int): Number of rows to skip.
 
-    Returns:
-    - array: Associative array of applicator records.
+        Returns:
+        - array: Associative array of applicator records.
     */
 
 
@@ -40,15 +40,15 @@ function getApplicators(PDO $pdo, int $limit = 10, int $offset = 0): array {
 
 function applicatorExists($hp_no){
     /*
-    Function to check if applicator exists.
+        Function to check if applicator exists.
 
-    Arg:
-    - $hp_no: unique identifier of the applicator
+        Arg:
+        - $hp_no: unique identifier of the applicator
 
-    Returns:
-    - Applicator data if exists
-    - False if applicator does not exist
-    - String containing error message and redirect using JS <alert>.
+        Returns:
+        - Applicator data if exists
+        - False if applicator does not exist
+        - String containing error message
     */
 
     global $pdo;
@@ -81,7 +81,20 @@ function applicatorExists($hp_no){
     }
 }
 
+
 function getInactiveApplicatorByHpNo($hp_no) {
+    /*
+        Function to check if an inactive applicator exists by HP number.
+
+        Args:
+        - $hp_no: HP number of the applicator.
+
+        Returns:
+        - True if an inactive applicator exists.
+        - False if no inactive applicator exists.
+        - String containing error message on failure.
+    */
+
     global $pdo;
 
     try {
@@ -113,6 +126,18 @@ function getInactiveApplicatorByHpNo($hp_no) {
 
 
 function getActiveApplicatorByHpNo($hp_no) {
+    /*
+        Function to check if an active applicator exists by HP number.
+
+        Args:
+        - $hp_no: HP number of the applicator.
+
+        Returns:
+        - True if an active applicator exists.
+        - False if no active applicator exists.
+        - String containing error message on failure.
+    */
+
     global $pdo;
 
     try {

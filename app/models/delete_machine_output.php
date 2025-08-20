@@ -1,19 +1,19 @@
 <?php
 /*
-    This file contains functions that deletes records from the machine_output table.
+    This file contains functions that DELETEs records from the machine_output table.
 */
 
 
 function disableMachineOutput($record_id): bool|string {
     /*
-    Disable (soft delete) a machine output by record_id.
+        Disable (soft delete) a single machine output by record_id.
 
-    Args:
-    - $record_id: ID of the record to disable
-    
-    Returns:
-    - true on success
-    - string containing error message on failure
+        Args:
+        - $record_id: ID of the record to disable
+
+        Returns:
+        - true on success
+        - string containing error message on failure
     */
 
     global $pdo;
@@ -37,14 +37,14 @@ function disableMachineOutput($record_id): bool|string {
 
 function disableMachineOutputsByRecordIds(array $record_ids): bool|string {
     /*
-    Function to disable (soft delete) multiple machine outputs in the database.
+        Disable (soft delete) multiple machine outputs by record IDs.
 
-    Args:
-    - $record_ids: array of record IDs to disable
+        Args:
+        - $record_ids: Array of record IDs to disable
 
-    Returns:
-    - true on success
-    - string containing error message on failure
+        Returns:
+        - true on success
+        - string containing error message on failure
     */
 
     global $pdo;

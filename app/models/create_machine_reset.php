@@ -1,6 +1,7 @@
 <?php 
-/* 
-    This file contains functiions to create entries on the machine_reset table.
+/*
+    This file defines a function to CREATE entries in the machine_reset table.
+    Used to log part resets performed on machines.
 */
 
 

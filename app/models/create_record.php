@@ -10,19 +10,19 @@ require_once __DIR__ . '/../includes/db.php';
 function createRecord($shift, $machine_data, $applicator1_data, 
                     $applicator2_data, $date_inspected, $created_by) {
     /*
-    Function to create a new record in the records table.
-    
-    Args:
-    - $shift: String representing the shift ('1st', '2nd', 'NIGHT')
-    - $machine_data: Array containing machine information from database
-    - $applicator1_data: Array containing applicator information from database
-    - $applicator2_data: Array containing applicator information from database
-    - $date_inspected: String date in Y-m-d format
-    - $created_by: Integer user ID of the person creating the record
-    
-    Returns:
-    - Integer record_id on success
-    - String containing error message and redirect using JS <alert> on failure
+        Function to create a new record in the records table.
+        
+        Args:
+        - $shift: String representing the shift ('1st', '2nd', 'NIGHT')
+        - $machine_data: Array containing machine information from database
+        - $applicator1_data: Array containing applicator information from database
+        - $applicator2_data: Array containing applicator information from database
+        - $date_inspected: String date in Y-m-d format
+        - $created_by: Integer user ID of the person creating the record
+        
+        Returns:
+        - Integer record_id on success
+        - String containing error message and redirect using JS <alert> on failure
     */
     
     global $pdo;
