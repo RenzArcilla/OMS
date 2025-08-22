@@ -25,6 +25,7 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="../../public/assets/css/record_output.css">
     <link rel="stylesheet" href="../../public/assets/css/add_entry.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
 </head> 
 <body>
     <div class="container">

@@ -4,65 +4,6 @@
     margin: 0 auto;
 }
 
-.header {
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.header-left {
-    display: flex;
-    align-items: center;
-}
-
-.back-btn {
-    padding: 0.75rem;
-    border: 1px solid #E5E7EB;
-    border-radius: 0.75rem;
-    background: white;
-    cursor: pointer;
-    margin-right: 1rem;
-    transition: all 0.2s;
-}
-
-.back-btn:hover {
-    background: #F3F4F6;
-}
-
-.title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    background: linear-gradient(135deg, #2F80ED 0%, #27AE60 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 0.5rem;
-}
-
-.subtitle {
-    color: #6B7280;
-}
-
-.add-user-btn {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.75rem;
-    font-weight: 600;
-    color: white;
-    background: linear-gradient(135deg, #2F80ED 0%, #27AE60 100%);
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 8px 25px rgba(47, 128, 237, 0.3);
-    transition: all 0.3s;
-}
-
-.add-user-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 35px rgba(47, 128, 237, 0.4);
-}
-
 .filters-card {
     background: white;
     border-radius: 0.75rem;

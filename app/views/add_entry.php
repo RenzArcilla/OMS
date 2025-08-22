@@ -28,6 +28,7 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="../../public/assets/css/base/base.css">
     <link rel="stylesheet" href="../../public/assets/css/add_entry.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
     <!-- Load machine infinite scroll logic -->
     <script src="../../public/assets/js/load_machines.js" defer></script>
     <!-- Load applicator infinite scroll logic -->
@@ -42,22 +43,14 @@ if (!isset($_SESSION['user_id'])) {
     <?php // include '../includes/side_bar.php'; ?>
     <div class="container">
         <!-- Header -->
-        <div class="header">
-            <div class="header-left">
-                <button class="back-btn" onclick="window.history.back()">
-                    ←
-                </button>
-                <div>
-                    <h1 class="title">Manage Entries</h1>
-                    <p class="subtitle">Manage machines and applicators in the system</p>
-                </div>
-            </div>
-            <div class="add-entry-buttons">
-                <button class="add-entry-btn add-machine-btn" onclick="openMachineModal()">
+        <div class="page-header">
+            <h1 class="page-title">Manage Entries</h1>
+            <div class="header-actions">
+                <button class="btn btn-primary" onclick="openMachineModal()">
                     🔧 Add Machine
                 </button>
 
-                <button class="add-entry-btn add-applicator-btn" onclick="openApplicatorModal()">
+                <button class="btn btn-primary" onclick="openApplicatorModal()">
                     ⚡ Add Applicator
                 </button>
             </div>

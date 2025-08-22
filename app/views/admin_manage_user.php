@@ -7,20 +7,15 @@
     <link rel="stylesheet" href="../../public/assets/css/base/base.css">
     <link rel="stylesheet" href="../../public/assets/css/admin_manage_user.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
-
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
 </head>
 <body>
     <?php include '../includes/side_bar.php'; ?>
     <div class="container">
         <!-- Header -->
-        <div class="header">
-            <div class="header-left">
-                <div>
-                    <h1 class="title">Manage Users</h1>
-                    <p class="subtitle">Manage user accounts, permissions, and access controls</p>
-                </div>
-            </div>
-            <button class="add-user-btn" onclick="openAddUserModal()">
+        <div class="page-header">
+            <h1 class="page-title">Manage Users</h1>
+            <button class="btn btn-primary" onclick="openAddUserModal()">
                 + Add New User
             </button>
         </div>
