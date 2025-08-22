@@ -14,6 +14,11 @@ function openResetModal(button) {
     const applicatorId = button.getAttribute("data-id");
     document.getElementById("reset_applicator_id").value = applicatorId;
     document.getElementById("resetModalDashboardApplicator").style.display = "block";
+    window.onclick = function(event) {
+        if (event.target === document.getElementById('resetModalDashboardApplicator')) {
+            document.getElementById('resetModalDashboardApplicator').style.display = 'none';
+        }
+    }
 }
 
 // Close the reset modal
