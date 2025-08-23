@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Applicator Dashboard</title>
     <link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
-    <link rel="stylesheet" href="../../public/assets/css/components/modal.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
 </head>
 <body>
@@ -278,7 +276,7 @@
                         </div>
                     </div>
 
-                    <div class="form-grid-single">
+                    <div class="form-grid-vertical">
                         <div class="form-group">
                             <label class="form-label">
                                 Select Applicator Part to Reset

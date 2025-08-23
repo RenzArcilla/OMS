@@ -11,12 +11,13 @@
 .form-grid-vertical .form-group {
     margin-bottom: 10px; /* Space between form groups */
 }
+
 /* Modal Overlay */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 90%;
     height: 100%;
     background: rgba(0, 0, 0, 0.6);
     display: none;
@@ -49,7 +50,7 @@
     animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid rgba(229, 231, 235, 0.8);
     margin: auto;
-    margin-top: 60px;
+    margin-top: 30px;
 }
 
 .modal-close-btn {
