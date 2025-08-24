@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../public/assets/css/components/modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
 </head>
 <body>
     <?php 
@@ -96,7 +97,7 @@
 
                 <!-- Applicator Status Section -->
                 <div class="data-section">
-                    <div class="section-header expanded" onclick="toggleSection(this)">
+                    <div class="section-header">
                         <div class="section-title">
                             <span class="filter-info">
                                 <?= htmlspecialchars($filter_display) ?>
