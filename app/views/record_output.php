@@ -42,19 +42,16 @@ if (!isset($_SESSION['user_id'])) {
             </div>
             <!-- Scrollable container for infinite scrolling -->
             <div class="data-section">
-                <div class="section-header expanded">
+                <div class="section-header expanded" onclick="toggleSection(this)">
                     <div class="section-title">
-                        📊 Latest Records
-                        <span class="section-badge">15</span>
+                        <span class="filter-info">
+                        </span>
                     </div>
-                    <svg class="expand-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
                 </div>
 
                 <div class="search-filter">
                     <input type="text" class="search-input" placeholder="Search records..." onkeyup="filterTable(this.value)">
-                    <button class="filter-btn active" onclick="filterByStatus(this, 'all')">All</button>
+                    <button class="filter-btn active" onclick="filterByStatus(this, 'all')">Search</button>
                     <button class="filter-btn" onclick="filterByStatus(this, 'recent')">First Shift</button>
                     <button class="filter-btn" onclick="filterByStatus(this, 'recent')">Second Shift</button>
                     <button class="filter-btn" onclick="filterByStatus(this, 'recent')">Night Shift</button>
@@ -62,7 +59,7 @@ if (!isset($_SESSION['user_id'])) {
 
                 <div class="section-content expanded" id="table-container" style="height: 500px; overflow-y: auto;">
                     <div class="table-container">
-                        <table class="data-table"id="data-table" >
+                        <table class="data-table" id="data-table">
                             <thead>
                                 <tr>
                                     <th>Actions</th>
