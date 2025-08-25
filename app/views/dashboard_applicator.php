@@ -65,7 +65,7 @@
     $top_3_parts = array_slice($parts_ordered, 0, 3);
     ?>
 
-    <div class="admin-container">
+    <div class="container">
         <!-- Main Content -->
         <div class="main-content">
             <!-- Dashboard Tab -->
