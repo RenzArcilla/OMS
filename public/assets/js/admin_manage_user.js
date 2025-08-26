@@ -29,6 +29,7 @@ function closeViewUserModal() {
 
 // Open the edit user modal
 function openEditUserModal(button) {
+    document.getElementById('edit_user_id').value = button.dataset.id || '';
     document.getElementById('edit_username').value = button.dataset.username || '';
     document.getElementById('edit_first_name').value = button.dataset.firstname || '';
     document.getElementById('edit_last_name').value = button.dataset.lastname || '';

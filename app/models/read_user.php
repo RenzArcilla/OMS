@@ -70,7 +70,7 @@ function getUsers(int $limit = 10, int $offset = 0): array {
     global $pdo;
     // Prepare the SQL statement with placeholders for limit and offset
     $stmt = $pdo->prepare("
-        SELECT username, first_name, last_name, user_type
+        SELECT user_id, username, first_name, last_name, user_type
         FROM users
         ORDER BY user_id DESC 
         LIMIT :limit OFFSET :offset
@@ -83,4 +83,40 @@ function getUsers(int $limit = 10, int $offset = 0): array {
     // Execute the query and return the results
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+function getUserByUsername($username) {
+    /*
+        Function to fetch a user by username.
+
+        Args:
+        - $username: string, the username of the user to fetch.
+
+        Returns:
+        - array: user data if found.
+        - false: if user does not exist.
+        - string (alert message): on database failure.
+    */
+        
+    global $pdo;
+
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username");
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result === false) {
+            return false;
+        } else {
+            // $result is an array with user data
+            return $result;
+        }
+
+    } catch (PDOException $e) {
+        error_log("Error checking duplicate username: " . $e->getMessage());
+        return "Database error while checking username. Please try again.";
+        exit;
+    }
 }

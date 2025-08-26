@@ -98,6 +98,7 @@
                                         <button class="action-btn edit-btn" 
                                                 onclick="openEditUserModal(this)" 
                                                 title="Edit User"
+                                                data-id="<?php echo htmlspecialchars($user['user_id'] ?? ''); ?>"
                                                 data-username="<?php echo htmlspecialchars($user['username'] ?? ''); ?>"
                                                 data-firstname="<?php echo htmlspecialchars($user['first_name'] ?? ''); ?>"
                                                 data-lastname="<?php echo htmlspecialchars($user['last_name'] ?? ''); ?>"
@@ -288,7 +289,6 @@
         </div>
     </div>
 
-
     <!-- Edit User Modal -->
     <div id="editUserModal" class="modal-overlay">
         <div class="form-container">
@@ -302,7 +302,9 @@
                 <p class="form-subtitle">Update user information and credentials</p>
             </div>
 
-            <form id="editUserForm" onsubmit="saveUser(event)">
+            <form id="editUserForm" method="POST" action="../controllers/edit_user.php">
+                <input type="hidden" id="edit_user_id" name="user_id" value="">
+
                 <!-- Personal Information Section -->
                 <div class="form-section">
                     <div class="section-header">
@@ -319,7 +321,7 @@
                                 Username
                                 <span class="required-badge">Required</span>
                             </label>
-                            <input type="text" id="edit_username" name="edit_username" class="form-input" required>
+                            <input type="text" id="edit_username" name="username" class="form-input" required>
                         </div>
                         
                         <div class="form-group">
@@ -327,7 +329,7 @@
                                 First Name
                                 <span class="required-badge">Required</span>
                             </label>
-                            <input type="text" id="edit_first_name" name="edit_first_name" class="form-input" required>
+                            <input type="text" id="edit_first_name" name="first_name" class="form-input" required>
                         </div>
                         
                         <div class="form-group">
@@ -335,7 +337,7 @@
                                 Last Name
                                 <span class="required-badge">Required</span>
                             </label>
-                            <input type="text" id="edit_last_name" name="edit_last_name" class="form-input" required>
+                            <input type="text" id="edit_last_name" name="last_name" class="form-input" required>
                         </div>
                         
                         <div class="form-group">
@@ -343,7 +345,7 @@
                                 Password
                                 <span class="required-badge">Required</span>
                             </label>
-                            <input type="password" id="edit_password" name="password" class="form-input" required>
+                            <input type="password" id="edit_password" name="password" class="form-input">
                         </div>
                     </div>
                 </div>
