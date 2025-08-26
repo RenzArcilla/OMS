@@ -6,6 +6,7 @@
     <title>HEPC - Applicator Dashboard</title>
     <link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
 </head>
 <body>
     <?php 
@@ -64,7 +65,7 @@
     $top_3_parts = array_slice($parts_ordered, 0, 3);
     ?>
 
-    <div class="admin-container">
+    <div class="container">
         <!-- Main Content -->
         <div class="main-content">
             <!-- Dashboard Tab -->

@@ -1,5 +1,3 @@
-
-
 .container {
     max-width: 2000px;
     margin: 0 auto;
@@ -235,4 +233,14 @@
 .tab-btn:hover:not(.active) {
     border-color: #2F80ED;
     background: #EFF6FF;
+}
+
+/* Hide applicators table by default */
+#applicators-table {
+    display: none;
+}
+
+/* Show machine table by default */
+#machine-table {
+    display: block;
 }
