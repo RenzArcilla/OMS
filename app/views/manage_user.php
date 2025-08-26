@@ -91,7 +91,7 @@
                 </tbody>
             </table>
 
-            <!-- Pagination -->
+            <!-- Pagination>
             <div class="pagination">
                 <div class="pagination-info" id="paginationInfo">
                     Showing 1 to 1 of 1 users
@@ -100,7 +100,7 @@
                     <button id="prevBtn" class="pagination-btn" onclick="previousPage()" disabled>Previous</button>
                     <button id="nextBtn" class="pagination-btn" onclick="nextPage()" disabled>Next</button>
                 </div>
-            </div>
+            </div -->
         </div>
     </div>
 
@@ -210,7 +210,6 @@
                     <span class="modal-avatar">👁️</span>
                     User Details
                 </h1>
-                <p class="form-subtitle">Complete user information and activity summary</p>
             </div>
 
             <!-- Personal Information Section -->
@@ -228,28 +227,21 @@
                         <label for="viewUserName" class="form-label">
                             Username
                         </label>
-                        <input type="text" id="viewUserName" name="name" class="form-input" placeholder="RenzngOdnum" readonly>
+                        <input type="text" id="username" name="username" class="form-input" readonly>
                     </div>
                     
                     <div class="form-group">
                         <label for="viewUserFirstName" class="form-label">
                             First Name
                         </label>
-                        <input type="text" id="viewUserFirstName" name="first_name" class="form-input" placeholder="Renz" readonly>
+                        <input type="text" id="first_name" name="first_name" class="form-input" readonly>
                     </div>
                     
                     <div class="form-group">
                         <label for="viewUserLastName" class="form-label">
                             Last Name
                         </label>
-                        <input type="text" id="viewUserLastName" name="last_name" class="form-input" placeholder="Ng Mundo" readonly>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="viewUserPassword" class="form-label">
-                            Password
-                        </label>
-                        <input type="password" id="viewUserPassword" name="password" class="form-input" placeholder="Hatdog123" readonly>
+                        <input type="text" id="last_name" name="last_name" class="form-input" readonly>
                     </div>
                 </div>
             </div>
@@ -260,7 +252,7 @@
                     <div class="section-icon">⚙️</div>
                     <div class="section-info">
                         <div class="section-title">Account Information</div>
-                        <div class="section-description">Role, status, and account timeline</div>
+                        <div class="section-description">Role, credential</div>
                     </div>
                 </div>
 
@@ -268,36 +260,9 @@
                     <div class="form-group">
                         <label class="form-label">Role</label>
                         <div class="form-field">
-                            <span class="field-icon">🎭</span>
+                            <span class="field-icon"><input type="text" id="last_name" name="last_name" class="form-input" readonly></span>
                             <span id="viewUserRole">-</span>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Status</label>
-                        <div class="form-field">
-                            <span class="field-icon">🟢</span>
-                            <span id="viewUserStatus">-</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Activity Summary -->
-            <div class="activity-section">
-                <h3 class="activity-title">📊 Activity Summary</h3>
-                <div class="activity-stats">
-                    <div class="activity-stat">
-                        <div id="viewUserFilesUploaded" class="stat-number">0</div>
-                        <div class="stat-label">Files Uploaded</div>
-                    </div>
-                    <div class="activity-stat">
-                        <div id="viewUserDaysActive" class="stat-number">0</div>
-                        <div class="stat-label">Days Active</div>
-                    </div>
-                    <div class="activity-stat">
-                        <div class="stat-number">5</div>
-                        <div class="stat-label">Login Sessions</div>
                     </div>
                 </div>
             </div>
@@ -310,6 +275,7 @@
             </div>
         </div>
     </div>
+
 
     <!-- Edit User Modal -->
     <div id="editUserModal" class="modal-overlay">
