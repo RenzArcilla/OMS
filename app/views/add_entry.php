@@ -86,9 +86,6 @@ if (!isset($_SESSION['user_id'])) {
                         <button type="button" class="btn-secondary" onclick="exportData()">📥 Export</button>
                         <button type="button" class="btn-secondary" onclick="refreshData()">🔄 Refresh</button>
                         
-                        <button class="auto-filter-btn" onclick="window.location.href = window.location.pathname;">
-                            🔄 Auto-Filter
-                        </button>
                     </div>
 
                     <div id="machine-table" class="section-content expanded" style="height: 600px; overflow-y: auto;">
