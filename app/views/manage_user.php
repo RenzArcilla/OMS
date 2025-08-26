@@ -78,10 +78,15 @@
                         </td>
                         <td>
                             <div class="action-buttons">
-                                <button class="action-btn view-btn" onclick="openViewUserModal()" title="View Details">
-                                    👁️
+                                <button class="action-btn view-btn" onclick="openViewUserModal(this)" title="View Details"
+                                    data-username="<?= htmlspecialchars($user['username']) ?>"
+                                    data-firstname="<?= htmlspecialchars($user['first_name']) ?>"
+                                    data-lastname="<?= htmlspecialchars($user['last_name']) ?>"
+                                    data-role="<?= htmlspecialchars($user['user_type']) ?>"
+                                >   👁️
                                 </button>
                                 <button class="action-btn edit-btn" onclick="openEditUserModal()" title="Edit User">
+
                                     ✏️
                                 </button>
                             </div>
@@ -104,6 +109,82 @@
         </div>
     </div>
 
+    <!-- View User Modal -->
+    <div id="viewUserModal" class="modal-overlay">
+        <div class="form-container">
+            <button class="modal-close-btn" onclick="closeViewUserModal()">×</button>
+            
+            <div class="form-header">
+                <h1 class="form-title">
+                    <span class="modal-avatar">👁️</span>
+                    User Details
+                </h1>
+            </div>
+
+            <!-- Personal Information Section -->
+            <div class="form-section">
+                <div class="section-header">
+                    <div class="section-icon">👤</div>
+                    <div class="section-info">
+                        <div class="section-title">Personal Information</div>
+                        <div class="section-description">User contact details and basic information</div>
+                    </div>
+                </div>
+
+                <div class="form-grid-vertical">
+                    <div class="form-group">
+                        <label for="viewUserName" class="form-label">
+                            Username
+                        </label>
+                        <input type="text" id="view_username" name="username" class="form-input" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="viewUserFirstName" class="form-label">
+                            First Name
+                        </label>
+                        <input type="text" id="view_first_name" name="first_name" class="form-input" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="viewUserLastName" class="form-label">
+                            Last Name
+                        </label>
+                        <input type="text" id="view_last_name" name="last_name" class="form-input" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Information Section -->
+            <div class="form-section">
+                <div class="section-header">
+                    <div class="section-icon">⚙️</div>
+                    <div class="section-info">
+                        <div class="section-title">Account Information</div>
+                        <div class="section-description">Role, credential</div>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <div class="form-label">Role</div>
+                        <div class="form-field">
+                            <input type="text" id="view_role" name="role" class="form-input" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Close Button -->
+            <div class="button-group">
+                <button type="button" class="cancel-btn" onclick="closeViewUserModal()">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    
     <!-- Add User Modal -->
     <div id="addUserModal" class="modal-overlay">
         <div class="form-container">
@@ -197,82 +278,6 @@
                     </button>
                 </div>
             </form>
-        </div>
-    </div>
-
-    <!-- View User Modal -->
-    <div id="viewUserModal" class="modal-overlay">
-        <div class="form-container">
-            <button class="modal-close-btn" onclick="closeViewUserModal()">×</button>
-            
-            <div class="form-header">
-                <h1 class="form-title">
-                    <span class="modal-avatar">👁️</span>
-                    User Details
-                </h1>
-            </div>
-
-            <!-- Personal Information Section -->
-            <div class="form-section">
-                <div class="section-header">
-                    <div class="section-icon">👤</div>
-                    <div class="section-info">
-                        <div class="section-title">Personal Information</div>
-                        <div class="section-description">User contact details and basic information</div>
-                    </div>
-                </div>
-
-                <div class="form-grid-vertical">
-                    <div class="form-group">
-                        <label for="viewUserName" class="form-label">
-                            Username
-                        </label>
-                        <input type="text" id="username" name="username" class="form-input" readonly>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="viewUserFirstName" class="form-label">
-                            First Name
-                        </label>
-                        <input type="text" id="first_name" name="first_name" class="form-input" readonly>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="viewUserLastName" class="form-label">
-                            Last Name
-                        </label>
-                        <input type="text" id="last_name" name="last_name" class="form-input" readonly>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Account Information Section -->
-            <div class="form-section">
-                <div class="section-header">
-                    <div class="section-icon">⚙️</div>
-                    <div class="section-info">
-                        <div class="section-title">Account Information</div>
-                        <div class="section-description">Role, credential</div>
-                    </div>
-                </div>
-
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label class="form-label">Role</label>
-                        <div class="form-field">
-                            <span class="field-icon"><input type="text" id="last_name" name="last_name" class="form-input" readonly></span>
-                            <span id="viewUserRole">-</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Close Button -->
-            <div class="button-group">
-                <button type="button" class="cancel-btn" onclick="closeViewUserModal()">
-                    Close
-                </button>
-            </div>
         </div>
     </div>
 

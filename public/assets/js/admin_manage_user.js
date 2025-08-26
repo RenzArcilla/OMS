@@ -9,7 +9,12 @@ function closeAddUserModal() {
 }
 
 // Open the view user modal
-function openViewUserModal() {
+function openViewUserModal(button) {
+    document.getElementById('view_username').value = button.dataset.username;
+    document.getElementById('view_first_name').value = button.dataset.firstname;
+    document.getElementById('view_last_name').value = button.dataset.lastname;
+    document.getElementById('view_role').value = button.dataset.role;
+
     document.getElementById("viewUserModal").style.display = "block";
 }
 
