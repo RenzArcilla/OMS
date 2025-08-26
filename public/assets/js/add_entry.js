@@ -259,8 +259,6 @@ function confirmDelete() {
 
 
 
-
-
 function openApplicatorDeleteModal(button) {
     // Store the form reference for later use
     window.currentDeleteForm = button.closest('form');
