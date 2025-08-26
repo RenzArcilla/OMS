@@ -6,6 +6,7 @@
     <title>HEPC - Applicator Dashboard</title>
     <link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
 </head>
 <body>
@@ -78,6 +79,9 @@
                         </button>
                         <button type="button" class="btn btn-primary" onclick="refreshPage()">
                             Refresh Data
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="openAddCustomPartModal()">
+                            Add Parts
                         </button>
                     </div>
                 </div>
@@ -511,6 +515,44 @@
             </div>
         </div>
     </div>
+    <!-- Add Custom Part Modal -->
+    a<div id="addCustomPartModalDashboardApplicator" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close-btn" onclick="closeAddCustomPartModal()">×</button>
+            
+            <div class="form-header">
+                <h1 class="form-title">➕ Add Custom Part</h1>
+                <p class="form-subtitle">Add a new custom part to this applicator</p>
+            </div>
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="customPartName">Part Name</label>
+                        <input type="text" id="customPartName" name="custom_part_name" class="form-input" placeholder="Enter part name..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customPartCycles">Initial Cycles</label>
+                        <input type="number" id="customPartCycles" name="custom_part_cycles" class="form-input" placeholder="e.g. 0" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customPartStatus">Status</label>
+                        <select id="customPartStatus" name="custom_part_status" class="form-input" required>
+                            <option value="">Select status</option>
+                            <option value="good">Good</option>
+                            <option value="warn">Warn</option>
+                            <option value="critical">Critical</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Add Part</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeAddCustomPartModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Load JavaScript -->
     <script src="../../public/assets/js/dashboard_applicator.js"></script>
 </body>
 </html>
