@@ -231,3 +231,25 @@ function closeMachineModal() {
 function closeApplicatorModal() {
     document.getElementById('editApplicatorModal').style.display = 'none';
 }
+
+function openDeleteModal(button) {
+    // Store the form reference for later use
+    window.currentDeleteForm = button.closest('form');
+    
+    // Show the delete modal
+    document.getElementById('deleteModalOverlay').style.display = 'block';
+}
+
+function closeDeleteModal() {
+    document.getElementById('deleteModalOverlay').style.display = 'none';
+}
+
+function confirmDelete() {
+    // Close the modal first
+    closeDeleteModal();
+    
+    // Submit the stored form
+    if (window.currentDeleteForm) {
+        window.currentDeleteForm.submit();
+    }
+}

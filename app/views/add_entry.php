@@ -30,6 +30,7 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/delete_modal.css">
     <!-- Load machine infinite scroll logic -->
     <script src="../../public/assets/js/load_machines.js" defer></script>
     <!-- Load applicator infinite scroll logic -->
@@ -137,9 +138,9 @@ if (!isset($_SESSION['user_id'])) {
                                                     >✏️</button>
 
                                             <!-- Delete form -->
-                                                    <form action="/SOMS/app/controllers/delete_machine.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this machine?');">
+                                                    <form action="/SOMS/app/controllers/delete_machine.php" method="POST" style="display:inline;">
                                                         <input type="hidden" name="machine_id" value="<?= $row['machine_id'] ?>">
-                                                        <button class="action-btn delete-btn" type="submit">🗑️</button>
+                                                        <button class="delete-btn" type="button" onclick="openDeleteModal(this)">🗑️</button>
                                                     </form>
                                                 </div>
                                             </td>
@@ -202,9 +203,13 @@ if (!isset($_SESSION['user_id'])) {
                                             >✏️</button>
 
                                             <!-- Delete form -->
-                                            <form action="/SOMS/app/controllers/delete_applicator.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this applicator?');">
+                                            <form action="/SOMS/app/controllers/delete_applicator.php" method="POST" style="display:inline;">
                                                 <input type="hidden" name="applicator_id" value="<?= htmlspecialchars($row['applicator_id']) ?>">
-                                                <button type="submit"class="action-btn delete-btn">🗑️</button>
+                                                <button 
+                                                    type="button"
+                                                    class="delete-btn"
+                                                    onclick="openDeleteModal(this)"
+                                                >🗑️</button>
                                             </form>
                                             </td>
                                         </tr>
@@ -593,6 +598,27 @@ if (!isset($_SESSION['user_id'])) {
                         </form>
                     </div>
                 </div>
+                <div class="modal-overlay" id="deleteModalOverlay">
+                    <div class="delete-modal-container">
+                        <button class="modal-close-btn" onclick="closeDeleteModal()">×</button>
+                        
+                        <!-- Delete Icon -->
+                        <div class="delete-icon" id="deleteIcon">🗑️</div>
+                        
+                        <!-- Title and Message -->
+                        <h2 class="delete-title" id="deleteTitle">Delete Confirmation</h2>
+                        <p class="delete-message" id="deleteMessage">
+                            Are you sure you want to delete this item? This action cannot be undone.
+                        </p>
+                        
+                        <!-- Action Buttons -->
+                        <div class="delete-actions">
+                            <button type="button" class="cancel-btn" style="position: relative; left: 150px; top: 50px;" onclick="closeDeleteModal()">Cancel</button>
+                            <button type="button" class="delete-btn" onclick="confirmDelete()">Delete</button>
+                        </div>
+                    </div>
+                </div>
+
     <script src="../../public/assets/js/add_entry.js"></script>
     <script src="../../public/assets/js/export_entry.js"></script>
 </body>
