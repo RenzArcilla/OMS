@@ -64,7 +64,6 @@
                 <tbody id="usersTableBody">
                     <?php foreach ($users as $user): ?>
                     <tr>
-                        
                         <td>
                             <div class="user-info">
                                 <div class="user-avatar">👤</div>
@@ -84,9 +83,6 @@
                                 </button>
                                 <button class="action-btn edit-btn" onclick="openEditUserModal()" title="Edit User">
                                     ✏️
-                                </button>
-                                <button class="action-btn delete-btn" onclick="openAccountDeletionModal()" title="Delete User">
-                                    🗑️
                                 </button>
                             </div>
                         </td>
@@ -427,88 +423,6 @@
                     </button>
                 </div>
             </form>
-        </div>
-    </div>
-
-    <!-- Account Deletion Modal -->
-    <div class="modal-overlay" id="accountDeletionModal">
-        <div class="form-container">
-            <button class="modal-close-btn" onclick="closeAccountDeletionModal()">×</button>
-            <div class="icon-container">
-                <div class="warning-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v2h-2v-2zm0-10h2v8h-2V7z"/>
-                    </svg>
-                </div>
-            </div>
-
-            <h1 class="title">Account Deletion Notice</h1>
-            <p class="subtitle">Important information about your account removal request</p>
-
-            <div class="content">
-                <div class="section">
-                    <h2 class="section-title">Deletion Request Received</h2>
-                    <div class="section-content">
-                        We have received your request to delete your account and all associated data. This notice confirms that the deletion process has been initiated and provides important details about what happens next.
-                    </div>
-                </div>
-
-                <div class="highlight-box">
-                    <div class="highlight-text">
-                        <strong>Account:</strong> user@example.com<br>
-                        <strong>Request Date:</strong> January 15, 2025<br>
-                        <strong>Deletion ID:</strong> DEL-2025-001234
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">What Will Be Deleted</h2>
-                    <div class="section-content">
-                        All personal information, account settings, user-generated content, transaction history, and associated metadata will be permanently removed. Some anonymized data may be retained for legal compliance and analytics purposes.
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Data Export Reminder</h2>
-                    <div class="section-content">
-                        If you need a copy of your data before deletion, please download it within the grace period. After this time, we will no longer be able to provide access to your information.
-                    </div>
-                </div>
-            </div>
-
-            <!-- I Understand Confirmation Section -->
-            <div class="confirmation-section">
-                <div class="confirmation-checkbox">
-                    <input type="checkbox" id="confirmPageDelete" onchange="togglePageDeleteButton()">
-                    <div class="confirmation-text">
-                        I understand this action is <strong>permanent and irreversible</strong>. 
-                        I acknowledge that all my data will be permanently deleted and cannot be recovered.
-                    </div>
-                </div>
-            </div>
-
-            <div class="action-buttons-to-confirm">
-                <a href="#" class="btn btn-primary" id="pageDeleteBtn" onclick="return confirmPageDeletion(event)">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    Confirm Deletion
-                </a>
-                <a href="#" class="btn btn-secondary" onclick="closeAccountDeletionModal()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                    Cancel Request
-                </a>
-            </div>
-
-            <div class="contact-info">
-                <div class="contact-title">Need Help?</div>
-                <div class="contact-details">
-                    Contact our support team at <a href="mailto:support@company.com">hayakawa@hepc.com</a><br>
-                    or call us at <a href="tel:+1234567890">(+63) 917 123 4567</a>
-                </div>
-            </div>
         </div>
     </div>
     <script src="../../public/assets/js/admin_manage_user.js"></script>

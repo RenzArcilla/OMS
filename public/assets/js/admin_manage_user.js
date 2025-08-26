@@ -26,15 +26,6 @@ function closeEditUserModal() {
     document.getElementById('editUserModal').style.display = 'none';
 }
 
-// Open the account deletion modal
-function openAccountDeletionModal() {
-    document.getElementById("accountDeletionModal").style.display = "block";
-}
-
-function closeAccountDeletionModal() {
-    document.getElementById('accountDeletionModal').style.display = 'none';
-}
-
 // Refresh the page
 function refreshData() {
     // Add loading state
@@ -47,37 +38,4 @@ function refreshData() {
     setTimeout(() => {
         window.location.reload();
     }, 1000);
-}
-
-// Toggle the page delete button
-function togglePageDeleteButton() {
-    const checkbox = document.getElementById('confirmPageDelete');
-    const deleteBtn = document.getElementById('pageDeleteBtn');
-    
-    if (checkbox && deleteBtn) {
-        if (checkbox.checked) {
-            deleteBtn.classList.add('enabled');
-            deleteBtn.classList.remove('disabled');
-        } else {
-            deleteBtn.classList.remove('enabled');
-            deleteBtn.classList.add('disabled');
-        }
-    }
-}
-function confirmPageDeletion(event) {
-    const checkbox = document.getElementById('confirmPageDelete');
-    if (!checkbox || !checkbox.checked) {
-        event.preventDefault();
-        alert('Please confirm you understand this action is permanent by checking the confirmation box.');
-        return false;
-    }
-    
-    // Add your deletion logic here
-    const confirmed = confirm('Are you absolutely sure? This will permanently delete your account and all data.');
-    if (confirmed) {
-        console.log('Account deletion confirmed');
-        alert('Account deletion confirmed. This would normally redirect to a confirmation page.');
-    }
-    event.preventDefault();
-    return false;
 }
