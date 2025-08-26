@@ -49,36 +49,34 @@
         </div>
 
         <!-- Users Table -->
+        <?php require_once '../models/read_user.php'; 
+        $users = getUsers(10, 0);
+        ?>
         <div class="users-table-card">
             <table class="users-table">
                 <thead>
                     <tr>
                         <th>User</th>
                         <th>Role</th>
-                        <th>Status</th>
-                        <th>Last Login</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody id="usersTableBody">
+                    <?php foreach ($users as $user): ?>
                     <tr>
+                        
                         <td>
                             <div class="user-info">
                                 <div class="user-avatar">👤</div>
                                 <div class="user-details">
-                                    <div class="user-name">John Smith</div>
-                                    <div class="user-email">john.smith</div>
+                                    <div class="user-name"><?php echo htmlspecialchars($user['first_name'] . ' ' . $user['last_name']); ?></div>
+                                    <div class="user-email"><?php echo htmlspecialchars($user['username']); ?></div>
                                 </div>
                             </div>
                         </td>
                         <td>
-                            <span class="role-badge admin">Admin</span>
+                            <span class="role-badge admin"><?php echo htmlspecialchars($user['user_type']); ?></span>
                         </td>
-                        <td>
-                            <span class="status-badge active">Active</span>
-                        </td>
-                        <td>2024-12-15 14:30</td>
-                        <td>
                             <div class="action-buttons">
                                 <button class="action-btn view-btn" onclick="openViewUserModal()" title="View Details">
                                     👁️
@@ -92,6 +90,7 @@
                             </div>
                         </td>
                     </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
 

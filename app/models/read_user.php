@@ -49,3 +49,38 @@ function loginUser($username, $password) {
         return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
+
+
+
+function getUsers(int $limit = 10, int $offset = 0): array {
+    /*
+        Function to fetch a list of users from the database with pagination. Used to display
+        users in manage_users.php.
+        It prepares and executes a SELECT query that fetches users ordered by most recent,
+        and returns them as an associative array.
+
+        Args:
+        - $limit: Maximum number of rows to fetch (default is 10).
+        - $offset: Number of rows to skip (default is 0), used for pagination.
+
+        Returns:
+        - Array of users (associative arrays) on success.
+    */
+
+    global $pdo;
+    // Prepare the SQL statement with placeholders for limit and offset
+    $stmt = $pdo->prepare("
+        SELECT username, first_name, last_name, user_type
+        FROM users
+        ORDER BY user_id DESC 
+        LIMIT :limit OFFSET :offset
+    ");
+
+    // Bind pagination parameters securely
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+
+    // Execute the query and return the results
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
