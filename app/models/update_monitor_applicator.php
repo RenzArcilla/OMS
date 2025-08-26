@@ -246,7 +246,7 @@ function resetApplicatorPartOutput($applicator_id, $part_name) {
 }
 
 
-function editPartOutputValue($applicator_id, $part_name, $value) {
+function editApplicatorPartOutputValue($applicator_id, $part_name, $value) {
     /*
         Reverts the output value for a specific part of an applicator.
         Supports both defined columns and custom JSON parts.
@@ -300,8 +300,8 @@ function editPartOutputValue($applicator_id, $part_name, $value) {
             return true;
 
         } catch (PDOException $e) {
-            error_log("Database Error in editPartOutputValue (defined): " . $e->getMessage());
-            return "Database error in editPartOutputValue (defined): " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+            error_log("Database Error in editApplicatorPartOutputValue (defined): " . $e->getMessage());
+            return "Database error in editApplicatorPartOutputValue (defined): " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
         }
     }
 
@@ -344,8 +344,8 @@ function editPartOutputValue($applicator_id, $part_name, $value) {
             return true;
 
         } catch (PDOException $e) {
-            error_log("Database Error in editPartOutputValue (custom): " . $e->getMessage());
-            return "Database error in editPartOutputValue (custom): " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+            error_log("Database Error in editApplicatorPartOutputValue (custom): " . $e->getMessage());
+            return "Database error in editApplicatorPartOutputValue (custom): " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
         }
     }
 
