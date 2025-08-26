@@ -251,6 +251,52 @@
                         </div>
                     </div>
                 </div>
+        <div class="data-section" style="max-width: 30vw; margin: 0; margin-left: 0;">
+            <div class="section-header expanded" onclick="toggleSection(this)">
+                <div class="section-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="9" y1="3" x2="9" y2="21"/>
+                    </svg>
+                    Parts Inventory
+                    <span class="section-badge" id="tableCount">156</span>
+                </div>
+                <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6,9 12,15 18,9"/>
+                </svg>
+            </div>
+            
+            <div class="section-content expanded" style="max-width: 30vw; margin: 0; margin-left: 0;">
+                <!-- Search and Filter Controls -->
+                <div class="search-filter">
+                    <input type="text" class="search-input" placeholder="Search parts by name, SKU, or category..." id="searchInput" onkeyup="filterTable()">
+                </div>
+
+                <!-- Data Table -->
+                <div class="table-container half-table" style="max-width: 100%;">
+                    <table class="data-table half-table" id="partsTable">
+                        <thead>
+                            <tr>
+                                <th>Part Name</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- Dummy data for demonstration -->
+                            <tr>
+                                <td>Wire Crimper</td>
+                            </tr>
+                            <tr>
+                                <td>Insulation Anvil</td>
+                            </tr>
+                            <tr>
+                                <td>Slide Cutter</td>
+                            </tr>
+                            <tr>
+                                <td>Custom Blade X</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

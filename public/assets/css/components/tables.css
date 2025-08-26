@@ -16,7 +16,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 28px 32px;
-    background: linear-gradient(135deg, #F8FAFC, #F1F5F9);
+    background: linear-gradienth(135deg, #F8FAFC, #F1F5F9);
     border-bottom: 1px solid rgba(229, 231, 235, 0.8);
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -83,6 +83,13 @@
 }
 
 .data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 14px;
+}
+
+.data-table .half-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
