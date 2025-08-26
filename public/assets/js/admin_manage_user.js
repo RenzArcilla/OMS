@@ -28,12 +28,21 @@ function closeViewUserModal() {
 }
 
 // Open the edit user modal
-function openEditUserModal() {
+function openEditUserModal(button) {
+    document.getElementById('edit_username').value = button.dataset.username || '';
+    document.getElementById('edit_first_name').value = button.dataset.firstname || '';
+    document.getElementById('edit_last_name').value = button.dataset.lastname || '';
+    document.getElementById('edit_role').value = button.dataset.role || '';
+
     document.getElementById("editUserModal").style.display = "block";
 }
 
 // Close the edit user modal
 function closeEditUserModal() {
+    document.getElementById('edit_username').value = '';
+    document.getElementById('edit_first_name').value = '';
+    document.getElementById('edit_last_name').value = '';
+    document.getElementById('edit_role').value = '';
     document.getElementById('editUserModal').style.display = 'none';
 }
 

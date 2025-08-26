@@ -95,7 +95,13 @@
                                                 data-role="<?php echo htmlspecialchars($user['user_type'] ?? ''); ?>">
                                             👁️
                                         </button>
-                                        <button class="action-btn edit-btn" onclick="openEditUserModal()" title="Edit User">
+                                        <button class="action-btn edit-btn" 
+                                                onclick="openEditUserModal(this)" 
+                                                title="Edit User"
+                                                data-username="<?php echo htmlspecialchars($user['username'] ?? ''); ?>"
+                                                data-firstname="<?php echo htmlspecialchars($user['first_name'] ?? ''); ?>"
+                                                data-lastname="<?php echo htmlspecialchars($user['last_name'] ?? ''); ?>"
+                                                data-role="<?php echo htmlspecialchars($user['user_type'] ?? ''); ?>">
                                             ✏️
                                         </button>
                                     </div>
@@ -293,7 +299,7 @@
                     <span class="modal-avatar">✏️</span>
                     Edit User
                 </h1>
-                <p class="form-subtitle">Update user information and account settings</p>
+                <p class="form-subtitle">Update user information and credentials</p>
             </div>
 
             <form id="editUserForm" onsubmit="saveUser(event)">
@@ -303,7 +309,7 @@
                         <div class="section-icon">👤</div>
                         <div class="section-info">
                             <div class="section-title">Personal Information</div>
-                            <div class="section-description">Update user contact details and basic information</div>
+                            <div class="section-description">Update user information</div>
                         </div>
                     </div>
 
@@ -313,7 +319,7 @@
                                 Username
                                 <span class="required-badge">Required</span>
                             </label>
-                            <input type="text" id="editUserName" name="name" class="form-input" placeholder="RenzngOdnum" required>
+                            <input type="text" id="edit_username" name="edit_username" class="form-input" required>
                         </div>
                         
                         <div class="form-group">
@@ -321,7 +327,7 @@
                                 First Name
                                 <span class="required-badge">Required</span>
                             </label>
-                            <input type="text" id="editUserFirstName" name="first_name" class="form-input" placeholder="Renz" required>
+                            <input type="text" id="edit_first_name" name="edit_first_name" class="form-input" required>
                         </div>
                         
                         <div class="form-group">
@@ -329,7 +335,7 @@
                                 Last Name
                                 <span class="required-badge">Required</span>
                             </label>
-                            <input type="text" id="editUserLastName" name="last_name" class="form-input" placeholder="Ng Mundo" required>
+                            <input type="text" id="edit_last_name" name="edit_last_name" class="form-input" required>
                         </div>
                         
                         <div class="form-group">
@@ -337,7 +343,7 @@
                                 Password
                                 <span class="required-badge">Required</span>
                             </label>
-                            <input type="password" id="editUserPassword" name="password" class="form-input" placeholder="Hatdog123" required>
+                            <input type="password" id="edit_password" name="password" class="form-input" required>
                         </div>
                     </div>
                 </div>
@@ -355,32 +361,11 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="editUserRole" class="form-label">User Role</label>
-                            <select id="editUserRole" name="role" class="form-input">
-                                <option value="User">User</option>
-                                <option value="Moderator">Moderator</option>
-                                <option value="Admin">Admin</option>
+                            <select id="edit_role" name="role" class="form-input">
+                                <option value="DEFAULT">Default</option>
+                                <option value="TOOLKEEPER">Toolkeeper</option>
+                                <option value="ADMIN">Admin</option>
                             </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="editUserStatus" class="form-label">Account Status</label>
-                            <select id="editUserStatus" name="status" class="form-input">
-                                <option value="Active">Active</option>
-                                <option value="Inactive">Inactive</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Suspended">Suspended</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Activity Summary -->
-                <div class="activity-section">
-                    <h3 class="activity-title">📊 Activity Summary</h3>
-                    <div class="activity-stats">
-                        <div class="activity-stat">
-                            <div id="editUserFilesUploaded" class="stat-number">0</div>
-                            <div class="stat-label">Files Uploaded</div>
                         </div>
                     </div>
                 </div>
