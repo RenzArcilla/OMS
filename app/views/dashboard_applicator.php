@@ -402,7 +402,7 @@
                                 <td>1,500,000</td>
                                 <td>
                                     <div class="progress-bar">
-                                        <div class="progress-fill progress-good" style="width: 9.0%;</div>
+                                        <div class="progress-fill progress-good" style="width: 9.0%;"></div>
                                     </div>
                                     <span>9.0%</span>
                                 </td>
@@ -637,6 +637,7 @@
                 <p class="form-subtitle">Add a new custom part to this applicator</p>
             </div>
 
+            <form id="addCustomPartForm" method="POST" action="../controllers/add_custom_part.php">
                 <div class="form-section">
                     <div class="form-group">
                         <label for="customPartName">Part Name</label>
