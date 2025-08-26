@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOMS - Home</title>
-    <link rel="stylesheet" href="../../public/assets/css/base/base.css">
+    <link rel="stylesheet" href="../../public/assets/css/base/typography.css">
     <link rel="stylesheet" href="../../public/assets/css/home.css">
 </head>
 <!-- Animated Background -->
@@ -95,7 +95,6 @@
                                             <th>Wire Anvil</th>
                                             <th>Insulation Crimper</th>
                                             <th>Insulation Anvil</th>
-                                            <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody id="metricsBody">
@@ -105,10 +104,6 @@
                                             <td class="metric-value">Data Here</td>
                                             <td class="metric-value">Data Here</td>
                                             <td class="metric-value">Data Here</td>
-                                            <td class="status-cell">
-                                                <div class="status-indicator success"></div>
-                                                Optimal
-                                            </td>
                                         </tr>
                                         <tr data-status="success">
                                         <td>Connect to Database the HP No.</td>
@@ -116,50 +111,35 @@
                                             <td class="metric-value">Data Here</td>
                                             <td class="metric-value">Data Here</td>
                                             <td class="metric-value">Data Here</td>
-                                            <td class="status-cell">
-                                                <div class="status-indicator success"></div>
-                                                Optimal
-                                            </td>
                                         </tr>
                                         <tr data-status="warning">
                                             <td>Connect to Database the HP No.</td>
                                             <td class="metric-value">Data Here</td>
                                             <td class="metric-value">Data Here</td>
                                             <td class="metric-value">Data Here</td>
-                                            <td class="status-cell">
-                                                <div class="status-indicator warning"></div>
-                                                Monitor
-                                            </td>
+                                            <td class="metric-value">Data Here</td>
+
                                         </tr>
                                         <tr data-status="success">
                                             <td>Connect to Database the HP No.</td>
                                             <td class="metric-value">Data Here</td>
                                             <td class="metric-value">Data Here</td>
                                             <td class="metric-value">Data Here</td>
-                                            <td class="status-cell">
-                                                <div class="status-indicator success"></div>
-                                                Normal
-                                            </td>
+                                            <td class="metric-value">Data Here</td>
                                         </tr>
                                         <tr data-status="success">
                                             <td>Connect to Database the HP No.</td>
                                             <td class="metric-value">Data Here</td>
                                             <td class="metric-value">Data Here</td>
                                             <td class="metric-value">Data Here</td>
-                                            <td class="status-cell">
-                                                <div class="status-indicator success"></div>
-                                                Healthy
-                                            </td>
+                                            <td class="metric-value">Data Here</td>
                                         </tr>
                                         <tr data-status="warning">
                                             <td>Connect to Database the HP No.</td>
                                             <td class="metric-value">Data Here</td>
                                             <td class="metric-value">Data Here</td>
                                             <td class="metric-value">Data Here</td>
-                                            <td class="status-cell">
-                                                <div class="status-indicator warning"></div>
-                                                Watch
-                                            </td>
+                                            <td class="metric-value">Data Here</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -190,8 +170,6 @@
                                             <th>AM No.</th>
                                             <th>Strip Blade</th>
                                             <th>Cut Blade</th>
-                                            <th>Status</th>
-                                            
                                         </tr>
                                     </thead>
                                     <tbody id="metricsBody">
@@ -199,21 +177,11 @@
                                             <td>Connect to Database the AM No.</td>
                                             <td class="metric-value">Data Here</td>
                                             <td class="metric-value">Data Here</td>
-                                            
-                                            <td class="status-cell">
-                                                <div class="status-indicator success"></div>
-                                                Optimal
-                                            </td>
                                         </tr>
                                         <tr data-status="success">
                                             <td>Connect to Database the AM No.</td>
                                             <td class="metric-value">Data Here</td>
                                             <td class="metric-value">Data Here</td>
-                                            
-                                            <td class="status-cell">
-                                                <div class="status-indicator success"></div>
-                                                Good
-                                            </td>
                                         </tr>
                                         
                                     </tbody>
