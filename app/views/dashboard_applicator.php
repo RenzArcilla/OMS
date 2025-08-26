@@ -313,23 +313,12 @@
             </div>
 
             <form id="addCustomPartForm" method="POST" action="../controllers/add_custom_part.php">
+                <input type="hidden" name="equipment_type" value="APPLICATOR">
+
                 <div class="form-section">
                     <div class="form-group">
                         <label for="customPartName">Part Name</label>
-                        <input type="text" id="customPartName" name="custom_part_name" class="form-input" placeholder="Enter part name..." required>
-                    </div>
-                    <div class="form-group">
-                        <label for="customPartCycles">Initial Cycles</label>
-                        <input type="number" id="customPartCycles" name="custom_part_cycles" class="form-input" placeholder="e.g. 0" min="0" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="customPartStatus">Status</label>
-                        <select id="customPartStatus" name="custom_part_status" class="form-input" required>
-                            <option value="">Select status</option>
-                            <option value="good">Good</option>
-                            <option value="warn">Warn</option>
-                            <option value="critical">Critical</option>
-                        </select>
+                        <input type="text" id="custom_part_name" name="custom_part_name" class="form-input" placeholder="Enter part name..." required>
                     </div>
                 </div>
                 <div class="form-actions">
