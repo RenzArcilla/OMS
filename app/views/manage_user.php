@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
 </head>
 <body>
-    <?php include '../includes/side_bar.php'; ?>
+    <?php // include '../includes/side_bar.php'; ?>
     <div class="container">
         <!-- Header -->
         <div class="page-header">
@@ -121,7 +121,9 @@
                 <p class="form-subtitle">Enter user information to create a new account</p>
             </div>
 
-            <form id="addUserForm" onsubmit="addUser(event)">
+            <form id="addUserForm" method="POST" action="../controllers/sign_up.php">
+                <input type="hidden" name="admin_create_user" value="admin_create_user">
+
                 <!-- Personal Information Section -->
                 <div class="form-section">
                     <div class="section-header">
@@ -138,7 +140,7 @@
                                 Username
                                 <span class="required-badge">Required</span>
                             </label>
-                            <input type="text" id="addUserName" name="name" class="form-input" placeholder="Enter user name" required>
+                            <input type="text" id="addUserName" name="username" class="form-input" placeholder="Enter user name" required>
                         </div>
                         
                         <div class="form-group">
@@ -146,7 +148,7 @@
                                 First Name
                                 <span class="required-badge">Required</span>
                             </label>
-                            <input type="text" id="addUserFirstName" name="first_name" class="form-input" placeholder="Enter first name" required>
+                            <input type="text" id="addUserFirstName" name="firstname" class="form-input" placeholder="Enter first name" required>
                         </div>
                         
                         <div class="form-group">
@@ -154,7 +156,7 @@
                                 Last Name
                                 <span class="required-badge">Required</span>
                             </label>
-                            <input type="text" id="addUserLastName" name="last_name" class="form-input" placeholder="Enter last name" required>
+                            <input type="text" id="addUserLastName" name="lastname" class="form-input" placeholder="Enter last name" required>
                         </div>
                         
                         <div class="form-group">
@@ -181,19 +183,9 @@
                         <div class="form-group">
                             <label for="addUserRole" class="form-label">User Role</label>
                             <select id="addUserRole" name="role" class="form-input">
-                                <option value="User">User</option>
-                                <option value="Moderator">Moderator</option>
-                                <option value="Admin">Admin</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="addUserStatus" class="form-label">Account Status</label>
-                            <select id="addUserStatus" name="status" class="form-input">
-                                <option value="Active">Active</option>
-                                <option value="Inactive">Inactive</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Suspended">Suspended</option>
+                                <option value="default">Default</option>
+                                <option value="toolkeeper">Toolkeeper</option>
+                                <option value="admin">Admin</option>
                             </select>
                         </div>
                     </div>

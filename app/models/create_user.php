@@ -8,17 +8,17 @@
 require_once __DIR__ . '/../includes/db.php'; 
 
 
-function createUser($first_name, $last_name, $username, $password) {
+function createUser($first_name, $last_name, $username, $password, $role = "DEFAULT") {
     /*
         Function to create a new user in the database.
-        It verifies that password and confirm_password match,
-        hashes the password, and inserts the user data into the 'users' table.
+        It hashes the password, and inserts the user data into the 'users' table.
 
         Args:
         - $first_name: The user's first name.
         - $last_name: The user's last name.
+        - $username: The user's username.
         - $password: The password of the user (to be hashed).
-        - $confirm_password: The confirmation password, must match $password.
+        - $role: DEFAULT, TOOLKEEPER, ADMIN
 
         Returns:
         - User data array if the login is successful.
@@ -41,8 +41,8 @@ function createUser($first_name, $last_name, $username, $password) {
 
         // Prepare SQL insert query
         $stmt = $pdo->prepare("
-            INSERT INTO users (first_name, last_name, password, username)
-            VALUES (:first_name, :last_name, :password, :user_name)
+            INSERT INTO users (first_name, last_name, password, username, user_type)
+            VALUES (:first_name, :last_name, :password, :user_name, :role)
         ");
 
         // Bind user input values to placeholders
@@ -50,6 +50,7 @@ function createUser($first_name, $last_name, $username, $password) {
         $stmt->bindParam(':last_name', $last_name);
         $stmt->bindParam(':user_name', $username);
         $stmt->bindParam(':password', $hashedPassword);
+        $stmt->bindParam(':role', $role);
 
         // Execute the statement
         $stmt->execute();
