@@ -1,22 +1,22 @@
 // Switch between machines and applicators tabs
 function switchTab(tab) {
     currentTab = tab;
-   
+
     // Update tab buttons
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.classList.remove('active');
     });
     event.target.classList.add('active');
-   
-    // Show/hide tables
-    document.querySelectorAll('.entries-table-card').forEach(card => {
-        card.classList.remove('active');
-    });
-   
+
+    // Hide all tables first
+    document.getElementById('machine-table').style.display = 'none';
+    document.getElementById('applicators-table').style.display = 'none';
+
+    // Show the selected table
     if (tab === 'machines') {
-        document.getElementById('machine-table').classList.add('active');
+        document.getElementById('machine-table').style.display = 'block';
     } else if (tab === 'applicators') {
-        document.getElementById('applicators-table').classList.add('active');
+        document.getElementById('applicators-table').style.display = 'block';
     }
 }
 
@@ -25,14 +25,14 @@ function openMachineModal() {
     document.getElementById('addMachineModal').style.display = 'block';
 }
 
-// Open Add Applicator Modal
-function openApplicatorModal() {
-    document.getElementById('addApplicatorModal').style.display = 'block';
-}
-
 // Close Add Applicator Modal
 function closeAddApplicatorModal() {
     document.getElementById('addApplicatorModal').style.display = 'none';
+}
+
+// Open Add Applicator Modal
+function openApplicatorModal() {
+    document.getElementById('addApplicatorModal').style.display = 'block';
 }
 
 // Close Add Machine Modal

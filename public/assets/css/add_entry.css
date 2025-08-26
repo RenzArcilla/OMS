@@ -234,3 +234,13 @@
     border-color: #2F80ED;
     background: #EFF6FF;
 }
+
+/* Hide applicators table by default */
+#applicators-table {
+    display: none;
+}
+
+/* Show machine table by default */
+#machine-table {
+    display: block;
+}
