@@ -16,7 +16,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 28px 32px;
-    background: linear-gradient(135deg, #F8FAFC, #F1F5F9);
+    background: linear-gradienth(135deg, #F8FAFC, #F1F5F9);
     border-bottom: 1px solid rgba(229, 231, 235, 0.8);
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -66,11 +66,11 @@
 }
 
 .section-content.expanded {
-    max-height: 400px;
+    max-height: 800px;
 }
 
 .table-container::-webkit-scrollbar {
-    height: 100px;
+    height: 400px;
 }
 
 .table-container::-webkit-scrollbar-track {
@@ -83,6 +83,13 @@
 }
 
 .data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 16px; /* Increased from 14px to 16px */
+}
+
+.data-table .half-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
@@ -118,7 +125,7 @@
 }
 
 .data-table td {
-    padding: 20px 24px;
+    padding: 24px 28px; /* Increased from 20px 24px to 24px 28px */
     color: #334155;
     border-bottom: 1px solid #f1f5f9;
     background: white;
