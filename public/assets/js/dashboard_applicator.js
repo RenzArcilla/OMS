@@ -81,6 +81,21 @@ function closeAddCustomPartModal() {
     document.getElementById('addCustomPartModalDashboardApplicator').style.display = 'none';
 }
 
+// Open the parts inventory modal
+function openPartsInventoryModal() {
+    document.getElementById('partsInventoryModalDashboardApplicator').style.display = 'block';
+    window.onclick = function(event) {
+        if (event.target === document.getElementById('partsInventoryModalDashboardApplicator')) {
+            document.getElementById('partsInventoryModalDashboardApplicator').style.display = 'none';
+        }
+    }
+}
+
+// Close the parts inventory modal
+function closePartsInventoryModal() {
+    document.getElementById('partsInventoryModalDashboardApplicator').style.display = 'none';
+}
+
 
 // Listen for changes in the "part" dropdown
 document.getElementById("editWireType").addEventListener("change", function() {

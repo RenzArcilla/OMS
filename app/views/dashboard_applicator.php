@@ -80,6 +80,9 @@
                         <button type="button" class="btn btn-primary" onclick="refreshPage()">
                             Refresh Data
                         </button>
+                        <button type="button" class="btn btn-primary" onclick="openPartsInventoryModal()">
+                            Parts Inventory
+                        </button>
                         <button type="button" class="btn btn-primary" onclick="openAddCustomPartModal()">
                             Add Parts
                         </button>
@@ -255,56 +258,165 @@
                         </div>
                     </div>
                 </div>
-        <div class="data-section" style="max-width: 30vw; margin: 0; margin-left: 0;">
-            <div class="section-header expanded" onclick="toggleSection(this)">
-                <div class="section-title">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                        <line x1="9" y1="3" x2="9" y2="21"/>
-                    </svg>
-                    Parts Inventory
-                    <span class="section-badge" id="tableCount">156</span>
-                </div>
-                <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="6,9 12,15 18,9"/>
-                </svg>
+            </div>
+        </div>
+    </div>
+<!-- Parts Inventory Modal -->
+    <div id="partsInventoryModalDashboardApplicator" class="modal-overlay" style="display: none;">
+        <div class="modal">
+            <button class="modal-close-btn" onclick="closePartsInventoryModal()">×</button>
+            
+            <div class="form-header">
+                <h1 class="form-title">📋 Parts Inventory</h1>
+                <p class="form-subtitle">View and manage applicator parts</p>
             </div>
             
-            <div class="section-content expanded" style="max-width: 30vw; margin: 0; margin-left: 0;">
+            <div class="section-content">
                 <!-- Search and Filter Controls -->
                 <div class="search-filter">
                     <input type="text" class="search-input" placeholder="Search parts by name, SKU, or category..." id="searchInput" onkeyup="filterTable()">
                 </div>
 
                 <!-- Data Table -->
-                <div class="table-container half-table" style="max-width: 100%;">
-                    <table class="data-table half-table" id="partsTable">
+                <div class="table-container">
+                    <table class="data-table" id="partsTable">
                         <thead>
                             <tr>
                                 <th>Part Name</th>
+                                <th>Status</th>
+                                <th>Current Cycles</th>
+                                <th>Max Cycles</th>
+                                <th>Usage %</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody">
-                            <!-- Dummy data for demonstration -->
+                            <!-- Wire Crimper -->
                             <tr>
                                 <td>Wire Crimper</td>
+                                <td><span class="status-badge status-good">Good</span></td>
+                                <td>234,567</td>
+                                <td>1,500,000</td>
+                                <td>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill progress-good" style="width: 15.6%;"></div>
+                                    </div>
+                                    <span>15.6%</span>
+                                </td>
                             </tr>
+                            <!-- Wire Anvil -->
+                            <tr>
+                                <td>Wire Anvil</td>
+                                <td><span class="status-badge status-good">Good</span></td>
+                                <td>189,234</td>
+                                <td>1,500,000</td>
+                                <td>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill progress-good" style="width: 12.6%;"></div>
+                                    </div>
+                                    <span>12.6%</span>
+                                </td>
+                            </tr>
+                            <!-- Insulation Crimper -->
+                            <tr>
+                                <td>Insulation Crimper</td>
+                                <td><span class="status-badge status-warn">Warn</span></td>
+                                <td>387,945</td>
+                                <td>1,500,000</td>
+                                <td>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill progress-warn" style="width: 25.9%;"></div>
+                                    </div>
+                                    <span>25.9%</span>
+                                </td>
+                            </tr>
+                            <!-- Insulation Anvil -->
                             <tr>
                                 <td>Insulation Anvil</td>
+                                <td><span class="status-badge status-good">Good</span></td>
+                                <td>298,671</td>
+                                <td>1,500,000</td>
+                                <td>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill progress-good" style="width: 19.9%;"></div>
+                                    </div>
+                                    <span>19.9%</span>
+                                </td>
                             </tr>
+                            <!-- Slide Cutter -->
                             <tr>
                                 <td>Slide Cutter</td>
+                                <td><span class="status-badge status-good">Good</span></td>
+                                <td>456,789</td>
+                                <td>1,500,000</td>
+                                <td>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill progress-good" style="width: 30.5%;"></div>
+                                    </div>
+                                    <span>30.5%</span>
+                                </td>
                             </tr>
+                            <!-- Cutter Holder -->
                             <tr>
-                                <td>Custom Blade X</td>
+                                <td>Cutter Holder</td>
+                                <td><span class="status-badge status-good">Good</span></td>
+                                <td>123,456</td>
+                                <td>1,500,000</td>
+                                <td>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill progress-good" style="width: 8.2%;"></div>
+                                    </div>
+                                    <span>8.2%</span>
+                                </td>
+                            </tr>
+                            <!-- Shear Blade -->
+                            <tr>
+                                <td>Shear Blade</td>
+                                <td><span class="status-badge status-good">Good</span></td>
+                                <td>98,765</td>
+                                <td>1,500,000</td>
+                                <td>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill progress-good" style="width: 6.6%;"></div>
+                                    </div>
+                                    <span>6.6%</span>
+                                </td>
+                            </tr>
+                            <!-- Cutter A -->
+                            <tr>
+                                <td>Cutter A</td>
+                                <td><span class="status-badge status-good">Good</span></td>
+                                <td>156,789</td>
+                                <td>1,500,000</td>
+                                <td>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill progress-good" style="width: 10.5%;"></div>
+                                    </div>
+                                    <span>10.5%</span>
+                                </td>
+                            </tr>
+                            <!-- Cutter B -->
+                            <tr>
+                                <td>Cutter B</td>
+                                <td><span class="status-badge status-good">Good</span></td>
+                                <td>134,567</td>
+                                <td>1,500,000</td>
+                                <td>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill progress-good" style="width: 9.0%;</div>
+                                    </div>
+                                    <span>9.0%</span>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+            
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="closePartsInventoryModal()">Close</button>
+            </div>
         </div>
     </div>
-
     <!-- Reset Applicator Modal -->
     <div id="resetModalDashboardApplicator" class="modal-overlay">
         <div class="form-container">
@@ -516,7 +628,7 @@
         </div>
     </div>
     <!-- Add Custom Part Modal -->
-    a<div id="addCustomPartModalDashboardApplicator" class="modal-overlay">
+    <div id="addCustomPartModalDashboardApplicator" class="modal-overlay">
         <div class="modal">
             <button class="modal-close-btn" onclick="closeAddCustomPartModal()">×</button>
             
