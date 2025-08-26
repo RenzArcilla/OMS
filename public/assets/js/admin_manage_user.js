@@ -10,15 +10,20 @@ function closeAddUserModal() {
 
 // Open the view user modal
 function openViewUserModal(button) {
-    document.getElementById('view_username').value = button.dataset.username;
-    document.getElementById('view_first_name').value = button.dataset.firstname;
-    document.getElementById('view_last_name').value = button.dataset.lastname;
-    document.getElementById('view_role').value = button.dataset.role;
+    document.getElementById('view_username').value = button.dataset.username || '';
+    document.getElementById('view_first_name').value = button.dataset.firstname || '';
+    document.getElementById('view_last_name').value = button.dataset.lastname || '';
+    document.getElementById('view_role').value = button.dataset.role || '';
 
     document.getElementById("viewUserModal").style.display = "block";
 }
 
+// Close the view user modal
 function closeViewUserModal() {
+    document.getElementById('view_username').value = '';
+    document.getElementById('view_first_name').value = '';
+    document.getElementById('view_last_name').value = '';
+    document.getElementById('view_role').value = '';
     document.getElementById('viewUserModal').style.display = 'none';
 }
 
@@ -27,19 +32,17 @@ function openEditUserModal() {
     document.getElementById("editUserModal").style.display = "block";
 }
 
+// Close the edit user modal
 function closeEditUserModal() {
     document.getElementById('editUserModal').style.display = 'none';
 }
 
 // Refresh the page
 function refreshData() {
-    // Add loading state
     const btn = event.target;
     const originalText = btn.innerHTML;
     btn.innerHTML = '⏳ Refreshing...';
     btn.disabled = true;
-    
-    // Add a small delay to show the loading state
     setTimeout(() => {
         window.location.reload();
     }, 1000);

@@ -49,8 +49,11 @@
         </div>
 
         <!-- Users Table -->
-        <?php require_once '../models/read_user.php'; 
+        <?php 
+        require_once '../models/read_user.php'; 
         $users = getUsers(10, 0);
+        // Debug: Log users array
+        error_log("Users in table: " . print_r($users, true));
         ?>
         <div class="users-table-card">
             <table class="users-table">
@@ -62,39 +65,47 @@
                     </tr>
                 </thead>
                 <tbody id="usersTableBody">
-                    <?php foreach ($users as $user): ?>
-                    <tr>
-                        <td>
-                            <div class="user-info">
-                                <div class="user-avatar">👤</div>
-                                <div class="user-details">
-                                    <div class="user-name"><?php echo htmlspecialchars($user['first_name'] . ' ' . $user['last_name']); ?></div>
-                                    <div class="user-email"><?php echo htmlspecialchars($user['username']); ?></div>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="role-badge admin"><?php echo htmlspecialchars($user['user_type']); ?></span>
-                        </td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="action-btn view-btn" onclick="openViewUserModal(this)" title="View Details"
-                                    data-username="<?= htmlspecialchars($user['username']) ?>"
-                                    data-firstname="<?= htmlspecialchars($user['first_name']) ?>"
-                                    data-lastname="<?= htmlspecialchars($user['last_name']) ?>"
-                                    data-role="<?= htmlspecialchars($user['user_type']) ?>"
-                                >   👁️
-                                </button>
-                                <button class="action-btn edit-btn" onclick="openEditUserModal()" title="Edit User">
-
-                                    ✏️
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
+                    <?php if (empty($users)): ?>
+                        <tr>
+                            <td colspan="3">No users found.</td>
+                        </tr>
+                    <?php else: ?>
+                        <?php foreach ($users as $user): ?>
+                            <tr>
+                                <td>
+                                    <div class="user-info">
+                                        <div class="user-avatar">👤</div>
+                                        <div class="user-details">
+                                            <div class="user-name"><?php echo htmlspecialchars($user['first_name'] . ' ' . $user['last_name']); ?></div>
+                                            <div class="user-email"><?php echo htmlspecialchars($user['username']); ?></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="role-badge admin"><?php echo htmlspecialchars($user['user_type'] ?? 'Unknown'); ?></span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="action-btn view-btn" 
+                                                onclick="openViewUserModal(this)" 
+                                                title="View Details"
+                                                data-username="<?php echo htmlspecialchars($user['username'] ?? ''); ?>"
+                                                data-firstname="<?php echo htmlspecialchars($user['first_name'] ?? ''); ?>"
+                                                data-lastname="<?php echo htmlspecialchars($user['last_name'] ?? ''); ?>"
+                                                data-role="<?php echo htmlspecialchars($user['user_type'] ?? ''); ?>">
+                                            👁️
+                                        </button>
+                                        <button class="action-btn edit-btn" onclick="openEditUserModal()" title="Edit User">
+                                            ✏️
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
+        </div>
 
             <!-- Pagination>
             <div class="pagination">
@@ -106,8 +117,6 @@
                     <button id="nextBtn" class="pagination-btn" onclick="nextPage()" disabled>Next</button>
                 </div>
             </div -->
-        </div>
-    </div>
 
     <!-- View User Modal -->
     <div id="viewUserModal" class="modal-overlay">
@@ -133,24 +142,18 @@
 
                 <div class="form-grid-vertical">
                     <div class="form-group">
-                        <label for="viewUserName" class="form-label">
-                            Username
-                        </label>
-                        <input type="text" id="view_username" name="username" class="form-input" readonly>
+                        <label for="view_username" class="form-label">Username</label>
+                        <input type="text" id="view_username" name="username" class="form-input" readonly autocomplete="off">
                     </div>
                     
                     <div class="form-group">
-                        <label for="viewUserFirstName" class="form-label">
-                            First Name
-                        </label>
-                        <input type="text" id="view_first_name" name="first_name" class="form-input" readonly>
+                        <label for="view_first_name" class="form-label">First Name</label>
+                        <input type="text" id="view_first_name" name="first_name" class="form-input" readonly autocomplete="off">
                     </div>
                     
                     <div class="form-group">
-                        <label for="viewUserLastName" class="form-label">
-                            Last Name
-                        </label>
-                        <input type="text" id="view_last_name" name="last_name" class="form-input" readonly>
+                        <label for="view_last_name" class="form-label">Last Name</label>
+                        <input type="text" id="view_last_name" name="last_name" class="form-input" readonly autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -167,9 +170,9 @@
 
                 <div class="form-grid">
                     <div class="form-group">
-                        <div class="form-label">Role</div>
+                        <label for="view_role" class="form-label">Role</label>
                         <div class="form-field">
-                            <input type="text" id="view_role" name="role" class="form-input" readonly>
+                            <input type="text" id="view_role" name="role" class="form-input" readonly autocomplete="off">
                         </div>
                     </div>
                 </div>
@@ -177,9 +180,7 @@
 
             <!-- Close Button -->
             <div class="button-group">
-                <button type="button" class="cancel-btn" onclick="closeViewUserModal()">
-                    Close
-                </button>
+                <button type="button" class="cancel-btn" onclick="closeViewUserModal()">Close</button>
             </div>
         </div>
     </div>
@@ -396,6 +397,6 @@
             </form>
         </div>
     </div>
-    <script src="../../public/assets/js/admin_manage_user.js"></script>
+    <script src="../../public/assets/js/admin_manage_user.js" defer></script>
 </body>
 </html>
