@@ -77,6 +77,7 @@
                         <td>
                             <span class="role-badge admin"><?php echo htmlspecialchars($user['user_type']); ?></span>
                         </td>
+                        <td>
                             <div class="action-buttons">
                                 <button class="action-btn view-btn" onclick="openViewUserModal()" title="View Details">
                                     👁️
