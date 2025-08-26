@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Applicator Dashboard</title>
-    <link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
+    <!--link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css"-->
 </head>
 <body>
     <?php 
@@ -261,21 +261,18 @@
             </div>
         </div>
     </div>
-<!-- Parts Inventory Modal -->
+
+    <!-- Parts Inventory Modal -->
     <div id="partsInventoryModalDashboardApplicator" class="modal-overlay" style="display: none;">
         <div class="modal">
             <button class="modal-close-btn" onclick="closePartsInventoryModal()">×</button>
             
             <div class="form-header">
                 <h1 class="form-title">📋 Parts Inventory</h1>
-                <p class="form-subtitle">View and manage applicator parts</p>
+                <p class="form-subtitle">View and manage custom applicator parts</p>
             </div>
             
             <div class="section-content">
-                <!-- Search and Filter Controls -->
-                <div class="search-filter">
-                    <input type="text" class="search-input" placeholder="Search parts by name, SKU, or category..." id="searchInput" onkeyup="filterTable()">
-                </div>
 
                 <!-- Data Table -->
                 <div class="table-container">
@@ -283,131 +280,18 @@
                         <thead>
                             <tr>
                                 <th>Part Name</th>
-                                <th>Status</th>
-                                <th>Current Cycles</th>
-                                <th>Max Cycles</th>
-                                <th>Usage %</th>
+                                <th>Created At</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody">
+                            <?php foreach ($custom_applicator_parts as $part): ?>
                             <!-- Wire Crimper -->
                             <tr>
-                                <td>Wire Crimper</td>
-                                <td><span class="status-badge status-good">Good</span></td>
-                                <td>234,567</td>
-                                <td>1,500,000</td>
-                                <td>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill progress-good" style="width: 15.6%;"></div>
-                                    </div>
-                                    <span>15.6%</span>
-                                </td>
+                                <td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $part['part_name']))) ?></td>
+                                <td><?= htmlspecialchars(date('Y-m-d', strtotime($part['created_at']))) ?></td>
                             </tr>
-                            <!-- Wire Anvil -->
-                            <tr>
-                                <td>Wire Anvil</td>
-                                <td><span class="status-badge status-good">Good</span></td>
-                                <td>189,234</td>
-                                <td>1,500,000</td>
-                                <td>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill progress-good" style="width: 12.6%;"></div>
-                                    </div>
-                                    <span>12.6%</span>
-                                </td>
-                            </tr>
-                            <!-- Insulation Crimper -->
-                            <tr>
-                                <td>Insulation Crimper</td>
-                                <td><span class="status-badge status-warn">Warn</span></td>
-                                <td>387,945</td>
-                                <td>1,500,000</td>
-                                <td>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill progress-warn" style="width: 25.9%;"></div>
-                                    </div>
-                                    <span>25.9%</span>
-                                </td>
-                            </tr>
-                            <!-- Insulation Anvil -->
-                            <tr>
-                                <td>Insulation Anvil</td>
-                                <td><span class="status-badge status-good">Good</span></td>
-                                <td>298,671</td>
-                                <td>1,500,000</td>
-                                <td>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill progress-good" style="width: 19.9%;"></div>
-                                    </div>
-                                    <span>19.9%</span>
-                                </td>
-                            </tr>
-                            <!-- Slide Cutter -->
-                            <tr>
-                                <td>Slide Cutter</td>
-                                <td><span class="status-badge status-good">Good</span></td>
-                                <td>456,789</td>
-                                <td>1,500,000</td>
-                                <td>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill progress-good" style="width: 30.5%;"></div>
-                                    </div>
-                                    <span>30.5%</span>
-                                </td>
-                            </tr>
-                            <!-- Cutter Holder -->
-                            <tr>
-                                <td>Cutter Holder</td>
-                                <td><span class="status-badge status-good">Good</span></td>
-                                <td>123,456</td>
-                                <td>1,500,000</td>
-                                <td>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill progress-good" style="width: 8.2%;"></div>
-                                    </div>
-                                    <span>8.2%</span>
-                                </td>
-                            </tr>
-                            <!-- Shear Blade -->
-                            <tr>
-                                <td>Shear Blade</td>
-                                <td><span class="status-badge status-good">Good</span></td>
-                                <td>98,765</td>
-                                <td>1,500,000</td>
-                                <td>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill progress-good" style="width: 6.6%;"></div>
-                                    </div>
-                                    <span>6.6%</span>
-                                </td>
-                            </tr>
-                            <!-- Cutter A -->
-                            <tr>
-                                <td>Cutter A</td>
-                                <td><span class="status-badge status-good">Good</span></td>
-                                <td>156,789</td>
-                                <td>1,500,000</td>
-                                <td>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill progress-good" style="width: 10.5%;"></div>
-                                    </div>
-                                    <span>10.5%</span>
-                                </td>
-                            </tr>
-                            <!-- Cutter B -->
-                            <tr>
-                                <td>Cutter B</td>
-                                <td><span class="status-badge status-good">Good</span></td>
-                                <td>134,567</td>
-                                <td>1,500,000</td>
-                                <td>
-                                    <div class="progress-bar">
-                                        <div class="progress-fill progress-good" style="width: 9.0%;"></div>
-                                    </div>
-                                    <span>9.0%</span>
-                                </td>
-                            </tr>
-                        </tbody>
+                            <?php endforeach; ?>
+                        </tbody>    
                     </table>
                 </div>
             </div>
@@ -417,6 +301,45 @@
             </div>
         </div>
     </div>
+
+    <!-- Add Custom Part Modal -->
+    <div id="addCustomPartModalDashboardApplicator" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close-btn" onclick="closeAddCustomPartModal()">×</button>
+            
+            <div class="form-header">
+                <h1 class="form-title">➕ Add Custom Part</h1>
+                <p class="form-subtitle">Add a new custom part to this applicator</p>
+            </div>
+
+            <form id="addCustomPartForm" method="POST" action="../controllers/add_custom_part.php">
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="customPartName">Part Name</label>
+                        <input type="text" id="customPartName" name="custom_part_name" class="form-input" placeholder="Enter part name..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customPartCycles">Initial Cycles</label>
+                        <input type="number" id="customPartCycles" name="custom_part_cycles" class="form-input" placeholder="e.g. 0" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customPartStatus">Status</label>
+                        <select id="customPartStatus" name="custom_part_status" class="form-input" required>
+                            <option value="">Select status</option>
+                            <option value="good">Good</option>
+                            <option value="warn">Warn</option>
+                            <option value="critical">Critical</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Add Part</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeAddCustomPartModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Reset Applicator Modal -->
     <div id="resetModalDashboardApplicator" class="modal-overlay">
         <div class="form-container">
@@ -627,44 +550,7 @@
             </div>
         </div>
     </div>
-    <!-- Add Custom Part Modal -->
-    <div id="addCustomPartModalDashboardApplicator" class="modal-overlay">
-        <div class="modal">
-            <button class="modal-close-btn" onclick="closeAddCustomPartModal()">×</button>
-            
-            <div class="form-header">
-                <h1 class="form-title">➕ Add Custom Part</h1>
-                <p class="form-subtitle">Add a new custom part to this applicator</p>
-            </div>
 
-            <form id="addCustomPartForm" method="POST" action="../controllers/add_custom_part.php">
-                <div class="form-section">
-                    <div class="form-group">
-                        <label for="customPartName">Part Name</label>
-                        <input type="text" id="customPartName" name="custom_part_name" class="form-input" placeholder="Enter part name..." required>
-                    </div>
-                    <div class="form-group">
-                        <label for="customPartCycles">Initial Cycles</label>
-                        <input type="number" id="customPartCycles" name="custom_part_cycles" class="form-input" placeholder="e.g. 0" min="0" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="customPartStatus">Status</label>
-                        <select id="customPartStatus" name="custom_part_status" class="form-input" required>
-                            <option value="">Select status</option>
-                            <option value="good">Good</option>
-                            <option value="warn">Warn</option>
-                            <option value="critical">Critical</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Add Part</button>
-                    <button type="button" class="btn btn-secondary" onclick="closeAddCustomPartModal()">Cancel</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    
     <!-- Load JavaScript -->
     <script src="../../public/assets/js/dashboard_applicator.js"></script>
 </body>
