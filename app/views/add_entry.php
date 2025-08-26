@@ -216,7 +216,9 @@ if (!isset($_SESSION['user_id'])) {
                             </table>
                         </div>
                     </div>
-
+            </div>
+        </div>
+    </div>
                 <!-- Add Machine Form Modal-->
                 <div id="addMachineModal" class="modal-overlay">
                     <div class="form-container">
@@ -403,7 +405,9 @@ if (!isset($_SESSION['user_id'])) {
                     </div>
                 </div>
 
-                            <!-- Edit Machine Modal -->
+                </div>
+
+                <!-- Edit Machine Modal -->
                 <div id="editModal" class="modal-overlay">
                     <div class="form-container">
                         <button class="modal-close-btn" onclick="closeModal()">×</button>
@@ -592,7 +596,6 @@ if (!isset($_SESSION['user_id'])) {
                         </form>
                     </div>
                 </div>
-    </div>
     <script src="../../public/assets/js/add_entry.js"></script>
     <script src="../../public/assets/js/export_entry.js"></script>
 </body>
