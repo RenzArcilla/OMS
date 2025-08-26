@@ -140,7 +140,7 @@ if (!isset($_SESSION['user_id'])) {
                                             <!-- Delete form -->
                                                     <form action="/SOMS/app/controllers/delete_machine.php" method="POST" style="display:inline;">
                                                         <input type="hidden" name="machine_id" value="<?= $row['machine_id'] ?>">
-                                                        <button class="delete-btn" type="button" onclick="openDeleteModal(this)">🗑️</button>
+                                                        <button class="delete-btn" type="button" onclick="openMachineDeleteModal(this)">🗑️</button>
                                                     </form>
                                                 </div>
                                             </td>
@@ -208,7 +208,7 @@ if (!isset($_SESSION['user_id'])) {
                                                 <button 
                                                     type="button"
                                                     class="delete-btn"
-                                                    onclick="openDeleteModal(this)"
+                                                    onclick="openApplicatorDeleteModal(this)"
                                                 >🗑️</button>
                                             </form>
                                             </td>

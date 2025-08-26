@@ -232,7 +232,7 @@ function closeApplicatorModal() {
     document.getElementById('editApplicatorModal').style.display = 'none';
 }
 
-function openDeleteModal(button) {
+function openMachineDeleteModal(button) {
     // Store the form reference for later use
     window.currentDeleteForm = button.closest('form');
     
@@ -240,13 +240,42 @@ function openDeleteModal(button) {
     document.getElementById('deleteModalOverlay').style.display = 'block';
 }
 
-function closeDeleteModal() {
+function closeMachineDeleteModal() {
     document.getElementById('deleteModalOverlay').style.display = 'none';
 }
 
 function confirmDelete() {
     // Close the modal first
-    closeDeleteModal();
+    closeMachineDeleteModal();
+    
+    // Submit the stored form
+    if (window.currentDeleteForm) {
+        window.currentDeleteForm.submit();
+    }
+}
+
+
+
+
+
+
+
+
+function openApplicatorDeleteModal(button) {
+    // Store the form reference for later use
+    window.currentDeleteForm = button.closest('form');
+    
+    // Show the delete modal
+    document.getElementById('deleteModalOverlay').style.display = 'block';
+}
+
+function closeApplicatorDeleteModal() {
+    document.getElementById('deleteModalOverlay').style.display = 'none';
+}
+
+function confirmDelete() {
+    // Close the modal first
+    closeApplicatorDeleteModal();
     
     // Submit the stored form
     if (window.currentDeleteForm) {
