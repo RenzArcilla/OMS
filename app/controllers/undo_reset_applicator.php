@@ -78,7 +78,7 @@ try {
     }
 
     // Update applicator monitoring table to revert an applicator part's output to value before reset
-    $result = editPartOutputValue($applicator_id, $part_name, $previous_output);
+    $result = editApplicatorPartOutputValue($applicator_id, $part_name, $previous_output);
     if (is_string($result)) {
         $pdo->rollBack();
         jsAlertRedirect($result, $redirect_url); // error message

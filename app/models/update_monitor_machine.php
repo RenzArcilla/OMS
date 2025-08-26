@@ -196,7 +196,7 @@ function resetMachinePartOutput($machine_id, $part_name) {
 }
 
 
-function editPartOutputValue($machine_id, $part_name, $value) {
+function editMachinePartOutputValue($machine_id, $part_name, $value) {
     /*
         Reverts a machine part output to a given value.
         Supports both standard columns and custom JSON parts.
@@ -244,8 +244,8 @@ function editPartOutputValue($machine_id, $part_name, $value) {
             return true;
 
         } catch (PDOException $e) {
-            error_log("Database Error in editPartOutputValue (defined): " . $e->getMessage());
-            return "Database error in editPartOutputValue (defined): " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+            error_log("Database Error in editPaeditMachinePartOutputValuertOutputValue (defined): " . $e->getMessage());
+            return "Database error in editMachinePartOutputValue (defined): " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
         }
     }
 
@@ -288,8 +288,8 @@ function editPartOutputValue($machine_id, $part_name, $value) {
             return true;
 
         } catch (PDOException $e) {
-            error_log("Database Error in editPartOutputValue (custom): " . $e->getMessage());
-            return "Database error in editPartOutputValue (custom): " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+            error_log("Database Error in editMachinePartOutputValue (custom): " . $e->getMessage());
+            return "Database error in editMachinePartOutputValue (custom): " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
         }
     }
 
