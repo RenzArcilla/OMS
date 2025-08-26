@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Machine Dashboard</title>
     <link rel="stylesheet" href="../../public/assets/css/dashboard_machine.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
 </head>
 <body>
     <?php
