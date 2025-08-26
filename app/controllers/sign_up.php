@@ -69,7 +69,7 @@ switch (strtolower($role)) {
 $pdo->beginTransaction();
 include_once '../models/create_user.php';
 
-$result = createUser($firstname, $lastname, $username, $password, $confirm_password, $role);
+$result = createUser($firstname, $lastname, $username, $password, $role);
 
 // 5. Handle response
 if (is_array($result)) {
