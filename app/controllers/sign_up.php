@@ -78,16 +78,20 @@ if (is_array($result)) {
         session_start();
     }
     
-    $_SESSION['user_id'] = $result['user_id'];
-    $_SESSION['username'] = $result['username'];
-    $_SESSION['first_name'] = $result['first_name'];
-    $_SESSION['user_type'] = $result['user_type'];
     $pdo->commit();
     if (isset($_POST['admin_create_user'])) {
         jsAlertRedirect("User created successfully.", $redirect_url);
     } elseif ($user_type == 'TOOLKEEPER') {
+        $_SESSION['user_id'] = $result['user_id'];
+        $_SESSION['username'] = $result['username'];
+        $_SESSION['first_name'] = $result['first_name'];
+        $_SESSION['user_type'] = $result['user_type'];
         header("Location: ../views/record_output.php");
     } else {
+        $_SESSION['user_id'] = $result['user_id'];
+        $_SESSION['username'] = $result['username'];
+        $_SESSION['first_name'] = $result['first_name'];
+        $_SESSION['user_type'] = $result['user_type'];
         header("Location: ../views/dashboard_applicator.php");
     }
     exit();
