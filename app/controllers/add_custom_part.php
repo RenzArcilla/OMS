@@ -17,7 +17,7 @@ require_once '../includes/db.php';
 include_once '../models/create_custom_part.php';
 
 // Redirect url
-$redirect_url = "../views/add_entry.php";
+$redirect_url = "../views/dashboard_applicator.php";
 
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -38,14 +38,16 @@ if (empty($type) || empty($name)) {
     exit;
 }
 
-if ($type !== "APPLICATOR" || $name !== "MACHINE") {
+// Check for equipment type
+$valid_types = ["APPLICATOR", "MACHINE", "PRESS"];
+if (!in_array($type, $valid_types, true)) {
     jsAlertRedirect("Invalid equipment type.", $redirect_url);
     exit;
-}   
+}
 
 // 3. Database operation
 $pdo->beginTransaction();
-$result = createCustomPart($type, $name);
+$result = createCustomPart((int) $_SESSION['user_id'], $type, $name);
 
 // Check if custom part creation was successful
 if ($result === true) {
