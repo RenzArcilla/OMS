@@ -377,7 +377,11 @@
                                 data-part-name="<?= htmlspecialchars($partNameTitle, ENT_QUOTES) ?>">
                             Edit
                         </button>
-                        <button class="btn btn-delete" data-part-id="<?= htmlspecialchars($part['part_id']) ?>" >Delete</button>
+                        <button class="btn btn-delete" 
+                                data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
+                                data-part-type="MACHINE">
+                            Delete
+                        </button>
                     </td>
                 </tr>
                 <?php endforeach; ?>
