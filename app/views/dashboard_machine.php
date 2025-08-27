@@ -78,6 +78,9 @@
                         <button type="button" class="btn btn-primary" onclick="refreshPage(this)">
                             Refresh Data
                         </button>
+                        <button type="button" class="btn btn-primary" onclick="openAddPartsModal()">
+                            Add Parts
+                        </button>
                     </div>
                 </div>
                 
@@ -521,6 +524,32 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <!-- Add Custom Part Modal -->
+    <div id="addCustomPartModalDashboardApplicator" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close-btn" onclick="closeAddCustomPartModal()">×</button>
+            
+            <div class="form-header">
+                <h1 class="form-title">➕ Add Custom Part</h1>
+                <p class="form-subtitle">Add a new custom part to this applicator</p>
+            </div>
+
+            <form id="addCustomPartForm" method="POST" action="../controllers/add_custom_part.php">
+                <input type="hidden" name="equipment_type" value="APPLICATOR">
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="customPartName">Part Name</label>
+                        <input type="text" id="custom_part_name" name="custom_part_name" class="form-input" placeholder="Enter part name..." required>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Add Part</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeAddCustomPartModal()">Cancel</button>
+                </div>
+            </form>
         </div>
     </div>
     <script src="../../public/assets/js/dashboard_machine.js"></script>
