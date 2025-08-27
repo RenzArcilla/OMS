@@ -276,6 +276,80 @@
                         </div>
                     </div>
                 </div>
+                <div class="data-section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            📤 Recently Deleted Outputs
+                            <span class="section-badge">3</span>
+                        </div>
+                        <div class="expand-icon">▼</div>
+                    </div>
+                    <div class="section-content expanded">
+                        <div class="search-filter">
+                            <input type="text" class="search-input" placeholder="Search deleted outputs...">
+                            <button class="filter-btn">All Outputs</button>
+                            <button class="filter-btn">Reports</button>
+                            <button class="filter-btn">Data Files</button>
+                            <button class="filter-btn">Logs</button>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Output ID</th>
+                                        <th>Output Name</th>
+                                        <th>Type</th>
+                                        <th>File Size</th>
+                                        <th>Machine Source</th>
+                                        <th>Generated Date</th>
+                                        <th>Deleted Date</th>
+                                        <th>Deleted By</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>OUT-2024-001</td>
+                                        <td>Production Report Q3 2024</td>
+                                        <td>Report</td>
+                                        <td>2.4 MB</td>
+                                        <td>AM-003</td>
+                                        <td>2024-08-15</td>
+                                        <td>2024-08-26</td>
+                                        <td>John Smith</td>
+                                        <td><span class="status-badge status-critical">Deleted</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>OUT-2024-002</td>
+                                        <td>Wire Assembly Log 08-24</td>
+                                        <td>Log File</td>
+                                        <td>850 KB</td>
+                                        <td>HP-002</td>
+                                        <td>2024-08-20</td>
+                                        <td>2024-08-24</td>
+                                        <td>Mike Johnson</td>
+                                        <td><span class="status-badge status-critical">Deleted</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>OUT-2024-003</td>
+                                        <td>Quality Control Data Export</td>
+                                        <td>Data File</td>
+                                        <td>1.8 MB</td>
+                                        <td>AM-002</td>
+                                        <td>2024-08-18</td>
+                                        <td>2024-08-22</td>
+                                        <td>Sarah Davis</td>
+                                        <td><span class="status-badge status-critical">Deleted</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+            
+                    
+
+
+
             </div>
         </div>
     </div>
