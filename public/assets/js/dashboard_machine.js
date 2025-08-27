@@ -76,8 +76,8 @@ function closeEditCustomPartModal() {
 // Listen for clicks on delete buttons in the custom parts table
 document.addEventListener('click', function(event) {
     if (event.target.classList.contains('btn-delete')) {
-        const partId = event.target.getAttribute('data-part-id')
-        const partType = event.target.getAttribute('data-part-type')
+        const partId = event.target.getAttribute('data-part-id');
+        const partType = event.target.getAttribute('data-part-type');
         confirmDeleteCustomPart(partId, partType);
     }
 });
