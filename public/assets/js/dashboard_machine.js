@@ -110,6 +110,34 @@ function confirmDeleteCustomPart(partId, type) {
     }
 }
 
+// Listen for clicks only on the restore buttons
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('restore-btn')) {
+        const machineId = event.target.dataset.machineId;
+        confirmRestoreCustomPart(machineId);
+    }
+});
+
+// Restore confirmation
+function confirmRestoreCustomPart(machineId) {
+    if (confirm("Are you sure you want to restore this machine?")) {
+        // Create a form dynamically
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "../controllers/restore_machine.php";
+
+        // Add hidden input for machine_id
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "machine_id";
+        input.value = machineId;
+
+        form.appendChild(input);
+        document.body.appendChild(form);
+
+        form.submit();
+    }
+}
 
 // Initialize event listeners when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function () {
@@ -218,3 +246,4 @@ if (typeof closeAddCustomPartModal === 'undefined') {
         }
     };
 }
+
