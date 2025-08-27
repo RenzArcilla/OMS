@@ -54,10 +54,10 @@ function loadMachines() {
                 actionsDiv.className = 'actions';
 
                 // Edit link
-                                         const editButton = document.createElement('button');
-                     editButton.textContent = '✏️';
-                     editButton.setAttribute('type', 'button');
-                     editButton.setAttribute('class', 'action-btn edit-btn');
+                    const editButton = document.createElement('button');
+                    editButton.textContent = '✏️';
+                    editButton.setAttribute('type', 'button');
+                    editButton.setAttribute('class', 'action-btn edit-btn');
 
                     // Set data attributes
                     editButton.dataset.id = row.machine_id;
@@ -78,7 +78,7 @@ function loadMachines() {
                 // Delete form
                     const deleteForm = document.createElement('form');
                     deleteForm.method = 'POST';
-                    deleteForm.action = '/SOMS/app/controllers/delete_machine.php';
+                    deleteForm.action = '/SOMS/app/controllers/disable_machine.php';
                     deleteForm.name = 'deleteForm'; 
                     deleteForm.style.display = 'inline';
                     deleteForm.onsubmit = () => confirm('Are you sure you want to delete this machine?');
@@ -89,11 +89,11 @@ function loadMachines() {
                     hiddenId.value = row.machine_id;
                     deleteForm.appendChild(hiddenId);
 
-                                         const deleteButton = document.createElement('button');
-                     deleteButton.type = 'submit';
-                     deleteButton.textContent = '🗑️';
-                     deleteButton.className = 'action-btn delete-btn';
-                     deleteForm.appendChild(deleteButton);
+                    const deleteButton = document.createElement('button');
+                    deleteButton.type = 'submit';
+                    deleteButton.textContent = '🗑️';
+                    deleteButton.className = 'action-btn delete-btn';
+                    deleteForm.appendChild(deleteButton);
 
                     actionsDiv.appendChild(deleteForm);
                     tdActions.appendChild(actionsDiv);

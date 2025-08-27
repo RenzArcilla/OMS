@@ -140,7 +140,7 @@ if (!isset($_SESSION['user_id'])) {
                                                     >✏️</button>
 
                                             <!-- Delete form -->
-                                                    <form action="/SOMS/app/controllers/delete_machine.php" method="POST" style="display:inline;">
+                                                    <form action="/SOMS/app/controllers/disable_machine.php" method="POST" style="display:inline;">
                                                         <input type="hidden" name="machine_id" value="<?= $row['machine_id'] ?>">
                                                         <button class="delete-btn" type="button" onclick="openMachineDeleteModal(this)">🗑️</button>
                                                     </form>
