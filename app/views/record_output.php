@@ -27,6 +27,7 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
 </head> 
 <body>
     <div class="container">
@@ -101,12 +102,12 @@ if (!isset($_SESSION['user_id'])) {
                                                 data-control-no="<?= htmlspecialchars($row['control_no'] ?? '') ?>"
                                                 data-machine-output="<?= htmlspecialchars($row['machine_output'] ?? '') ?>"
                                                 title="Edit Record" 
-                                            ><span class="btn-small btn-edit">✏️</span></a>
+                                            ><span class="edit-btn">✏️</span></a>
 
                                             <!-- Delete form -->
                                             <form action="/SOMS/app/controllers/delete_record.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this record?');">
                                                 <input type="hidden" name="record_id" value="<?= htmlspecialchars($row['record_id']) ?>">
-                                                <button type="submit" title="Delete Record" class="btn-small btn-delete">🗑️</button>
+                                                <button type="submit" title="Delete Record" class="delete-btn">🗑️</button>
                                             </form>
                                         </td>
                                         <td><?= htmlspecialchars($row['record_id']) ?></td>

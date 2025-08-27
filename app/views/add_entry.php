@@ -31,6 +31,8 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/delete_modal.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
+    
     <!-- Load machine infinite scroll logic -->
     <script src="../../public/assets/js/load_machines.js" defer></script>
     <!-- Load applicator infinite scroll logic -->
@@ -509,7 +511,7 @@ if (!isset($_SESSION['user_id'])) {
                             
                             <div class="form-section">
                                 <div class="section-header">
-                                    <div class="section-icon">✏️</div>
+                                    <div class="edit-btn">✏️</div>
                                     <div class="section-info">
                                         <div class="section-title">Applicator Details</div>
                                         <div class="section-description">Update applicator information</div>
@@ -603,7 +605,7 @@ if (!isset($_SESSION['user_id'])) {
                         <button class="modal-close-btn" onclick="closeMachineDeleteModal()">×</button>
                         
                         <!-- Delete Icon -->
-                        <div class="delete-icon" id="deleteIcon">🗑️</div>
+                        <div class="delete-btn" id="deleteIcon">🗑️</div>
                         
                         <!-- Title and Message -->
                         <h2 class="delete-title" id="deleteTitle">Delete Confirmation</h2>
