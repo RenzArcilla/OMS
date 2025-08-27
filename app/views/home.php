@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOMS - Home</title>
+    <link rel="stylesheet" href="../../public/assets/css/base/base.css">
     <link rel="stylesheet" href="../../public/assets/css/base/typography.css">
     <link rel="stylesheet" href="../../public/assets/css/home.css">
 </head>
@@ -15,7 +16,7 @@
     </div>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <div class="container">
         <div class="hero-container">
             <div class="hero-content">
                 <div class="hero-badge">
