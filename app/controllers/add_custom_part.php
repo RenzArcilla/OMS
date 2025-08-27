@@ -14,7 +14,8 @@ if (!isset($_SESSION['user_id'])) {
 // Include necessary files
 require_once '../includes/js_alert.php';
 require_once '../includes/db.php'; 
-include_once '../models/create_custom_part.php';
+require_once '../models/create_custom_part.php';
+require_once '../models/read_custom_parts.php';
 
 // Redirect url
 $redirect_url = "../views/dashboard_applicator.php";
@@ -45,6 +46,13 @@ if (empty($type) || empty($name)) {
 $valid_types = ["APPLICATOR", "MACHINE", "PRESS"];
 if (!in_array($type, $valid_types, true)) {
     jsAlertRedirect("Invalid equipment type.", $redirect_url);
+    exit;
+}
+
+// Check if new part name is unique
+$existing_part = getCustomPartByName($name);
+if ($existing_part) {
+    jsAlertRedirect("Part name already exists.", $redirect_url);
     exit;
 }
 
