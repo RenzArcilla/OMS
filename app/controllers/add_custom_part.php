@@ -18,6 +18,9 @@ include_once '../models/create_custom_part.php';
 
 // Redirect url
 $redirect_url = "../views/dashboard_applicator.php";
+if (strtoupper(trim($_POST['equipment_type'])) === "MACHINE") {
+    $redirect_url = "../views/dashboard_machine.php";
+}
 
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
