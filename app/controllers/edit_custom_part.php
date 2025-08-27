@@ -19,12 +19,18 @@ require_once '../models/update_custom_part.php'; // Update custom part model
 
 // Redirect URL
 $redirect_url = "../views/dashboard_applicator.php";
+if (strtoupper(trim($_POST['equipment_type'])) === "MACHINE") {
+    $redirect_url = "../views/dashboard_machine.php";
+}
 
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     jsAlertRedirect("Invalid request method.", $redirect_url);
     exit;
 }
+
+// 0. Initialize variables
+$result = null;
 
 // 1. Sanitize input
 $part_id = isset($_POST['part_id']) ? intval($_POST['part_id']) : null;
@@ -36,6 +42,12 @@ $name = isset($_POST['custom_part_name'])
 // 2. Validation
 if (empty($type) || empty($name) || empty($part_id)) {
     jsAlertRedirect("Please fill in all required fields.", $redirect_url);
+    exit;
+}
+
+// Check if nothing changed
+if ($result && $result['part_id'] === $part_id && $result['part_name'] === $name && $result['equipment_type'] === $type) {
+    jsAlertRedirect("No changes detected.", $redirect_url);
     exit;
 }
 

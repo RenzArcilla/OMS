@@ -385,6 +385,61 @@
         </table>
     </div>
 
+    <!-- Add Custom Part Modal -->
+    <div id="addCustomPartModalDashboardApplicator" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close-btn" onclick="closeAddCustomPartModal()">×</button>
+            
+            <div class="form-header">
+                <h1 class="form-title">➕ Add Custom Part</h1>
+                <p class="form-subtitle">Add a new custom part to this applicator</p>
+            </div>
+
+            <form id="addCustomPartForm" method="POST" action="../controllers/add_custom_part.php">
+                <input type="hidden" name="equipment_type" value="MACHINE">
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="customPartName">Part Name</label>
+                        <input type="text" id="custom_part_name" name="custom_part_name" class="form-input" placeholder="Enter part name..." required>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Add Part</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeAddCustomPartModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Custom Part Modal -->
+    <div id="editCustomPartModalDashboardMachine" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close-btn" onclick="closeEditCustomPartModal()">×</button>
+
+            <div class="form-header">
+                <h1 class="form-title">✏️ Edit Custom Part</h1>
+                <p class="form-subtitle">Edit the details of this custom part</p>
+            </div>
+
+            <form id="editCustomPartForm" method="POST" action="../controllers/edit_custom_part.php">
+                <input type="hidden" name="equipment_type" value="MACHINE">
+                <input type="hidden" name="part_id" id="edit_part_id">
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="customPartName">Part Name</label>
+                        <input type="text" id="edit_part_name" name="custom_part_name" class="form-input" placeholder="Enter part name..." required>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeEditCustomPartModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Reset Machine Modal -->
     <div id="resetModalDashboardMachine" class="modal-overlay">
         <div class="modal modal-reset">
@@ -554,32 +609,7 @@
             </div>
         </div>
     </div>
-    <!-- Add Custom Part Modal -->
-    <div id="addCustomPartModalDashboardApplicator" class="modal-overlay">
-        <div class="modal">
-            <button class="modal-close-btn" onclick="closeAddCustomPartModal()">×</button>
-            
-            <div class="form-header">
-                <h1 class="form-title">➕ Add Custom Part</h1>
-                <p class="form-subtitle">Add a new custom part to this applicator</p>
-            </div>
 
-            <form id="addCustomPartForm" method="POST" action="../controllers/add_custom_part.php">
-                <input type="hidden" name="equipment_type" value="MACHINE">
-
-                <div class="form-section">
-                    <div class="form-group">
-                        <label for="customPartName">Part Name</label>
-                        <input type="text" id="custom_part_name" name="custom_part_name" class="form-input" placeholder="Enter part name..." required>
-                    </div>
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Add Part</button>
-                    <button type="button" class="btn btn-secondary" onclick="closeAddCustomPartModal()">Cancel</button>
-                </div>
-            </form>
-        </div>
-    </div>
     <script src="../../public/assets/js/dashboard_machine.js"></script>
 </body>
 </html>

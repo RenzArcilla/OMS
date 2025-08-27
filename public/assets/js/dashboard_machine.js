@@ -49,6 +49,34 @@ function closeMachineModal() {
     modal.style.display = 'none';
 }
 
+document.addEventListener('click', function(event) {
+    const btn = event.target.closest('.btn-edit');
+    if (btn) {
+        const partId = btn.getAttribute('data-part-id');
+        const partName = btn.getAttribute('data-part-name');
+        openEditCustomPartModal(partId, partName);
+    }
+});
+
+function openEditCustomPartModal(partId, partName) {
+    const modal = document.getElementById('editCustomPartModalDashboardMachine');
+    modal.style.display = 'block';
+    document.getElementById('edit_part_id').value = partId;
+    document.getElementById('edit_part_name').value = partName;
+}
+
+function closeEditCustomPartModal() {
+    document.getElementById('editCustomPartModalDashboardMachine').style.display = 'none';
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById('editCustomPartModalDashboardMachine');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+};
+
+
 // Initialize event listeners when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function () {
     console.log('DOM loaded, initializing dashboard machine...'); // Debug log
