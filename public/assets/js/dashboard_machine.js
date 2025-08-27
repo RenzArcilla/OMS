@@ -49,6 +49,7 @@ function closeMachineModal() {
     modal.style.display = 'none';
 }
 
+// Listen for clicks on edit buttons in the custom parts table
 document.addEventListener('click', function(event) {
     const btn = event.target.closest('.btn-edit');
     if (btn) {
@@ -58,6 +59,7 @@ document.addEventListener('click', function(event) {
     }
 });
 
+// Open the edit custom part modal
 function openEditCustomPartModal(partId, partName) {
     const modal = document.getElementById('editCustomPartModalDashboardMachine');
     modal.style.display = 'block';
@@ -65,16 +67,48 @@ function openEditCustomPartModal(partId, partName) {
     document.getElementById('edit_part_name').value = partName;
 }
 
+// Close the edit custom part modal
 function closeEditCustomPartModal() {
     document.getElementById('editCustomPartModalDashboardMachine').style.display = 'none';
 }
 
-window.onclick = function(event) {
-    const modal = document.getElementById('editCustomPartModalDashboardMachine');
-    if (event.target === modal) {
-        modal.style.display = 'none';
+
+// Listen for clicks on delete buttons in the custom parts table
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('btn-delete')) {
+        const partId = event.target.getAttribute('data-part-id')
+        const partType = event.target.getAttribute('data-part-type')
+        confirmDeleteCustomPart(partId, partType);
     }
-};
+});
+
+// Delete confirmation
+function confirmDeleteCustomPart(partId, type) {
+    if (confirm("Are you sure you want to delete this custom part? This action CANNOT be undone!")) {
+        // Create a form dynamically
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "../controllers/delete_custom_part.php";
+
+        // Add hidden input for part_id
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "part_id";
+        input.value = partId;
+
+        // Add hidden input for equipment type
+        const inputType = document.createElement("input");
+        inputType.type = "hidden";
+        inputType.name = "equipment_type";
+        inputType.value = type;
+
+        form.appendChild(input);
+        form.appendChild(inputType);
+        document.body.appendChild(form);
+
+        form.submit();
+    }
+}
 
 
 // Initialize event listeners when the DOM is fully loaded
