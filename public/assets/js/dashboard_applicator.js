@@ -111,12 +111,13 @@ function closeEditCustomPartModal() {
 document.addEventListener('click', function(event) {
     if (event.target.classList.contains('btn-delete')) {
         const partId = event.target.getAttribute('data-part-id');
-        confirmDeleteCustomPart(partId);
+        const partType = event.target.getAttribute('data-part-type');
+        confirmDeleteCustomPart(partId, partType);
     }
 });
 
 // Delete confirmation
-function confirmDeleteCustomPart(partId) {
+function confirmDeleteCustomPart(partId, type) {
     if (confirm("Are you sure you want to delete this custom part? This action CANNOT be undone!")) {
         // Create a form dynamically
         const form = document.createElement("form");
@@ -129,7 +130,14 @@ function confirmDeleteCustomPart(partId) {
         input.name = "part_id";
         input.value = partId;
 
+        // Add hidden input for equipment type
+        const inputType = document.createElement("input");
+        inputType.type = "hidden";
+        inputType.name = "equipment_type";
+        inputType.value = type;
+
         form.appendChild(input);
+        form.appendChild(inputType);
         document.body.appendChild(form);
 
         form.submit();
