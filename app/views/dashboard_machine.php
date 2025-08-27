@@ -62,6 +62,10 @@
     // Get parts priority data
     $parts_ordered = getPartsOrderedByOutput($part_names_array);
     $top_3_parts = array_slice($parts_ordered, 0, 3);
+
+    // Get disabled machines
+    require_once __DIR__ . '/../models/read_machines.php';
+    $disabled_machines = getDisabledMachines(10, 0);
     ?>
 
     <div class="admin-container">
@@ -208,7 +212,7 @@
             </div>
         
             <div class="tables-grid">
-                <!-- Table 1: Custom Parts -->
+                <!-- Table 1: Custom Parts >
                 <div class="data-section">
                     <div class="section-header">
                         <div class="section-title">
@@ -242,7 +246,7 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div -->
 
                 <!-- Table 2: Recently Deleted Machine -->
                 <div class="data-section">
@@ -261,24 +265,33 @@
                             <table class="data-table">
                                 <thead>
                                     <tr>
-                                        <th>Machine Name</th>
+                                        <th>Actions</th>
+                                        <th>Control Number</th>
+                                        <th>Model</th>
+                                        <th>Maker</th>
+                                        <th>Last Encoded</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php foreach ($disabled_machines as $machine): ?>
                                     <tr>
-                                        <td>Wire Assembly Unit Alpha</td>
+                                        <td>
+                                            <button class="restore-btn" data-id="<?php echo $machine['machine_id']; ?>">Restore</button>
+                                            <button class="delete-btn" data-id="<?php echo $machine['machine_id']; ?>">Delete</button>
+                                        </td>
+                                        <td><?php echo htmlspecialchars($machine['control_no']); ?></td>
+                                        <td><?php echo htmlspecialchars($machine['model']); ?></td>
+                                        <td><?php echo htmlspecialchars($machine['maker']); ?></td>
+                                        <td><?php echo htmlspecialchars($machine['last_encoded']); ?></td>
                                     </tr>
-                                    <tr>
-                                        <td>High Precision Crimper</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Cable Cutting Station Beta</td>
-                                    </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
+
+                <!-- Table 3: Recently Deleted Outputs Section -->
                 <div class="data-section">
                     <div class="section-header">
                         <div class="section-title">
