@@ -1,6 +1,6 @@
 <?php
 /*
-    This script handles the deletion (soft delete) of an applicator to the database.
+    This script handles the disabling (soft delete) of an applicator to the database.
     It retrieves form data, sanitizes it, and updates the status in the database.
 */
 

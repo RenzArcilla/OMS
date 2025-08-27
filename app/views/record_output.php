@@ -105,7 +105,7 @@ if (!isset($_SESSION['user_id'])) {
                                             ><span class="edit-btn">✏️</span></a>
 
                                             <!-- Delete form -->
-                                            <form action="/SOMS/app/controllers/delete_record.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this record?');">
+                                            <form action="/SOMS/app/controllers/disable_record.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this record?');">
                                                 <input type="hidden" name="record_id" value="<?= htmlspecialchars($row['record_id']) ?>">
                                                 <button type="submit" title="Delete Record" class="delete-btn">🗑️</button>
                                             </form>
