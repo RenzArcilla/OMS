@@ -276,7 +276,11 @@
                                     <?php foreach ($disabled_machines as $machine): ?>
                                     <tr>
                                         <td>
-                                            <button class="restore-btn" data-id="<?php echo $machine['machine_id']; ?>">Restore</button>
+                                            <button id="restore-machine-<?= htmlspecialchars($machine['machine_id']) ?>"
+                                                    class="restore-btn"
+                                                    data-machine-id="<?= htmlspecialchars($machine['machine_id']) ?>">
+                                                Restore
+                                            </button>
                                             <button class="delete-btn" data-id="<?php echo $machine['machine_id']; ?>">Delete</button>
                                         </td>
                                         <td><?php echo htmlspecialchars($machine['control_no']); ?></td>
