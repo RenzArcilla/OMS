@@ -205,7 +205,7 @@ if (!isset($_SESSION['user_id'])) {
                                             >✏️</button>
 
                                             <!-- Delete form -->
-                                            <form action="/SOMS/app/controllers/delete_applicator.php" method="POST" style="display:inline;">
+                                            <form action="/SOMS/app/controllers/disable_applicator.php" method="POST" style="display:inline;">
                                                 <input type="hidden" name="applicator_id" value="<?= htmlspecialchars($row['applicator_id']) ?>">
                                                 <button 
                                                     type="button"

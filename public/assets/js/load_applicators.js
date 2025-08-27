@@ -85,7 +85,7 @@ function loadApplicators() {
                 // Delete form
                 const deleteForm = document.createElement('form');
                 deleteForm.method = 'POST';
-                deleteForm.action = '/SOMS/app/controllers/delete_applicator.php';
+                deleteForm.action = '/SOMS/app/controllers/disable_applicator.php';
                 deleteForm.style.display = 'inline';
                 deleteForm.onsubmit = () => confirm('Are you sure you want to delete this applicator?');
 
