@@ -72,40 +72,6 @@
 }
 
 
-.btn-secondary {
-    padding: 0.75rem 1.5rem;
-    border: 1px solid #E5E7EB;
-    border-radius: 0.75rem;
-    background: white;
-    color: #6B7280;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-
-.btn-secondary:hover {
-    background: #F3F4F6;
-}
-
-
-.btn-primary {
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 0.75rem;
-    background: linear-gradient(135deg, #2F80ED 0%, #27AE60 100%);
-    color: white;
-    font-weight: 500;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(47, 128, 237, 0.3);
-    transition: all 0.2s;
-}
-
-
-.btn-primary:hover {
-    box-shadow: 0 6px 20px rgba(47, 128, 237, 0.4);
-}
-
 .actions {
     display: flex;
     gap: 0.5rem;
@@ -135,11 +101,6 @@
 
 .edit-btn:hover { 
     background: #F0FDF4; 
-}
-
-
-.delete-btn:hover { 
-    background: #FEF2F2; 
 }
 
 
