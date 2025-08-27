@@ -72,13 +72,14 @@
         <div class="content-card">
             <h1 class="content-title">Dashboard</h1>
             <p class="content-text">
-                This is the dashboard of the system.
+                Welcome to the SOMS Dashboard!
             </p>
             <br>
             <p class="content-text">
-                You can navigate to the different pages using the sidebar.
+                We're glad to have you here. Use the sidebar to explore and manage different sections of the system.
             </p>
         </div>
     </main>
+    <script src="/SOMS/public/assets/js/sidebar.js"></script>
 </body>
 </html>
