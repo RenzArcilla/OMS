@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Machine Dashboard</title>
-    <link rel="stylesheet" href="../../public/assets/css/dashboard_machine.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
+    <!-- link rel="stylesheet" href="../../public/assets/css/dashboard_machine.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css" -->
 </head>
 <body>
     <?php
@@ -537,7 +537,7 @@
             </div>
 
             <form id="addCustomPartForm" method="POST" action="../controllers/add_custom_part.php">
-                <input type="hidden" name="equipment_type" value="APPLICATOR">
+                <input type="hidden" name="equipment_type" value="MACHINE">
 
                 <div class="form-section">
                     <div class="form-group">
