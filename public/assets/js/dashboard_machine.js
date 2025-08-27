@@ -51,6 +51,7 @@ function closeMachineModal() {
 
 // Initialize event listeners when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function () {
+    console.log('DOM loaded, initializing dashboard machine...'); // Debug log
     const undoPartSelect = document.getElementById('undoPartSelect');
     
     // Handle changes in the undo part dropdown
@@ -94,8 +95,64 @@ document.addEventListener('DOMContentLoaded', function () {
         const resetModal = document.getElementById('resetModalDashboardMachine');
         const undoModal = document.getElementById('undoModalDashboardMachine');
         const machineModal = document.getElementById('machineModalDashboardMachine');
+        const addCustomPartModal = document.getElementById('addCustomPartModalDashboardMachine');
         if (event.target === resetModal) closeResetModal();
         if (event.target === undoModal) closeUndoModal();
         if (event.target === machineModal) closeMachineModal();
+        if (event.target === addCustomPartModal) closeAddCustomPartModal();
     });
 });
+
+
+// Open the add custom parts modal
+function openAddPartsModal() {
+    console.log('openAddPartsModal function called'); // Debug log
+    const modal = document.getElementById('addCustomPartModalDashboardMachine');
+    if (modal) {
+        modal.style.display = 'block';
+        console.log('Modal opened successfully'); // Debug log
+    } else {
+        console.error('Modal element not found'); // Debug log
+    }
+}
+
+// Close the add custom parts modal
+function closeAddCustomPartModal() {
+    const modal = document.getElementById('addCustomPartModalDashboardMachine');
+    modal.style.display = 'none';
+    const form = modal.querySelector('form');
+    if (form) form.reset();
+}
+
+// Ensure functions are available globally
+console.log('Dashboard machine JS loaded, functions available:', {
+    openAddPartsModal: typeof openAddPartsModal,
+    closeAddCustomPartModal: typeof closeAddCustomPartModal,
+    openResetModal: typeof openResetModal,
+    closeResetModal: typeof closeResetModal
+});
+
+// Add missing functions if they don't exist
+if (typeof openAddPartsModal === 'undefined') {
+    window.openAddPartsModal = function() {
+        console.log('openAddPartsModal function called');
+        const modal = document.getElementById('addCustomPartModalDashboardMachine');
+        if (modal) {
+            modal.style.display = 'block';
+            console.log('Modal opened successfully');
+        } else {
+            console.error('Modal element not found');
+        }
+    };
+}
+
+if (typeof closeAddCustomPartModal === 'undefined') {
+    window.closeAddCustomPartModal = function() {
+        const modal = document.getElementById('addCustomPartModalDashboardMachine');
+        if (modal) {
+            modal.style.display = 'none';
+            const form = modal.querySelector('form');
+            if (form) form.reset();
+        }
+    };
+}
