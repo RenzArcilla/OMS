@@ -81,6 +81,32 @@ function closeAddCustomPartModal() {
     document.getElementById('addCustomPartModalDashboardApplicator').style.display = 'none';
 }
 
+// Listen for clicks on edit buttons in the custom parts table
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('btn-edit')) {
+        const partId = event.target.getAttribute('data-part-id');
+        const partName = event.target.getAttribute('data-part-name');
+        openEditCustomPartModal(partId, partName);
+    }
+});
+
+// Open the edit custom part modal
+function openEditCustomPartModal(partId, partName) {
+    document.getElementById('editCustomPartModalDashboardApplicator').style.display = 'block';
+    document.getElementById('edit_part_id').value = partId; // Set the part ID
+    document.getElementById('edit_part_name').value = partName; // Set the part name
+    window.onclick = function(event) {
+        if (event.target === document.getElementById('editCustomPartModalDashboardApplicator')) {
+            document.getElementById('editCustomPartModalDashboardApplicator').style.display = 'none';
+        }
+    }
+}
+
+// Close the edit custom part modal
+function closeEditCustomPartModal() {
+    document.getElementById('editCustomPartModalDashboardApplicator').style.display = 'none';
+}
+
 // Open the parts inventory modal
 function openPartsInventoryModal() {
     document.getElementById('partsInventoryModalDashboardApplicator').style.display = 'block';

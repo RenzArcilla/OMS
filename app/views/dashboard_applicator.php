@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Applicator Dashboard</title>
-    <link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
+    <!-- link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css" -->
 </head>
 <body>
     <?php 
@@ -281,6 +281,7 @@
                             <tr>
                                 <th>Part Name</th>
                                 <th>Created At</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody">
@@ -289,6 +290,15 @@
                             <tr>
                                 <td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $part['part_name']))) ?></td>
                                 <td><?= htmlspecialchars(date('Y-m-d', strtotime($part['created_at']))) ?></td>
+                                <td>
+                                    <?php $partNameTitle = ucwords(str_replace('_', ' ', strtolower($part['part_name']))); ?>
+                                    <button class="btn btn-edit" 
+                                            data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
+                                            data-part-name="<?= htmlspecialchars($partNameTitle, ENT_QUOTES) ?>">
+                                        Edit
+                                    </button>
+                                    <button class="btn btn-delete" onclick="confirmDeletePart(<?= htmlspecialchars($part['part_id']) ?>)">Delete</button>
+                                </td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>    
@@ -299,6 +309,34 @@
             <div class="form-actions">
                 <button type="button" class="btn btn-secondary" onclick="closePartsInventoryModal()">Close</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Edit Custom Part Modal -->
+    <div id="editCustomPartModalDashboardApplicator" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close-btn" onclick="closeEditCustomPartModal()">×</button>
+
+            <div class="form-header">
+                <h1 class="form-title">✏️ Edit Custom Part</h1>
+                <p class="form-subtitle">Edit the details of this custom part</p>
+            </div>
+
+            <form id="editCustomPartForm" method="POST" action="../controllers/edit_custom_part.php">
+                <input type="hidden" name="equipment_type" value="APPLICATOR">
+                <input type="hidden" name="part_id" id="edit_part_id">
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="customPartName">Part Name</label>
+                        <input type="text" id="edit_part_name" name="custom_part_name" class="form-input" placeholder="Enter part name..." required>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeEditCustomPartModal()">Cancel</button>
+                </div>
+            </form>
         </div>
     </div>
 
