@@ -297,7 +297,7 @@
                                             data-part-name="<?= htmlspecialchars($partNameTitle, ENT_QUOTES) ?>">
                                         Edit
                                     </button>
-                                    <button class="btn btn-delete" onclick="confirmDeletePart(<?= htmlspecialchars($part['part_id']) ?>)">Delete</button>
+                                    <button class="btn btn-delete" data-part-id="<?= htmlspecialchars($part['part_id']) ?>" >Delete</button>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
