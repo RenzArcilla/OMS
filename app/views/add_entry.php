@@ -24,7 +24,7 @@ if (!isset($_SESSION['user_id'])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add Machine or Applicator</title>4
+    <title>Add Machine or Applicator</title>
     <link rel="stylesheet" href="../../public/assets/css/base/base.css">
     <link rel="stylesheet" href="../../public/assets/css/add_entry.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
