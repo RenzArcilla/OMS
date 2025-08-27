@@ -66,3 +66,42 @@ function updateMachine($machine_id, $control_no, $description, $model,
         return "Database error in updateMachine: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
+
+
+function restoreDisabledMachine($machine_id) {
+    /*
+        This function restores a disabled machine by updating its status in the database.
+
+        Args:
+        - $machine_id: int, ID of the machine
+
+        Returns:
+        - true on successful update
+        - string containing error message on failure
+    */
+
+    global $pdo;
+    
+    try {
+        // Prepare SQL update query
+        $stmt = $pdo->prepare("
+            UPDATE machines SET
+                is_active = 1
+            WHERE machine_id = :machine_id
+        ");
+
+        // Bind parameters
+        $stmt->bindParam(':machine_id', $machine_id);
+
+        // Execute the statement
+        if ($stmt->execute()) {
+            return true; // Success
+        } else {
+            return "Failed to update machine. Please try again.";
+        }
+    } catch (PDOException $e) {
+        // Log error and return an error message on failure
+        error_log("Database Error in restoreDisabledMachine: " . $e->getMessage());
+        return "Database error when restoring machine: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}

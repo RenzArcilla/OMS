@@ -124,7 +124,7 @@ function confirmRestoreCustomPart(machineId) {
         // Create a form dynamically
         const form = document.createElement("form");
         form.method = "POST";
-        form.action = "../controllers/restore_custom_part.php";
+        form.action = "../controllers/restore_machine.php";
 
         // Add hidden input for machine_id
         const input = document.createElement("input");
