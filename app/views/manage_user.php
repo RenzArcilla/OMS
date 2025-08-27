@@ -6,112 +6,128 @@
     <title>HEPC - Admin Manage User</title>
     <link rel="stylesheet" href="../../public/assets/css/base/base.css">
     <link rel="stylesheet" href="../../public/assets/css/admin_manage_user.css">
+    <link rel="stylesheet" href="../../public/assets/css/components/table.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
 </head>
 <body>
     <?php // include '../includes/side_bar.php'; ?>
     <div class="container">
-        <!-- Header -->
-        <div class="page-header">
-            <h1 class="page-title">Manage Users</h1>
-            <button class="btn btn-primary" onclick="openAddUserModal()">
-                + Add New User
-            </button>
-        </div>
-
-        <!-- Filters -->
-        <div class="filters-card">
-            <div class="filters-grid">
-                <div class="search-wrapper">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" id="searchInput" placeholder="Search users..." class="search-input">
+        <div class="main-content">
+            <div id="dashboard-tab" class="tab-content">
+                <!-- Header -->
+                <div class="page-header">
+                    <h1 class="page-title">Manage Users</h1>
+                    <div class="header-actions">    
+                        <button type="button" class="btn btn-secondary" onclick="exportUsers()">
+                            Export Report
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="refreshData()">
+                            Refresh Data
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="openAddUserModal()">
+                            + Add New User
+                        </button>
+                    </div>
                 </div>
-                
-                <select id="roleFilter" class="filter-select">
-                    <option value="all">All Roles</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Moderator">Moderator</option>
-                    <option value="User">User</option>
-                </select>
-                
-                <select id="statusFilter" class="filter-select">
-                    <option value="all">All Status</option>
-                    <option value="Active">Active</option>
-                    <option value="Inactive">Inactive</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Suspended">Suspended</option>
-                </select>
-                
-                <button type="button" class="btn-secondary" onclick="exportUsers()">📥 Export</button>
-                <button type="button" class="btn-secondary" onclick="refreshData()">🔄 Refresh</button>
-            </div>
-        </div>
 
-        <!-- Users Table -->
-        <?php 
-        require_once '../models/read_user.php'; 
-        $users = getUsers(10, 0);
-        // Debug: Log users array
-        error_log("Users in table: " . print_r($users, true));
-        ?>
-        <div class="users-table-card">
-            <table class="users-table">
-                <thead>
-                    <tr>
-                        <th>User</th>
-                        <th>Role</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="usersTableBody">
-                    <?php if (empty($users)): ?>
-                        <tr>
-                            <td colspan="3">No users found.</td>
-                        </tr>
-                    <?php else: ?>
-                        <?php foreach ($users as $user): ?>
-                            <tr>
-                                <td>
-                                    <div class="user-info">
-                                        <div class="user-avatar">👤</div>
-                                        <div class="user-details">
-                                            <div class="user-name"><?php echo htmlspecialchars($user['first_name'] . ' ' . $user['last_name']); ?></div>
-                                            <div class="user-email"><?php echo htmlspecialchars($user['username']); ?></div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="role-badge admin"><?php echo htmlspecialchars($user['user_type'] ?? 'Unknown'); ?></span>
-                                </td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <button class="action-btn view-btn" 
-                                                onclick="openViewUserModal(this)" 
-                                                title="View Details"
-                                                data-username="<?php echo htmlspecialchars($user['username'] ?? ''); ?>"
-                                                data-firstname="<?php echo htmlspecialchars($user['first_name'] ?? ''); ?>"
-                                                data-lastname="<?php echo htmlspecialchars($user['last_name'] ?? ''); ?>"
-                                                data-role="<?php echo htmlspecialchars($user['user_type'] ?? ''); ?>">
-                                            👁️
-                                        </button>
-                                        <button class="action-btn edit-btn" 
-                                                onclick="openEditUserModal(this)" 
-                                                title="Edit User"
-                                                data-id="<?php echo htmlspecialchars($user['user_id'] ?? ''); ?>"
-                                                data-username="<?php echo htmlspecialchars($user['username'] ?? ''); ?>"
-                                                data-firstname="<?php echo htmlspecialchars($user['first_name'] ?? ''); ?>"
-                                                data-lastname="<?php echo htmlspecialchars($user['last_name'] ?? ''); ?>"
-                                                data-role="<?php echo htmlspecialchars($user['user_type'] ?? ''); ?>">
-                                            ✏️
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+                <!-- Users Data Section -->
+                <div class="data-section">
+                    <div class="section-header expanded" onclick="toggleSection(this)">
+                        <div class="section-title">
+                            <span class="filter-info">Users Management</span>
+                        </div>
+                    </div>
+                    
+                    <div class="search-filter">
+                        <div class="search-wrapper">
+                            <input type="text" 
+                                id="searchInput" 
+                                class="search-input" 
+                                placeholder="Search users..." 
+                                onkeyup="searchUsers(this.value)">
+                        </div>
+                        
+                        <select id="roleFilter" class="filter-select" onchange="filterByRole(this.value)">
+                            <option value="all">All Roles</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Moderator">Moderator</option>
+                            <option value="User">User</option>
+                        </select>
+
+                    </div>
+                    
+                    <!-- Users Table -->
+                    <?php 
+                    require_once '../models/read_user.php'; 
+                    $users = getUsers(10, 0);
+                    // Debug: Log users array
+                    error_log("Users in table: " . print_r($users, true));
+                    ?>
+                    
+                    <div class="section-content expanded">
+                        <div class="table-container">
+                            <table class="data-table" id="usersTable">
+                                <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Role</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="usersTableBody">
+                                    <?php if (empty($users)): ?>
+                                        <tr>
+                                            <td colspan="3">No users found.</td>
+                                        </tr>
+                                    <?php else: ?>
+                                        <?php foreach ($users as $user): ?>
+                                            <tr>
+                                                <td>
+                                                    <div class="user-info">
+                                                        <div class="user-avatar">👤</div>
+                                                        <div class="user-details">
+                                                            <div class="user-name"><?php echo htmlspecialchars($user['first_name'] . ' ' . $user['last_name']); ?></div>
+                                                            <div class="user-email"><?php echo htmlspecialchars($user['username']); ?></div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span class="role-badge admin"><?php echo htmlspecialchars($user['user_type'] ?? 'Unknown'); ?></span>
+                                                </td>
+                                                <td>
+                                                    <div class="action-buttons">
+                                                        <button class="action-btn view-btn" 
+                                                                onclick="openViewUserModal(this)" 
+                                                                title="View Details"
+                                                                data-username="<?php echo htmlspecialchars($user['username'] ?? ''); ?>"
+                                                                data-firstname="<?php echo htmlspecialchars($user['first_name'] ?? ''); ?>"
+                                                                data-lastname="<?php echo htmlspecialchars($user['last_name'] ?? ''); ?>"
+                                                                data-role="<?php echo htmlspecialchars($user['user_type'] ?? ''); ?>">
+                                                            👁️
+                                                        </button>
+                                                        <button class="action-btn edit-btn" 
+                                                                onclick="openEditUserModal(this)" 
+                                                                title="Edit User"
+                                                                data-id="<?php echo htmlspecialchars($user['user_id'] ?? ''); ?>"
+                                                                data-username="<?php echo htmlspecialchars($user['username'] ?? ''); ?>"
+                                                                data-firstname="<?php echo htmlspecialchars($user['first_name'] ?? ''); ?>"
+                                                                data-lastname="<?php echo htmlspecialchars($user['last_name'] ?? ''); ?>"
+                                                                data-role="<?php echo htmlspecialchars($user['user_type'] ?? ''); ?>">
+                                                            ✏️
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
             <!-- Pagination>
