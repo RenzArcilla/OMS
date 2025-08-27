@@ -1,6 +1,6 @@
 <?php
 /*
-    This script handles the deletion (soft delete) of a record in the database.
+    This script handles the disabling (soft delete) of a record in the database.
     It retrieves form data, sanitizes it, and updates the status in the database.
 */
 
@@ -13,7 +13,7 @@ if (!isset($_SESSION['user_id'])) {
 
 // Include necessary files
 require_once '../includes/js_alert.php';
-require_once '../models/delete_record.php';
+require_once '../models/disable_record.php';
 require_once '../models/delete_applicator_output.php';
 require_once '../models/delete_machine_output.php';
 
