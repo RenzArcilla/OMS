@@ -49,3 +49,44 @@ function getCustomParts($type){
         return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
+
+
+function getCustomPartByName($name) {
+    /*
+        Function to fetch a custom part by its name.
+        It prepares and executes a SELECT query that fetches a custom part by its name,
+        and returns it as an associative array.
+
+        Args:
+        - $name: Name of the custom part to fetch.
+
+        Returns:
+        - Associative array of the custom part on success.
+        - String containing error message.
+    */
+
+    global $pdo;
+
+    try {
+        // Prepare the SQL statement with placeholders
+        $stmt = $pdo->prepare("
+            SELECT * 
+            FROM custom_part_definitions 
+            WHERE part_name = :name
+        ");
+
+        // Bind parameters securely
+        $stmt->bindValue(':name', $name, PDO::PARAM_STR);
+
+        // Execute the query
+        $stmt->execute();
+
+        // Return the results
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+
+    } catch (PDOException $e) {
+        // Log error and return an error message on failure
+        error_log("Database Error in getCustomPartByName: " . $e->getMessage());
+        return "Database error occurred when fetching custom part by name: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}
