@@ -17,7 +17,7 @@ require_once '../includes/db.php';
 require_once '../models/read_applicator_reset.php';
 require_once '../models/update_applicator_reset.php';
 require_once '../models/update_monitor_applicator.php';
-require_once '../models/disable_record.php';
+require_once '../models/delete_record.php';
 require_once '../models/read_records.php';
 require_once '../models/delete_applicator_output.php';
 require_once '../models/delete_machine_output.php';
