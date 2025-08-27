@@ -294,6 +294,41 @@
                             </div>
                         </div>
                     </div>
+                                    <!-- Table 2: Recently Deleted Machine -->
+                    <div class="data-section">
+                        <div class="section-header">
+                            <div class="section-title">
+                                🗑️ Recently Deleted Machine
+                                <span class="section-badge">3</span>
+                            </div>
+                            <div class="expand-icon">▼</div>
+                        </div>
+                        <div class="section-content expanded">
+                            <div class="search-filter">
+                                <input type="text" class="search-input" placeholder="Search deleted machines...">
+                            </div>
+                            <div class="table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Machine Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Wire Assembly Unit Alpha</td>
+                                        </tr>
+                                        <tr>
+                                            <td>High Precision Crimper</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cable Cutting Station Beta</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
             </div>
         </div>
     </div>
