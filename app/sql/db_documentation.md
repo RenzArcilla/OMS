@@ -181,11 +181,18 @@ This database system is designed to track machine and applicator usage in a manu
 | `cut_blade_output` | INT | DEFAULT 0 | Cumulative cut blade output |
 | `strip_blade_a_output` | INT | DEFAULT 0 | Cumulative strip blade A output |
 | `strip_blade_b_output` | INT | DEFAULT 0 | Cumulative strip blade B output |
+| `is_active` | BOOLEAN | DEFAULT TRUE, NOT NULL | Indicates if monitoring is active for this machine |
 | **Custom Parts Totals** | | | |
 | `custom_parts_output` | JSON | DEFAULT NULL | Cumulative custom part outputs |
 | `last_updated` | DATETIME | AUTO-UPDATE | Last modification timestamp |
 
-**Indexes**: `idx_machine_id`, `idx_last_updated`
+**Indexes**:  
+- `idx_is_active`  
+- `idx_active_machine_id (is_active, machine_id)`  
+- `idx_machine_id`  
+- `idx_last_updated`  
+
+---
 
 ### 9. `monitor_applicator` (Hybrid Structure)
 **Purpose**: Tracks cumulative output counts for applicator parts over time.
@@ -205,11 +212,16 @@ This database system is designed to track machine and applicator usage in a manu
 | `shear_blade_output` | INT | DEFAULT 0 | Cumulative shear blade output |
 | `cutter_a_output` | INT | DEFAULT 0 | Cumulative cutter A output |
 | `cutter_b_output` | INT | DEFAULT 0 | Cumulative cutter B output |
+| `is_active` | BOOLEAN | DEFAULT TRUE, NOT NULL | Indicates if monitoring is active for this applicator |
 | **Custom Parts Totals** | | | |
 | `custom_parts_output` | JSON | DEFAULT NULL | Cumulative custom part outputs |
 | `last_updated` | DATETIME | AUTO-UPDATE | Last modification timestamp |
 
-**Indexes**: `idx_applicator_id`, `idx_last_updated`
+**Indexes**:  
+- `idx_is_active`  
+- `idx_active_applicator_id (is_active, applicator_id)`  
+- `idx_applicator_id`  
+- `idx_last_updated`  
 
 ---
 

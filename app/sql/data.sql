@@ -3,13 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 14, 2025 at 07:13 AM
+-- Generation Time: Aug 28, 2025 at 06:23 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
-
--- Drop the database if existing (WARNING!!! WILL DELETE ALL DATA PERTAINING TO PREVIOUS DATABASE!)
--- DROP DATABASE IF EXISTS machine_and_applicator;
-
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -26,6 +22,9 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
+
+CREATE DATABASE IF NOT EXISTS `machine_and_applicator`;
+USE `machine_and_applicator`;
 
 --
 -- Table structure for table `applicators`
@@ -255,12 +254,12 @@ INSERT INTO `applicator_outputs` (`applicator_output_id`, `record_id`, `applicat
 (239, 199, 2, 1, 1511, 1511, 1511, 1511, 1511, NULL, NULL, 1511, 1511, 1511, '[{\"name\":\"special_guide_plate\",\"value\":1511},{\"name\":\"tension_spring\",\"value\":1511},{\"name\":\"alignment_pin\",\"value\":1511},{\"name\":\"pressure_pad\",\"value\":1511}]'),
 (240, 200, 1, 1, 300, 300, 300, 300, 300, 300, 300, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":300},{\"name\":\"tension_spring\",\"value\":300},{\"name\":\"alignment_pin\",\"value\":300},{\"name\":\"pressure_pad\",\"value\":300}]'),
 (241, 201, 7, 1, 78, 78, 78, 78, 78, NULL, NULL, 78, 78, 78, '[{\"name\":\"special_guide_plate\",\"value\":78},{\"name\":\"tension_spring\",\"value\":78},{\"name\":\"alignment_pin\",\"value\":78},{\"name\":\"pressure_pad\",\"value\":78}]'),
-(242, 202, 3, 1, 34, 34, 34, 34, 34, 34, 34, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":34},{\"name\":\"tension_spring\",\"value\":34},{\"name\":\"alignment_pin\",\"value\":34},{\"name\":\"pressure_pad\",\"value\":34}]'),
+(242, 202, 3, 0, 34, 34, 34, 34, 34, 34, 34, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":34},{\"name\":\"tension_spring\",\"value\":34},{\"name\":\"alignment_pin\",\"value\":34},{\"name\":\"pressure_pad\",\"value\":34}]'),
 (243, 203, 4, 1, 1, 1, 1, 1, 1, NULL, NULL, 1, 1, 1, '[{\"name\":\"special_guide_plate\",\"value\":1},{\"name\":\"tension_spring\",\"value\":1},{\"name\":\"alignment_pin\",\"value\":1},{\"name\":\"pressure_pad\",\"value\":1}]'),
 (244, 204, 4, 1, 10, 10, 10, 10, 10, 5, 5, 10, 10, 10, '[{\"name\":\"special_guide_plate\",\"value\":10},{\"name\":\"tension_spring\",\"value\":10},{\"name\":\"alignment_pin\",\"value\":10},{\"name\":\"pressure_pad\",\"value\":10}]'),
 (245, 205, 6, 1, 600, 600, 600, 600, 600, NULL, NULL, 600, 600, 600, '[{\"name\":\"special_guide_plate\",\"value\":600},{\"name\":\"tension_spring\",\"value\":600},{\"name\":\"alignment_pin\",\"value\":600},{\"name\":\"pressure_pad\",\"value\":600}]'),
 (246, 206, 7, 1, 1, 1, 1, 1, 1, NULL, NULL, 1, 1, 1, '[{\"name\":\"special_guide_plate\",\"value\":1},{\"name\":\"tension_spring\",\"value\":1},{\"name\":\"alignment_pin\",\"value\":1},{\"name\":\"pressure_pad\",\"value\":1}]'),
-(247, 207, 8, 1, 344, 344, 344, 344, 344, NULL, NULL, 344, 344, 344, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(247, 207, 8, 0, 344, 344, 344, 344, 344, NULL, NULL, 344, 344, 344, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
 (248, 208, 18, 1, 20, 20, 20, 20, 20, 344, 344, 20, 20, 20, '[{\"name\":\"special_guide_plate\",\"value\":20},{\"name\":\"tension_spring\",\"value\":20},{\"name\":\"alignment_pin\",\"value\":20},{\"name\":\"pressure_pad\",\"value\":20}]'),
 (249, 209, 10, 1, 344, 344, 344, 344, 344, NULL, NULL, 344, 344, 344, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
 (250, 210, 11, 1, 1, 1, 1, 1, 1, NULL, NULL, 1, 1, 1, '[{\"name\":\"special_guide_plate\",\"value\":1},{\"name\":\"tension_spring\",\"value\":1},{\"name\":\"alignment_pin\",\"value\":1},{\"name\":\"pressure_pad\",\"value\":1}]'),
@@ -309,8 +308,45 @@ INSERT INTO `applicator_outputs` (`applicator_output_id`, `record_id`, `applicat
 (307, 220, 8, 1, 346, 346, 346, 346, 346, NULL, NULL, 346, 346, 346, '[{\"name\":\"special_guide_plate\",\"value\":346},{\"name\":\"tension_spring\",\"value\":346},{\"name\":\"alignment_pin\",\"value\":346},{\"name\":\"pressure_pad\",\"value\":346}]'),
 (308, 236, 8, 1, 6, 6, 6, 6, 6, NULL, NULL, 6, 6, 6, '[{\"name\":\"special_guide_plate\",\"value\":6},{\"name\":\"tension_spring\",\"value\":6},{\"name\":\"alignment_pin\",\"value\":6},{\"name\":\"pressure_pad\",\"value\":6}]'),
 (309, 204, 4, 1, 10, 10, 10, 10, 10, NULL, NULL, 10, 10, 10, '[{\"name\":\"special_guide_plate\",\"value\":10},{\"name\":\"tension_spring\",\"value\":10},{\"name\":\"alignment_pin\",\"value\":10},{\"name\":\"pressure_pad\",\"value\":10}]'),
-(311, 207, 2, 1, 554, 554, 554, 554, 554, NULL, NULL, 554, 554, 554, '[{\"name\":\"special_guide_plate\",\"value\":554},{\"name\":\"tension_spring\",\"value\":554},{\"name\":\"alignment_pin\",\"value\":554},{\"name\":\"pressure_pad\",\"value\":554}]'),
-(314, 152, 6, 1, 3, 3, 3, 3, 3, NULL, NULL, 3, 3, 3, '[{\"name\":\"special_guide_plate\",\"value\":3},{\"name\":\"tension_spring\",\"value\":3},{\"name\":\"alignment_pin\",\"value\":3},{\"name\":\"pressure_pad\",\"value\":3}]');
+(311, 207, 2, 0, 554, 554, 554, 554, 554, NULL, NULL, 554, 554, 554, '[{\"name\":\"special_guide_plate\",\"value\":554},{\"name\":\"tension_spring\",\"value\":554},{\"name\":\"alignment_pin\",\"value\":554},{\"name\":\"pressure_pad\",\"value\":554}]'),
+(314, 152, 6, 1, 3, 3, 3, 3, 3, NULL, NULL, 3, 3, 3, '[{\"name\":\"special_guide_plate\",\"value\":3},{\"name\":\"tension_spring\",\"value\":3},{\"name\":\"alignment_pin\",\"value\":3},{\"name\":\"pressure_pad\",\"value\":3}]'),
+(318, 243, 1, 1, 344, 344, 344, 344, 344, 344, 344, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(319, 244, 2, 1, 21, 21, 21, 21, 21, NULL, NULL, 21, 21, 21, '[{\"name\":\"special_guide_plate\",\"value\":21},{\"name\":\"tension_spring\",\"value\":21},{\"name\":\"alignment_pin\",\"value\":21},{\"name\":\"pressure_pad\",\"value\":21}]'),
+(320, 245, 3, 1, 344, 344, 344, 344, 344, 344, 344, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(321, 246, 4, 1, 1, 1, 1, 1, 1, NULL, NULL, 1, 1, 1, '[{\"name\":\"special_guide_plate\",\"value\":1},{\"name\":\"tension_spring\",\"value\":1},{\"name\":\"alignment_pin\",\"value\":1},{\"name\":\"pressure_pad\",\"value\":1}]'),
+(322, 247, 5, 1, 300, 300, 300, 300, 300, 300, 300, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":300},{\"name\":\"tension_spring\",\"value\":300},{\"name\":\"alignment_pin\",\"value\":300},{\"name\":\"pressure_pad\",\"value\":300}]'),
+(323, 248, 6, 1, 600, 600, 600, 600, 600, NULL, NULL, 600, 600, 600, '[{\"name\":\"special_guide_plate\",\"value\":600},{\"name\":\"tension_spring\",\"value\":600},{\"name\":\"alignment_pin\",\"value\":600},{\"name\":\"pressure_pad\",\"value\":600}]'),
+(324, 249, 7, 0, 1, 1, 1, 1, 1, NULL, NULL, 1, 1, 1, '[{\"name\":\"special_guide_plate\",\"value\":1},{\"name\":\"tension_spring\",\"value\":1},{\"name\":\"alignment_pin\",\"value\":1},{\"name\":\"pressure_pad\",\"value\":1}]'),
+(325, 250, 8, 1, 344, 344, 344, 344, 344, NULL, NULL, 344, 344, 344, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(326, 251, 9, 1, 344, 344, 344, 344, 344, 344, 344, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(327, 252, 10, 1, 344, 344, 344, 344, 344, NULL, NULL, 344, 344, 344, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(328, 253, 11, 1, 2, 2, 2, 2, 2, NULL, NULL, 2, 2, 2, '[{\"name\":\"special_guide_plate\",\"value\":2},{\"name\":\"tension_spring\",\"value\":2},{\"name\":\"alignment_pin\",\"value\":2},{\"name\":\"pressure_pad\",\"value\":2}]'),
+(329, 254, 12, 1, 344, 344, 344, 344, 344, NULL, NULL, 344, 344, 344, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(330, 255, 13, 1, 344, 344, 344, 344, 344, 344, 344, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(331, 255, 3, 1, 344, 344, 344, 344, 344, 344, 344, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(332, 256, 14, 1, 1, 1, 1, 1, 1, NULL, NULL, 1, 1, 1, '[{\"name\":\"special_guide_plate\",\"value\":1},{\"name\":\"tension_spring\",\"value\":1},{\"name\":\"alignment_pin\",\"value\":1},{\"name\":\"pressure_pad\",\"value\":1}]'),
+(333, 256, 4, 1, 1, 1, 1, 1, 1, NULL, NULL, 1, 1, 1, '[{\"name\":\"special_guide_plate\",\"value\":1},{\"name\":\"tension_spring\",\"value\":1},{\"name\":\"alignment_pin\",\"value\":1},{\"name\":\"pressure_pad\",\"value\":1}]'),
+(334, 257, 15, 1, 344, 344, 344, 344, 344, NULL, NULL, 344, 344, 344, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(335, 257, 5, 1, 344, 344, 344, 344, 344, 344, 344, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(336, 258, 16, 1, 344, 344, 344, 344, 344, NULL, NULL, 344, 344, 344, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]');
+INSERT INTO `applicator_outputs` (`applicator_output_id`, `record_id`, `applicator_id`, `is_active`, `total_output`, `wire_crimper`, `wire_anvil`, `insulation_crimper`, `insulation_anvil`, `slide_cutter`, `cutter_holder`, `shear_blade`, `cutter_a`, `cutter_b`, `custom_parts`) VALUES
+(337, 258, 6, 1, 344, 344, 344, 344, 344, NULL, NULL, 344, 344, 344, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(338, 259, 17, 1, 344, 344, 344, 344, 344, 344, 344, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(339, 259, 7, 1, 344, 344, 344, 344, 344, NULL, NULL, 344, 344, 344, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(340, 260, 18, 1, 344, 344, 344, 344, 344, NULL, NULL, 344, 344, 344, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(341, 260, 8, 1, 344, 344, 344, 344, 344, NULL, NULL, 344, 344, 344, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(342, 261, 19, 1, 344, 344, 344, 344, 344, NULL, NULL, 344, 344, 344, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(343, 261, 9, 1, 344, 344, 344, 344, 344, 344, 344, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(344, 262, 3, 1, 344, 344, 344, 344, 344, 344, 344, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(345, 262, 10, 1, 344, 344, 344, 344, 344, NULL, NULL, 344, 344, 344, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(346, 263, 1, 1, 344, 344, 344, 344, 344, 344, 344, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(347, 263, 11, 1, 344, 344, 344, 344, 344, NULL, NULL, 344, 344, 344, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(348, 264, 2, 1, 344, 344, 344, 344, 344, NULL, NULL, 344, 344, 344, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(349, 264, 12, 1, 344, 344, 344, 344, 344, NULL, NULL, 344, 344, 344, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(350, 265, 3, 1, 344, 344, 344, 344, 344, 344, 344, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(351, 265, 13, 1, 344, 344, 344, 344, 344, 344, 344, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
+(352, 266, 3, 1, 1500, 1500, 1500, 1500, 1500, 1500, 1500, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":1500},{\"name\":\"tension_spring\",\"value\":1500},{\"name\":\"alignment_pin\",\"value\":1500},{\"name\":\"pressure_pad\",\"value\":1500}]'),
+(353, 266, 2, 1, 346, 346, 346, 346, 346, NULL, NULL, 346, 346, 346, '[{\"name\":\"special_guide_plate\",\"value\":346},{\"name\":\"tension_spring\",\"value\":346},{\"name\":\"alignment_pin\",\"value\":346},{\"name\":\"pressure_pad\",\"value\":346}]');
 
 -- --------------------------------------------------------
 
@@ -348,7 +384,22 @@ INSERT INTO `applicator_reset` (`reset_id`, `applicator_id`, `reset_by`, `part_r
 (12, 12, 3, 'special_guide_plate', 0, '2025-07-29 10:28:34', NULL, NULL),
 (13, 13, 2, 'wire_crimper', 0, '2025-07-29 10:28:34', NULL, NULL),
 (14, 14, 3, 'tension_spring', 0, '2025-07-29 10:28:34', NULL, NULL),
-(15, 15, 2, 'cutter_a', 0, '2025-07-29 10:28:34', NULL, NULL);
+(15, 15, 2, 'cutter_a', 0, '2025-07-29 10:28:34', NULL, NULL),
+(16, 1, 21, 'cutter_a_output', 600, '2025-08-18 13:05:01', NULL, NULL),
+(17, 2, 21, 'wire_crimper_output', 8848, '2025-08-18 13:05:26', 21, '2025-08-19 09:01:00'),
+(18, 3, 21, 'wire_anvil_output', 6339, '2025-08-18 13:10:00', 21, '2025-08-19 08:53:27'),
+(19, 3, 21, 'pressure_pad', 5189, '2025-08-19 06:41:18', 21, '2025-08-19 08:50:20'),
+(20, 1, 21, 'wire_crimper_output', 9180, '2025-08-19 06:53:11', 21, '2025-08-19 08:41:14'),
+(21, 3, 21, 'wire_crimper_output', 6489, '2025-08-19 08:53:06', 21, '2025-08-19 08:53:15'),
+(22, 3, 21, 'wire_crimper_output', 6489, '2025-08-19 08:53:43', 21, '2025-08-19 08:53:56'),
+(23, 3, 21, 'wire_crimper_output', 6489, '2025-08-19 08:54:41', 21, '2025-08-19 09:00:04'),
+(24, 3, 21, 'wire_anvil_output', 6339, '2025-08-19 09:00:11', 21, '2025-08-19 09:00:19'),
+(25, 3, 21, 'pressure_pad', 5189, '2025-08-19 09:00:28', 21, '2025-08-19 09:00:36'),
+(26, 2, 21, 'wire_crimper_output', 8848, '2025-08-19 10:24:09', 21, '2025-08-19 10:24:50'),
+(27, 2, 21, 'pressure_pad', 7848, '2025-08-19 10:25:05', 21, '2025-08-19 10:25:15'),
+(28, 2, 21, 'wire_crimper_output', 8848, '2025-08-19 10:28:21', 21, '2025-08-19 10:28:28'),
+(29, 3, 21, 'pressure_pad', 5189, '2025-08-19 10:29:13', 21, '2025-08-19 10:29:41'),
+(30, 1, 21, 'wire_crimper_output', 9180, '2025-08-19 14:45:46', 21, '2025-08-19 14:46:03');
 
 -- --------------------------------------------------------
 
@@ -424,8 +475,7 @@ INSERT INTO `machines` (`machine_id`, `control_no`, `description`, `model`, `mak
 (20, 'CTRL020', 'SEMI-AUTOMATIC', 'WPU-1300', 'SCHLEUNIGER', 'MSN020', 'MINV020', '2024-02-03 10:15:00', 0),
 (21, 'FASASF', 'AUTOMATIC', 'ASDFASDF', 'ASDFSADF', 'ASDFSADF', 'ASDFSDAF', NULL, 0),
 (33, 'EYEBOLLORD', 'AUTOMATIC', 'ASDFASDF', 'ASDFSADF', 'ASDFSADF', 'ASDFSDAF', NULL, 0),
-(34, 'DIGITIDOG', 'SEMI-AUTOMATIC', 'ASDFASDF', 'ASDFSADF', 'ASDFSADF', 'ASDFSDAF', NULL, 0),
-(35, '11111', 'AUTOMATIC', 'ASDFASDF', 'ASDFSADF', 'ASDFSADF', 'ASDFSDAF', NULL, 0);
+(34, 'DIGITIDOG', 'SEMI-AUTOMATIC', 'ASDFASDF', 'ASDFSADF', 'ASDFSADF', 'ASDFSDAF', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -543,12 +593,12 @@ INSERT INTO `machine_outputs` (`machine_output_id`, `record_id`, `machine_id`, `
 (175, 199, 1, 1, 3000, 3000, 3000, 3000, '[{\"name\":\"feed_roller\",\"value\":3000},{\"name\":\"guide_tube\",\"value\":3000},{\"name\":\"sensor_bracket\",\"value\":3000},{\"name\":\"cooling_fan\",\"value\":3000}]'),
 (176, 200, 1, 1, 345, 345, 345, 345, '[{\"name\":\"feed_roller\",\"value\":345},{\"name\":\"guide_tube\",\"value\":345},{\"name\":\"sensor_bracket\",\"value\":345},{\"name\":\"cooling_fan\",\"value\":345}]'),
 (177, 201, 9, 1, 9, 9, 9, 9, '[{\"name\":\"feed_roller\",\"value\":9},{\"name\":\"guide_tube\",\"value\":9},{\"name\":\"sensor_bracket\",\"value\":9},{\"name\":\"cooling_fan\",\"value\":9}]'),
-(178, 202, 3, 1, 35, 35, 35, 35, '[{\"name\":\"feed_roller\",\"value\":35},{\"name\":\"guide_tube\",\"value\":35},{\"name\":\"sensor_bracket\",\"value\":35},{\"name\":\"cooling_fan\",\"value\":35}]'),
+(178, 202, 3, 0, 35, 35, 35, 35, '[{\"name\":\"feed_roller\",\"value\":35},{\"name\":\"guide_tube\",\"value\":35},{\"name\":\"sensor_bracket\",\"value\":35},{\"name\":\"cooling_fan\",\"value\":35}]'),
 (179, 203, 6, 1, 3, 3, 3, 3, '[{\"name\":\"feed_roller\",\"value\":3},{\"name\":\"guide_tube\",\"value\":3},{\"name\":\"sensor_bracket\",\"value\":3},{\"name\":\"cooling_fan\",\"value\":3}]'),
 (180, 204, 1, 1, 3, 3, 3, 3, '[{\"name\":\"feed_roller\",\"value\":3},{\"name\":\"guide_tube\",\"value\":3},{\"name\":\"sensor_bracket\",\"value\":3},{\"name\":\"cooling_fan\",\"value\":3}]'),
 (181, 205, 6, 1, 2700, 2700, 2700, 2700, '[{\"name\":\"feed_roller\",\"value\":2700},{\"name\":\"guide_tube\",\"value\":2700},{\"name\":\"sensor_bracket\",\"value\":2700},{\"name\":\"cooling_fan\",\"value\":2700}]'),
 (182, 206, 7, 1, 3400, 3400, 3400, 3400, '[{\"name\":\"feed_roller\",\"value\":3400},{\"name\":\"guide_tube\",\"value\":3400},{\"name\":\"sensor_bracket\",\"value\":3400},{\"name\":\"cooling_fan\",\"value\":3400}]'),
-(183, 207, 7, 1, 3300, 3300, 3300, 3300, '[{\"name\":\"feed_roller\",\"value\":3300},{\"name\":\"guide_tube\",\"value\":3300},{\"name\":\"sensor_bracket\",\"value\":3300},{\"name\":\"cooling_fan\",\"value\":3300}]'),
+(183, 207, 7, 0, 3300, 3300, 3300, 3300, '[{\"name\":\"feed_roller\",\"value\":3300},{\"name\":\"guide_tube\",\"value\":3300},{\"name\":\"sensor_bracket\",\"value\":3300},{\"name\":\"cooling_fan\",\"value\":3300}]'),
 (184, 208, 9, 1, 18, 18, 18, 18, '[{\"name\":\"feed_roller\",\"value\":18},{\"name\":\"guide_tube\",\"value\":18},{\"name\":\"sensor_bracket\",\"value\":18},{\"name\":\"cooling_fan\",\"value\":18}]'),
 (185, 209, 10, 1, 2800, 2800, 2800, 2800, '[{\"name\":\"feed_roller\",\"value\":2800},{\"name\":\"guide_tube\",\"value\":2800},{\"name\":\"sensor_bracket\",\"value\":2800},{\"name\":\"cooling_fan\",\"value\":2800}]'),
 (186, 210, 11, 1, 1, 1, 1, 1, '[{\"name\":\"feed_roller\",\"value\":1},{\"name\":\"guide_tube\",\"value\":1},{\"name\":\"sensor_bracket\",\"value\":1},{\"name\":\"cooling_fan\",\"value\":1}]'),
@@ -570,7 +620,31 @@ INSERT INTO `machine_outputs` (`machine_output_id`, `record_id`, `machine_id`, `
 (214, 238, 1, 1, 9, 9, 9, 9, '[{\"name\":\"feed_roller\",\"value\":9},{\"name\":\"guide_tube\",\"value\":9},{\"name\":\"sensor_bracket\",\"value\":9},{\"name\":\"cooling_fan\",\"value\":9}]'),
 (215, 239, 1, 1, 10, 10, 10, 10, '[{\"name\":\"feed_roller\",\"value\":10},{\"name\":\"guide_tube\",\"value\":10},{\"name\":\"sensor_bracket\",\"value\":10},{\"name\":\"cooling_fan\",\"value\":10}]'),
 (216, 240, 1, 1, 5, 5, 5, 5, '[{\"name\":\"feed_roller\",\"value\":5},{\"name\":\"guide_tube\",\"value\":5},{\"name\":\"sensor_bracket\",\"value\":5},{\"name\":\"cooling_fan\",\"value\":5}]'),
-(217, 241, 6, 1, 6, 6, 6, 6, '[{\"name\":\"feed_roller\",\"value\":6},{\"name\":\"guide_tube\",\"value\":6},{\"name\":\"sensor_bracket\",\"value\":6},{\"name\":\"cooling_fan\",\"value\":6}]');
+(217, 241, 6, 1, 6, 6, 6, 6, '[{\"name\":\"feed_roller\",\"value\":6},{\"name\":\"guide_tube\",\"value\":6},{\"name\":\"sensor_bracket\",\"value\":6},{\"name\":\"cooling_fan\",\"value\":6}]'),
+(218, 243, 1, 1, 344, 344, 344, 344, '[{\"name\":\"feed_roller\",\"value\":344},{\"name\":\"guide_tube\",\"value\":344},{\"name\":\"sensor_bracket\",\"value\":344},{\"name\":\"cooling_fan\",\"value\":344}]'),
+(219, 244, 2, 1, 21, 21, 21, 21, '[{\"name\":\"feed_roller\",\"value\":21},{\"name\":\"guide_tube\",\"value\":21},{\"name\":\"sensor_bracket\",\"value\":21},{\"name\":\"cooling_fan\",\"value\":21}]'),
+(220, 245, 3, 1, 344, 344, 344, 344, '[{\"name\":\"feed_roller\",\"value\":344},{\"name\":\"guide_tube\",\"value\":344},{\"name\":\"sensor_bracket\",\"value\":344},{\"name\":\"cooling_fan\",\"value\":344}]'),
+(221, 246, 4, 1, 1, 1, 1, 1, '[{\"name\":\"feed_roller\",\"value\":1},{\"name\":\"guide_tube\",\"value\":1},{\"name\":\"sensor_bracket\",\"value\":1},{\"name\":\"cooling_fan\",\"value\":1}]'),
+(222, 247, 5, 1, 300, 300, 300, 300, '[{\"name\":\"feed_roller\",\"value\":300},{\"name\":\"guide_tube\",\"value\":300},{\"name\":\"sensor_bracket\",\"value\":300},{\"name\":\"cooling_fan\",\"value\":300}]'),
+(223, 248, 6, 1, 600, 600, 600, 600, '[{\"name\":\"feed_roller\",\"value\":600},{\"name\":\"guide_tube\",\"value\":600},{\"name\":\"sensor_bracket\",\"value\":600},{\"name\":\"cooling_fan\",\"value\":600}]'),
+(224, 249, 7, 0, 1, 1, 1, 1, '[{\"name\":\"feed_roller\",\"value\":1},{\"name\":\"guide_tube\",\"value\":1},{\"name\":\"sensor_bracket\",\"value\":1},{\"name\":\"cooling_fan\",\"value\":1}]'),
+(225, 250, 8, 1, 344, 344, 344, 344, '[{\"name\":\"feed_roller\",\"value\":344},{\"name\":\"guide_tube\",\"value\":344},{\"name\":\"sensor_bracket\",\"value\":344},{\"name\":\"cooling_fan\",\"value\":344}]'),
+(226, 251, 9, 1, 344, 344, 344, 344, '[{\"name\":\"feed_roller\",\"value\":344},{\"name\":\"guide_tube\",\"value\":344},{\"name\":\"sensor_bracket\",\"value\":344},{\"name\":\"cooling_fan\",\"value\":344}]'),
+(227, 252, 10, 1, 344, 344, 344, 344, '[{\"name\":\"feed_roller\",\"value\":344},{\"name\":\"guide_tube\",\"value\":344},{\"name\":\"sensor_bracket\",\"value\":344},{\"name\":\"cooling_fan\",\"value\":344}]'),
+(228, 253, 11, 1, 1, 1, 1, 1, '[{\"name\":\"feed_roller\",\"value\":1},{\"name\":\"guide_tube\",\"value\":1},{\"name\":\"sensor_bracket\",\"value\":1},{\"name\":\"cooling_fan\",\"value\":1}]'),
+(229, 254, 12, 1, 344, 344, 344, 344, '[{\"name\":\"feed_roller\",\"value\":344},{\"name\":\"guide_tube\",\"value\":344},{\"name\":\"sensor_bracket\",\"value\":344},{\"name\":\"cooling_fan\",\"value\":344}]'),
+(230, 255, 13, 1, 344, 344, 344, 344, '[{\"name\":\"feed_roller\",\"value\":344},{\"name\":\"guide_tube\",\"value\":344},{\"name\":\"sensor_bracket\",\"value\":344},{\"name\":\"cooling_fan\",\"value\":344}]'),
+(231, 256, 14, 1, 1, 1, 1, 1, '[{\"name\":\"feed_roller\",\"value\":1},{\"name\":\"guide_tube\",\"value\":1},{\"name\":\"sensor_bracket\",\"value\":1},{\"name\":\"cooling_fan\",\"value\":1}]'),
+(232, 257, 15, 1, 344, 344, 344, 344, '[{\"name\":\"feed_roller\",\"value\":344},{\"name\":\"guide_tube\",\"value\":344},{\"name\":\"sensor_bracket\",\"value\":344},{\"name\":\"cooling_fan\",\"value\":344}]'),
+(233, 258, 16, 1, 344, 344, 344, 344, '[{\"name\":\"feed_roller\",\"value\":344},{\"name\":\"guide_tube\",\"value\":344},{\"name\":\"sensor_bracket\",\"value\":344},{\"name\":\"cooling_fan\",\"value\":344}]'),
+(234, 259, 1, 1, 344, 344, 344, 344, '[{\"name\":\"feed_roller\",\"value\":344},{\"name\":\"guide_tube\",\"value\":344},{\"name\":\"sensor_bracket\",\"value\":344},{\"name\":\"cooling_fan\",\"value\":344}]'),
+(235, 260, 2, 1, 344, 344, 344, 344, '[{\"name\":\"feed_roller\",\"value\":344},{\"name\":\"guide_tube\",\"value\":344},{\"name\":\"sensor_bracket\",\"value\":344},{\"name\":\"cooling_fan\",\"value\":344}]'),
+(236, 261, 3, 1, 344, 344, 344, 344, '[{\"name\":\"feed_roller\",\"value\":344},{\"name\":\"guide_tube\",\"value\":344},{\"name\":\"sensor_bracket\",\"value\":344},{\"name\":\"cooling_fan\",\"value\":344}]'),
+(237, 262, 4, 1, 344, 344, 344, 344, '[{\"name\":\"feed_roller\",\"value\":344},{\"name\":\"guide_tube\",\"value\":344},{\"name\":\"sensor_bracket\",\"value\":344},{\"name\":\"cooling_fan\",\"value\":344}]'),
+(238, 263, 5, 1, 344, 344, 344, 344, '[{\"name\":\"feed_roller\",\"value\":344},{\"name\":\"guide_tube\",\"value\":344},{\"name\":\"sensor_bracket\",\"value\":344},{\"name\":\"cooling_fan\",\"value\":344}]'),
+(239, 264, 6, 1, 344, 344, 344, 344, '[{\"name\":\"feed_roller\",\"value\":344},{\"name\":\"guide_tube\",\"value\":344},{\"name\":\"sensor_bracket\",\"value\":344},{\"name\":\"cooling_fan\",\"value\":344}]'),
+(240, 265, 7, 1, 344, 344, 344, 344, '[{\"name\":\"feed_roller\",\"value\":344},{\"name\":\"guide_tube\",\"value\":344},{\"name\":\"sensor_bracket\",\"value\":344},{\"name\":\"cooling_fan\",\"value\":344}]'),
+(241, 266, 1, 1, 3000, 3000, 3000, 3000, '[{\"name\":\"feed_roller\",\"value\":3000},{\"name\":\"guide_tube\",\"value\":3000},{\"name\":\"sensor_bracket\",\"value\":3000},{\"name\":\"cooling_fan\",\"value\":3000}]');
 
 -- --------------------------------------------------------
 
@@ -608,7 +682,19 @@ INSERT INTO `machine_reset` (`reset_id`, `machine_id`, `reset_by`, `part_reset`,
 (12, 12, 3, 'feed_roller', 0, '2025-07-29 10:28:34', NULL, NULL),
 (13, 13, 2, 'guide_tube', 0, '2025-07-29 10:28:34', NULL, NULL),
 (14, 14, 3, 'strip_blade_a', 0, '2025-07-29 10:28:34', NULL, NULL),
-(15, 15, 2, 'sensor_bracket', 0, '2025-07-29 10:28:34', NULL, NULL);
+(15, 15, 2, 'sensor_bracket', 0, '2025-07-29 10:28:34', NULL, NULL),
+(18, 3, 21, 'cut_blade_output', 4664, '2025-08-20 09:46:36', 21, '2025-08-20 12:33:04'),
+(19, 2, 21, 'strip_blade_a_output', 3279, '2025-08-20 09:46:47', 21, '2025-08-20 12:12:59'),
+(20, 5, 21, 'cooling_fan', 1932, '2025-08-20 09:46:56', 21, '2025-08-20 12:12:47'),
+(21, 2, 21, 'cut_blade_output', 3529, '2025-08-20 12:16:08', 21, '2025-08-20 12:16:18'),
+(22, 2, 21, 'sensor_bracket', 1404, '2025-08-20 12:16:33', 21, '2025-08-20 12:16:46'),
+(23, 3, 21, 'cut_blade_output', 4664, '2025-08-20 12:44:58', 21, '2025-08-20 12:45:07'),
+(24, 8, 21, 'strip_blade_b_output', -118, '2025-08-20 13:08:50', NULL, NULL),
+(25, 8, 21, 'feed_roller', -2268, '2025-08-20 13:08:57', NULL, NULL),
+(26, 8, 21, 'guide_tube', -2268, '2025-08-20 13:09:23', NULL, NULL),
+(27, 8, 21, 'sensor_bracket', -1958, '2025-08-20 13:09:31', NULL, NULL),
+(28, 8, 21, 'cooling_fan', -2043, '2025-08-20 13:09:39', NULL, NULL),
+(36, 1, 21, 'strip_blade_a_output', 14921, '2025-08-26 13:53:42', 21, '2025-08-26 13:53:58');
 
 -- --------------------------------------------------------
 
@@ -629,6 +715,7 @@ CREATE TABLE `monitor_applicator` (
   `shear_blade_output` int(11) DEFAULT 0,
   `cutter_a_output` int(11) DEFAULT 0,
   `cutter_b_output` int(11) DEFAULT 0,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
   `custom_parts_output` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`custom_parts_output`)),
   `last_updated` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -637,27 +724,27 @@ CREATE TABLE `monitor_applicator` (
 -- Dumping data for table `monitor_applicator`
 --
 
-INSERT INTO `monitor_applicator` (`monitor_id`, `applicator_id`, `total_output`, `wire_crimper_output`, `wire_anvil_output`, `insulation_crimper_output`, `insulation_anvil_output`, `slide_cutter_output`, `cutter_holder_output`, `shear_blade_output`, `cutter_a_output`, `cutter_b_output`, `custom_parts_output`, `last_updated`) VALUES
-(1, 1, -1453, 9180, 9030, 8830, 8805, 8680, 8630, 650, 600, 550, '{\"special_guide_plate\":8155,\"tension_spring\":8105,\"alignment_pin\":7930,\"pressure_pad\":7930}', '2025-08-14 12:49:04'),
-(2, 2, 14648, 8848, 8698, 8498, 829, 725, 675, 629, 8223, 8173, '{\"alignment_pin\":7773,\"pressure_pad\":7848,\"special_guide_plate\":7648,\"tension_spring\":7648}', '2025-08-14 12:48:39'),
-(3, 3, 13189, 6489, 6339, 6139, 6114, 5989, 5939, 700, 650, 600, '{\"special_guide_plate\":5439,\"tension_spring\":5339,\"alignment_pin\":5189,\"pressure_pad\":5189}', '2025-08-14 12:49:04'),
-(4, 4, 7765, 1290, 1140, 940, 900, 775, 725, 675, 640, 590, '{\"alignment_pin\":155,\"pressure_pad\":225,\"special_guide_plate\":15,\"tension_spring\":15}', '2025-08-14 08:49:44'),
-(5, 5, 9182, 3157, 3007, 2807, 2782, 2682, 2632, 650, 600, 550, '{\"special_guide_plate\":2172,\"tension_spring\":2092,\"alignment_pin\":1932,\"pressure_pad\":1932}', '2025-08-14 12:09:19'),
-(6, 6, 9606, 4031, 3881, 3681, 800, 700, 650, 600, 3406, 3356, '{\"alignment_pin\":2966,\"pressure_pad\":3046,\"special_guide_plate\":2856,\"tension_spring\":2856}', '2025-08-13 14:13:45'),
-(7, 7, 9535, 2385, 2235, 2035, 975, 850, 800, 750, 1735, 1685, '{\"special_guide_plate\":1295,\"tension_spring\":1175,\"alignment_pin\":1035,\"pressure_pad\":1035}', '2025-08-08 12:40:35'),
-(8, 8, 10314, 3389, 3239, 3039, 950, 825, 775, 725, 2739, 2689, '{\"alignment_pin\":2214,\"pressure_pad\":2289,\"special_guide_plate\":2064,\"tension_spring\":2064}', '2025-08-08 12:40:35'),
-(9, 9, 9591, 3341, 3191, 2991, 2966, 2841, 2791, 650, 600, 550, '{\"special_guide_plate\":2321,\"tension_spring\":2261,\"alignment_pin\":2091,\"pressure_pad\":2091}', '2025-08-12 07:07:11'),
-(10, 10, 9064, 3264, 3114, 2914, 825, 725, 675, 625, 2639, 2589, '{\"alignment_pin\":2194,\"pressure_pad\":2269,\"special_guide_plate\":2064,\"tension_spring\":2064}', '2025-08-08 12:40:35'),
-(11, 11, 8785, 2310, 2160, 1960, 900, 775, 725, 675, 1660, 1610, '{\"special_guide_plate\":1280,\"tension_spring\":1190,\"alignment_pin\":1035,\"pressure_pad\":1035}', '2025-08-08 12:40:35'),
-(12, 12, 10064, 3364, 3214, 3014, 925, 800, 750, 700, 2714, 2664, '{\"alignment_pin\":2209,\"pressure_pad\":2279,\"special_guide_plate\":2064,\"tension_spring\":2064}', '2025-08-08 12:40:36'),
-(13, 13, 9314, 3289, 3139, 2939, 2914, 2814, 2764, 650, 600, 550, '{\"special_guide_plate\":2299,\"tension_spring\":2229,\"alignment_pin\":2064,\"pressure_pad\":2064}', '2025-08-08 12:40:36'),
-(14, 14, 8253, 1328, 1178, 978, 950, 825, 775, 725, 678, 628, '{\"alignment_pin\":158,\"pressure_pad\":223,\"special_guide_plate\":3,\"tension_spring\":3}', '2025-08-08 12:40:35'),
-(15, 15, 8532, 2282, 2132, 1932, 875, 750, 700, 650, 1632, 1582, '{\"special_guide_plate\":1257,\"tension_spring\":1207,\"alignment_pin\":1032,\"pressure_pad\":1032}', '2025-08-08 12:40:35'),
-(16, 16, 8032, 2232, 2082, 1882, 825, 725, 675, 625, 1607, 1557, '{\"alignment_pin\":1157,\"pressure_pad\":1232,\"special_guide_plate\":1032,\"tension_spring\":1032}', '2025-08-08 12:40:35'),
-(17, 17, 9532, 2382, 2232, 2032, 2007, 1882, 1832, 750, 700, 650, '{\"special_guide_plate\":1297,\"tension_spring\":1167,\"alignment_pin\":1032,\"pressure_pad\":1032}', '2025-08-08 12:40:35'),
-(18, 18, 8782, 2307, 2157, 1957, 900, 775, 725, 675, 1657, 1607, '{\"alignment_pin\":1172,\"pressure_pad\":1242,\"special_guide_plate\":1032,\"tension_spring\":1032}', '2025-08-08 12:40:35'),
-(19, 19, 9032, 2332, 2182, 1982, 925, 800, 750, 700, 1682, 1632, '{\"special_guide_plate\":1287,\"tension_spring\":1177,\"alignment_pin\":1032,\"pressure_pad\":1032}', '2025-08-08 12:40:35'),
-(20, 20, 7250, 1225, 1075, 875, 850, 750, 700, 650, 600, 550, '{\"alignment_pin\": 120, \"pressure_pad\": 195}', '2025-07-29 10:28:34');
+INSERT INTO `monitor_applicator` (`monitor_id`, `applicator_id`, `total_output`, `wire_crimper_output`, `wire_anvil_output`, `insulation_crimper_output`, `insulation_anvil_output`, `slide_cutter_output`, `cutter_holder_output`, `shear_blade_output`, `cutter_a_output`, `cutter_b_output`, `is_active`, `custom_parts_output`, `last_updated`) VALUES
+(1, 1, 2141, 9868, 9718, 9518, 9493, 9368, 9318, 650, 0, 550, 1, '{\"special_guide_plate\":8843,\"tension_spring\":8793,\"alignment_pin\":8618,\"pressure_pad\":8618}', '2025-08-27 14:38:00'),
+(2, 2, 15359, 9559, 9409, 9209, 829, 725, 675, 629, 8934, 8884, 1, '{\"alignment_pin\":8484,\"pressure_pad\":8559,\"special_guide_plate\":8359,\"tension_spring\":8359}', '2025-08-27 14:36:53'),
+(3, 3, 16065, 9365, 9215, 9015, 8990, 8865, 8815, 700, 650, 600, 1, '{\"special_guide_plate\":8315,\"tension_spring\":8215,\"alignment_pin\":8065,\"pressure_pad\":8065}', '2025-08-27 14:38:00'),
+(4, 4, 7767, 1292, 1142, 942, 900, 775, 725, 675, 642, 592, 1, '{\"alignment_pin\":157,\"pressure_pad\":227,\"special_guide_plate\":17,\"tension_spring\":17}', '2025-08-26 14:01:19'),
+(5, 5, 9826, 3801, 3651, 3451, 3426, 3326, 3276, 650, 600, 550, 1, '{\"special_guide_plate\":2816,\"tension_spring\":2736,\"alignment_pin\":2576,\"pressure_pad\":2576}', '2025-08-26 14:01:19'),
+(6, 6, 10550, 4975, 4825, 4625, 800, 700, 650, 600, 4350, 4300, 1, '{\"alignment_pin\":3910,\"pressure_pad\":3990,\"special_guide_plate\":3800,\"tension_spring\":3800}', '2025-08-26 14:01:19'),
+(7, 7, 9880, 2730, 2580, 2380, 975, 850, 800, 750, 2080, 2030, 1, '{\"special_guide_plate\":1640,\"tension_spring\":1520,\"alignment_pin\":1380,\"pressure_pad\":1380}', '2025-08-26 14:01:19'),
+(8, 8, 11002, 4077, 3927, 3727, 950, 825, 775, 725, 3427, 3377, 1, '{\"alignment_pin\":2902,\"pressure_pad\":2977,\"special_guide_plate\":2752,\"tension_spring\":2752}', '2025-08-26 14:01:19'),
+(9, 9, 10279, 4029, 3879, 3679, 3654, 3529, 3479, 650, 600, 550, 1, '{\"special_guide_plate\":3009,\"tension_spring\":2949,\"alignment_pin\":2779,\"pressure_pad\":2779}', '2025-08-26 14:01:19'),
+(10, 10, 9752, 3952, 3802, 3602, 825, 725, 675, 625, 3327, 3277, 1, '{\"alignment_pin\":2882,\"pressure_pad\":2957,\"special_guide_plate\":2752,\"tension_spring\":2752}', '2025-08-26 14:01:19'),
+(11, 11, 9131, 2656, 2506, 2306, 900, 775, 725, 675, 2006, 1956, 1, '{\"special_guide_plate\":1626,\"tension_spring\":1536,\"alignment_pin\":1381,\"pressure_pad\":1381}', '2025-08-27 14:37:17'),
+(12, 12, 10752, 4052, 3902, 3702, 925, 800, 750, 700, 3402, 3352, 1, '{\"alignment_pin\":2897,\"pressure_pad\":2967,\"special_guide_plate\":2752,\"tension_spring\":2752}', '2025-08-26 14:01:19'),
+(13, 13, 10002, 3977, 3827, 3627, 3602, 3502, 3452, 650, 600, 550, 1, '{\"special_guide_plate\":2987,\"tension_spring\":2917,\"alignment_pin\":2752,\"pressure_pad\":2752}', '2025-08-26 14:01:19'),
+(14, 14, 8254, 1329, 1179, 979, 950, 825, 775, 725, 679, 629, 1, '{\"alignment_pin\":159,\"pressure_pad\":224,\"special_guide_plate\":4,\"tension_spring\":4}', '2025-08-26 14:01:19'),
+(15, 15, 8876, 2626, 2476, 2276, 875, 750, 700, 650, 1976, 1926, 1, '{\"special_guide_plate\":1601,\"tension_spring\":1551,\"alignment_pin\":1376,\"pressure_pad\":1376}', '2025-08-26 14:01:19'),
+(16, 16, 8376, 2576, 2426, 2226, 825, 725, 675, 625, 1951, 1901, 1, '{\"alignment_pin\":1501,\"pressure_pad\":1576,\"special_guide_plate\":1376,\"tension_spring\":1376}', '2025-08-26 14:01:19'),
+(17, 17, 9876, 2726, 2576, 2376, 2351, 2226, 2176, 750, 700, 650, 1, '{\"special_guide_plate\":1641,\"tension_spring\":1511,\"alignment_pin\":1376,\"pressure_pad\":1376}', '2025-08-26 14:01:19'),
+(18, 18, 9126, 2651, 2501, 2301, 900, 775, 725, 675, 2001, 1951, 1, '{\"alignment_pin\":1516,\"pressure_pad\":1586,\"special_guide_plate\":1376,\"tension_spring\":1376}', '2025-08-26 14:01:19'),
+(19, 19, 9376, 2676, 2526, 2326, 925, 800, 750, 700, 2026, 1976, 1, '{\"special_guide_plate\":1631,\"tension_spring\":1521,\"alignment_pin\":1376,\"pressure_pad\":1376}', '2025-08-26 14:01:19'),
+(20, 20, 7250, 1225, 1075, 875, 850, 750, 700, 650, 600, 550, 1, '{\"alignment_pin\": 120, \"pressure_pad\": 195}', '2025-07-29 10:28:34');
 
 -- --------------------------------------------------------
 
@@ -672,6 +759,7 @@ CREATE TABLE `monitor_machine` (
   `cut_blade_output` int(11) DEFAULT 0,
   `strip_blade_a_output` int(11) DEFAULT 0,
   `strip_blade_b_output` int(11) DEFAULT 0,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
   `custom_parts_output` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`custom_parts_output`)),
   `last_updated` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -680,27 +768,27 @@ CREATE TABLE `monitor_machine` (
 -- Dumping data for table `monitor_machine`
 --
 
-INSERT INTO `monitor_machine` (`monitor_id`, `machine_id`, `total_machine_output`, `cut_blade_output`, `strip_blade_a_output`, `strip_blade_b_output`, `custom_parts_output`, `last_updated`) VALUES
-(1, 1, 27671, 15171, 14921, 14671, '{\"feed_roller\":13046,\"guide_tube\":12971,\"sensor_bracket\":12671,\"cooling_fan\":12671}', '2025-08-14 12:51:59'),
-(2, 2, 15129, 3529, 3279, 3029, '{\"sensor_bracket\":1404,\"cooling_fan\":1329,\"feed_roller\":1129,\"guide_tube\":1129}', '2025-08-14 12:52:12'),
-(3, 3, 18064, 4664, 4414, 4164, '{\"feed_roller\":2464,\"guide_tube\":2389,\"sensor_bracket\":2064,\"cooling_fan\":2064}', '2025-08-08 12:40:35'),
-(4, 4, 16535, 3585, 3335, 3085, '{\"sensor_bracket\":1325,\"cooling_fan\":1245,\"feed_roller\":1035,\"guide_tube\":1035}', '2025-08-14 09:54:37'),
-(5, 5, 16432, 4382, 4132, 3882, '{\"feed_roller\":2317,\"guide_tube\":2242,\"sensor_bracket\":1932,\"cooling_fan\":1932}', '2025-08-14 12:52:12'),
-(6, 6, 16338, 5188, 4938, 4688, '{\"sensor_bracket\":3098,\"cooling_fan\":3028,\"feed_roller\":2838,\"guide_tube\":2838}', '2025-08-12 07:07:11'),
-(7, 7, 21335, 7035, 6785, 6535, '{\"feed_roller\":4760,\"guide_tube\":4685,\"sensor_bracket\":4335,\"cooling_fan\":4335}', '2025-08-14 10:51:58'),
-(8, 8, 14232, 382, 132, -118, '{\"sensor_bracket\":-1958,\"cooling_fan\":-2043,\"feed_roller\":-2268,\"guide_tube\":-2268}', '2025-08-14 10:51:58'),
-(9, 9, 16032, 3532, 3282, 3032, '{\"feed_roller\":1407,\"guide_tube\":1332,\"sensor_bracket\":1032,\"cooling_fan\":1032}', '2025-08-08 12:40:35'),
-(10, 10, 15032, 3432, 3182, 2932, '{\"sensor_bracket\":1307,\"cooling_fan\":1232,\"feed_roller\":1032,\"guide_tube\":1032}', '2025-08-08 12:40:35'),
-(11, 11, 15503, 2553, 2303, 2053, '{\"feed_roller\":393,\"guide_tube\":318,\"sensor_bracket\":3,\"cooling_fan\":3}', '2025-08-08 12:40:35'),
-(12, 12, 17032, 3632, 3382, 3132, '{\"sensor_bracket\":1332,\"cooling_fan\":1247,\"feed_roller\":1032,\"guide_tube\":1032}', '2025-08-08 12:40:35'),
-(13, 13, 15532, 3482, 3232, 2982, '{\"feed_roller\":1412,\"guide_tube\":1337,\"sensor_bracket\":1032,\"cooling_fan\":1032}', '2025-08-08 12:40:35'),
-(14, 14, 16503, 2653, 2403, 2153, '{\"sensor_bracket\":308,\"cooling_fan\":223,\"feed_roller\":3,\"guide_tube\":3}', '2025-08-08 12:40:35'),
-(15, 15, 16032, 3532, 3282, 3032, '{\"feed_roller\":1407,\"guide_tube\":1332,\"sensor_bracket\":1032,\"cooling_fan\":1032}', '2025-08-08 12:40:35'),
-(16, 16, 15032, 3432, 3182, 2932, '{\"sensor_bracket\":1302,\"cooling_fan\":1227,\"feed_roller\":1032,\"guide_tube\":1032}', '2025-08-08 12:40:35'),
-(17, 17, 17000, 2700, 2450, 2200, '{\"feed_roller\": 430, \"guide_tube\": 355}', '2025-07-29 10:28:34'),
-(18, 18, 15500, 2550, 2300, 2050, '{\"sensor_bracket\": 295, \"cooling_fan\": 215}', '2025-07-29 10:28:34'),
-(19, 19, 16000, 2600, 2350, 2100, '{\"feed_roller\": 405, \"guide_tube\": 330}', '2025-07-29 10:28:34'),
-(20, 20, 14500, 2450, 2200, 1950, '{\"sensor_bracket\": 280, \"cooling_fan\": 205}', '2025-07-29 10:28:34');
+INSERT INTO `monitor_machine` (`monitor_id`, `machine_id`, `total_machine_output`, `cut_blade_output`, `strip_blade_a_output`, `strip_blade_b_output`, `is_active`, `custom_parts_output`, `last_updated`) VALUES
+(1, 1, 31359, 18859, 18609, 18359, 1, '{\"feed_roller\":16734,\"guide_tube\":16659,\"sensor_bracket\":16359,\"cooling_fan\":16359}', '2025-08-27 14:36:53'),
+(2, 2, 15494, 3894, 3644, 3394, 1, '{\"sensor_bracket\":1769,\"cooling_fan\":1694,\"feed_roller\":1494,\"guide_tube\":1494}', '2025-08-26 14:01:19'),
+(3, 3, 18752, 5352, 5102, 4852, 1, '{\"feed_roller\":3152,\"guide_tube\":3077,\"sensor_bracket\":2752,\"cooling_fan\":2752}', '2025-08-26 14:01:19'),
+(4, 4, 16880, 3930, 3680, 3430, 1, '{\"sensor_bracket\":1670,\"cooling_fan\":1590,\"feed_roller\":1380,\"guide_tube\":1380}', '2025-08-26 14:01:19'),
+(5, 5, 17076, 5026, 4776, 4526, 1, '{\"feed_roller\":2961,\"guide_tube\":2886,\"sensor_bracket\":2576,\"cooling_fan\":2576}', '2025-08-26 14:01:19'),
+(6, 6, 17282, 6132, 5882, 5632, 1, '{\"sensor_bracket\":4042,\"cooling_fan\":3972,\"feed_roller\":3782,\"guide_tube\":3782}', '2025-08-26 14:01:19'),
+(7, 7, 21680, 7380, 7130, 6880, 1, '{\"feed_roller\":5105,\"guide_tube\":5030,\"sensor_bracket\":4680,\"cooling_fan\":4680}', '2025-08-26 14:01:19'),
+(8, 8, 14576, 726, 476, 344, 1, '{\"sensor_bracket\":344,\"cooling_fan\":344,\"feed_roller\":344,\"guide_tube\":344}', '2025-08-26 14:01:19'),
+(9, 9, 16376, 3876, 3626, 3376, 1, '{\"feed_roller\":1751,\"guide_tube\":1676,\"sensor_bracket\":1376,\"cooling_fan\":1376}', '2025-08-26 14:01:19'),
+(10, 10, 15376, 3776, 3526, 3276, 1, '{\"sensor_bracket\":1651,\"cooling_fan\":1576,\"feed_roller\":1376,\"guide_tube\":1376}', '2025-08-26 14:01:19'),
+(11, 11, 15504, 2554, 2304, 2054, 1, '{\"feed_roller\":394,\"guide_tube\":319,\"sensor_bracket\":4,\"cooling_fan\":4}', '2025-08-26 14:01:19'),
+(12, 12, 17376, 3976, 3726, 3476, 1, '{\"sensor_bracket\":1676,\"cooling_fan\":1591,\"feed_roller\":1376,\"guide_tube\":1376}', '2025-08-26 14:01:19'),
+(13, 13, 15876, 3826, 3576, 3326, 1, '{\"feed_roller\":1756,\"guide_tube\":1681,\"sensor_bracket\":1376,\"cooling_fan\":1376}', '2025-08-26 14:01:19'),
+(14, 14, 16504, 2654, 2404, 2154, 1, '{\"sensor_bracket\":309,\"cooling_fan\":224,\"feed_roller\":4,\"guide_tube\":4}', '2025-08-26 14:01:19'),
+(15, 15, 16376, 3876, 3626, 3376, 1, '{\"feed_roller\":1751,\"guide_tube\":1676,\"sensor_bracket\":1376,\"cooling_fan\":1376}', '2025-08-26 14:01:19'),
+(16, 16, 15376, 3776, 3526, 3276, 1, '{\"sensor_bracket\":1646,\"cooling_fan\":1571,\"feed_roller\":1376,\"guide_tube\":1376}', '2025-08-26 14:01:19'),
+(17, 17, 17000, 2700, 2450, 2200, 1, '{\"feed_roller\": 430, \"guide_tube\": 355}', '2025-07-29 10:28:34'),
+(18, 18, 15500, 2550, 2300, 2050, 1, '{\"sensor_bracket\": 295, \"cooling_fan\": 215}', '2025-07-29 10:28:34'),
+(19, 19, 16000, 2600, 2350, 2100, 1, '{\"feed_roller\": 405, \"guide_tube\": 330}', '2025-07-29 10:28:34'),
+(20, 20, 14500, 2450, 2200, 1950, 1, '{\"sensor_bracket\": 280, \"cooling_fan\": 205}', '2025-07-29 10:28:34');
 
 -- --------------------------------------------------------
 
@@ -823,12 +911,12 @@ INSERT INTO `records` (`record_id`, `shift`, `machine_id`, `applicator1_id`, `ap
 (199, '2nd', 1, 1, 2, 21, '2025-08-07', '2025-08-07 14:37:31', 0, '2025-08-14 10:51:47'),
 (200, '1st', 1, 1, 3, 21, '2025-07-01', '2025-08-08 12:40:35', 1, '2025-08-12 08:23:24'),
 (201, 'NIGHT', 9, 7, 8, 21, '2025-07-01', '2025-08-08 12:40:35', 1, '2025-08-11 14:24:42'),
-(202, '2nd', 3, 3, NULL, 21, '2025-07-01', '2025-08-08 12:40:35', 1, '2025-08-14 10:52:28'),
+(202, '2nd', 3, 3, NULL, 21, '2025-07-01', '2025-08-08 12:40:35', 0, '2025-08-19 11:08:24'),
 (203, '2nd', 6, 4, 5, 21, '2025-07-01', '2025-08-08 12:40:35', 1, '2025-08-13 12:07:16'),
 (204, '1st', 1, 4, 2, 21, '2025-07-01', '2025-08-08 12:40:35', 1, '2025-08-13 11:08:51'),
 (205, '2nd', 6, 6, 2, 21, '2025-07-01', '2025-08-08 12:40:35', 0, '2025-08-13 12:33:09'),
 (206, '2nd', 7, 7, 8, 21, '2025-07-01', '2025-08-08 12:40:35', 0, '2025-08-13 12:33:00'),
-(207, '1st', 7, 8, 2, 21, '2025-07-01', '2025-08-08 12:40:35', 1, '2025-08-14 10:51:58'),
+(207, '1st', 7, 8, 2, 21, '2025-07-01', '2025-08-08 12:40:35', 0, '2025-08-19 11:08:30'),
 (208, 'NIGHT', 9, 18, 19, 21, '2025-07-01', '2025-08-08 12:40:35', 1, '2025-08-12 07:56:14'),
 (209, 'NIGHT', 10, 10, 10, 21, '2025-07-01', '2025-08-08 12:40:35', 1, '2025-08-08 13:28:47'),
 (210, 'NIGHT', 11, 11, NULL, 21, '2025-07-01', '2025-08-08 12:40:35', 0, '2025-08-11 08:16:09'),
@@ -846,11 +934,35 @@ INSERT INTO `records` (`record_id`, `shift`, `machine_id`, `applicator1_id`, `ap
 (222, 'NIGHT', 7, 3, 2, 21, '2025-07-01', '2025-08-08 12:40:36', 1, '2025-08-08 12:47:16'),
 (225, '2nd', 1, 1, 2, 21, '2025-08-08', '2025-08-08 13:30:01', 1, '2025-08-13 12:09:11'),
 (236, 'NIGHT', 1, 1, 8, 21, '2025-08-11', '2025-08-11 13:41:57', 1, '2025-08-12 08:17:29'),
-(237, '1st', 2, 3, NULL, 21, '2025-08-11', '2025-08-11 13:42:57', 1, '2025-08-14 12:52:12'),
+(237, '1st', 2, 3, NULL, 21, '2025-08-11', '2025-08-11 13:42:57', 0, '2025-08-19 10:45:03'),
 (238, 'NIGHT', 1, 6, 9, 21, '2025-08-11', '2025-08-11 13:57:18', 0, '2025-08-12 07:04:46'),
 (239, '1st', 1, 6, 9, 21, '2025-08-11', '2025-08-11 14:10:09', 1, '2025-08-11 14:10:09'),
 (240, '2nd', 1, 1, 2, 21, '2025-08-11', '2025-08-11 14:19:41', 1, '2025-08-11 14:19:41'),
-(241, '1st', 6, 6, 9, 21, '2025-08-12', '2025-08-12 07:07:11', 1, '2025-08-12 07:07:11');
+(241, '1st', 6, 6, 9, 21, '2025-08-12', '2025-08-12 07:07:11', 1, '2025-08-12 07:07:11'),
+(243, '1st', 1, 1, NULL, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(244, '1st', 2, 2, NULL, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(245, '1st', 3, 3, NULL, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(246, '2nd', 4, 4, NULL, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(247, '2nd', 5, 5, NULL, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(248, '2nd', 6, 6, NULL, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(249, '1st', 7, 7, NULL, 21, '2025-07-01', '2025-08-26 14:01:19', 0, '2025-08-26 14:18:49'),
+(250, '1st', 8, 8, NULL, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(251, '1st', 9, 9, NULL, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(252, 'NIGHT', 10, 10, NULL, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(253, 'NIGHT', 11, 11, NULL, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(254, 'NIGHT', 12, 12, NULL, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(255, 'NIGHT', 13, 13, 3, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(256, 'NIGHT', 14, 14, 4, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(257, 'NIGHT', 15, 15, 5, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(258, 'NIGHT', 16, 16, 6, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(259, 'NIGHT', 1, 17, 7, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(260, 'NIGHT', 2, 18, 8, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(261, 'NIGHT', 3, 19, 9, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(262, 'NIGHT', 4, 3, 10, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(263, 'NIGHT', 5, 1, 11, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(264, 'NIGHT', 6, 2, 12, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(265, 'NIGHT', 7, 3, 13, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
+(266, '2nd', 1, 3, 2, 21, '2025-08-27', '2025-08-27 14:36:53', 1, '2025-08-27 14:38:00');
 
 -- --------------------------------------------------------
 
@@ -892,10 +1004,10 @@ INSERT INTO `users` (`user_id`, `username`, `password`, `first_name`, `last_name
 (18, 'operator15', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Carmen', 'Hernandez', 'DEFAULT'),
 (19, 'supervisor1', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Richard', 'Thompson', 'TOOLKEEPER'),
 (20, 'supervisor2', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Linda', 'White', 'TOOLKEEPER'),
-(21, 'earl_batumbakal', '$2y$10$mIGfKKMS4ETvbHtKethcceyxU8nO3xQz8PYNh0Jc82zZKG80MPjcS', 'Earl', 'Batumbakal', 'DEFAULT'),
-(22, 'sdf asdgasdfs', '$2y$10$sy0oEaq.t.q9Ymc7VMfrjePm3uujaPDdFJHU5E1oHu1ayIDLCsDqq', 'asdfsadfsda', 'asdfsadgafsdhdaf', 'DEFAULT'),
+(21, 'earl_batumbakal', '$2y$10$mIGfKKMS4ETvbHtKethcceyxU8nO3xQz8PYNh0Jc82zZKG80MPjcS', 'Earl', 'Batumbakal', 'ADMIN'),
+(22, 'wantutripor', '$2y$10$sy0oEaq.t.q9Ymc7VMfrjePm3uujaPDdFJHU5E1oHu1ayIDLCsDqq', 'asdfsadfsda', 'asdfsadgafsdhdaf', 'DEFAULT'),
 (23, 'ASDFHASHGFHAGASFHASD HGF', '$2y$10$9feeeU9gjOd.cSxH7602TuuWtHCl2ZJDjcwdp/o36Aivh5Kpjv4LO', 'asdfsadfsda', 'asdfsadgafsdhdaf', 'DEFAULT'),
-(24, 'DFASGAFHDAGASGBSDFTGAGA', '$2y$10$jehT1QDy5337JhQ0G9VV5eh6bn57ooBjZV4JjlmL7imaKEdelFT2m', 'DSAFSADFSAD', 'FASDFSADF', 'DEFAULT');
+(24, 'eyeballord01234', '$2y$10$KTdcjYPy2imQMd/Y.fiMme08eKqY19vRS9ZS91CKOI.yOGeXCKfLW', 'DSAFSADFSAD', 'FASDFSADF', 'DEFAULT');
 
 --
 -- Indexes for dumped tables
@@ -978,7 +1090,9 @@ ALTER TABLE `monitor_applicator`
   ADD PRIMARY KEY (`monitor_id`),
   ADD UNIQUE KEY `applicator_id` (`applicator_id`),
   ADD KEY `idx_applicator_id` (`applicator_id`),
-  ADD KEY `idx_last_updated` (`last_updated`);
+  ADD KEY `idx_last_updated` (`last_updated`),
+  ADD KEY `idx_is_active` (`is_active`),
+  ADD KEY `idx_active_applicator_id` (`is_active`,`applicator_id`);
 
 --
 -- Indexes for table `monitor_machine`
@@ -987,7 +1101,9 @@ ALTER TABLE `monitor_machine`
   ADD PRIMARY KEY (`monitor_id`),
   ADD UNIQUE KEY `machine_id` (`machine_id`),
   ADD KEY `idx_machine_id` (`machine_id`),
-  ADD KEY `idx_last_updated` (`last_updated`);
+  ADD KEY `idx_last_updated` (`last_updated`),
+  ADD KEY `idx_is_active` (`is_active`),
+  ADD KEY `idx_active_machine_id` (`is_active`,`machine_id`);
 
 --
 -- Indexes for table `records`
@@ -1023,61 +1139,61 @@ ALTER TABLE `applicators`
 -- AUTO_INCREMENT for table `applicator_outputs`
 --
 ALTER TABLE `applicator_outputs`
-  MODIFY `applicator_output_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=318;
+  MODIFY `applicator_output_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=354;
 
 --
 -- AUTO_INCREMENT for table `applicator_reset`
 --
 ALTER TABLE `applicator_reset`
-  MODIFY `reset_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `reset_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `custom_part_definitions`
 --
 ALTER TABLE `custom_part_definitions`
-  MODIFY `part_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `part_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `machines`
 --
 ALTER TABLE `machines`
-  MODIFY `machine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `machine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `machine_outputs`
 --
 ALTER TABLE `machine_outputs`
-  MODIFY `machine_output_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=218;
+  MODIFY `machine_output_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=242;
 
 --
 -- AUTO_INCREMENT for table `machine_reset`
 --
 ALTER TABLE `machine_reset`
-  MODIFY `reset_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `reset_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `monitor_applicator`
 --
 ALTER TABLE `monitor_applicator`
-  MODIFY `monitor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=321;
+  MODIFY `monitor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=360;
 
 --
 -- AUTO_INCREMENT for table `monitor_machine`
 --
 ALTER TABLE `monitor_machine`
-  MODIFY `monitor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=211;
+  MODIFY `monitor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=235;
 
 --
 -- AUTO_INCREMENT for table `records`
 --
 ALTER TABLE `records`
-  MODIFY `record_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=242;
+  MODIFY `record_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=267;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Constraints for dumped tables
