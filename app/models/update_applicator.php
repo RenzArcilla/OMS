@@ -73,3 +73,42 @@ function updateApplicator($applicator_id, $control_no, $terminal_no, $descriptio
         return "Database error in updateApplicator: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
+
+
+function restoreDisabledApplicator($applicator_id) {
+    /*
+        This function restores a disabled applicator by updating its status in the database.
+
+        Args:
+        - $applicator_id: int, ID of the applicator
+
+        Returns:
+        - true on successful update
+        - string containing error message on failure
+    */
+
+    global $pdo;
+    
+    try {
+        // Prepare SQL update query
+        $stmt = $pdo->prepare("
+            UPDATE applicators SET
+                is_active = 1
+            WHERE applicator_id = :applicator_id
+        ");
+
+        // Bind parameters
+        $stmt->bindParam(':applicator_id', $applicator_id);
+
+        // Execute the statement
+        if ($stmt->execute()) {
+            return true; // Success
+        } else {    
+            return "Failed to update machine. Please try again.";
+        }
+    } catch (PDOException $e) {
+        // Log error and return an error message on failure
+        error_log("Database Error in restoreDisabledApplicator: " . $e->getMessage());
+        return "Database error when restoring applicator: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}
