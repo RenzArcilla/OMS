@@ -1,15 +1,4 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    min-height: 100vh;
-    overflow-x: hidden;
-}
+/* Sidebar Component Styles */
 
 .sidebar {
     position: fixed;
@@ -154,38 +143,6 @@ body {
     visibility: visible;
 }
 
-.main-content {
-    padding: 100px 40px 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.content-card {
-    background: white;
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-}
-
-.content-title {
-    font-size: 32px;
-    color: #333;
-    margin-bottom: 20px;
-    font-weight: 700;
-}
-
-.content-text {
-    color: #666;
-    line-height: 1.6;
-    font-size: 16px;
-    position: relative;
-    align-items: center;
-    justify-content: center;
-}
-
 .sidebar-footer {
     padding: 25px;
     background: rgba(0, 0, 0, 0.1);
@@ -196,8 +153,4 @@ body {
     color: rgba(255, 255, 255, 0.7);
     font-size: 12px;
     text-align: center;
-}
-
-.center-text {
-
 }
