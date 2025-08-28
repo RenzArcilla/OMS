@@ -333,3 +333,41 @@ function disableMachineCumulativeOutputs($machine_id) {
         return "Database error occurred when disabling machine cumulative outputs: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
+
+
+function restoreMachineCumulativeOutputs($machine_id) {
+    /*
+        Restore (undo soft delete) cumulative outputs in the database.
+        Sets the status of all cumulative outputs for a given machine to 'enabled'.
+
+        Args:
+        - $machine_id: int, ID of the machine to restore cumulative outputs for
+
+        Returns:
+        - true on successful restore
+        - string containing error message on failure
+    */
+
+    global $pdo;
+
+    try {
+        // Update the status of all cumulative outputs for the given machine
+        $stmt = $pdo->prepare("
+            UPDATE monitor_machine
+            SET is_active = 1
+            WHERE machine_id = :machine_id
+        ");
+
+        $stmt->bindParam(':machine_id', $machine_id, PDO::PARAM_INT);
+
+        // Execute the query
+        $stmt->execute();
+
+        return true;
+
+    } catch (PDOException $e) {
+        // Log error and return an error message on failure
+        error_log("Database Error in restoreMachineCumulativeOutputs: " . $e->getMessage());
+        return "Database error occurred when restoring machine cumulative outputs: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}
