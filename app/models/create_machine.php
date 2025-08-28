@@ -35,9 +35,9 @@ function createMachine($control_no, $description, $model,
         // Prepare SQL insert query
         $stmt = $pdo->prepare("
             INSERT INTO machines (control_no, description, model, 
-                                    maker, serial_no, invoice_no)
+                                    maker, serial_no, invoice_no, last_encoded)
             VALUES (:control_no, :description, :model,
-                    :machine_maker, :serial_no, :invoice_no)
+                    :machine_maker, :serial_no, :invoice_no, NOW())
         ");
 
         // Bind parameters
