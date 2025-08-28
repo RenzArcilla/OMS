@@ -28,8 +28,10 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css">
 </head> 
 <body>
+    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/sidebar.php'; ?>
     <div class="container">
         <!-- Page Header -->
         <div class="main-content">
@@ -406,5 +408,7 @@ if (!isset($_SESSION['user_id'])) {
 <script src="../../public/assets/js/edit_record_modal.js" defer></script>
 <!-- Load modal logic for editing records -->
 <script src="../../public/assets/js/record_output.js" defer></script>
+<!-- Sidebar functionality -->
+<script src="/SOMS/public/assets/js/sidebar.js" defer></script>
 </body>
 </html>
