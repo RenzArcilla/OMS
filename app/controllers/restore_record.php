@@ -40,21 +40,23 @@ try {
     $pdo->beginTransaction();
 
     // Restore the record
-    $result = restoreRecord($record_id);
-    if (is_string($result)) throw new Exception($result);
+    $restoreRecord = restoreRecord($record_id);
+    if (is_string($restoreRecord)) throw new Exception($restoreRecord);
 
     // Restore applicator_outputs pertaining to the record
-    $result = restoreApplicatorOutput($record_id);
-    if (is_string($result)) throw new Exception($result);
+    $restoreApplicatorOutput = restoreApplicatorOutputByRecordID($record_id);
+    if (is_string($restoreApplicatorOutput)) throw new Exception($restoreApplicatorOutput);
 
     // Restore machine_output pertaining to the record
-    $result = restoreMachineOutput($record_id);
-    if (is_string($result)) throw new Exception($result);
+    $restoreMachineOutput = restoreMachineOutputByRecordID($record_id);
+    if (is_string($restoreMachineOutput)) throw new Exception($restoreMachineOutput);
 
     // Commit transaction
-    $pdo->commit();
-    jsAlertRedirect("Record restored successfully!", $redirect_url);
-    exit;
+    if ($restoreRecord && $restoreApplicatorOutput && $restoreMachineOutput) {
+        $pdo->commit();
+        jsAlertRedirect("Record restored successfully!", $redirect_url);
+        exit;
+    }
 
 } catch (Exception $e) {
     // Rollback on any error

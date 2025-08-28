@@ -74,3 +74,32 @@ function updateRecord($record_id, $date_inspected, $shift, $app1_id, $app2_id, $
         return "Database error in updateRecord: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
+
+
+function restoreRecord($record_id): bool|string {
+    /*
+        Function to restore a record in the database.
+
+        Args:
+        - $record_id: ID of the record to restore.
+
+        Returns:
+        - True on success, string containing error message on failure.
+    */
+    global $pdo;
+
+    try {
+        // Prepare the SQL statement
+        $stmt = $pdo->prepare("UPDATE records SET is_active = 1 WHERE record_id = :record_id");
+        $stmt->bindParam(':record_id', $record_id, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        return true;
+    } catch (PDOException $e) {
+        // Log error
+        error_log("Database Error on restoreRecord: " . $e->getMessage());
+        return "Database error while restoring record: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}
