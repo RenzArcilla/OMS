@@ -18,11 +18,10 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-// Add smooth scroll behavior for nav items
+// Add click effect for nav items
 document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', function(e) {
-        e.preventDefault();
-        // Add a subtle click effect
+        // Add a subtle click effect without preventing navigation
         this.style.transform = 'scale(0.98)';
         setTimeout(() => {
             this.style.transform = '';
