@@ -144,6 +144,35 @@ function confirmDeleteCustomPart(partId, type) {
     }
 }
 
+// Listen for clicks only on the restore buttons
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('restore-btn')) {
+        const applicatorId = event.target.dataset.applicatorId;
+        confirmRestoreCustomPart(applicatorId);
+    }
+});
+
+// Restore confirmation
+function confirmRestoreCustomPart(applicatorId) {
+    if (confirm("Are you sure you want to restore this applicator?")) {
+        // Create a form dynamically
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "../controllers/restore_applicator.php";
+
+        // Add hidden input for applicator_id
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "applicator_id";
+        input.value = applicatorId;
+
+        form.appendChild(input);
+        document.body.appendChild(form);
+
+        form.submit();
+    }
+}
+
 // Open the parts inventory modal
 function openPartsInventoryModal() {
     document.getElementById('partsInventoryModalDashboardApplicator').style.display = 'block';
