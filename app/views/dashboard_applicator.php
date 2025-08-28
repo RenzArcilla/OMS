@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Applicator Dashboard</title>
-    <link rel="stylesheet" href="../../public/assets/css/base/base.css">
+    <!-- link rel="stylesheet" href="../../public/assets/css/base/base.css">
     <link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css" -->
 </head>
 <body>
     <?php 
@@ -65,7 +65,11 @@
     // Get parts priority data
     $parts_ordered = getPartsOrderedByOutput($part_names_array);
     $top_3_parts = array_slice($parts_ordered, 0, 3);
-    ?>
+
+        // Get disabled applicators
+        require_once __DIR__ . '/../models/read_applicators.php';
+        $disabled_applicators = getDisabledApplicators(10, 0);
+        ?>
 
     <div class="container">
         <!-- Main Content -->
@@ -277,25 +281,43 @@
                                 <table class="data-table">
                                     <thead>
                                         <tr>
-                                            <th>Part Name</th>
+                                            <th>Actions</th>
+                                            <th>HP Number</th>
+                                            <th>Description</th>
+                                            <th>Terminal Maker</th>
+                                            <th>Applicator Maker</th>
+                                            <th>Last Encoded</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php foreach ($disabled_applicators as $applicator): ?>
                                         <tr>
-                                            <td>Custom Wire Crimper Pro</td>
+                                            <td>
+                                                <button id="restore-applicator-<?= htmlspecialchars($applicator['applicator_id']) ?>"
+                                                        class="restore-btn"
+                                                        data-applicator-id="<?= htmlspecialchars($applicator['applicator_id']) ?>">
+                                                    Restore
+                                                </button>
+                                                <button id="delete-applicator-<?= htmlspecialchars($applicator['applicator_id']) ?>"
+                                                        class="delete-applicator-btn"
+                                                        data-applicator-id="<?= htmlspecialchars($applicator['applicator_id']) ?>">
+                                                    Delete
+                                                </button>
+                                            </td>
+                                            <td><?php echo htmlspecialchars($applicator['hp_no']); ?></td>
+                                            <td><?php echo htmlspecialchars($applicator['description']); ?></td>
+                                            <td><?php echo htmlspecialchars($applicator['terminal_maker']); ?></td>
+                                            <td><?php echo htmlspecialchars($applicator['applicator_maker']); ?></td>
+                                            <td><?php echo htmlspecialchars($applicator['last_encoded']); ?></td>
                                         </tr>
-                                        <tr>
-                                            <td>Enhanced Cut Blade X1</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Precision Wire Anvil V2</td>
-                                        </tr>
+                                        <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                                    <!-- Table 2: Recently Deleted Machine -->
+
+                    <!-- Table 2: Recently Deleted Machine -->
                     <div class="data-section">
                         <div class="section-header">
                             <div class="section-title">
