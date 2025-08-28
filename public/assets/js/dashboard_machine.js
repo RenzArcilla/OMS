@@ -139,35 +139,6 @@ function confirmRestoreCustomPart(machineId) {
     }
 }
 
-// Listen for clicks only on the delete machine button
-document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('delete-machine-btn')) {
-        const machineId = event.target.dataset.machineId;
-        confirmDeleteMachine(machineId);
-    }
-});
-
-// Delete confirmation
-function confirmDeleteMachine(machineId) {
-    if (confirm("This action will PERMANENTLY DELETE all records pertaining to this machine - including outputs from this machine! Are you sure you want to delete this machine?")) {
-        // Create a form dynamically
-        const form = document.createElement("form");
-        form.method = "POST";
-        form.action = "../controllers/delete_machine.php";
-        
-        // Add hidden input for machine_id
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "machine_id";
-        input.value = machineId;
-
-        form.appendChild(input);
-        document.body.appendChild(form);
-
-        form.submit();
-    }
-}
-
 // Initialize event listeners when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function () {
     console.log('DOM loaded, initializing dashboard machine...'); // Debug log
