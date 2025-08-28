@@ -6,14 +6,15 @@
     <title>Forgot Password</title>
     <link rel="stylesheet" href="../../public/assets/css/base/typography.css">
     <link rel="stylesheet" href="../../public/assets/css/forgot_password.css">
+    <link rel="stylesheet" href="../../public/assets/css/components/buttons.css">
 </head>
 <body>
-    <div class="container">
-        <div class="form-container">
+    <div class="card">
+        <div class="card-content">
             <!-- Header Section -->
-            <div class="form-title">
+            <div class="card-title">
                 <h1>Forgot Password</h1>
-                <p class="subtitle">Enter your username and we'll send you instructions to reset your password</p>
+                <p class="card-subtitle">Enter your username and we'll send you instructions to reset your password</p>
             </div>
             
             <!-- Messages Section -->
@@ -26,9 +27,9 @@
             </div>
             
 
-            <div class="content-area">
+            <div class="card-content">
                 <form id="forgotPasswordForm" action="forgot_password.php" method="post">
-                    <div class="form-group">
+                    <div class="card-group">
                         <label for="username">Username</label>
                         <input type="text" id="username" name="username" placeholder="Enter your username" required>
                     </div>
@@ -39,5 +40,7 @@
             </div>
         </div>
     </div>
+    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/views/forgot_password_confirmation.php'; ?>
+
 </body>
 </html>

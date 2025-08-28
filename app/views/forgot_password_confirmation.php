@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgot Password Confirmation</title>
     <link rel="stylesheet" href="../../public/assets/css/base/typography.css">
-        <link rel="stylesheet" href="../../public/assets/css/forgot_password.css">
-        <link rel="stylesheet" href="../../public/assets/css/forgot_password.css">
+    <link rel="stylesheet" href="../../public/assets/css/forgot_password.css">
+    <link rel="stylesheet" href="../../public/assets/css/forgot_password_confirmation.css">
+    <link rel="stylesheet" href="../../public/assets/css/components/buttons.css">
 </head>
 <body>
-    <div class="container">
-        <div class="form-container">
+    <div class="card">
+        <div class="card-content">
             <!-- Header Section -->
-            <div class="form-title">
+            <div class="card-title">
                 <h1>Set New Password</h1>
                 <p class="subtitle">Create a strong password to secure your account</p>
             </div>
@@ -27,9 +28,9 @@
             </div>
             
             <!-- Content Area - Add your content here -->
-            <div class="content-area">
+            <div class="card-content">
                 <form id="newPasswordForm" action="reset_password.php" method="post">
-                    <div class="form-group">
+                    <div class="card-group">
                         <label for="new_password">New Password</label>
                         <div class="password-input-wrapper">
                             <input type="password" id="new_password" name="new_password" placeholder="Enter your new password" required>
@@ -67,7 +68,7 @@
                         </div>
                     </div>
                     
-                    <div class="form-group">
+                    <div class="card-group">
                         <label for="confirm_password">Confirm Password</label>
                         <div class="password-input-wrapper">
                             <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your new password" required>
