@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgot Password Confirmation</title>
     <link rel="stylesheet" href="../../public/assets/css/base/typography.css">
-    <link rel="stylesheet" href="../../public/assets/css/forgot_password.css">
     <link rel="stylesheet" href="../../public/assets/css/forgot_password_confirmation.css">
     <link rel="stylesheet" href="../../public/assets/css/components/buttons.css">
+    <link rel="stylesheet" href="../../public/assets/css/components/cards.css">
+    <link rel="stylesheet" href="../../public/assets/css/components/header.css">
 </head>
 <body>
     <div class="card">

@@ -27,45 +27,23 @@
     gap: 16px;
 }
 
-.btn {
-    padding: 16px 28px;
-    border-radius: 16px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    position: relative;
-    overflow: hidden;
+
+/* Header Styles for Cards */
+.card-title h1 {
+    font-size: 28px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #DC143C, #B22222);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    margin-bottom: 8px;
 }
 
-.btn-secondary {
-    background: #FFFFFF;
-    border: 2px solid #e2e8f0;
+.card-subtitle {
     color: #6B7280;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-.btn-secondary:hover {
-    background: #f8fafc;
-    border-color: #3b82f6;
-    color: #3b82f6;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, #2F80ED, #27AE60);
-    color: white;
-    box-shadow: 0 8px 32px rgba(47, 128, 237, 0.3);
-    border: 2px solid transparent;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(47, 128, 237, 0.35);
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    line-height: 1.5;
 }
