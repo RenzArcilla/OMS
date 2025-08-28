@@ -176,7 +176,7 @@ function getActiveMachineByControlNo($control_no) {
         - $control_no: string, control number of the machine
 
         Returns:
-        - true if active machine exists
+        - associative array of row with same control_no if active machine exists
         - false if no active machine found
         - string containing error message on failure
     */
@@ -201,7 +201,7 @@ function getActiveMachineByControlNo($control_no) {
             return false;
         }
 
-        return true;
+        return $data;
 
     } catch (PDOException $e) {
         // Log error and return an error message on failure
