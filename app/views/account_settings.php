@@ -18,7 +18,7 @@
                 <div class="card">
                     <!-- Profile Overview -->
                     <div class="card-content">
-                        <div class="card-title">
+                        <div class="card-title center-content">
                             <div class="card-icon">👤</div>
                             <div>
                                 <div class="card-title">Profile Overview</div>
@@ -51,7 +51,7 @@
                     <!-- Username Settings -->
                 <div class="card">
                     <div class="card-content">
-                        <div class="card-title">
+                        <div class="card-title center-content">
                             <div class="card-icon">🏷️</div>
                             <div>
                                 <div class="card-title">Username</div>
@@ -84,7 +84,7 @@
                     <!-- Password Settings -->
                 <div class="card">
                     <div class="card-content">
-                        <div class="card-title">
+                        <div class="card-title center-content">
                             <div class="card-icon">🔐</div>
                             <div>
                                 <div class="card-title">Password & Security</div>
