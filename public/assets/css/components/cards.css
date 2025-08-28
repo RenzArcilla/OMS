@@ -50,14 +50,13 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-align: center;
-    margin-bottom: 8px;
+    margin-bottom: 2px;
 }
 .subtitle {
     color: #6B7280;
     font-size: 15px;
     font-weight: 400;
     text-align: center;
-    margin-bottom: 36px;
     line-height: 1.6;
     opacity: 0.8;
 }
