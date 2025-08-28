@@ -6,10 +6,16 @@
     <title>SOMS - Sign Up</title>
     <link rel="stylesheet" href="../../public/assets/css/base/typography.css">
     <link rel="stylesheet" href="../../public/assets/css/signup.css">
+    <link rel="stylesheet" href="../../public/assets/css/components/cards.css">
+    <link rel="stylesheet" href="../../public/assets/css/components/buttons.css">
 </head>
 <body>
-    <div class="signup-container">
-        <h2 class="signup-title">Create Account</h2>
+    <div class="card">
+        <div class="card-content">
+            <div class="card-title">
+                <h1>Create Account</h1>
+                <p class="subtitle">Create an account to get started</p>
+            </div>
         <form method="POST" action="../controllers/sign_up.php" autocomplete="off">
             
             <div class="form-group">
@@ -39,7 +45,7 @@
                 <input type="password" id="confirm_password" name="confirm_password" class="form-input" placeholder="Confirm your password" required>
             </div>
             
-            <button type="submit" class="signup-btn">Create Account</button>
+            <button class="btn-primary" type="submit" id="submitBtn">Create Account</button>
         </form>
         <p class="login-link">Already have an account? <a href="login.php">Log in here</a></p>
     </div>
