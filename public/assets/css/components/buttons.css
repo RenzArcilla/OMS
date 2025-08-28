@@ -7,37 +7,46 @@
 }
 
 .btn-secondary {
-    padding: 0.75rem 1.5rem;
-    border: 1px solid #E5E7EB;
-    border-radius: 0.75rem;
-    background: white;
-    color: #6B7280;
+    display: block;
+    text-align: center;
+    color: #DC143C;
+    text-decoration: none;
+    font-size: 14px;
     font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 8px;
+    border-radius: 8px;
 }
 
-
 .btn-secondary:hover {
-    background: #F3F4F6;
+    background: rgba(220, 20, 60, 0.05);
+    color: #B22222;
 }
 
 
 .btn-primary {
-    padding: 0.75rem 1.5rem;
+    width: 100%;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, #DC143C, #B22222);
+    color: #FFFFFF;
     border: none;
-    border-radius: 0.75rem;
-    background: linear-gradient(135deg, #2F80ED 0%, #27AE60 100%);
-    color: white;
-    font-weight: 500;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(47, 128, 237, 0.3);
-    transition: all 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(220, 20, 60, 0.25);
 }
 
-
 .btn-primary:hover {
-    box-shadow: 0 6px 20px rgba(47, 128, 237, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(220, 20, 60, 0.35),
+                0 0 20px rgba(178, 34, 34, 0.15);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(220, 20, 60, 0.2);
 }
 
 .edit-btn {
