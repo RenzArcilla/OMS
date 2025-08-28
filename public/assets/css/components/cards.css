@@ -43,7 +43,7 @@
 
 /* Header Styles */
 .card-title h1 {
-    font-size: 50px;
+    font-size: 32px;
     font-weight: 800;
     background: linear-gradient(135deg, #DC143C, #B22222);
     -webkit-background-clip: text;
@@ -52,6 +52,7 @@
     text-align: center;
     margin-bottom: 2px;
 }
+
 .subtitle {
     color: #6B7280;
     font-size: 15px;
@@ -59,4 +60,5 @@
     text-align: center;
     line-height: 1.6;
     opacity: 0.8;
+    margin-bottom: 10px;
 }
