@@ -159,3 +159,34 @@ function restoreMachineOutputs($machine_id) {
         return "Database error occurred when restoring machine outputs: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
+
+
+function restoreMachineOutputByRecordID($record_id): bool|string {
+    /*
+        Restore (undo soft delete) a single machine output by record_id.
+
+        Args:
+        - $record_id: ID of the record to restore
+
+        Returns:
+        - true on success
+        - string containing error message on failure
+    */
+
+    global $pdo;
+
+    try {
+        $stmt = $pdo->prepare("
+            UPDATE machine_outputs
+            SET is_active = 1
+            WHERE record_id = :record_id
+        ");
+        $stmt->bindValue(':record_id', $record_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return true;
+    } catch (PDOException $e) {
+        error_log("Database Error in restoreMachineOutputByRecordID(): " . $e->getMessage());
+        return "Database error occurred when restoring machine output: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}
