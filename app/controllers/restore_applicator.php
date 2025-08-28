@@ -2,23 +2,26 @@
 /*
     This file is the controller file for restoring a disabled applicator.
     It retrieves form data, sanitizes it, and updates the database record.
+    - restore applicator
+    - restore outputs of the applicator
+    - restore cumulative outputs of the applicator
 */
 
+// Start session and check if user is logged in
+session_start(); 
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../views/login.php");
+    exit();
+}
 
-session_start();
-
+// Include necessary files
 require_once '../includes/js_alert.php';
-require_once '../includes/db.php';
 require_once '../models/update_applicator.php';
+require_once '../models/update_applicator_output.php';
+require_once '../models/update_monitor_applicator.php';
 
 // Redirect url
 $redirect_url = "../views/dashboard_applicator.php";
-
-// Ensure request method is POST
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    jsAlertRedirect("Invalid request method!", $redirect_url);
-    exit;
-}
 
 // Check for credentials 
 if (isset($_SESSION['user_type']) != "ADMIN") {
@@ -26,34 +29,55 @@ if (isset($_SESSION['user_type']) != "ADMIN") {
     exit;
 }
 
-// Get the form data
-$applicator_id = isset($_POST['applicator_id']) ? trim($_POST['applicator_id']) : null;
-
-// Check if fields are empty
-if (empty($applicator_id)) {
-    jsAlertRedirect("Missing required fields.", $redirect_url);
+// Check if the request method is POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    jsAlertRedirect("Invalid request method.", $redirect_url);
     exit;
 }
 
+// 1. Sanitize input
+$applicator_id = isset($_POST['applicator_id']) ? strtoupper(trim($_POST['applicator_id'])) : null;
+
+// 2. Validation
+if (empty($applicator_id)) {
+    jsAlertRedirect("applicator ID is required.", $redirect_url);
+    exit;
+}
+
+// 3. Database operation
 try {
     $pdo->beginTransaction();
 
-    $result = restoreDisabledApplicator($applicator_id);
-    if ($result === true) { 
+    // restores applicator
+    $restoreApplicator = restoreDisabledApplicator($applicator_id);
+    if (is_string($restoreApplicator)) {
+        throw new Exception($restoreApplicator);
+    }
+
+    // restores outputs of the applicator
+    $restoreOutputs = restoreApplicatorOutputs($applicator_id);
+    if (is_string($restoreOutputs)) {
+        throw new Exception($restoreOutputs);
+    }
+
+    // restores cumulative outputs of the applicator
+    $restoreCumulativeOutputs = restoreApplicatorCumulativeOutputs($applicator_id);
+    if (is_string($restoreCumulativeOutputs)) {
+        throw new Exception($restoreCumulativeOutputs);
+    }
+
+    // Check if all returned true
+    if ($restoreApplicator && $restoreOutputs && $restoreCumulativeOutputs) {
         $pdo->commit();
-        jsAlertRedirect("applicator restored successfully!", $redirect_url);
-        exit;
-    } elseif (is_string($result)) {
-        $pdo->rollBack();
-        jsAlertRedirect($result, $redirect_url);
+        jsAlertRedirect("Applicator restored successfully!", $redirect_url);
         exit;
     } else {
-        $pdo->rollBack();
-        jsAlertRedirect("Failed to restore applicator. Please try again.", $redirect_url);
-        exit;
+        throw new Exception("Failed to restore applicator. Please try again.");
     }
-} catch (PDOException $e) {
+
+} catch (Exception $e) {
+    // Rollback on any error
     $pdo->rollBack();
-    jsAlertRedirect("Database transaction failed: " . htmlspecialchars($e->getMessage()), $redirect_url);
+    jsAlertRedirect($e->getMessage(), $redirect_url);
     exit;
 }

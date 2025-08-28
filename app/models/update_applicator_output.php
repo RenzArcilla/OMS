@@ -218,3 +218,41 @@ function disableApplicatorOutputs($applicator_id) {
         return "Database error occurred when disabling applicator outputs: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
+
+
+function restoreApplicatorOutputs($applicator_id) {
+    /*
+        Restore (undo soft delete) applicator outputs in the database.
+        Sets the status of all outputs for a given applicator to 'enabled'.
+
+        Args:
+        - $applicator_id: int, ID of the applicator to restore outputs for
+
+        Returns:
+        - true on successful restore
+        - string containing error message on failure
+    */
+
+    global $pdo;
+
+    try {
+        // Update the status of all outputs for the given applicator
+        $stmt = $pdo->prepare("
+            UPDATE applicator_outputs
+            SET is_active = 1
+            WHERE applicator_id = :applicator_id
+        ");
+
+        $stmt->bindParam(':applicator_id', $applicator_id, PDO::PARAM_INT);
+
+        // Execute the query
+        $stmt->execute();
+
+        return true;
+
+    } catch (PDOException $e) {
+        // Log error and return an error message on failure
+        error_log("Database Error in restoreApplicatorOutputs: " . $e->getMessage());
+        return "Database error occurred when restoring applicator outputs: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}
