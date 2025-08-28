@@ -6,17 +6,19 @@
     <title>SOMS - Account Settings</title>
     <link rel="stylesheet" href="../../public/assets/css/base/typography.css">
     <link rel="stylesheet" href="../../public/assets/css/account_settings.css">
+    <link rel="stylesheet" href="../../public/assets/css/components/cards.css">
 </head>
 <body>
-<body>
-    <section class="settings-section">
-        <div class="container">
-            <h2 class="section-title">Account Settings</h2>
-            <div class="settings-container">
-                <div class="settings-grid">
+    <div class="container">
+        <div class="account-settings-container">
+            <div class="card-title">
+                <h1>Account Settings</h1>
+                <p class="subtitle">Manage your account settings</p>
+            </div>
+                <div class="card">
                     <!-- Profile Overview -->
-                    <div class="settings-card">
-                        <div class="card-header">
+                    <div class="card-content">
+                        <div class="card-title center-content">
                             <div class="card-icon">👤</div>
                             <div>
                                 <div class="card-title">Profile Overview</div>
@@ -32,22 +34,24 @@
                             </div>
                         </div>
                         
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label class="form-label" for="displayName">Display Name</label>
                             <input type="text" id="displayName" class="form-input" value="" placeholder="Enter your display name">
                             <div class="form-help">This name will be visible as you login to the system</div>
                         </div>
                         
-                        <div class="form-actions">
+                        <div class="d-grid gap-2">
                             <button type="button" class="btn btn-primary" onclick="updateProfile()">
                                 💾 Save Changes
                             </button>
                         </div>
                     </div>
+                </div>
 
                     <!-- Username Settings -->
-                    <div class="settings-card">
-                        <div class="card-header">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title center-content">
                             <div class="card-icon">🏷️</div>
                             <div>
                                 <div class="card-title">Username</div>
@@ -75,10 +79,12 @@
                             
                         </div>
                     </div>
+                </div>
 
                     <!-- Password Settings -->
-                    <div class="settings-card">
-                        <div class="card-header">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title center-content">
                             <div class="card-icon">🔐</div>
                             <div>
                                 <div class="card-title">Password & Security</div>
@@ -149,10 +155,9 @@
 
                         </div>
                     </div>
-
+                                    
                 </div>
             </div>
-        </div>
-    </section>
+    </div>
 </body>
 </html>

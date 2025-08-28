@@ -1,3 +1,11 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 32px 80px;
+    height: 100%;
+}
 .card {
     display: flex;
     flex-direction: column;
@@ -13,6 +21,15 @@
     border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
+.center-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    left: -10px;
+}
+
 .card-content {
     background: #FFFFFF;
     padding: 40px 32px;
@@ -26,21 +43,20 @@
 
 /* Header Styles */
 .card-title h1 {
-    font-size: 28px;
+    font-size: 50px;
     font-weight: 800;
     background: linear-gradient(135deg, #DC143C, #B22222);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-align: center;
-    margin-bottom: 8px;
+    margin-bottom: 2px;
 }
 .subtitle {
     color: #6B7280;
     font-size: 15px;
     font-weight: 400;
     text-align: center;
-    margin-bottom: 36px;
     line-height: 1.6;
     opacity: 0.8;
 }
