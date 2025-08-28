@@ -6,13 +6,12 @@
     <title>Forgot Password</title>
     <link rel="stylesheet" href="/SOMS/public/assets/css/base/typography.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/forgot_password.css">
-
-
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/cards.css">
 </head>
 <body>
-    <div class="container">
-        <div class="forgot-password-container">
-            <div class="forgot-password-title">
+    <div class="card">
+        <div class="card-content">
+            <div class="card-title">
                 <h1>Forgot Password</h1>
                 <p class="subtitle">Enter your username and we'll send you instructions to reset your password</p>
             </div>
