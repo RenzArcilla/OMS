@@ -333,11 +333,6 @@
                                                         data-applicator-id="<?= htmlspecialchars($applicator['applicator_id']) ?>">
                                                     Restore
                                                 </button>
-                                                <button id="delete-applicator-<?= htmlspecialchars($applicator['applicator_id']) ?>"
-                                                        class="delete-applicator-btn"
-                                                        data-applicator-id="<?= htmlspecialchars($applicator['applicator_id']) ?>">
-                                                    Delete
-                                                </button>
                                             </td>
                                             <td><?php echo htmlspecialchars($applicator['hp_no']); ?></td>
                                             <td><?php echo htmlspecialchars($applicator['description']); ?></td>
