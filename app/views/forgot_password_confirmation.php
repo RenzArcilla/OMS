@@ -4,22 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgot Password Confirmation</title>
-    <link rel="stylesheet" href="../../public/assets/css/base/typography.css">
-    <link rel="stylesheet" href="../../public/assets/css/forgot_password_confirmation.css">
-    <link rel="stylesheet" href="../../public/assets/css/components/buttons.css">
-    <link rel="stylesheet" href="../../public/assets/css/components/cards.css">
-    <link rel="stylesheet" href="../../public/assets/css/components/header.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/base/typography.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/forgot_password_confirmation.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/cards.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
 </head>
 <body>
     <div class="card">
         <div class="card-content">
-            <!-- Header Section -->
             <div class="card-title">
                 <h1>Set New Password</h1>
                 <p class="subtitle">Create a strong password to secure your account</p>
             </div>
             
-            <!-- Messages Section -->
             <div class="success-message" id="successMessage">
                 Your password has been successfully updated!
             </div>
@@ -28,64 +25,62 @@
                 Please check your password requirements and try again.
             </div>
             
-            <!-- Content Area - Add your content here -->
-            <div class="card-content">
-                <form id="newPasswordForm" action="reset_password.php" method="post">
-                    <div class="card-group">
-                        <label for="new_password">New Password</label>
-                        <div class="password-input-wrapper">
-                            <input type="password" id="new_password" name="new_password" placeholder="Enter your new password" required>
-                            <button type="button" class="toggle-password" onclick="togglePassword('new_password')">
-                                👁️
-                            </button>
+            <form id="newPasswordForm" action="reset_password.php" method="post">
+                <div class="form-group">
+                    <label for="new_password">New Password</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="new_password" name="new_password" placeholder="Enter your new password" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword('new_password')">
+                            👁️
+                        </button>
+                    </div>
+                    <div class="password-strength" id="passwordStrength">
+                        <div class="strength-bar">
+                            <div class="strength-fill" id="strengthFill"></div>
                         </div>
-                        <div class="password-strength" id="passwordStrength">
-                            <div class="strength-bar">
-                                <div class="strength-fill" id="strengthFill"></div>
-                            </div>
-                            <span id="strengthText">Password strength</span>
+                        <span id="strengthText">Password strength</span>
+                    </div>
+                    <div class="password-requirements">
+                        <div class="requirement" id="lengthReq">
+                            <span class="requirement-icon">○</span>
+                            At least 8 characters
                         </div>
-                        <div class="password-requirements">
-                            <div class="requirement" id="lengthReq">
-                                <span class="requirement-icon">○</span>
-                                At least 8 characters
-                            </div>
-                            <div class="requirement" id="uppercaseReq">
-                                <span class="requirement-icon">○</span>
-                                One uppercase letter
-                            </div>
-                            <div class="requirement" id="lowercaseReq">
-                                <span class="requirement-icon">○</span>
-                                One lowercase letter
-                            </div>
-                            <div class="requirement" id="numberReq">
-                                <span class="requirement-icon">○</span>
-                                One number
-                            </div>
-                            <div class="requirement" id="specialReq">
-                                <span class="requirement-icon">○</span>
-                                One special character
-                            </div>
+                        <div class="requirement" id="uppercaseReq">
+                            <span class="requirement-icon">○</span>
+                            One uppercase letter
+                        </div>
+                        <div class="requirement" id="lowercaseReq">
+                            <span class="requirement-icon">○</span>
+                            One lowercase letter
+                        </div>
+                        <div class="requirement" id="numberReq">
+                            <span class="requirement-icon">○</span>
+                            One number
+                        </div>
+                        <div class="requirement" id="specialReq">
+                            <span class="requirement-icon">○</span>
+                            One special character
                         </div>
                     </div>
-                    
-                    <div class="card-group">
-                        <label for="confirm_password">Confirm Password</label>
-                        <div class="password-input-wrapper">
-                            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your new password" required>
-                            <button type="button" class="toggle-password" onclick="togglePassword('confirm_password')">
-                                👁️
-                            </button>
-                        </div>
-                        <div class="password-match" id="passwordMatch">
-                            Passwords match ✓
-                        </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your new password" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword('confirm_password')">
+                            👁️
+                        </button>
                     </div>
-                    
-                    <button type="submit" class="btn-primary" id="submitBtn" disabled>Update Password</button>
-                    <a href="login.php" class="btn-secondary">← Back to Login</a>
-                </form>
-            </div>
+                    <div class="password-match" id="passwordMatch">
+                        Passwords match ✓
+                    </div>
+                </div>
+                
+                <button class="btn-primary" type="submit" id="submitBtn">Update Password</button>
+                
+                <a href="login.php" class="back-link">← Back to Login</a>
+            </form>
         </div>
     </div>
 </body>

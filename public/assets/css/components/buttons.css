@@ -214,3 +214,24 @@
 }
 .btn-undo { background: #3b82f6; color: white; }
 .btn-reset { background: #f59e0b; color: white; }
+
+
+
+.back-link {
+    display: block;
+    text-align: center;
+    color: #DC143C;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 12px 16px;
+    border-radius: 12px;
+    position: relative;
+}
+
+.back-link:hover {
+    background: rgba(220, 20, 60, 0.06);
+    color: #B22222;
+    transform: translateY(-1px);
+}

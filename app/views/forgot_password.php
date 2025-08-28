@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/SOMS/public/assets/css/base/typography.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/forgot_password.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/cards.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
 </head>
 <body>
     <div class="card">
@@ -31,7 +32,7 @@
                     <div class="input-highlight"></div>
                 </div>
                 
-                <button type="submit" id="submitBtn">Reset Password</button>
+                <button class="btn-primary" type="submit" id="submitBtn">Reset Password</button>
                 
                 <a href="login.php" class="back-link">← Back to Login</a>
             </form>
