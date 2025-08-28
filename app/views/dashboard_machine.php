@@ -287,11 +287,6 @@
                                                     data-machine-id="<?= htmlspecialchars($machine['machine_id']) ?>">
                                                 Restore
                                             </button>
-                                            <button id="delete-machine-<?= htmlspecialchars($machine['machine_id']) ?>"
-                                                    class="delete-machine-btn"
-                                                    data-machine-id="<?= htmlspecialchars($machine['machine_id']) ?>">
-                                                Delete
-                                            </button>
                                         </td>
                                         <td><?php echo htmlspecialchars($machine['control_no']); ?></td>
                                         <td><?php echo htmlspecialchars($machine['model']); ?></td>

@@ -1,8 +1,7 @@
 <?php
 /*
-    This file contains a function for disabling (soft DELETE-ing) a machine row 
+    This file contains functions for deleting and disabling a machine row 
     in the machines table. 
-    It is used in the machine listing with pagination (e.g., infinite scroll).
 */
 
 // Include the database connection
@@ -34,46 +33,5 @@ function disableMachine($machine_id): bool {
         // Log error
         error_log("Database Error on disableMachine: " . $e->getMessage());
         return "Database Error on disableMachine: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
-    }
-}
-
-
-function deleteMachine($machine_id): bool|string {
-    /*
-        Delete a machine from the database.
-
-        Args:
-        - $machine_id: ID of the machine to delete
-
-        Returns:
-        - true on success
-        - string containing error message on failure
-    */
-    global $pdo;
-
-    // Basic validation
-    if (!is_numeric($machine_id) || $machine_id <= 0) {
-        return "Invalid machine ID.";
-    }
-
-    try {
-        // Prepare the SQL statement
-        $stmt = $pdo->prepare("DELETE FROM machines WHERE machine_id = :machine_id");
-        $stmt->bindParam(':machine_id', $machine_id, PDO::PARAM_INT);
-
-        // Execute the statement
-        $stmt->execute();
-
-        // Check if any row was deleted
-        if ($stmt->rowCount() === 0) {
-            return "No machine found with the given ID.";
-        }
-
-        return true;
-    
-    } catch (PDOException $e) {
-        // Log error
-        error_log("Database Error on deleteMachine: " . $e->getMessage());
-        return "Database error while deleting machine: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
