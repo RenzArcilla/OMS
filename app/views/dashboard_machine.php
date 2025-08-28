@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Machine Dashboard</title>
-    <!-- link rel="stylesheet" href="../../public/assets/css/dashboard_machine.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css" -->
+    <link rel="stylesheet" href="../../public/assets/css/base/base.css">
+    <link rel="stylesheet" href="../../public/assets/css/dashboard_machine.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
 </head>
 <body>
     <?php
@@ -68,7 +69,7 @@
     $disabled_machines = getDisabledMachines(10, 0);
     ?>
 
-    <div class="admin-container">
+    <div class="container">
         <!-- Main Content -->
         <div class="main-content">
             <!-- Dashboard Tab -->
