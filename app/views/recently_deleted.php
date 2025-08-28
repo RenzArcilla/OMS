@@ -107,7 +107,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <button class="btn-small btn-edit" onclick="openUndoModal()">Undo</button>
+                                    <button class="btn-small btn-undo" onclick="openUndoModal()">Undo</button>
                                     <button class="btn-small btn-reset" onclick="openResetModal()">Reset</button>
                                 </td>
                             </tr>
