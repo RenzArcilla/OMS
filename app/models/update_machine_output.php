@@ -83,3 +83,41 @@ function updateMachineOutput($machine_data, $machine_output, $record_id) {
         return "Database error occurred in updateMachineOutput: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
+
+
+function disableMachineOutputs($machine_id) {
+    /*
+        Disable (soft delete) machine outputs in the database.
+        Sets the status of all outputs for a given machine to 'disabled'.
+
+        Args:
+        - $machine_id: int, ID of the machine to disable outputs for
+
+        Returns:
+        - true on successful disable
+        - string containing error message on failure
+    */
+
+    global $pdo;
+
+    try {
+        // Update the status of all outputs for the given machine
+        $stmt = $pdo->prepare("
+            UPDATE machine_outputs
+            SET is_active = 0
+            WHERE machine_id = :machine_id
+        ");
+
+        $stmt->bindParam(':machine_id', $machine_id, PDO::PARAM_INT);
+
+        // Execute the query
+        $stmt->execute();
+
+        return true;
+
+    } catch (PDOException $e) {
+        // Log error and return an error message on failure
+        error_log("Database Error in disableMachineOutputs: " . $e->getMessage());
+        return "Database error occurred when disabling machine outputs: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}
