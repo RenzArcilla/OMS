@@ -295,3 +295,41 @@ function editMachinePartOutputValue($machine_id, $part_name, $value) {
 
     return "Revert cancelled: invalid part name!";
 }
+
+
+function disableMachineCumulativeOutputs($machine_id) {
+    /*
+        Disable (soft delete) cumulative outputs in the database.
+        Sets the status of all cumulative outputs for a given machine to 'disabled'.
+
+        Args:
+        - $machine_id: int, ID of the machine to disable cumulative outputs for
+
+        Returns:
+        - true on successful disable
+        - string containing error message on failure
+    */
+
+    global $pdo;
+
+    try {
+        // Update the status of all cumulative outputs for the given machine
+        $stmt = $pdo->prepare("
+            UPDATE monitor_machine
+            SET is_active = 0
+            WHERE machine_id = :machine_id
+        ");
+
+        $stmt->bindParam(':machine_id', $machine_id, PDO::PARAM_INT);
+
+        // Execute the query
+        $stmt->execute();
+
+        return true;
+
+    } catch (PDOException $e) {
+        // Log error and return an error message on failure
+        error_log("Database Error in disableMachineCumulativeOutputs: " . $e->getMessage());
+        return "Database error occurred when disabling machine cumulative outputs: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}

@@ -2,6 +2,9 @@
 /*
     This script handles the disabling (soft delete) of a machine to the database.
     It retrieves form data, sanitizes it, and updates the status in the database.
+    - disables machine
+    - disables outputs of the machine
+    - disable cumulative outputs of the machine
 */
 
 // Start session and check if user is logged in
@@ -13,7 +16,9 @@ if (!isset($_SESSION['user_id'])) {
 
 // Include necessary files
 require_once '../includes/js_alert.php';
-include_once '../models/delete_machines.php';
+require_once '../models/delete_machines.php';
+require_once '../models/update_machine_output.php';
+require_once '../models/update_monitor_machine.php';
 
 // Redirect url
 $redirect_url = "../views/add_entry.php";
@@ -34,20 +39,39 @@ if (empty($machine_id)) {
 }
 
 // 3. Database operation
-$pdo->beginTransaction();
-$result = disableMachine($machine_id);
+try {
+    $pdo->beginTransaction();
 
-// Check if machine deletion was successful
-if ($result === true) {
-    $pdo->commit();
-    jsAlertRedirect("Machine disabled successfully!", $redirect_url);
-    exit;
-} elseif (is_string($result)) {
-    $pdo->rollBack(); // Rollback transaction in case of error
-    jsAlertRedirect($result, $redirect_url);
-    exit;
-} else {
+    // disables machine
+    $disableMachine = disableMachine($machine_id);
+    if (is_string($disableMachine)) {
+        throw new Exception($disableMachine);
+    }
+
+    // disables outputs of the machine
+    $disableOutputs = disableMachineOutputs($machine_id);
+    if (is_string($disableOutputs)) {
+        throw new Exception($disableOutputs);
+    }
+
+    // disable cumulative outputs of the machine
+    $disableCumulativeOutputs = disableMachineCumulativeOutputs($machine_id);
+    if (is_string($disableCumulativeOutputs)) {
+        throw new Exception($disableCumulativeOutputs);
+    }
+
+    // Check if all returned true
+    if ($disableMachine && $disableOutputs && $disableCumulativeOutputs) {
+        $pdo->commit();
+        jsAlertRedirect("Machine disabled successfully!", $redirect_url);
+        exit;
+    } else {
+        throw new Exception("Failed to disable machine. Please try again.");
+    }
+
+} catch (Exception $e) {
+    // Rollback on any error
     $pdo->rollBack();
-    jsAlertRedirect("Failed to disable machine. Please try again.", $redirect_url);
+    jsAlertRedirect($e->getMessage(), $redirect_url);
     exit;
 }
