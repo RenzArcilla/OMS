@@ -36,6 +36,37 @@ function disableRecord($record_id): bool|string {
 }
 
 
+function deleteOutputByMachineID(int $machine_id): bool|string {
+    /*
+        Function to delete all records in the database for a specific machine.
+
+        Args:
+        - $machine_id: ID of the machine whose records should be deleted
+
+        Returns:
+        - true on success
+        - string containing error message on failure
+    */
+    global $pdo;
+
+    try {
+        // Prepare the SQL statement
+        $stmt = $pdo->prepare("DELETE FROM records WHERE machine_id = :machine_id");
+        $stmt->bindParam(':machine_id', $machine_id, PDO::PARAM_INT);
+
+        // Execute the statement
+        $stmt->execute();
+
+        return true;
+
+    } catch (PDOException $e) {
+        // Log error
+        error_log("Database Error on deleteOutputByMachineID: " . $e->getMessage());
+        return "Database error while deleting records: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}
+
+
 function disableRecordEncodedLaterThan($timestamp): bool|string {
     /*
         Function to disable (soft delete) all records encoded later than a timestamp in the database.
