@@ -61,7 +61,7 @@ function openApplicatorModal() {
     }
 }
 
-// Close the machine modal
+// Close the applicator modal
 function closeApplicatorModal() {
     document.getElementById('applicatorModalDashboardApplicator').style.display = 'none';
 }
@@ -160,6 +160,35 @@ function confirmRestoreCustomPart(applicatorId) {
         form.method = "POST";
         form.action = "../controllers/restore_applicator.php";
 
+        // Add hidden input for applicator_id
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "applicator_id";
+        input.value = applicatorId;
+
+        form.appendChild(input);
+        document.body.appendChild(form);
+
+        form.submit();
+    }
+}
+
+// Listen for clicks only on the delete applicator button
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('delete-applicator-btn')) {
+        const applicatorId = event.target.dataset.applicatorId;
+        confirmDeleteapplicator(applicatorId);
+    }
+});
+
+// Delete confirmation
+function confirmDeleteapplicator(applicatorId) {
+    if (confirm("This action will PERMANENTLY DELETE all records pertaining to this applicator - including outputs from this applicator! Are you sure you want to delete this applicator?")) {
+        // Create a form dynamically
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "../controllers/delete_applicator.php";
+        
         // Add hidden input for applicator_id
         const input = document.createElement("input");
         input.type = "hidden";
