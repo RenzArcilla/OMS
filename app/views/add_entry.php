@@ -32,7 +32,7 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/delete_modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
-    
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css">
     <!-- Load machine infinite scroll logic -->
     <script src="../../public/assets/js/load_machines.js" defer></script>
     <!-- Load applicator infinite scroll logic -->
@@ -44,7 +44,7 @@ if (!isset($_SESSION['user_id'])) {
     <!-- Load cancel forms of add modals form -->
 </head>
 <body>
-    <?php // include '../includes/side_bar.php'; ?>
+    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/sidebar.php'; ?>
     <div class="container">
         <div class="main-content">
             <!-- Dashboard Tab -->
@@ -623,5 +623,6 @@ if (!isset($_SESSION['user_id'])) {
 
     <script src="../../public/assets/js/add_entry.js"></script>
     <script src="../../public/assets/js/export_entry.js"></script>
+    <script src="../../public/assets/js/sidebar.js"></script>
 </body>
 </html>

@@ -10,9 +10,11 @@
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css">
 </head>
 <body>
-    <?php // include '../includes/side_bar.php'; ?>
+    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/sidebar.php'; ?>
     <div class="container">
         <div class="main-content">
             <div id="dashboard-tab" class="tab-content">
@@ -401,5 +403,6 @@
         </div>
     </div>
     <script src="../../public/assets/js/admin_manage_user.js" defer></script>
+    <script src="../../public/assets/js/sidebar.js"></script>
 </body>
 </html>

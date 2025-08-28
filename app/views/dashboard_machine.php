@@ -6,7 +6,11 @@
     <title>HEPC - Machine Dashboard</title>
     <link rel="stylesheet" href="../../public/assets/css/base/base.css">
     <link rel="stylesheet" href="../../public/assets/css/dashboard_machine.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css">
 </head>
 <body>
     <?php
@@ -638,5 +642,6 @@
     </div>
 
     <script src="../../public/assets/js/dashboard_machine.js"></script>
+    <script src="../../public/assets/js/sidebar.js"></script>
 </body>
 </html>
