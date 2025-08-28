@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgot Password Confirmation</title>
-    <link rel="stylesheet" href="../../public/assets/css/base/typography.css">
-    <link rel="stylesheet" href="../../public/assets/css/forgot_password_confirmation.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/base/typography.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/forgot_password_confirmation.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/cards.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
 </head>
 <body>
-    <div class="container">
-        <div class="new-password-container">
-            <div class="new-password-title">
+    <div class="card">
+        <div class="card-content">
+            <div class="card-title">
                 <h1>Set New Password</h1>
                 <p class="subtitle">Create a strong password to secure your account</p>
             </div>
@@ -75,7 +77,7 @@
                     </div>
                 </div>
                 
-                <button type="submit" id="submitBtn" disabled>Update Password</button>
+                <button class="btn-primary" type="submit" id="submitBtn">Update Password</button>
                 
                 <a href="login.php" class="back-link">← Back to Login</a>
             </form>
