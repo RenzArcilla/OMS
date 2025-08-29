@@ -100,7 +100,7 @@ if (!isset($_SESSION['user_id'])) {
                                     <tr>
                                         <td>
                                             <div class="actions">
-                                                <a href="#" onclick="openRecordEditModalSafe(this); return false;" 
+                                                <button class="edit-btn" onclick="openRecordEditModalSafe(this); return false;" 
                                                     data-id="<?= htmlspecialchars($row['record_id']) ?>"
                                                     data-date-inspected="<?= htmlspecialchars($row['date_inspected']) ?>"
                                                     data-shift="<?= htmlspecialchars($row['shift']) ?>"
@@ -111,12 +111,12 @@ if (!isset($_SESSION['user_id'])) {
                                                     data-control-no="<?= htmlspecialchars($row['control_no'] ?? '') ?>"
                                                     data-machine-output="<?= htmlspecialchars($row['machine_output'] ?? '') ?>"
                                                     title="Edit Record" 
-                                                ><span class="edit-btn">✏️</span></a>
+                                                >Edit</button>
 
                                                 <!-- Delete form -->
                                                 <form action="/SOMS/app/controllers/disable_record.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this record?');">
                                                     <input type="hidden" name="record_id" value="<?= htmlspecialchars($row['record_id']) ?>">
-                                                    <button type="submit" title="Delete Record" class="delete-btn">🗑️</button>
+                                                    <button type="submit" title="Delete Record" class="delete-btn">Delete</button>
                                                 </form>
                                             </div>
                                         </td>
