@@ -137,8 +137,8 @@
                             <button class="filter-btn active" onclick="filterByStatus(this, 'all')">All</button>
                         <?php endif; ?>
                         
-                        <button class="auto-filter-btn" onclick="window.location.href = window.location.pathname;">
-                            🔄 Auto-Filter
+                        <button class="tab-btn" onclick="window.location.href = window.location.pathname;">
+                            Auto-Filter
                         </button>
                     </div>
 
@@ -170,12 +170,12 @@
                                         <tr>
                                             <td>
                                                 <div class="actions">
-                                                    <button class="delete-btn"
+                                                    <button class="reset-btn"
                                                             data-id="<?= htmlspecialchars($row['machine_id']) ?>"
                                                             onclick="openResetModal(this)">
                                                             Reset
                                                     </button>
-                                                    <button class="edit-btn"
+                                                    <button class="undo-btn"
                                                             data-id="<?= htmlspecialchars($row['machine_id']) ?>"
                                                             onclick="openUndoModal(this)">
                                                             Undo
@@ -251,12 +251,12 @@
                                         <td>
                                             <div class="actions">
                                                 <?php $partNameTitle = ucwords(str_replace('_', ' ', strtolower($part['part_name']))); ?>
-                                                <button class="btn btn-edit" 
+                                                <button class="edit-btn" 
                                                         data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
                                                         data-part-name="<?= htmlspecialchars($partNameTitle, ENT_QUOTES) ?>">
                                                     Edit
                                                 </button>
-                                                <button class="btn btn-delete" 
+                                                <button class="delete-btn" 
                                                         data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
                                                         data-part-type="MACHINE">
                                                     Delete
@@ -300,7 +300,7 @@
                                     <tr>
                                         <td>
                                             <button id="restore-machine-<?= htmlspecialchars($machine['machine_id']) ?>"
-                                                    class="tab-btn"
+                                                    class="restore-btn"
                                                     data-machine-id="<?= htmlspecialchars($machine['machine_id']) ?>">
                                                 Restore
                                             </button>
