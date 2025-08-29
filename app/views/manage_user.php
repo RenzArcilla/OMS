@@ -73,9 +73,9 @@
                             <table class="data-table" id="usersTable">
                                 <thead>
                                     <tr>
+                                        <th>Actions</th>
                                         <th>User</th>
                                         <th>Role</th>
-                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="usersTableBody">
@@ -86,6 +86,29 @@
                                     <?php else: ?>
                                         <?php foreach ($users as $user): ?>
                                             <tr>
+                                                <td>
+                                                    <div class="action-buttons">
+                                                        <button class="delete-btn" 
+                                                                onclick="openViewUserModal(this)" 
+                                                                title="View Details"
+                                                                data-username="<?php echo htmlspecialchars($user['username'] ?? ''); ?>"
+                                                                data-firstname="<?php echo htmlspecialchars($user['first_name'] ?? ''); ?>"
+                                                                data-lastname="<?php echo htmlspecialchars($user['last_name'] ?? ''); ?>"
+                                                                data-role="<?php echo htmlspecialchars($user['user_type'] ?? ''); ?>">
+                                                            👁️
+                                                        </button>
+                                                        <button class="edit-btn" 
+                                                                onclick="openEditUserModal(this)" 
+                                                                title="Edit User"
+                                                                data-id="<?php echo htmlspecialchars($user['user_id'] ?? ''); ?>"
+                                                                data-username="<?php echo htmlspecialchars($user['username'] ?? ''); ?>"
+                                                                data-firstname="<?php echo htmlspecialchars($user['first_name'] ?? ''); ?>"
+                                                                data-lastname="<?php echo htmlspecialchars($user['last_name'] ?? ''); ?>"
+                                                                data-role="<?php echo htmlspecialchars($user['user_type'] ?? ''); ?>">
+                                                            ✏️
+                                                        </button>
+                                                    </div>
+                                                </td>
                                                 <td>
                                                     <div class="user-info">
                                                         <div class="user-avatar">👤</div>
@@ -98,29 +121,7 @@
                                                 <td>
                                                     <span class="role-badge admin"><?php echo htmlspecialchars($user['user_type'] ?? 'Unknown'); ?></span>
                                                 </td>
-                                                <td>
-                                                    <div class="action-buttons">
-                                                        <button class="action-btn view-btn" 
-                                                                onclick="openViewUserModal(this)" 
-                                                                title="View Details"
-                                                                data-username="<?php echo htmlspecialchars($user['username'] ?? ''); ?>"
-                                                                data-firstname="<?php echo htmlspecialchars($user['first_name'] ?? ''); ?>"
-                                                                data-lastname="<?php echo htmlspecialchars($user['last_name'] ?? ''); ?>"
-                                                                data-role="<?php echo htmlspecialchars($user['user_type'] ?? ''); ?>">
-                                                            👁️
-                                                        </button>
-                                                        <button class="action-btn edit-btn" 
-                                                                onclick="openEditUserModal(this)" 
-                                                                title="Edit User"
-                                                                data-id="<?php echo htmlspecialchars($user['user_id'] ?? ''); ?>"
-                                                                data-username="<?php echo htmlspecialchars($user['username'] ?? ''); ?>"
-                                                                data-firstname="<?php echo htmlspecialchars($user['first_name'] ?? ''); ?>"
-                                                                data-lastname="<?php echo htmlspecialchars($user['last_name'] ?? ''); ?>"
-                                                                data-role="<?php echo htmlspecialchars($user['user_type'] ?? ''); ?>">
-                                                            ✏️
-                                                        </button>
-                                                    </div>
-                                                </td>
+                                                
                                             </tr>
                                         <?php endforeach; ?>
                                     <?php endif; ?>

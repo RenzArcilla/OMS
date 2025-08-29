@@ -168,12 +168,12 @@
                                     <?php foreach ($machine_total_outputs as $row): ?>
                                         <tr>
                                             <td>
-                                                <button class="btn-small btn-reset"
+                                                <button class="delete-btn"
                                                         data-id="<?= htmlspecialchars($row['machine_id']) ?>"
                                                         onclick="openResetModal(this)">
                                                         Reset
                                                 </button>
-                                                <button class="btn-small btn-edit"
+                                                <button class="edit-btn"
                                                         data-id="<?= htmlspecialchars($row['machine_id']) ?>"
                                                         onclick="openUndoModal(this)">
                                                         Undo

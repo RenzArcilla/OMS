@@ -306,7 +306,7 @@
                     <div class="data-section">
                         <div class="section-header">
                             <div class="section-title">
-                                🗑️ Recently Deleted Applicators
+                                📤 Recently Deleted Applicators
                                 <span class="section-badge">3</span>
                             </div>
                             <div class="expand-icon">▼</div>
