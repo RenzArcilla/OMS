@@ -88,7 +88,7 @@
                                         <?php foreach ($users as $user): ?>
                                             <tr>
                                                 <td>
-                                                    <div class="action-buttons">
+                                                    <div class="actions">
                                                         <button class="delete-btn" 
                                                                 onclick="openViewUserModal(this)" 
                                                                 title="View Details"
