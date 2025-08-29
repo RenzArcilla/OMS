@@ -7,6 +7,7 @@
 }
 
 .btn-secondary {
+    width: 100%;
     display: block;
     text-align: center;
     color: #DC143C;
@@ -15,7 +16,7 @@
     font-weight: 500;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     padding: 8px;
-    border-radius: 8px;
+    border-radius: 16px;
 }
 
 .btn-secondary:hover {
@@ -30,7 +31,7 @@
     background: linear-gradient(135deg, #DC143C, #B22222);
     color: #FFFFFF;
     border: none;
-    border-radius: 12px;
+    border-radius: 16px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
@@ -54,7 +55,7 @@
     color: #FFFFFF;
     border: none;
     padding: 14px 32px;
-    border-radius: 8px;
+    border-radius: 16px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
@@ -75,7 +76,7 @@
     color: #FFFFFF;
     border: none;
     padding: 14px 32px;
-    border-radius: 8px;
+    border-radius: 16px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
@@ -104,7 +105,7 @@
     color: #374151;
     border: 2px solid #E5E7EB;
     padding: 12px 32px;
-    border-radius: 8px;
+    border-radius: 16px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
@@ -123,7 +124,7 @@
     right: 20px;
     background: #F3F4F6;
     border: none;
-    border-radius: 50%;
+    border-radius: 16px;
     width: 40px;
     height: 40px;
     cursor: pointer;
@@ -152,7 +153,7 @@
     height: 50px;
     background: linear-gradient(145deg, #dc143c, #b91c3c);
     border: none;
-    border-radius: 12px;
+    border-radius: 16px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -235,3 +236,77 @@
     color: #B22222;
     transform: translateY(-1px);
 }
+
+
+.action-btn {
+    padding: 0.75rem;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: transparent;
+    font-size: 1.3rem;
+    min-width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.action-btn:hover {
+    transform: scale(1.1);
+}
+
+
+.edit-btn:hover { 
+    background: #F0FDF4; 
+}
+
+
+.filter-btn {
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #FFFFFF, #F9FAFB);
+    border: 2px solid rgba(229, 231, 235, 0.8);
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #6B7280;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    position: relative;
+    overflow: hidden;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    border-color: #2F80ED;
+    color: #2F80ED;
+    background: rgba(47, 128, 237, 0.02);
+}
+
+/* Tab Buttons */
+.tab-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #E5E7EB;
+    border-radius: 16px;
+    background: white;
+    color: #6B7280;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tab-btn.active {
+    border-color: #DC143C;
+    background: linear-gradient(135deg, #DC143C 0%, #B22222 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+}
+
+.tab-btn:hover:not(.active) {
+    border-color: #DC143C;
+    background: rgba(220, 20, 60, 0.05);
+    color: #DC143C;
+}
+

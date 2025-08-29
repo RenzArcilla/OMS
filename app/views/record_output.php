@@ -48,6 +48,7 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="section-header expanded" onclick="toggleSection(this)">
                     <div class="section-title">
                         <span class="filter-info">
+                        Record Output
                         </span>
                     </div>
                 </div>

@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Machine Dashboard</title>
-    <!-- link rel="stylesheet" href="../../public/assets/css/base/base.css">
+    <link rel="stylesheet" href="../../public/assets/css/base/base.css">
     <link rel="stylesheet" href="../../public/assets/css/dashboard_machine.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css" -->
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css">
 </head>
 <body>
     <?php
@@ -168,12 +168,12 @@
                                     <?php foreach ($machine_total_outputs as $row): ?>
                                         <tr>
                                             <td>
-                                                <button class="btn-small btn-reset"
+                                                <button class="delete-btn"
                                                         data-id="<?= htmlspecialchars($row['machine_id']) ?>"
                                                         onclick="openResetModal(this)">
                                                         Reset
                                                 </button>
-                                                <button class="btn-small btn-edit"
+                                                <button class="edit-btn"
                                                         data-id="<?= htmlspecialchars($row['machine_id']) ?>"
                                                         onclick="openUndoModal(this)">
                                                         Undo
@@ -216,9 +216,8 @@
                     </div>
                 </div>
             </div>
-        
+            <!-- Table 1: Custom Parts -->
             <div class="tables-grid">
-                <!-- Table 1: Custom Parts >
                 <div class="data-section">
                     <div class="section-header">
                         <div class="section-title">
@@ -232,27 +231,40 @@
                             <input type="text" class="search-input" placeholder="Search custom parts...">
                         </div>
                         <div class="table-container">
-                            <table class="data-table">
+                            <table class="data-table" id="partsTable"   >
                                 <thead>
                                     <tr>
                                         <th>Part Name</th>
+                                        <th>Created At</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tableBody">
+                                    <?php foreach ($custom_machine_parts as $part): ?>
+                                    <!-- Wire Crimper -->
                                     <tr>
-                                        <td>Custom Wire Crimper Pro</td>
+                                        <td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $part['part_name']))) ?></td>
+                                        <td><?= htmlspecialchars(date('Y-m-d', strtotime($part['created_at']))) ?></td>
+                                        <td>
+                                            <?php $partNameTitle = ucwords(str_replace('_', ' ', strtolower($part['part_name']))); ?>
+                                            <button class="btn btn-edit" 
+                                                    data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
+                                                    data-part-name="<?= htmlspecialchars($partNameTitle, ENT_QUOTES) ?>">
+                                                Edit
+                                            </button>
+                                            <button class="btn btn-delete" 
+                                                    data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
+                                                    data-part-type="MACHINE">
+                                                Delete
+                                            </button>
+                                        </td>
                                     </tr>
-                                    <tr>
-                                        <td>Enhanced Cut Blade X1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Precision Wire Anvil V2</td>
-                                    </tr>
-                                </tbody>
+                                    <?php endforeach; ?>
+                                </tbody>  
                             </table>
                         </div>
                     </div>
-                </div -->
+                </div>
 
                 <!-- Table 2: Recently Deleted Machine -->
                 <div class="data-section">
@@ -283,7 +295,7 @@
                                     <tr>
                                         <td>
                                             <button id="restore-machine-<?= htmlspecialchars($machine['machine_id']) ?>"
-                                                    class="restore-btn"
+                                                    class="tab-btn"
                                                     data-machine-id="<?= htmlspecialchars($machine['machine_id']) ?>">
                                                 Restore
                                             </button>
@@ -299,8 +311,10 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
                 <!-- Table 3: Recently Deleted Outputs Section -->
+            <div class="full-width-table">
                 <div class="data-section">
                     <div class="section-header">
                         <div class="section-title">
@@ -373,42 +387,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Parts Inventory Modal -->
-    <!-- Data Table -->
-    <div class="table-container">
-        <table class="data-table" id="partsTable">
-            <thead>
-                <tr>
-                    <th>Part Name</th>
-                    <th>Created At</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody">
-                <?php foreach ($custom_machine_parts as $part): ?>
-                <!-- Wire Crimper -->
-                <tr>
-                    <td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $part['part_name']))) ?></td>
-                    <td><?= htmlspecialchars(date('Y-m-d', strtotime($part['created_at']))) ?></td>
-                    <td>
-                        <?php $partNameTitle = ucwords(str_replace('_', ' ', strtolower($part['part_name']))); ?>
-                        <button class="btn btn-edit" 
-                                data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
-                                data-part-name="<?= htmlspecialchars($partNameTitle, ENT_QUOTES) ?>">
-                            Edit
-                        </button>
-                        <button class="btn btn-delete" 
-                                data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
-                                data-part-type="MACHINE">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>    
-        </table>
     </div>
 
     <!-- Add Custom Part Modal -->
