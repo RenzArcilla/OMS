@@ -295,7 +295,7 @@
                                     <tr>
                                         <td>
                                             <button id="restore-machine-<?= htmlspecialchars($machine['machine_id']) ?>"
-                                                    class="restore-btn"
+                                                    class="tab-btn"
                                                     data-machine-id="<?= htmlspecialchars($machine['machine_id']) ?>">
                                                 Restore
                                             </button>
@@ -314,7 +314,7 @@
             </div>
 
                 <!-- Table 3: Recently Deleted Outputs Section -->
-            <div class="tables-grid">
+            <div class="full-width-table">
                 <div class="data-section">
                     <div class="section-header">
                         <div class="section-title">
