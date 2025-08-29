@@ -55,9 +55,9 @@ function loadMachines() {
 
                 // Edit link
                     const editButton = document.createElement('button');
-                    editButton.textContent = '✏️';
+                    editButton.textContent = 'Edit';
                     editButton.setAttribute('type', 'button');
-                    editButton.setAttribute('class', 'action-btn edit-btn');
+                    editButton.setAttribute('class', 'edit-btn');
 
                     // Set data attributes
                     editButton.dataset.id = row.machine_id;
@@ -91,8 +91,8 @@ function loadMachines() {
 
                     const deleteButton = document.createElement('button');
                     deleteButton.type = 'submit';
-                    deleteButton.textContent = '🗑️';
-                    deleteButton.className = 'action-btn delete-btn';
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.className = 'delete-btn';
                     deleteForm.appendChild(deleteButton);
 
                     actionsDiv.appendChild(deleteForm);

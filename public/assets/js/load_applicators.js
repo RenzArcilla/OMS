@@ -62,9 +62,9 @@ function loadApplicators() {
                 
                 // Edit button
                 const editButton = document.createElement('button');
-                editButton.textContent = '✏️';
+                editButton.textContent = 'Edit';
                 editButton.setAttribute('type', 'button');
-                editButton.setAttribute('class', 'action-btn edit-btn');
+                editButton.setAttribute('class', 'edit-btn');
 
                 // Set data attributes
                 editButton.dataset.id = row.applicator_id;
@@ -97,8 +97,8 @@ function loadApplicators() {
 
                 const deleteButton = document.createElement('button');
                 deleteButton.type = 'submit';
-                deleteButton.className = 'action-btn delete-btn';
-                deleteButton.textContent = '🗑️';
+                deleteButton.className = 'delete-btn';
+                deleteButton.textContent = 'Delete';
                 deleteForm.appendChild(deleteButton);
 
                 actionsDiv.appendChild(deleteForm);
