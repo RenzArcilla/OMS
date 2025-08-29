@@ -89,7 +89,7 @@
                                             <tr>
                                                 <td>
                                                     <div class="actions">
-                                                        <button class="delete-btn" 
+                                                        <button class="view-btn" 
                                                                 onclick="openViewUserModal(this)" 
                                                                 title="View Details"
                                                                 data-username="<?php echo htmlspecialchars($user['username'] ?? ''); ?>"
