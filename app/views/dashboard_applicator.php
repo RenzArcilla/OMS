@@ -179,14 +179,14 @@
                                             <td>
                                                 <div class="actions">
                                                     <button
-                                                        class="edit-btn"
+                                                        class="reset-btn"
                                                         type="button"
                                                         onclick="openResetModal(this)"
                                                         data-id="<?= $row['applicator_id'] ?>">
                                                         Reset
                                                     </button>
                                                     <button
-                                                        class="delete-btn"
+                                                        class="undo-btn"
                                                         type="button"
                                                         onclick="openUndoModal(this)"
                                                         data-id="<?= $row['applicator_id'] ?>">
@@ -298,12 +298,12 @@
                                             <td>
                                                 <div class="actions">
                                                     <?php $partNameTitle = ucwords(str_replace('_', ' ', strtolower($part['part_name']))); ?>
-                                                    <button class="btn btn-edit" 
+                                                    <button class="edit-btn" 
                                                             data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
                                                             data-part-name="<?= htmlspecialchars($partNameTitle, ENT_QUOTES) ?>">
                                                         Edit
                                                     </button>
-                                                    <button class="btn btn-delete" 
+                                                    <button class="delete-btn" 
                                                             data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
                                                             data-part-type="MACHINE">
                                                         Delete
@@ -347,7 +347,7 @@
                                             <tr>
                                                 <td>
                                                     <button id="restore-applicator-<?= htmlspecialchars($applicator['applicator_id']) ?>"
-                                                            class="tab-btn"
+                                                            class="restore-btn"
                                                             data-applicator-id="<?= htmlspecialchars($applicator['applicator_id']) ?>">
                                                         Restore
                                                     </button>
