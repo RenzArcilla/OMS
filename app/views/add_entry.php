@@ -33,6 +33,7 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/delete_modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/layout/grid.css">
     <!-- Load machine infinite scroll logic -->
     <script src="../../public/assets/js/load_machines.js" defer></script>
     <!-- Load applicator infinite scroll logic -->
@@ -53,6 +54,9 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="page-header">
                     <h1 class="page-title">Manage Entries</h1>
                     <div class="header-actions">
+                        <button type="button" class="btn-secondary" onclick="exportData()">
+                            Export Report
+                        </button>
                         <button class="btn-primary" onclick="openMachineModal()">
                             Add Machine
                         </button>
@@ -60,6 +64,7 @@ if (!isset($_SESSION['user_id'])) {
                         <button class="btn-primary" onclick="openApplicatorModal()">
                             Add Applicator
                         </button>
+
                     </div>
                 </div>
                 <!-- Tab Section -->

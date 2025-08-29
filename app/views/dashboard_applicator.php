@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/layout/grid.css">
+
 </head>
 <body>
     <?php 
@@ -86,9 +88,7 @@
                         <button type="button" class="btn-primary" onclick="refreshPage()">
                             Refresh Data
                         </button>
-                        <button type="button" class="btn-primary" onclick="openPartsInventoryModal()">
-                            Parts Inventory
-                        </button>
+
                         <button type="button" class="btn-primary" onclick="openAddCustomPartModal()">
                             Add Parts
                         </button>
@@ -296,17 +296,19 @@
                                             <td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $part['part_name']))) ?></td>
                                             <td><?= htmlspecialchars(date('Y-m-d', strtotime($part['created_at']))) ?></td>
                                             <td>
-                                                <?php $partNameTitle = ucwords(str_replace('_', ' ', strtolower($part['part_name']))); ?>
-                                                <button class="btn btn-edit" 
-                                                        data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
-                                                        data-part-name="<?= htmlspecialchars($partNameTitle, ENT_QUOTES) ?>">
-                                                    Edit
-                                                </button>
-                                                <button class="btn btn-delete" 
-                                                        data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
-                                                        data-part-type="MACHINE">
-                                                    Delete
-                                                </button>
+                                                <div class="actions">
+                                                    <?php $partNameTitle = ucwords(str_replace('_', ' ', strtolower($part['part_name']))); ?>
+                                                    <button class="btn btn-edit" 
+                                                            data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
+                                                            data-part-name="<?= htmlspecialchars($partNameTitle, ENT_QUOTES) ?>">
+                                                        Edit
+                                                    </button>
+                                                    <button class="btn btn-delete" 
+                                                            data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
+                                                            data-part-type="MACHINE">
+                                                        Delete
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                         <?php endforeach; ?>

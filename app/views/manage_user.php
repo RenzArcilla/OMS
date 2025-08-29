@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/layout/grid.css">
 </head>
 <body>
     <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/sidebar.php'; ?>
@@ -87,7 +88,7 @@
                                         <?php foreach ($users as $user): ?>
                                             <tr>
                                                 <td>
-                                                    <div class="action-buttons">
+                                                    <div class="actions">
                                                         <button class="delete-btn" 
                                                                 onclick="openViewUserModal(this)" 
                                                                 title="View Details"

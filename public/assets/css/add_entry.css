@@ -65,11 +65,6 @@
     box-shadow: 0 0 0 4px rgba(47, 128, 237, 0.1);
 }
 
-
-
-
-
-
 .entries-table-card {
     background: white;
     border-radius: 0.75rem;
@@ -81,11 +76,9 @@
     overflow-y: auto;
 }
 
-
 .entries-table-card.active {
     display: block;
 }
-
 
 .entries-table {
     width: 100%;

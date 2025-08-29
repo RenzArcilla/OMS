@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/layout/grid.css">
 </head>
 <body>
     <?php
@@ -82,13 +83,13 @@
                 <div class="page-header">
                     <h1 class="page-title">📊 Machine Dashboard</h1>
                     <div class="header-actions">
-                        <button type="button" class="btn btn-secondary" onclick="exportData()">
+                        <button type="button" class="btn-secondary" onclick="exportData()">
                             Export Report
                         </button>
-                        <button type="button" class="btn btn-primary" onclick="refreshPage(this)">
+                        <button type="button" class="btn-primary" onclick="refreshPage(this)">
                             Refresh Data
                         </button>
-                        <button type="button" class="btn btn-primary" onclick="openAddPartsModal()">
+                        <button type="button" class="btn-primary" onclick="openAddPartsModal()">
                             Add Parts
                         </button>
                     </div>
@@ -168,16 +169,18 @@
                                     <?php foreach ($machine_total_outputs as $row): ?>
                                         <tr>
                                             <td>
-                                                <button class="delete-btn"
-                                                        data-id="<?= htmlspecialchars($row['machine_id']) ?>"
-                                                        onclick="openResetModal(this)">
-                                                        Reset
-                                                </button>
-                                                <button class="edit-btn"
-                                                        data-id="<?= htmlspecialchars($row['machine_id']) ?>"
-                                                        onclick="openUndoModal(this)">
-                                                        Undo
-                                                </button>
+                                                <div class="actions">
+                                                    <button class="delete-btn"
+                                                            data-id="<?= htmlspecialchars($row['machine_id']) ?>"
+                                                            onclick="openResetModal(this)">
+                                                            Reset
+                                                    </button>
+                                                    <button class="edit-btn"
+                                                            data-id="<?= htmlspecialchars($row['machine_id']) ?>"
+                                                            onclick="openUndoModal(this)">
+                                                            Undo
+                                                    </button>
+                                                </div>
                                             </td>
                                             <td><?= htmlspecialchars($row['control_no']) ?></td>
                                             <td><strong><?= htmlspecialchars(explode(' ', $row['last_updated'])[0]) ?></strong></td>
@@ -246,17 +249,19 @@
                                         <td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $part['part_name']))) ?></td>
                                         <td><?= htmlspecialchars(date('Y-m-d', strtotime($part['created_at']))) ?></td>
                                         <td>
-                                            <?php $partNameTitle = ucwords(str_replace('_', ' ', strtolower($part['part_name']))); ?>
-                                            <button class="btn btn-edit" 
-                                                    data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
-                                                    data-part-name="<?= htmlspecialchars($partNameTitle, ENT_QUOTES) ?>">
-                                                Edit
-                                            </button>
-                                            <button class="btn btn-delete" 
-                                                    data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
-                                                    data-part-type="MACHINE">
-                                                Delete
-                                            </button>
+                                            <div class="actions">
+                                                <?php $partNameTitle = ucwords(str_replace('_', ' ', strtolower($part['part_name']))); ?>
+                                                <button class="btn btn-edit" 
+                                                        data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
+                                                        data-part-name="<?= htmlspecialchars($partNameTitle, ENT_QUOTES) ?>">
+                                                    Edit
+                                                </button>
+                                                <button class="btn btn-delete" 
+                                                        data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
+                                                        data-part-type="MACHINE">
+                                                    Delete
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
