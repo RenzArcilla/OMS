@@ -78,25 +78,25 @@ function getRecordsAndOutputs(int $limit = 20, int $offset = 0): array {
 }
 
 
-function getDisabledRecordsAndOutputs($limit = 20, $offset = 0): array {
+function getDisabledRecordsAndOutputs($limit = 20, $offset = 0, $search = null): array {
     /*
-        Function to fetch a list of disabled (soft-deleted) machines from the database with pagination.
-        It prepares and executes a SELECT query that fetches disabled machines ordered by most recent,
-        and returns them as an associative array.
+        Function to fetch a list of disabled records with related outputs and machine details.
+        It joins records with applicator outputs, machine outputs, applicators, and machines
+        to provide a complete dataset for each disabled record. Supports optional search
+        filtering and pagination.
 
         Args:
-        - $pdo: PDO database connection object.
-        - $limit: Maximum number of rows to fetch (default is 10).
+        - $limit: Maximum number of rows to fetch (default is 20).
         - $offset: Number of rows to skip (default is 0), used for pagination.
+        - $search: Optional search term to filter records by record ID, applicator HP numbers,
+                control number, or last updated date.
 
         Returns:
-        - Array of disabled machines (associative arrays) on success.
+        - Array of disabled records with outputs and machine details (associative arrays) on success.
     */
-
     global $pdo;
 
-    // Prepare the SQL statement with placeholders for limit and offset
-    $stmt = $pdo->prepare("
+    $sql = "
         SELECT 
             r.record_id AS record_id,
             r.shift AS shift,
@@ -132,15 +132,29 @@ function getDisabledRecordsAndOutputs($limit = 20, $offset = 0): array {
         LEFT JOIN machines m ON r.machine_id = m.machine_id
 
         WHERE r.is_active = 0
-        ORDER BY r.last_updated DESC
-        LIMIT :limit OFFSET :offset
-    ");
+    ";
 
-    // Bind pagination parameters securely
+    // Add search condition if provided
+    if (!empty($search)) {
+        $sql .= " AND (
+            r.record_id LIKE :search OR
+            a1.hp_no LIKE :search OR
+            a2.hp_no LIKE :search OR
+            m.control_no LIKE :search OR
+            r.last_updated LIKE :search
+        )";
+    }
+
+    $sql .= " ORDER BY r.last_updated DESC LIMIT :limit OFFSET :offset";
+
+    $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
     $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 
-    // Execute the query and return the results
+    if (!empty($search)) {
+        $stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
+    }
+
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
