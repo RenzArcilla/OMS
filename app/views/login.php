@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Log In</title>
+    <link rel="icon" href="/SOMS/public/assets/images/favicon.ico">
     <link rel="stylesheet" href="../../public/assets/css/base/typography.css">
     <link rel="stylesheet" href="../../public/assets/css/login.css">
     <?php require_once "../controllers/log_in.php"; ?>
