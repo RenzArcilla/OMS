@@ -54,7 +54,7 @@
                             <?php foreach ($disabled_records as $row): ?>
                                 <tr>
                                     <td>
-                                    <button class="tab-btn" 
+                                    <button class="restore-btn" 
                                         data-record-id="<?= htmlspecialchars($row['record_id']) ?>">
                                         Restore
                                     </button>
