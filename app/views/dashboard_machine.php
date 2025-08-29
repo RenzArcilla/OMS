@@ -299,8 +299,10 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
                 <!-- Table 3: Recently Deleted Outputs Section -->
+            <div class="tables-grid">
                 <div class="data-section">
                     <div class="section-header">
                         <div class="section-title">

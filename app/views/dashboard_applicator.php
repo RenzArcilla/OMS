@@ -266,44 +266,43 @@
                         </div>
                     </div>
                 </div>
-                <!-- Table 1: Custom Parts >
-                <div class="data-section">
-                    <div class="section-header">
-                        <div class="section-title">
-                            🔧 Custom Parts
-                            <span class="section-badge">3</span>
-                        </div>
-                        <div class="expand-icon">▼</div>
-                    </div>
-                    <div class="section-content expanded">
-                        <div class="search-filter">
-                            <input type="text" class="search-input" placeholder="Search custom parts...">
-                        </div>
-                        <div class="table-container">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Part Name</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Custom Wire Crimper Pro</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Enhanced Cut Blade X1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Precision Wire Anvil V2</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div -->
-
-                <!-- Table 2: Recently Deleted Applicators -->
+                <!-- Table 1: Custom Parts -->
                 <div class="tables-grid">
+                    <div class="data-section">
+                        <div class="section-header">
+                            <div class="section-title">
+                                🔧 Custom Parts
+                                <span class="section-badge">3</span>
+                            </div>
+                            <div class="expand-icon">▼</div>
+                        </div>
+                        <div class="section-content expanded">
+                            <div class="search-filter">
+                                <input type="text" class="search-input" placeholder="Search custom parts...">
+                            </div>
+                            <div class="table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Part Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Custom Wire Crimper Pro</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Enhanced Cut Blade X1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Precision Wire Anvil V2</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                <!-- Table 2: Recently Deleted Applicators -->
                     <div class="data-section">
                         <div class="section-header">
                             <div class="section-title">
@@ -351,8 +350,10 @@
                             </div>
                         </div>
                     <div>
+                </div>
 
                     <!-- Table 3: Recently Deleted Record -->
+                <div class="full-width-table">
                     <div class="data-section">
                         <div class="section-header">
                             <div class="section-title">
@@ -424,8 +425,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="full-width-table">
             </div>
         </div>
     </div>
