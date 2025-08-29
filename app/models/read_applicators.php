@@ -168,7 +168,7 @@ function getActiveApplicatorByHpNo($hp_no) {
         - $hp_no: HP number of the applicator.
 
         Returns:
-        - True if an active applicator exists.
+        - associative array of row with same hp_no if active machine exists
         - False if no active applicator exists.
         - String containing error message on failure.
     */
@@ -193,7 +193,7 @@ function getActiveApplicatorByHpNo($hp_no) {
             return false;
         }
 
-        return true;
+        return $data;
 
     } catch (PDOException $e) {
         // Log error and return an error message on failure
