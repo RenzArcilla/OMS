@@ -95,13 +95,13 @@ if (!isset($_SESSION['user_id'])) {
                             <table class="data-table">
                                 <thead>
                                     <tr>
+                                        <th>Actions</th>
                                         <th>Control No</th>
                                         <th>Description</th>
                                         <th>Model</th>
                                         <th>Maker</th>
                                         <th>Serial No</th>
                                         <th>Invoice No</th>
-                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="machine-body">
@@ -116,14 +116,7 @@ if (!isset($_SESSION['user_id'])) {
                                     <!-- Render fetched machine data as table rows -->
                                     <?php foreach ($machines as $row): ?>
                                         <tr>
-                                            <td><?= htmlspecialchars($row['control_no']) ?></td>
-                                            <td><?= htmlspecialchars($row['description']) ?></td>
-                                            <td><?= htmlspecialchars($row['model']) ?></td>
-                                            <td><?= htmlspecialchars($row['maker']) ?></td>
-                                            <td><?= htmlspecialchars($row['serial_no']) ?></td>
-                                            <td><?= htmlspecialchars($row['invoice_no']) ?></td>
                                             <td>
-
                                             <!-- Edit link with data attributes -->
                                                 <div class="actions">
                                                     <button class="edit-btn"
@@ -136,15 +129,22 @@ if (!isset($_SESSION['user_id'])) {
                                                         data-maker="<?= htmlspecialchars($row['maker'], ENT_QUOTES) ?>"
                                                         data-serial="<?= htmlspecialchars($row['serial_no'], ENT_QUOTES) ?>"
                                                         data-invoice="<?= htmlspecialchars($row['invoice_no'], ENT_QUOTES) ?>"
-                                                    >✏️</button>
+                                                    >Edit</button>
 
                                             <!-- Delete form -->
                                                     <form action="/SOMS/app/controllers/disable_machine.php" method="POST" style="display:inline;">
                                                         <input type="hidden" name="machine_id" value="<?= $row['machine_id'] ?>">
-                                                        <button class="delete-btn" type="button" onclick="openMachineDeleteModal(this)">🗑️</button>
+                                                        <button class="delete-btn" type="button" onclick="openMachineDeleteModal(this)">Delete</button>
                                                     </form>
                                                 </div>
                                             </td>
+                                            <td><?= htmlspecialchars($row['control_no']) ?></td>
+                                            <td><?= htmlspecialchars($row['description']) ?></td>
+                                            <td><?= htmlspecialchars($row['model']) ?></td>
+                                            <td><?= htmlspecialchars($row['maker']) ?></td>
+                                            <td><?= htmlspecialchars($row['serial_no']) ?></td>
+                                            <td><?= htmlspecialchars($row['invoice_no']) ?></td>
+                                            
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -158,6 +158,7 @@ if (!isset($_SESSION['user_id'])) {
                             <table class="data-table">
                                 <thead>
                                     <tr>
+                                        <th>Actions</th>
                                         <th>HP No</th>
                                         <th>Terminal No</th>
                                         <th>Description</th>
@@ -166,7 +167,6 @@ if (!isset($_SESSION['user_id'])) {
                                         <th>Applicator Maker</th>
                                         <th>Serial No</th>
                                         <th>Invoice No</th>
-                                        <th>Actions</th>
                                     </tr>
                                 </thead>
 
@@ -178,18 +178,10 @@ if (!isset($_SESSION['user_id'])) {
                                         foreach ($applicators as $row):
                                     ?>
                                         <tr>
-                                            <td><?= htmlspecialchars($row['hp_no']) ?></td>
-                                            <td><?= htmlspecialchars($row['terminal_no']) ?></td>
-                                            <td><?= htmlspecialchars($row['description']) ?></td>
-                                            <td><?= htmlspecialchars($row['wire']) ?></td>
-                                            <td><?= htmlspecialchars($row['terminal_maker']) ?></td>
-                                            <td><?= htmlspecialchars($row['applicator_maker']) ?></td>
-                                            <td><?= htmlspecialchars($row['serial_no']) ?></td>
-                                            <td><?= htmlspecialchars($row['invoice_no']) ?></td>
                                             <td>
                                             <!-- Edit link with data attributes -->
                                             <div class="actions">
-                                                <button class="action-btn edit-btn"
+                                                <button class="edit-btn"
                                                     type="button"
                                                     onclick="openApplicatorEditModal(this)"
                                                     data-id="<?= $row['applicator_id'] ?>"
@@ -201,7 +193,7 @@ if (!isset($_SESSION['user_id'])) {
                                                     data-applicator-maker="<?= htmlspecialchars($row['applicator_maker']) ?>"
                                                     data-serial="<?= htmlspecialchars($row['serial_no']) ?>"
                                                     data-invoice="<?= htmlspecialchars($row['invoice_no']) ?>"
-                                            >✏️</button>
+                                            >Edit</button>
 
                                             <!-- Delete form -->
                                             <form action="/SOMS/app/controllers/disable_applicator.php" method="POST" style="display:inline;">
@@ -210,9 +202,18 @@ if (!isset($_SESSION['user_id'])) {
                                                     type="button"
                                                     class="delete-btn"
                                                     onclick="openApplicatorDeleteModal(this)"
-                                                >🗑️</button>
+                                                >Delete</button>
                                             </form>
                                             </td>
+                                            <td><?= htmlspecialchars($row['hp_no']) ?></td>
+                                            <td><?= htmlspecialchars($row['terminal_no']) ?></td>
+                                            <td><?= htmlspecialchars($row['description']) ?></td>
+                                            <td><?= htmlspecialchars($row['wire']) ?></td>
+                                            <td><?= htmlspecialchars($row['terminal_maker']) ?></td>
+                                            <td><?= htmlspecialchars($row['applicator_maker']) ?></td>
+                                            <td><?= htmlspecialchars($row['serial_no']) ?></td>
+                                            <td><?= htmlspecialchars($row['invoice_no']) ?></td>
+                                            
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
