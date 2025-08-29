@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgot Password</title>
+    <link rel="icon" href="/SOMS/public/assets/images/favicon.ico">
     <link rel="stylesheet" href="/SOMS/public/assets/css/base/typography.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/forgot_password.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/cards.css">
