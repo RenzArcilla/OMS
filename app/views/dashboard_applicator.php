@@ -11,10 +11,13 @@
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/layout/grid.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css">
 
 </head>
 <body>
     <?php 
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/sidebar.php';
+
     // First, get custom parts
     require_once "../models/read_custom_parts.php";
     $custom_applicator_parts = getCustomParts("APPLICATOR");
@@ -697,5 +700,6 @@
 
     <!-- Load JavaScript -->
     <script src="../../public/assets/js/dashboard_applicator.js"></script>
+    <script src="../../public/assets/js/sidebar.js"></script>
 </body>
 </html>
