@@ -96,24 +96,26 @@ if (!isset($_SESSION['user_id'])) {
                                 <?php foreach ($records as $row): ?>
                                     <tr>
                                         <td>
-                                            <a href="#" onclick="openRecordEditModalSafe(this); return false;" 
-                                                data-id="<?= htmlspecialchars($row['record_id']) ?>"
-                                                data-date-inspected="<?= htmlspecialchars($row['date_inspected']) ?>"
-                                                data-shift="<?= htmlspecialchars($row['shift']) ?>"
-                                                data-hp1-no="<?= htmlspecialchars($row['hp1_no'] ?? '') ?>"
-                                                data-app1-output="<?= htmlspecialchars($row['app1_output'] ?? '') ?>"
-                                                data-hp2-no="<?= htmlspecialchars($row['hp2_no'] ?? '') ?>"
-                                                data-app2-output="<?= htmlspecialchars($row['app2_output'] ?? '') ?>"
-                                                data-control-no="<?= htmlspecialchars($row['control_no'] ?? '') ?>"
-                                                data-machine-output="<?= htmlspecialchars($row['machine_output'] ?? '') ?>"
-                                                title="Edit Record" 
-                                            ><span class="edit-btn">✏️</span></a>
+                                            <div class="actions">
+                                                <a href="#" onclick="openRecordEditModalSafe(this); return false;" 
+                                                    data-id="<?= htmlspecialchars($row['record_id']) ?>"
+                                                    data-date-inspected="<?= htmlspecialchars($row['date_inspected']) ?>"
+                                                    data-shift="<?= htmlspecialchars($row['shift']) ?>"
+                                                    data-hp1-no="<?= htmlspecialchars($row['hp1_no'] ?? '') ?>"
+                                                    data-app1-output="<?= htmlspecialchars($row['app1_output'] ?? '') ?>"
+                                                    data-hp2-no="<?= htmlspecialchars($row['hp2_no'] ?? '') ?>"
+                                                    data-app2-output="<?= htmlspecialchars($row['app2_output'] ?? '') ?>"
+                                                    data-control-no="<?= htmlspecialchars($row['control_no'] ?? '') ?>"
+                                                    data-machine-output="<?= htmlspecialchars($row['machine_output'] ?? '') ?>"
+                                                    title="Edit Record" 
+                                                ><span class="edit-btn">✏️</span></a>
 
-                                            <!-- Delete form -->
-                                            <form action="/SOMS/app/controllers/disable_record.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this record?');">
-                                                <input type="hidden" name="record_id" value="<?= htmlspecialchars($row['record_id']) ?>">
-                                                <button type="submit" title="Delete Record" class="delete-btn">🗑️</button>
-                                            </form>
+                                                <!-- Delete form -->
+                                                <form action="/SOMS/app/controllers/disable_record.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this record?');">
+                                                    <input type="hidden" name="record_id" value="<?= htmlspecialchars($row['record_id']) ?>">
+                                                    <button type="submit" title="Delete Record" class="delete-btn">🗑️</button>
+                                                </form>
+                                            </div>
                                         </td>
                                         <td><?= htmlspecialchars($row['record_id']) ?></td>
                                         <td><?= htmlspecialchars($row['date_inspected']) ?></td>
@@ -126,13 +128,16 @@ if (!isset($_SESSION['user_id'])) {
                                         <td><?= htmlspecialchars($row['app2_output']) ?></td>
                                         <td><?= htmlspecialchars($row['control_no']) ?></td>
                                         <td><?= htmlspecialchars($row['machine_output']) ?></td>
-                                        
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
+                        
                     </div>
                 </div>
+            </div>
+            <div class="full-width-table">
+                <?php include_once __DIR__ . '/recently_deleted_outputs_table.php'; ?>
             </div>
         </div>
     </div>
