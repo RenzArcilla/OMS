@@ -4,7 +4,11 @@
 */
 
 
+require_once '../includes/auth.php';
 require_once '../models/read_applicator_reset.php';
+
+// Require Default Privileges
+requireDefault();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $part_name = $_POST['part_name'] ?? null;

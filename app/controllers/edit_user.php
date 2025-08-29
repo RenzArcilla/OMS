@@ -4,18 +4,16 @@
     It retrieves form data, sanitizes it, checks for duplicate usernames, and updates the user record.
 */
 
-// Start session and check if user is logged in
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../views/login.php");
-    exit();
-}
 
 // Include necessary files
+require_once '../includes/auth.php'; // Authentication
 require_once '../includes/db.php'; // Database connection
 require_once '../includes/js_alert.php'; // JavaScript alert function
 require_once '../models/read_user.php'; // Read user model
 require_once '../models/update_user.php'; // Update user model
+
+// Require Admin Privileges
+requireAdmin();
 
 // Redirect URL
 $redirect_url = "../views/manage_user.php";

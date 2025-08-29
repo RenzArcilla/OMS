@@ -5,13 +5,16 @@
 */
 
 
-session_start();
-
+// Include necessary files
+require_once '../includes/auth.php';
 require_once '../includes/js_alert.php';
 require_once '../includes/db.php';
 require_once '../models/read_monitor_applicator.php';
 require_once '../models/create_applicator_reset.php';
 require_once '../models/update_monitor_applicator.php';
+
+// Require Toolkeeper/Admin Privileges
+requireToolkeeper();
 
 // Redirect url
 $redirect_url = "../views/dashboard_applicator.php";
