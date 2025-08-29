@@ -48,7 +48,7 @@
         $machine_total_outputs = [$search_result]; // Single result in array
     } else {
         // Use existing logic for all records
-        $machine_total_outputs = getRecordsAndOutputs(10, 0, $part_names_array);
+        $machine_total_outputs = getMachineRecordsAndOutputs(10, 0, $part_names_array);
     }
     
     // Get current filter info (only if not searching)

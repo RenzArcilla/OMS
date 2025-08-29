@@ -15,7 +15,7 @@
 // Include the database connection
 require_once __DIR__ . '/../../includes/db.php'; 
 
-function getRecordsAndOutputs(int $limit = 10, int $offset = 0, $part_names_array): array {
+function getApplicatorRecordsAndOutputs(int $limit = 10, int $offset = 0, $part_names_array): array {
     /*
         Function to fetch a list of cumulative applicator outputs from the database with pagination.
         It prepares and executes a SELECT query that fetches applicators ordered by highest output,

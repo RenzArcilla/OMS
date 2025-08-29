@@ -15,7 +15,7 @@
 // Include the database connection
 require_once __DIR__ . '/../../includes/db.php'; 
 
-function getRecordsAndOutputs(int $limit = 10, int $offset = 0, $part_names_array): array {
+function getMachineRecordsAndOutputs(int $limit = 10, int $offset = 0, $part_names_array): array {
     /*
         Function to fetch a list of cumulative machine outputs from the database with pagination.
         It prepares and executes a SELECT query that fetches machines ordered by highest output,
