@@ -1,0 +1,17 @@
+/* Grid Layout for Side by Side Tables */
+.tables-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 40px;
+}
+
+.full-width-table {
+    grid-column: 1 / -1;
+}
+
+/* Button Layout for Edit and Delete */
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}

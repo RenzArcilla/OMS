@@ -33,6 +33,7 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/delete_modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/layout/grid.css">
     <!-- Load machine infinite scroll logic -->
     <script src="../../public/assets/js/load_machines.js" defer></script>
     <!-- Load applicator infinite scroll logic -->
