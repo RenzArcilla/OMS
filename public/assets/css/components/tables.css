@@ -196,23 +196,9 @@
     box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.1);
 }
 
-.filter-btn {
-    padding: 12px 20px;
-    background: linear-gradient(135deg, #FFFFFF, #F9FAFB);
-    border: 2px solid rgba(229, 231, 235, 0.8);
-    border-radius: 16px;
-    font-size: 13px;
-    font-weight: 600;
-    color: #6B7280;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-    position: relative;
-    overflow: hidden;
-}
 
-.filter-btn:hover, .filter-btn.active {
-    border-color: #2F80ED;
-    color: #2F80ED;
-    background: rgba(47, 128, 237, 0.02);
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
 }

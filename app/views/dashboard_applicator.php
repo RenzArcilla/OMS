@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Applicator Dashboard</title>
-    <!-- link rel="stylesheet" href="../../public/assets/css/base/base.css">
+    <link rel="stylesheet" href="../../public/assets/css/base/base.css">
     <link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css" -->
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
 </head>
 <body>
     <?php 
@@ -136,8 +137,8 @@
                             <button class="filter-btn active" onclick="filterByStatus(this, 'all')">All</button>
                         <?php endif; ?>
                         
-                        <button class="auto-filter-btn" onclick="window.location.href = window.location.pathname;">
-                            🔄 Auto-Filter
+                        <button style="position: relative; left: -10px;" class="tab-btn" onclick="window.location.href = window.location.pathname;">
+                            Auto-Sort
                         </button>
                     </div>
                     
@@ -176,20 +177,22 @@
                                     <?php foreach ($applicator_total_outputs as $row): ?>
                                         <tr>
                                             <td>
-                                                <button
-                                                    class="btn-small btn-reset"
-                                                    type="button"
-                                                    onclick="openResetModal(this)"
-                                                    data-id="<?= $row['applicator_id'] ?>">
-                                                    Reset
-                                                </button>
-                                                <button
-                                                    class="btn-small btn-edit"
-                                                    type="button"
-                                                    onclick="openUndoModal(this)"
-                                                    data-id="<?= $row['applicator_id'] ?>">
-                                                    Undo
-                                                </button>
+                                                <div class="actions">
+                                                    <button
+                                                        class="edit-btn"
+                                                        type="button"
+                                                        onclick="openResetModal(this)"
+                                                        data-id="<?= $row['applicator_id'] ?>">
+                                                        Reset
+                                                    </button>
+                                                    <button
+                                                        class="delete-btn"
+                                                        type="button"
+                                                        onclick="openUndoModal(this)"
+                                                        data-id="<?= $row['applicator_id'] ?>">
+                                                        Undo
+                                                    </button>
+                                                </div>
                                             </td>
                                             <td><?= htmlspecialchars($row['hp_no']) ?></td>
                                             <td><strong><?= htmlspecialchars(explode(' ', $row['last_updated'])[0]) ?></strong></td>
@@ -329,7 +332,7 @@
                                         <tr>
                                             <td>
                                                 <button id="restore-applicator-<?= htmlspecialchars($applicator['applicator_id']) ?>"
-                                                        class="restore-btn"
+                                                        class="tab-btn"
                                                         data-applicator-id="<?= htmlspecialchars($applicator['applicator_id']) ?>">
                                                     Restore
                                                 </button>

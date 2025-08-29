@@ -66,36 +66,8 @@
 }
 
 
-.actions {
-    display: flex;
-    gap: 0.5rem;
-}
 
 
-.action-btn {
-    padding: 0.75rem;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    background: transparent;
-    font-size: 1.3rem;
-    min-width: 3rem;
-    height: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-
-.action-btn:hover {
-    transform: scale(1.1);
-}
-
-
-.edit-btn:hover { 
-    background: #F0FDF4; 
-}
 
 
 .entries-table-card {

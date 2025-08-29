@@ -80,12 +80,6 @@ if (!isset($_SESSION['user_id'])) {
                             <option value="END">End</option>
                         </select>
 
-                        <select id="statusFilter" class="filter-select">
-                            <option value="all">All Status</option>
-                            <option value="Active">Active</option>
-                            <option value="Inactive">Inactive</option>
-                        </select>
-
                         <button type="button" class="tab-btn" onclick="exportData()">Export</button>
                         <button type="button" class="tab-btn" onclick="refreshData()">Refresh</button>
                         
