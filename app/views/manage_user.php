@@ -96,7 +96,7 @@
                                                                 data-firstname="<?php echo htmlspecialchars($user['first_name'] ?? ''); ?>"
                                                                 data-lastname="<?php echo htmlspecialchars($user['last_name'] ?? ''); ?>"
                                                                 data-role="<?php echo htmlspecialchars($user['user_type'] ?? ''); ?>">
-                                                            👁️
+                                                            View
                                                         </button>
                                                         <button class="edit-btn" 
                                                                 onclick="openEditUserModal(this)" 
@@ -106,7 +106,7 @@
                                                                 data-firstname="<?php echo htmlspecialchars($user['first_name'] ?? ''); ?>"
                                                                 data-lastname="<?php echo htmlspecialchars($user['last_name'] ?? ''); ?>"
                                                                 data-role="<?php echo htmlspecialchars($user['user_type'] ?? ''); ?>">
-                                                            ✏️
+                                                            Edit
                                                         </button>
                                                     </div>
                                                 </td>
