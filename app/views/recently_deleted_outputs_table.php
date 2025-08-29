@@ -21,8 +21,7 @@
         <div class="data-section">
             <div class="section-header expanded" onclick="toggleSection(this)">
                 <div class="section-title">
-                    Applicator Status
-                    <span class="section-badge">24</span>
+                    Recently Deleted Outputs
                 </div>
 
             </div>
@@ -53,7 +52,7 @@
                             <?php foreach ($disabled_records as $row): ?>
                                 <tr>
                                     <td>
-                                    <button class="restore-btn" 
+                                    <button class="tab-btn" 
                                         data-record-id="<?= htmlspecialchars($row['record_id']) ?>">
                                         Restore
                                     </button>
