@@ -83,13 +83,13 @@
                 <div class="page-header">
                     <h1 class="page-title">📊 Machine Dashboard</h1>
                     <div class="header-actions">
-                        <button type="button" class="btn btn-secondary" onclick="exportData()">
+                        <button type="button" class="btn-secondary" onclick="exportData()">
                             Export Report
                         </button>
-                        <button type="button" class="btn btn-primary" onclick="refreshPage(this)">
+                        <button type="button" class="btn-primary" onclick="refreshPage(this)">
                             Refresh Data
                         </button>
-                        <button type="button" class="btn btn-primary" onclick="openAddPartsModal()">
+                        <button type="button" class="btn-primary" onclick="openAddPartsModal()">
                             Add Parts
                         </button>
                     </div>

@@ -54,6 +54,9 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="page-header">
                     <h1 class="page-title">Manage Entries</h1>
                     <div class="header-actions">
+                        <button type="button" class="btn-secondary" onclick="exportData()">
+                            Export Report
+                        </button>
                         <button class="btn-primary" onclick="openMachineModal()">
                             Add Machine
                         </button>
@@ -61,6 +64,7 @@ if (!isset($_SESSION['user_id'])) {
                         <button class="btn-primary" onclick="openApplicatorModal()">
                             Add Applicator
                         </button>
+
                     </div>
                 </div>
                 <!-- Tab Section -->
