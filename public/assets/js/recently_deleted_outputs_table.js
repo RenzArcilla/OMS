@@ -27,3 +27,32 @@ function confirmRestoreCustomPart(recordId) {
         form.submit();
     }
 }
+
+
+// Filter the table based on search input
+async function filterTable(searchValue) {
+    const response = await fetch(`../controllers/search_disabled_records.php?q=${encodeURIComponent(searchValue)}`);
+    const data = await response.json();
+
+    const tbody = document.getElementById("deletedRecordsMetricsBody");
+    tbody.innerHTML = "";
+
+    data.forEach(row => {
+        tbody.innerHTML += `
+            <tr>
+                <td><button class="tab-btn" data-record-id="${row.record_id}">Restore</button></td>
+                <td>${row.record_id}</td>
+                <td>${row.date_inspected}</td>
+                <td>${row.date_encoded.split(" ")[0]}</td>
+                <td>${row.last_updated.split(" ")[0]}</td>
+                <td>${row.shift}</td>
+                <td>${row.hp1_no}</td>
+                <td>${row.app1_output}</td>
+                <td>${row.hp2_no}</td>
+                <td>${row.app2_output}</td>
+                <td>${row.control_no}</td>
+                <td>${row.machine_output}</td>
+            </tr>
+        `;
+    });
+}

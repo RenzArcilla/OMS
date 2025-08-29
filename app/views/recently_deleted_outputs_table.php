@@ -25,20 +25,21 @@
                 <div class="section-title">
                     Recently Deleted Outputs
                 </div>
+            </div>
 
-            </div>
             <div class="search-filter">
-                <input type="text" class="search-input" placeholder="Search applicator..." onkeyup="filterTable(this.value)">
+                <input type="text" class="search-input" placeholder="Search for date encoded, record, applicator, or machine identifiers..." onkeyup="filterTable(this.value)">
             </div>
+            
             <div class="section-content expanded">
                 <div class="table-container">
                     <table class="data-table" id="metricsTable">
-                        <thead>
+                        <thead> 
                             <tr>
                                 <th>Actions</th>
                                 <th>Record ID</th>
                                 <th>Date Inspected</th>
-                                <th>Last Encoded</th>
+                                <th>Date Encoded</th>
                                 <th>Last Updated</th>
                                 <th>Shift</th>
                                 <th>Applicator1</th>
@@ -49,7 +50,7 @@
                                 <th>Machine Output</th>
                             </tr>
                         </thead>
-                        <tbody id="metricsBody">
+                        <tbody id="deletedRecordsMetricsBody">
                             <!-- Render fetched record data as table rows -->
                             <?php foreach ($disabled_records as $row): ?>
                                 <tr>
@@ -70,7 +71,6 @@
                                     <td><?= htmlspecialchars($row['app2_output']) ?></td>
                                     <td><?= htmlspecialchars($row['control_no']) ?></td>
                                     <td><?= htmlspecialchars($row['machine_output']) ?></td>
-                                    
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
