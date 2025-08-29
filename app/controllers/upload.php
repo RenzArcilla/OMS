@@ -3,19 +3,18 @@
     This PHP code handles the file upload and ETL pipeline trigger for the file upload form in file_upload.php.
 */
 
+
+// Include necessary files
+require_once '../includes/auth.php';
 require_once __DIR__ . '/../includes/etl/extract.php';
 require_once __DIR__ . '/../includes/etl/transform.php';
 require_once __DIR__ . '/../includes/etl/load.php';
-require_once __DIR__ . '/../includes/db.php'; // Database connection
+require_once __DIR__ . '/../includes/db.php'; 
+
+// Require Toolkeeper/Admin Privileges
+requireToolkeeper();
 
 $tempDir = __DIR__ . '/../temp/'; // Directory where uploaded files will be temporarily stored
-
-// Start session and check if user is logged in
-session_start(); 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../views/login.php");
-    exit();
-}
 
 // Redirect url
 $redirect_url = "../views/file_upload.php";

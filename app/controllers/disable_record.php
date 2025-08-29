@@ -4,18 +4,16 @@
     It retrieves form data, sanitizes it, and updates the status in the database.
 */
 
-// Start session and check if user is logged in
-session_start(); 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../views/login.php");
-    exit();
-}
 
 // Include necessary files
+require_once '../includes/auth.php';
 require_once '../includes/js_alert.php';
 require_once '../models/delete_record.php';
 require_once '../models/delete_applicator_output.php';
 require_once '../models/delete_machine_output.php';
+
+// Require Toolkeeper/Admin Privileges
+requireToolkeeper();
 
 // Redirect url
 $redirect_url = "../views/record_output.php";

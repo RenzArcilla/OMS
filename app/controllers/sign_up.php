@@ -87,6 +87,12 @@ if (is_array($result)) {
         $_SESSION['first_name'] = $result['first_name'];
         $_SESSION['user_type'] = $result['user_type'];
         header("Location: ../views/record_output.php");
+    } elseif ($user_type == 'ADMIN') {
+        $_SESSION['user_id'] = $result['user_id'];
+        $_SESSION['username'] = $result['username'];
+        $_SESSION['first_name'] = $result['first_name'];
+        $_SESSION['user_type'] = $result['user_type'];
+        header("Location: ../views/manage_user.php");
     } else {
         $_SESSION['user_id'] = $result['user_id'];
         $_SESSION['username'] = $result['username'];

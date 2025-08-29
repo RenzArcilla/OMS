@@ -4,20 +4,18 @@
     It processes the form submission from the record output page and saves the data to the database.
 */
 
-// Ensure the user is logged in before proceeding
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../views/login.php");
-    exit;
-}
 
 // Include necessary files
+require_once '../includes/auth.php';
 require_once '../includes/js_alert.php';
 require_once '../models/read_applicators.php';
 require_once '../models/read_machines.php';
 require_once '../models/create_record.php';
 require_once '../models/create_applicator_output.php';
 require_once '../models/create_machine_output.php';
+
+// Require Toolkeeper/Admin Privileges
+requireToolkeeper();
 
 // --- Redirect path ---
 $redirect = "../views/record_output.php";

@@ -7,18 +7,16 @@
     - restore cumulative outputs of the applicator
 */
 
-// Start session and check if user is logged in
-session_start(); 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../views/login.php");
-    exit();
-}
 
 // Include necessary files
+require_once '../includes/auth.php';
 require_once '../includes/js_alert.php';
 require_once '../models/update_applicator.php';
 require_once '../models/update_applicator_output.php';
 require_once '../models/update_monitor_applicator.php';
+
+// Require Admin Privileges
+requireAdmin();
 
 // Redirect url
 $redirect_url = "../views/dashboard_applicator.php";

@@ -4,17 +4,15 @@
     It retrieves the part ID, sanitizes it, and deletes the corresponding record.
 */
 
-// Start session and check if user is logged in
-session_start(); 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../views/dashboard_applicator.php");
-    exit();
-}
 
 // Include necessary files
+require_once '../includes/auth.php';
 require_once '../includes/js_alert.php';
 require_once '../includes/db.php'; 
-include_once '../models/delete_custom_part.php';
+require_once '../models/delete_custom_part.php';
+
+// Require Admin Privileges
+requireAdmin();
 
 // Redirect url
 $redirect_url = "../views/dashboard_applicator.php";

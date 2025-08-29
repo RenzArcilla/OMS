@@ -7,18 +7,16 @@
     - restore cumulative outputs of the machine
 */
 
-// Start session and check if user is logged in
-session_start(); 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../views/login.php");
-    exit();
-}
 
 // Include necessary files
+require_once '../includes/auth.php';
 require_once '../includes/js_alert.php';
 require_once '../models/update_machine.php';
 require_once '../models/update_machine_output.php';
 require_once '../models/update_monitor_machine.php';
+
+// Require Admin Privileges
+requireAdmin();
 
 // Redirect url
 $redirect_url = "../views/dashboard_machine.php";
