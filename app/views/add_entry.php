@@ -53,12 +53,12 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="page-header">
                     <h1 class="page-title">Manage Entries</h1>
                     <div class="header-actions">
-                        <button class="btn btn-primary" onclick="openMachineModal()">
-                            🔧 Add Machine
+                        <button class="btn-primary" onclick="openMachineModal()">
+                            Add Machine
                         </button>
 
-                        <button class="btn btn-primary" onclick="openApplicatorModal()">
-                            ⚡ Add Applicator
+                        <button class="btn-primary" onclick="openApplicatorModal()">
+                            Add Applicator
                         </button>
                     </div>
                 </div>
@@ -86,8 +86,8 @@ if (!isset($_SESSION['user_id'])) {
                             <option value="Inactive">Inactive</option>
                         </select>
 
-                        <button type="button" class="btn-secondary" onclick="exportData()">📥 Export</button>
-                        <button type="button" class="btn-secondary" onclick="refreshData()">🔄 Refresh</button>
+                        <button type="button" class="tab-btn" onclick="exportData()">Export</button>
+                        <button type="button" class="tab-btn" onclick="refreshData()">Refresh</button>
                         
                     </div>
 

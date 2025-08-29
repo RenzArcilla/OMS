@@ -167,29 +167,6 @@
     margin-bottom: 2rem;
 }
 
-.tab-btn {
-    padding: 0.75rem 1.5rem;
-    border: 2px solid #E5E7EB;
-    border-radius: 0.75rem;
-    background: white;
-    color: #6B7280;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.tab-btn.active {
-    border-color: #2F80ED;
-    background: linear-gradient(135deg, #2F80ED 0%, #27AE60 100%);
-    color: white;
-    box-shadow: 0 4px 15px rgba(47, 128, 237, 0.3);
-}
-
-.tab-btn:hover:not(.active) {
-    border-color: #2F80ED;
-    background: #EFF6FF;
-}
-
 /* Hide applicators table by default */
 #applicators-table {
     display: none;
