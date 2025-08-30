@@ -17,8 +17,15 @@
     <link rel="stylesheet" href="/SOMS/public/assets/css/layout/grid.css">
 </head>
 <body>
-    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/sidebar.php'; ?>
-    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/header.php'; ?>
+    <?php 
+        // Include necessary files
+        include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/sidebar.php';
+        include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/header.php';
+
+        // Require admin priveledge to view this page 
+        require_once '../includes/auth.php';
+        requireAdmin(); 
+    ?>
     <div class="container">
         <div class="main-content">
             <div id="dashboard-tab" class="tab-content">
