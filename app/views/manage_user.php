@@ -6,6 +6,7 @@
     <title>HEPC - Admin Manage User</title>
     <link rel="icon" href="/SOMS/public/assets/images/favicon.ico">
     <link rel="stylesheet" href="../../public/assets/css/base/base.css">
+    <link rel="stylesheet" href="../../public/assets/css/base/header.css">
     <link rel="stylesheet" href="../../public/assets/css/admin_manage_user.css">
     <link rel="stylesheet" href="../../public/assets/css/components/table.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
@@ -17,6 +18,7 @@
 </head>
 <body>
     <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/sidebar.php'; ?>
+    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/header.php'; ?>
     <div class="container">
         <div class="main-content">
             <div id="dashboard-tab" class="tab-content">

@@ -23,6 +23,7 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="icon" href="/SOMS/public/assets/images/favicon.ico">
     <title>Record Output</title>
     <link rel="stylesheet" href="../../public/assets/css/base/base.css">
+    <link rel="stylesheet" href="../../public/assets/css/base/header.css">
     <link rel="stylesheet" href="../../public/assets/css/record_output.css">
     <link rel="stylesheet" href="../../public/assets/css/add_entry.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
@@ -35,6 +36,7 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 <body>
     <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/sidebar.php'; ?>
+    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/header.php'; ?>
     <div class="container">
         <!-- Page Header -->
         <div class="main-content">
