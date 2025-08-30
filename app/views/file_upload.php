@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../public/assets/css/base/header.css">
     <link rel="stylesheet" href="../../public/assets/css/base/typography.css">
     <link rel="stylesheet" href="../../public/assets/css/file_upload.css">
     <link rel="stylesheet" href="../../public/assets/css/components/cards.css">
     <title>SOMS - File Upload </title>
 </head>
 <body>
+    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/header.php'; ?>
         <div class="container">
             <div class="card-title">
                 <h1>From NOAH to SOMS</h1>

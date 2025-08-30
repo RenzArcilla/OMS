@@ -23,6 +23,7 @@
 
 .logo {
     position: relative;
+    left: 8px;
     top: -4px;
     font-size: 45px;
     font-weight: 900;
