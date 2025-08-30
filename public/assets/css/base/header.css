@@ -1,5 +1,5 @@
  /* Navigation */
- .navbar {
+.navbar {
     position: fixed;
     top: 0;
     left: 0;
@@ -24,7 +24,7 @@
 .logo {
     position: relative;
     left: -5px;
-    top: -4px;
+    top: -5px;
     font-size: 45px;
     font-weight: 900;
     background: linear-gradient(135deg, #dc267f 0%, #e72861 100%);
