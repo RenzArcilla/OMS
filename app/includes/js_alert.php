@@ -13,23 +13,7 @@
 function jsAlertRedirect($message, $redirect_url = "../views/login.php", $css = "") {
     // Default CSS for the modal if none provided
     $defaultCss = <<<EOT
-<style>
-.js-alert-modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.3); z-index: 9999; display: flex; align-items: center; justify-content: center;
-}
-.js-alert-modal {
-    background: #fff; padding: 2em 2.5em; border-radius: 8px; box-shadow: 0 2px 16px rgba(0,0,0,0.2);
-    font-family: Arial, sans-serif; text-align: center; min-width: 300px;
-}
-.js-alert-modal button {
-    margin-top: 1.5em; padding: 0.5em 2em; border: none; border-radius: 4px;
-    background: #007bff; color: #fff; font-size: 1em; cursor: pointer;
-}
-.js-alert-modal button:hover {
-    background: #0056b3;
-}
-</style>
+
 EOT;
 
     $cssBlock = $css ? $css : $defaultCss;
@@ -43,15 +27,6 @@ $cssBlock
         <button onclick="closeJsAlertModal()">OK</button>
     </div>
 </div>
-<script>
-function closeJsAlertModal() {
-    document.getElementById('jsAlertModalOverlay').remove();
-    window.location.href = '$redirect_url';
-}
-// Allow pressing Enter to close modal
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') closeJsAlertModal();
-});
-</script>
+<script src="../assets/js/js_alert.js"></script>
 EOD;
 }
