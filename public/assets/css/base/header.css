@@ -1,0 +1,32 @@
+ /* Navigation */
+ .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(220, 38, 127, 0.1);
+    z-index: 1000;
+    padding: 20px 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.nav-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 50px 0 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    position: relative;
+    top: -4px;
+    font-size: 45px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #dc267f 0%, #e72861 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

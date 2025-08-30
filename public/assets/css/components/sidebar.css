@@ -18,20 +18,6 @@
     left: 0;
 }
 
-.sidebar-header {
-    padding: 30px 25px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.sidebar-title {
-    color: white;
-    font-size: 24px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
-
 .sidebar-subtitle {
     color: rgba(255, 255, 255, 0.8);
     font-size: 14px;
