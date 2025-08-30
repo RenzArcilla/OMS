@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recently Deleted</title>
+    <link rel="icon" href="/SOMS/public/assets/images/favicon.ico">
     <link rel="stylesheet" href="../../public/assets/css/base/base.css">
     <link rel="stylesheet" href="../../public/assets/css/components/sidebar.css">
     <link rel="stylesheet" href="../../public/assets/css/components/tables.css">

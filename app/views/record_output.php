@@ -20,6 +20,7 @@ if (!isset($_SESSION['user_id'])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="/SOMS/public/assets/images/favicon.ico">
     <title>Record Output</title>
     <link rel="stylesheet" href="../../public/assets/css/base/base.css">
     <link rel="stylesheet" href="../../public/assets/css/base/header.css">

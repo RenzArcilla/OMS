@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOMS - Account Settings</title>
     <link rel="stylesheet" href="../../public/assets/css/base/header.css">
+    <link rel="icon" href="/SOMS/public/assets/images/favicon.ico">
     <link rel="stylesheet" href="../../public/assets/css/base/typography.css">
     <link rel="stylesheet" href="../../public/assets/css/account_settings.css">
     <link rel="stylesheet" href="../../public/assets/css/components/cards.css">

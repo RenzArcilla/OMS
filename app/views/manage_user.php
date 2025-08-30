@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Admin Manage User</title>
+    <link rel="icon" href="/SOMS/public/assets/images/favicon.ico">
     <link rel="stylesheet" href="../../public/assets/css/base/base.css">
     <link rel="stylesheet" href="../../public/assets/css/base/header.css">
     <link rel="stylesheet" href="../../public/assets/css/admin_manage_user.css">
