@@ -12,18 +12,18 @@ header('Content-Type: application/json; charset=utf-8');
 
 try {
     // Validate inputs
-    $search = isset($_GET['q']) ? trim($_GET['q']) : null;
+    $search = isset($_GET['q']) ? strtoupper(trim($_GET['q'])) : null;
     if ($search === '') {
         $search = null;
     }
 
-    $shift = isset($_GET['shift']) ? strtoupper(trim($_GET['shift'])) : 'ALL';
+    $shift = isset($_GET['shift']) ? trim($_GET['shift']) : 'ALL';
     $allowedShifts = ['ALL', '1st', '2nd', 'NIGHT'];
     if (!in_array($shift, $allowedShifts, true)) {
         $shift = 'ALL';
     }
 
-    $type = isset($_GET['type']) ? strtoupper(trim($_GET['type'])) : 'ALL';
+    $type = isset($_GET['type']) ? trim($_GET['type']) : 'ALL';
     $allowedtype = ['ALL', 'BIG', 'SMALL']; 
     if (!in_array($type, $allowedtype, true)) {
         $type = 'ALL';
