@@ -30,7 +30,7 @@ try {
     }
 
     // Fetch filtered results
-    $applicators = getFilteredApplicators(20, 0, $search, $description, $type);;
+    $applicators = getFilteredApplicators(20, 0, $search, $description, $type);
 
     echo json_encode([
         'success' => true,
