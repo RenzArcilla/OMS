@@ -757,6 +757,8 @@ if (!isset($_SESSION['user_id'])) {
     <!-- Load edit modals -->
     <script src="../../public/assets/js/edit_machine_modal.js" defer></script>
     <script src="../../public/assets/js/edit_applicator_modal.js" defer></script>
+    <!-- Load infinite scroll logic -->
+    <script src="../../public/assets/js/search_machines.js" defer></script>
     <!-- Load infinite scroll logic >
     <script src="../../public/assets/js/load_machines.js" defer></script>
     <script src="../../public/assets/js/load_applicators.js" defer></script -->
