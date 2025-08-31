@@ -201,3 +201,65 @@ function getActiveApplicatorByHpNo($hp_no) {
         return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
+
+
+function getFilteredApplicators($limit, $offset, $search = null, $description = 'ALL', $type = 'ALL') {
+    /*
+        Function to fetch applicators from the database with optional search and filters.
+        Supports pagination via limit and offset, and prevents SQL injection.
+
+        Parameters:
+            int $limit        - Maximum number of rows to fetch.
+            int $offset       - Number of rows to skip for pagination.
+            string $search    - Optional search keyword for multiple fields.
+            string $description - Optional filter for applicator description (default = 'ALL').
+            string $type      - Optional filter for wire type (default = 'ALL').
+
+        Returns:
+            array - Associative array of applicators matching the search and filter criteria.
+    */
+
+    global $pdo;
+
+    $query = "SELECT * FROM applicators WHERE 1=1";
+    $params = [];
+
+    // Escape LIKE wildcards if search is used
+    if (!empty($search)) {
+        $search = str_replace(['%', '_'], ['\%', '\_'], $search);
+        $query .= " AND (
+                    hp_no LIKE :search OR 
+                    terminal_no LIKE :search OR 
+                    serial_no LIKE :search OR 
+                    invoice_no LIKE :search)";
+        $params[':search'] = "%$search%";
+    }
+
+    // Apply description filter if provided
+    if ($description !== 'ALL') {
+        $query .= " AND description = :description";
+        $params[':description'] = $description;
+    }
+
+    // Apply wire type filter if provided
+    if ($type !== 'ALL') {
+        $query .= " AND wire = :type";
+        $params[':type'] = $type;
+    }
+
+    $query .= " ORDER BY applicator_id DESC LIMIT :limit OFFSET :offset";
+
+    $stmt = $pdo->prepare($query);
+
+    // Bind dynamic parameters securely
+    foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value);
+    }
+
+    $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
