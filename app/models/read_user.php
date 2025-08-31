@@ -122,15 +122,17 @@ function getUserByUsername($username) {
 }
 
 
-function searchUsers(string $search = '', string $role = 'all'): array {
+function searchUsers(string $search = '', string $role = 'all', int $limit = 20, int $offset = 0): array {
     /*
-        Function to search users from the database with optional filters.
+        Function to search users from the database with optional filters and pagination.
         It applies a search query across username, first name, and last name,
-        and can also filter users based on their role.
-        
+        and can also filter users based on their role. Results are paginated.
+
         Parameters:
             string $search - The search keyword (optional).
             string $role   - The role filter (optional, default = 'all').
+            int $limit     - Number of rows to fetch per page (default = 20).
+            int $offset    - Starting point for rows (default = 0).
 
         Returns:
             array - A list of users matching the search and filter criteria.
@@ -158,10 +160,20 @@ function searchUsers(string $search = '', string $role = 'all'): array {
         $params[':role'] = $role;
     }
 
-    $sql .= " ORDER BY user_id DESC";
+    $sql .= " ORDER BY user_id DESC LIMIT :limit OFFSET :offset";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute($params);
+
+    // Bind normal parameters
+    foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value, PDO::PARAM_STR);
+    }
+
+    // Bind pagination parameters (must be integers)
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+
+    $stmt->execute();
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
