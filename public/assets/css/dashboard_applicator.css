@@ -380,3 +380,73 @@
 .progress-warn {
     background: #f59e0b;
 }
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+    flex-direction: row;
+}
+/*btn secondary modal*/
+.btn-secondary {
+    background: white;
+    color: #6B7280;
+    border: 2px solid #D1D5DB;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary:hover {
+    background: rgba(107, 114, 128, 0.05);
+    border-color: #9CA3AF;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+}
+
+.btn-secondary:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.part-details {
+    background: rgba(220, 20, 60, 0.05);
+    border: 2px solid rgba(220, 20, 60, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+}
+
+.part-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.part-icon {
+    font-size: 24px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #DC143C, #B22222);
+    border-radius: 12px;
+    color: white;
+    flex-shrink: 0;
+}
+
+.part-content {
+    flex: 1;
+}
+
+.part-name {
+    color: #374151;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.part-meta {
+    color: #6B7280;
+    font-size: 12px;
+    font-weight: 400;
+}

@@ -323,6 +323,7 @@
                             </div>
                         </div>
                     </div>
+                    
                 <!-- Table 2: Recently Deleted Applicators -->
                     <div class="data-section">
                         <div class="section-header">
@@ -435,9 +436,60 @@
         </div>
     </div>
 
+    <!-- Delete Custom Part Modal -->
+    <div id="deleteCustomPartModalDashboardApplicator" class="modal-overlay">
+        <div class="form-container">
+            <button class="modal-close-btn">×</button>
+            
+            <div class="form-header">
+                <span class="delete-icon">🗑️</span>
+                <h1 class="form-title">Delete Custom Part</h1>
+                <p class="form-subtitle">Permanently remove this custom part</p>
+            </div>
+
+            <div class="warning-section">
+                <span class="warning-icon">⚠️</span>
+                <div class="warning-title">Permanent Action</div>
+                <div class="warning-text">
+                    This custom part will be permanently removed from this applicator. This action cannot be undone.
+                </div>
+            </div>
+
+            <div id="messageContainer"></div>
+
+            <div class="part-details">
+                <div class="part-info">
+                    <div class="part-icon">⚙️</div>
+                    <div class="part-content">
+                        <div class="part-name" id="partName">Custom Valve Assembly</div>
+                        <div class="part-meta">Added on March 15, 2024 • Part ID: #CP001</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="confirmation-section">
+                <label class="confirmation-checkbox">
+                    <input type="checkbox" id="confirmDelete" class="confirmation-input">
+                    <span class="confirmation-label">
+                        I understand that this action is permanent and cannot be undone. I want to delete this custom part.
+                    </span>
+                </label>
+            </div>
+
+            <form id="deleteCustomPartForm" method="POST" action="../controllers/delete_custom_part.php">
+                <input type="hidden" name="equipment_type" value="APPLICATOR">
+                <input type="hidden" name="part_id" value="" id="partIdInput">
+                
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary" id="deleteBtn" disabled>Delete Part Permanently</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeEditCustomPartModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <!-- Edit Custom Part Modal -->
     <div id="editCustomPartModalDashboardApplicator" class="modal-overlay">
-        <div class="modal">
+        <div class="form-container">
             <button class="modal-close-btn" onclick="closeEditCustomPartModal()">×</button>
 
             <div class="form-header">
@@ -450,12 +502,31 @@
                 <input type="hidden" name="part_id" id="edit_part_id">
 
                 <div class="form-section">
-                    <div class="form-group">
-                        <label for="customPartName">Part Name</label>
-                        <input type="text" id="edit_part_name" name="custom_part_name" class="form-input" placeholder="Enter part name..." required>
+                    <div class="section-header">
+                        <div class="section-icon">⚙️</div>
+                        <div class="section-info">
+                            <div class="section-title">Part Name</div>
+                            <div class="section-description">Edit the name of the custom part</div>
+                        </div>
+                    </div>
+                    <div class="form-grid-vertical">
+                        <div class="form-group">
+                            <label class="form-label" for="edit_part_name">
+                                Part Name
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="edit_part_name" 
+                                name="custom_part_name" 
+                                class="form-input" 
+                                placeholder="Enter part name..." 
+                                required
+                            >
+                        </div>
                     </div>
                 </div>
-                <div class="form-actions">
+                <div class="button-group">
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                     <button type="button" class="btn btn-secondary" onclick="closeEditCustomPartModal()">Cancel</button>
                 </div>
@@ -465,30 +536,59 @@
 
     <!-- Add Custom Part Modal -->
     <div id="addCustomPartModalDashboardApplicator" class="modal-overlay">
-        <div class="modal">
-            <button class="modal-close-btn" onclick="closeAddCustomPartModal()">×</button>
+        <div class="form-container">
+            <button class="modal-close-btn" onclick="closeAddCustomPartModal()" aria-label="Close modal">×</button>
             
             <div class="form-header">
                 <h1 class="form-title">➕ Add Custom Part</h1>
                 <p class="form-subtitle">Add a new custom part to this applicator</p>
             </div>
 
+            <div id="messageContainer"></div>
+
             <form id="addCustomPartForm" method="POST" action="../controllers/add_custom_part.php">
                 <input type="hidden" name="equipment_type" value="APPLICATOR">
 
                 <div class="form-section">
-                    <div class="form-group">
-                        <label for="customPartName">Part Name</label>
-                        <input type="text" id="custom_part_name" name="custom_part_name" class="form-input" placeholder="Enter part name..." required>
+                    <div class="section-header">
+                        <div class="section-icon">⚙️</div>
+                        <div class="section-info">
+                            <div class="section-title">Part Name</div>
+                            <div class="section-description">Enter the name of the custom part</div>
+                        </div>
+                    </div>
+                    <div class="form-grid-vertical">
+                        <div class="form-group">
+                            <label class="form-label" for="custom_part_name">
+                                Part Name
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="custom_part_name" 
+                                name="custom_part_name" 
+                                class="form-input" 
+                                placeholder="Enter part name..." 
+                                required
+                                maxlength="100"
+                                aria-describedby="part-name-help"
+                            >
+                        </div>
                     </div>
                 </div>
+                
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Add Part</button>
-                    <button type="button" class="btn btn-secondary" onclick="closeAddCustomPartModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        Add Part
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeAddCustomPartModal()">
+                        Cancel
+                    </button>
                 </div>
             </form>
         </div>
     </div>
+
 
     <!-- Reset Applicator Modal -->
     <div id="resetModalDashboardApplicator" class="modal-overlay">
@@ -557,13 +657,13 @@
         </div>
     </div>
 
-    <!-- Undo Reset Modal -->
+    <!-- Undo Modal -->
     <div id="undoModalDashboardApplicator" class="modal-overlay">
         <div class="form-container">
             <button class="modal-close-btn" onclick="closeUndoModal()">×</button>
             
             <div class="form-header">
-                <h1 class="form-title">↩️ Undo Reset</h1>
+                <h1 class="form-title">↩️ Undo</h1>
                 <p class="form-subtitle">Revert applicator reset to previous state</p>
             </div>
 
@@ -704,7 +804,7 @@
     <!-- Export Modal -->
     <div id="exportModal" class="modal-overlay">
         <div class="form-container">
-            <button class="modal-close-btn" onclick="closeExportModal()">×</button>
+            <button class="modal-close-btn">×</button>
             
             <div class="form-header">
                 <h1 class="form-title">Export Data</h1>
@@ -808,7 +908,7 @@
 
             <!-- Action Buttons -->
             <div class="button-group">
-                <button type="button" class="cancel-btn" onclick="closeExportModal()">Cancel</button>
+                <button type="button" class="cancel-btn">Cancel</button>
                 <button type="button" class="export-btn" onclick="handleExport()">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -824,5 +924,8 @@
     <!-- Load JavaScript -->
     <script src="../../public/assets/js/dashboard_applicator.js"></script>
     <script src="../../public/assets/js/sidebar.js"></script>
+    <script src="../../public/assets/js/utils/exit.js"></script>
+    <script src="../../public/assets/js/utils/enter.js"></script>
+    <script src="../../public/assets/js/utils/checkbox.js"></script>
 </body>
 </html>
