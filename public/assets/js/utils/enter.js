@@ -8,4 +8,11 @@ document.addEventListener('click', function(event) {
             modal.style.display = 'block';
         }
     }
+    if (event.target.classList.contains('delete-btn')) {
+        // This works even for dynamically added elements
+        const modal = document.getElementById('deleteCustomPartModalDashboardApplicator');
+        if (modal) {
+            modal.style.display = 'block';
+        }
+    }
 });

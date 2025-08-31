@@ -150,6 +150,46 @@
     opacity: 0.6;
 }
 
+.btn {
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex: 1;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #DC2626, #B91C1C);
+    color: white;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+}
+
+.btn-danger:hover:not(:disabled) {
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.35);
+    transform: translateY(-2px);
+}
+
+.btn-danger:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.25);
+}
+
+.btn-danger:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: linear-gradient(135deg, #9CA3AF, #6B7280);
+    box-shadow: none;
+    transform: none;
+}
+
 /* DELETE BUTTON - Destructive actions (Intense Red) */
 .delete-btn {
     background: linear-gradient(135deg, #E53E3E 0%, #C53030 100%);

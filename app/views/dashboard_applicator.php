@@ -435,6 +435,57 @@
         </div>
     </div>
 
+    <!-- Delete Custom Part Modal -->
+    <div id="deleteCustomPartModalDashboardApplicator" class="modal-overlay">
+        <div class="form-container">
+            <button class="modal-close-btn">×</button>
+            
+            <div class="form-header">
+                <span class="delete-icon">🗑️</span>
+                <h1 class="form-title">Delete Custom Part</h1>
+                <p class="form-subtitle">Permanently remove this custom part</p>
+            </div>
+
+            <div class="warning-section">
+                <span class="warning-icon">⚠️</span>
+                <div class="warning-title">Permanent Action</div>
+                <div class="warning-text">
+                    This custom part will be permanently removed from this applicator. This action cannot be undone.
+                </div>
+            </div>
+
+            <div id="messageContainer"></div>
+
+            <div class="part-details">
+                <div class="part-info">
+                    <div class="part-icon">⚙️</div>
+                    <div class="part-content">
+                        <div class="part-name" id="partName">Custom Valve Assembly</div>
+                        <div class="part-meta">Added on March 15, 2024 • Part ID: #CP001</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="confirmation-section">
+                <label class="confirmation-checkbox">
+                    <input type="checkbox" id="confirmDelete" class="confirmation-input">
+                    <span class="confirmation-label">
+                        I understand that this action is permanent and cannot be undone. I want to delete this custom part.
+                    </span>
+                </label>
+            </div>
+
+            <form id="deleteCustomPartForm" method="POST" action="../controllers/delete_custom_part.php">
+                <input type="hidden" name="equipment_type" value="APPLICATOR">
+                <input type="hidden" name="part_id" value="" id="partIdInput">
+                
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary" id="deleteBtn" disabled>Delete Part Permanently</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeEditCustomPartModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <!-- Edit Custom Part Modal -->
     <div id="editCustomPartModalDashboardApplicator" class="modal-overlay">
         <div class="form-container">
@@ -605,13 +656,13 @@
         </div>
     </div>
 
-    <!-- Undo Reset Modal -->
+    <!-- Undo Modal -->
     <div id="undoModalDashboardApplicator" class="modal-overlay">
         <div class="form-container">
             <button class="modal-close-btn" onclick="closeUndoModal()">×</button>
             
             <div class="form-header">
-                <h1 class="form-title">↩️ Undo Reset</h1>
+                <h1 class="form-title">↩️ Undo</h1>
                 <p class="form-subtitle">Revert applicator reset to previous state</p>
             </div>
 
@@ -874,5 +925,6 @@
     <script src="../../public/assets/js/sidebar.js"></script>
     <script src="../../public/assets/js/utils/exit.js"></script>
     <script src="../../public/assets/js/utils/enter.js"></script>
+    <script src="../../public/assets/js/utils/checkbox.js"></script>
 </body>
 </html>

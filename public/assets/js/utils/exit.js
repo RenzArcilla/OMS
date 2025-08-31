@@ -6,4 +6,8 @@ buttons.forEach(button => {
     button.addEventListener('click', function() {
         document.getElementById('exportModal').style.display = 'none';
     });
+    button.addEventListener('click', function() {
+        document.getElementById('deleteCustomPartModalDashboardApplicator').style.display = 'none';
+    });
 });
+
