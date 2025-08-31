@@ -46,7 +46,7 @@ function getApplicatorRecordsAndOutputs(int $limit = 10, int $offset = 0, $part_
     
     // If no filter is specified, automatically find the part with highest average output
     if (!$filter_by) {
-        $filter_by = findHighestOutputPart($part_names_array);
+        $filter_by = findHighestOutputApplicatorPart($part_names_array);
     }
     
     $is_custom_part_filter = false;
@@ -112,7 +112,7 @@ function getApplicatorRecordsAndOutputs(int $limit = 10, int $offset = 0, $part_
     return $records;
 }
 
-function findHighestOutputPart($part_names_array): string {
+function findHighestOutputApplicatorPart($part_names_array): string {
     /*
         Function to find the part with the highest average output across all applicators.
         This helps identify which parts are most likely to need replacement.
@@ -171,7 +171,7 @@ function findHighestOutputPart($part_names_array): string {
     return $highest_part;
 }
 
-function getPartsOrderedByOutput($part_names_array): array {
+function getPartsOrderedByApplicatorOutput($part_names_array): array {
     /*
         Function to get all parts ordered by their average output.
         Useful for dashboard analytics and identifying replacement priorities.

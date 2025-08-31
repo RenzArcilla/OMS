@@ -72,8 +72,7 @@
                                 </div>
                             </div>
 
-                            <!--?php include __DIR__ . '/applicator_table.php'; ?-->
-
+                            <?php include __DIR__ . '/applicator_table.php'; ?>
                             <?php include __DIR__ . '/machine_table.php'; ?>
                         </div>
                     </div>

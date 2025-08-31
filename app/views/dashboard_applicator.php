@@ -62,7 +62,7 @@
         $current_filter = $_GET['filter_by'] ?? null;
         if (!$current_filter) {
             // Get the auto-selected highest output part
-            $current_filter = findHighestOutputPart($part_names_array);
+            $current_filter = findHighestOutputApplicatorPart($part_names_array);
             $filter_display = "Auto-sorted by: " . str_replace('_output', '', ucwords(str_replace('_', ' ', $current_filter)));
         } else {
             $filter_display = "Filtered by: " . str_replace('_output', '', ucwords(str_replace('_', ' ', $current_filter)));
@@ -72,7 +72,7 @@
     }
     
     // Get parts priority data
-    $parts_ordered = getPartsOrderedByOutput($part_names_array);
+    $parts_ordered = getPartsOrderedByApplicatorOutput($part_names_array);
     $top_3_parts = array_slice($parts_ordered, 0, 3);
 
     // Get disabled applicators
