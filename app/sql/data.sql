@@ -1009,6 +1009,7 @@ INSERT INTO `users` (`user_id`, `username`, `password`, `first_name`, `last_name
 (23, 'ASDFHASHGFHAGASFHASD HGF', '$2y$10$9feeeU9gjOd.cSxH7602TuuWtHCl2ZJDjcwdp/o36Aivh5Kpjv4LO', 'asdfsadfsda', 'asdfsadgafsdhdaf', 'DEFAULT'),
 (24, 'eyeballord01234', '$2y$10$KTdcjYPy2imQMd/Y.fiMme08eKqY19vRS9ZS91CKOI.yOGeXCKfLW', 'DSAFSADFSAD', 'FASDFSADF', 'DEFAULT');
 
+
 --
 -- Indexes for dumped tables
 --
