@@ -465,30 +465,59 @@
 
     <!-- Add Custom Part Modal -->
     <div id="addCustomPartModalDashboardApplicator" class="modal-overlay">
-        <div class="modal">
-            <button class="modal-close-btn" onclick="closeAddCustomPartModal()">×</button>
+        <div class="form-container">
+            <button class="modal-close-btn" onclick="closeAddCustomPartModal()" aria-label="Close modal">×</button>
             
             <div class="form-header">
                 <h1 class="form-title">➕ Add Custom Part</h1>
                 <p class="form-subtitle">Add a new custom part to this applicator</p>
             </div>
 
+            <div id="messageContainer"></div>
+
             <form id="addCustomPartForm" method="POST" action="../controllers/add_custom_part.php">
                 <input type="hidden" name="equipment_type" value="APPLICATOR">
 
                 <div class="form-section">
-                    <div class="form-group">
-                        <label for="customPartName">Part Name</label>
-                        <input type="text" id="custom_part_name" name="custom_part_name" class="form-input" placeholder="Enter part name..." required>
+                    <div class="section-header">
+                        <div class="section-icon">⚙️</div>
+                        <div class="section-info">
+                            <div class="section-title">Part Name</div>
+                            <div class="section-description">Enter the name of the custom part</div>
+                        </div>
+                    </div>
+                    <div class="form-grid-vertical">
+                        <div class="form-group">
+                            <label class="form-label" for="custom_part_name">
+                                Part Name
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="custom_part_name" 
+                                name="custom_part_name" 
+                                class="form-input" 
+                                placeholder="Enter part name..." 
+                                required
+                                maxlength="100"
+                                aria-describedby="part-name-help"
+                            >
+                        </div>
                     </div>
                 </div>
+                
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Add Part</button>
-                    <button type="button" class="btn btn-secondary" onclick="closeAddCustomPartModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        Add Part
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeAddCustomPartModal()">
+                        Cancel
+                    </button>
                 </div>
             </form>
         </div>
     </div>
+
 
     <!-- Reset Applicator Modal -->
     <div id="resetModalDashboardApplicator" class="modal-overlay">
