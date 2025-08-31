@@ -323,6 +323,7 @@
                             </div>
                         </div>
                     </div>
+                    
                 <!-- Table 2: Recently Deleted Applicators -->
                     <div class="data-section">
                         <div class="section-header">
