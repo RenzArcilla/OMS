@@ -380,3 +380,10 @@
 .progress-warn {
     background: #f59e0b;
 }
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+    flex-direction: row;
+}
