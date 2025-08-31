@@ -67,7 +67,7 @@ if (!isset($_SESSION['user_id'])) {
                     <button class="tab-btn active" onclick="switchTab('machines')">🔧 Machines</button>
                     <button class="tab-btn" onclick="switchTab('applicators')">⚡ Applicators</button>
                 </div>  
-                <!-- Applicator Status Section -->
+                <!-- Machine Table -->
                 <div class="data-section">
                     <div id="machine-table" class="section-content expanded" style="height: 600px; overflow-y: auto;">
                         <!-- Filters -->
@@ -77,8 +77,8 @@ if (!isset($_SESSION['user_id'])) {
                             </div>
                             <select id="machineDescription" class="filter-select">  
                                 <option value="ALL">All</option>
-                                <option value="SIDE">Semi-Automatic</option>
                                 <option value="END">Automatic</option>
+                                <option value="SIDE">Semi-Automatic</option>
                             </select>
                             <button type="button" class="tab-btn" onclick="refreshData()">Refresh</button>
                         </div>
@@ -102,8 +102,8 @@ if (!isset($_SESSION['user_id'])) {
                                     require_once __DIR__ . '/../models/read_machines.php';
 
                                     // Fetch initial set of machines (first 10 entries)
-                                    $machines = getMachines($pdo, 20, 0);
-                                    ?>
+                                    $machines = getMachines($pdo, 20, 0);?>
+
                                     <!-- Render fetched machine data as table rows -->
                                     <?php foreach ($machines as $row): ?>
                                         <tr>
@@ -135,7 +135,6 @@ if (!isset($_SESSION['user_id'])) {
                                             <td><?= htmlspecialchars($row['maker']) ?></td>
                                             <td><?= htmlspecialchars($row['serial_no']) ?></td>
                                             <td><?= htmlspecialchars($row['invoice_no']) ?></td>
-                                            
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -150,14 +149,14 @@ if (!isset($_SESSION['user_id'])) {
                             <div class="search-filter">
                                 <input type="text" class="search-input" placeholder="Search here..." onkeyup="applyApplicatorFilters(this.value)">
                             </div>
-                            <select id="applicatorDescription" class="filter-select">  
+                            <select id="applicatorDescription" class="filter-select" onchange="applyApplicatorFilters()">  
                                 <option value="ALL">All Types</option>
                                 <option value="SIDE">SIDE</option>
                                 <option value="END">END</option>
                                 <option value="CLAMP">CLAMP</option>
                                 <option value="STRIP AND CRIMP">STRIP AND CRIMP</option>
                             </select>
-                            <select id="applicatorWireType" class="filter-select">  
+                            <select id="applicatorWireType" class="filter-select" onchange="applyApplicatorFilters()">  
                                 <option value="ALL">All Types</option>
                                 <option value="SMALL">Small</option>
                                 <option value="BIG">Big</option>
@@ -183,11 +182,15 @@ if (!isset($_SESSION['user_id'])) {
 
                                 <tbody id="applicator-body">
                                     <?php
-                                        require_once __DIR__ . '/../includes/db.php';
-                                        require_once __DIR__ . '/../models/read_applicators.php';
-                                        $applicators = getApplicators($pdo, 20, 0);
-                                        foreach ($applicators as $row):
-                                    ?>
+                                    // Include database connection and machine reader logic
+                                    require_once __DIR__ . '/../includes/db.php';
+                                    require_once __DIR__ . '/../models/read_applicators.php';
+
+                                    // Fetch initial set of machines (first 10 entries)
+                                    $applicators = getApplicators($pdo, 20, 0);?>
+                                    
+                                    <!-- Render fetched machine data as table rows -->
+                                    <?php foreach ($applicators as $row): ?>
                                         <tr>
                                             <td>
                                             <!-- Edit link with data attributes -->
@@ -224,13 +227,13 @@ if (!isset($_SESSION['user_id'])) {
                                             <td><?= htmlspecialchars($row['applicator_maker']) ?></td>
                                             <td><?= htmlspecialchars($row['serial_no']) ?></td>
                                             <td><?= htmlspecialchars($row['invoice_no']) ?></td>
-                                            
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
                     </div>
+                <div>
             </div>
         </div>
     </div>
@@ -420,7 +423,6 @@ if (!isset($_SESSION['user_id'])) {
                     </div>
                 </div>
 
-                </div>
 
                 <!-- Edit Machine Modal -->
                 <div id="editModal" class="modal-overlay">
@@ -757,8 +759,9 @@ if (!isset($_SESSION['user_id'])) {
     <!-- Load edit modals -->
     <script src="../../public/assets/js/edit_machine_modal.js" defer></script>
     <script src="../../public/assets/js/edit_applicator_modal.js" defer></script>
-    <!-- Load infinite scroll logic -->
+    <!-- Load search logic -->
     <script src="../../public/assets/js/search_machines.js" defer></script>
+    <script src="../../public/assets/js/search_applicators.js" defer></script>
     <!-- Load infinite scroll logic >
     <script src="../../public/assets/js/load_machines.js" defer></script>
     <script src="../../public/assets/js/load_applicators.js" defer></script -->
