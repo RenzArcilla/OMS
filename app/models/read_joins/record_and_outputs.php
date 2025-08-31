@@ -80,21 +80,24 @@ function getRecordsAndOutputs(int $limit = 20, int $offset = 0): array {
 
 function getDisabledRecordsAndOutputs($limit = 20, $offset = 0, $search = null): array {
     /*
-        Function to fetch a list of disabled records with related outputs and machine details.
-        It joins records with applicator outputs, machine outputs, applicators, and machines
-        to provide a complete dataset for each disabled record. Supports optional search
-        filtering and pagination.
+        Fetch disabled records with related outputs and machine details.
+        Supports optional search and pagination, with protection against SQL injection.
 
         Args:
-        - $limit: Maximum number of rows to fetch (default is 20).
-        - $offset: Number of rows to skip (default is 0), used for pagination.
-        - $search: Optional search term to filter records by record ID, applicator HP numbers,
-                control number, or last updated date.
+        - $limit: Max rows to fetch (default 20).
+        - $offset: Rows to skip (default 0).
+        - $search: Optional search string.
 
         Returns:
-        - Array of disabled records with outputs and machine details (associative arrays) on success.
+        - Array of disabled records (associative arrays).
     */
+
     global $pdo;
+
+    // Escape LIKE wildcards if search is used
+    if (!empty($search)) {
+        $search = str_replace(['%', '_'], ['\%', '\_'], $search);
+    }
 
     $sql = "
         SELECT 
@@ -123,12 +126,9 @@ function getDisabledRecordsAndOutputs($limit = 20, $offset = 0, $search = null):
             ON r.record_id = ao2.record_id 
             AND r.applicator2_id = ao2.applicator_id
 
-
         LEFT JOIN machine_outputs mo ON r.record_id = mo.record_id
-
         LEFT JOIN applicators a1 ON r.applicator1_id = a1.applicator_id
         LEFT JOIN applicators a2 ON r.applicator2_id = a2.applicator_id
-
         LEFT JOIN machines m ON r.machine_id = m.machine_id
 
         WHERE r.is_active = 0
@@ -148,6 +148,7 @@ function getDisabledRecordsAndOutputs($limit = 20, $offset = 0, $search = null):
     $sql .= " ORDER BY r.last_updated DESC LIMIT :limit OFFSET :offset";
 
     $stmt = $pdo->prepare($sql);
+
     $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
     $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 
@@ -156,5 +157,6 @@ function getDisabledRecordsAndOutputs($limit = 20, $offset = 0, $search = null):
     }
 
     $stmt->execute();
+
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
