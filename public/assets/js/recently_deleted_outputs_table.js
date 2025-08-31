@@ -10,12 +10,10 @@ document.addEventListener('click', function(event) {
 // Restore confirmation
 function confirmRestoreCustomPart(recordId) {
     if (confirm("Are you sure you want to restore this record?")) {
-        // Create a form dynamically
         const form = document.createElement("form");
         form.method = "POST";
         form.action = "../controllers/restore_record.php";
 
-        // Add hidden input for record_id
         const input = document.createElement("input");
         input.type = "hidden";
         input.name = "record_id";
@@ -23,11 +21,9 @@ function confirmRestoreCustomPart(recordId) {
 
         form.appendChild(input);
         document.body.appendChild(form);
-
         form.submit();
     }
 }
-
 
 // Filter the table based on search input
 async function filterTable(searchValue) {
@@ -40,7 +36,11 @@ async function filterTable(searchValue) {
     data.forEach(row => {
         tbody.innerHTML += `
             <tr>
-                <td><button class="tab-btn" data-record-id="${row.record_id}">Restore</button></td>
+                <td>
+                    <button class="restore-btn" 
+                        data-record-id="<?= htmlspecialchars($row['record_id']) ?>">
+                        Restore
+                    </button>
                 <td>${row.record_id}</td>
                 <td>${row.date_inspected}</td>
                 <td>${row.date_encoded.split(" ")[0]}</td>
