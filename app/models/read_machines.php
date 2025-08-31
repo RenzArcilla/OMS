@@ -209,3 +209,67 @@ function getActiveMachineByControlNo($control_no) {
         return "Database error occurred in getActiveMachineByControlNo: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
+
+
+function getFilteredMachines(int $limit = 20, int $offset = 0, ?string $search = null, string $description = 'ALL'): array {
+    /*
+        Function to fetch a list of machines with optional search and description filter.
+        Supports pagination for efficient retrieval of machine records.
+
+        Args:
+        - $limit: Maximum number of rows to fetch (default is 20).
+        - $offset: Number of rows to skip (default is 0), used for pagination.
+        - $search: Optional search term to filter by control_no, model, maker,
+                   serial_no, or invoice_no.
+        - $description: Optional filter for description values ("ALL", "SIDE", "END").
+                        Defaults to "ALL" (no filter applied).
+
+        Returns:
+        - Array of machines (associative arrays) on success.
+    */
+    global $pdo;
+
+    // Escape LIKE wildcards if search is used
+    if (!empty($search)) {
+        $search = str_replace(['%', '_'], ['\%', '\_'], $search);
+    }
+
+    $sql = "
+        SELECT machine_id, control_no, description, model, maker, serial_no, invoice_no
+        FROM machines
+        WHERE is_active = 1
+    ";
+
+    $params = [];
+
+    // Add search condition if provided
+    if (!empty($search)) {
+        $search = str_replace(['%', '_'], ['\%', '\_'], $search); // escape LIKE wildcards
+        $sql .= " AND (
+            control_no LIKE :search OR
+            model LIKE :search OR
+            serial_no LIKE :search OR
+            invoice_no LIKE :search
+        )";
+        $params[':search'] = "%$search%";
+    }
+
+    // Add description filter if not "ALL"
+    if ($description !== 'ALL') {
+        $sql .= " AND description = :description";
+        $params[':description'] = $description;
+    }
+
+    $sql .= " ORDER BY last_encoded DESC LIMIT :limit OFFSET :offset";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+
+    foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value, PDO::PARAM_STR);
+    }
+
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
