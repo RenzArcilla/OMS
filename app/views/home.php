@@ -157,58 +157,44 @@
                                         <thead>
                                             <tr>
                                                 <th>HP UNIT</th>
+                                                <th>OUTPUT</th>
                                                 <th>WIRE CRIMPER</th>
                                                 <th>WIRE ANVIL</th>
                                                 <th>INSULATION CRIMPER</th>
                                                 <th>INSULATION ANVIL</th>
-                                                <th>STATUS</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr data-status="success">
-                                                <td class="metric-value">HP-001</td>
-                                                <td class="metric-value">98.5%</td>
-                                                <td class="metric-value">97.2%</td>
-                                                <td class="metric-value">99.1%</td>
-                                                <td class="metric-value">96.8%</td>
-                                                <td class="status-cell">
-                                                    <div class="status-dot success"></div>
-                                                    OPTIMAL
-                                                </td>
-                                            </tr>
-                                            <tr data-status="success">
-                                                <td class="metric-value">HP-002</td>
-                                                <td class="metric-value">95.3%</td>
-                                                <td class="metric-value">96.7%</td>
-                                                <td class="metric-value">98.2%</td>
-                                                <td class="metric-value">97.5%</td>
-                                                <td class="status-cell">
-                                                    <div class="status-dot success"></div>
-                                                    OPTIMAL
-                                                </td>
-                                            </tr>
-                                            <tr data-status="warning">
-                                                <td class="metric-value">HP-003</td>
-                                                <td class="metric-value">87.2%</td>
-                                                <td class="metric-value">89.1%</td>
-                                                <td class="metric-value">85.6%</td>
-                                                <td class="metric-value">88.3%</td>
-                                                <td class="status-cell">
-                                                    <div class="status-dot warning"></div>
-                                                    MONITOR
-                                                </td>
-                                            </tr>
-                                            <tr data-status="success">
-                                                <td class="metric-value">HP-004</td>
-                                                <td class="metric-value">99.1%</td>
-                                                <td class="metric-value">98.7%</td>
-                                                <td class="metric-value">97.9%</td>
-                                                <td class="metric-value">99.2%</td>
-                                                <td class="status-cell">
-                                                    <div class="status-dot success"></div>
-                                                    OPTIMAL
-                                                </td>
-                                            </tr>
+                                        <tbody id="metricsBody">
+                                            <?php foreach ($applicator_total_outputs as $row): ?>
+                                                <tr>
+                                                    <td><?= htmlspecialchars($row['hp_no']) ?></td>
+                                                    <td><strong><?= htmlspecialchars($row['total_output']) ?></strong></td>
+                                                    <td>
+                                                        <div><strong><?= htmlspecialchars($row['wire_crimper_output']) ?></strong> / 1.5M</div>
+                                                        <div class="progress-bar">
+                                                            <div class="progress-fill" style="width: 42%;"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div><strong><?= htmlspecialchars($row['wire_anvil_output']) ?></strong> / 1.5M</div>
+                                                        <div class="progress-bar">
+                                                            <div class="progress-fill" style="width: 38%;"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div><strong><?= htmlspecialchars($row['insulation_crimper_output']) ?></strong> / 1.5M</div>
+                                                        <div class="progress-bar">
+                                                            <div class="progress-fill" style="width: 51%;"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div><strong><?= htmlspecialchars($row['insulation_anvil_output']) ?></strong> / 1.5M</div>
+                                                        <div class="progress-bar">
+                                                            <div class="progress-fill" style="width: 46%;"></div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -257,7 +243,6 @@
                 </div>
             </div>
         </section>
-
         <script src="../../public/assets/js/sidebar.js"></script>
 </body>
 </html>
