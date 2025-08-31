@@ -229,11 +229,6 @@ function getFilteredMachines(int $limit = 20, int $offset = 0, ?string $search =
     */
     global $pdo;
 
-    // Escape LIKE wildcards if search is used
-    if (!empty($search)) {
-        $search = str_replace(['%', '_'], ['\%', '\_'], $search);
-    }
-
     $sql = "
         SELECT machine_id, control_no, description, model, maker, serial_no, invoice_no
         FROM machines

@@ -18,7 +18,7 @@ try {
     }
 
     $description = isset($_GET['description']) ? strtoupper(trim($_GET['description'])) : 'ALL';
-    $allowedDescriptions = ['ALL', 'SIDE', 'END'];
+    $allowedDescriptions = ['ALL', 'AUTOMATIC', 'SEMI-AUTOMATIC'];
     if (!in_array($description, $allowedDescriptions, true)) {
         $description = 'ALL';
     }
