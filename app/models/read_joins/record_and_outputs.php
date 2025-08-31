@@ -160,3 +160,60 @@ function getDisabledRecordsAndOutputs($limit = 20, $offset = 0, $search = null):
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
+function getFilteredRecords($limit, $offset, $search = null, $shift = 'ALL') {
+    /*
+        Function to fetch records and outputs from the database with optional search and shift filter.
+        Supports pagination via limit and offset, and prevents SQL injection.
+
+        Parameters:
+            int $limit        - Maximum number of rows to fetch.
+            int $offset       - Number of rows to skip for pagination.
+            string $search    - Optional search keyword across multiple columns.
+            string $shift     - Optional shift filter (default = 'ALL').
+
+        Returns:
+            array - Associative array of records matching the search and filter criteria.
+    */
+
+    global $pdo;
+
+    $sql = "SELECT * FROM record_and_outputs WHERE 1=1";
+    $params = [];
+
+    // Apply search filter if provided
+    if (!empty($search)) {
+        $search = str_replace(['%', '_'], ['\%', '\_'], $search); // escape LIKE wildcards
+        $sql .= " AND (
+            record_id LIKE :search OR
+            last_updated LIKE :search OR
+            hp1_no LIKE :search OR
+            hp2_no LIKE :search OR
+            control_no LIKE :search
+        )";
+        $params[':search'] = "%$search%";
+    }
+
+    // Apply shift filter if provided
+    if ($shift !== 'ALL') {
+        $sql .= " AND shift = :shift";
+        $params[':shift'] = $shift;
+    }
+
+    $sql .= " ORDER BY record_id DESC LIMIT :limit OFFSET :offset";
+
+    $stmt = $pdo->prepare($sql);
+
+    // Bind dynamic parameters securely
+    foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value);
+    }
+
+    $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}

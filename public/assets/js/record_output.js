@@ -1,3 +1,8 @@
+// Refresh functionality
+function refreshData() {
+    location.reload();
+}
+
 // Modal functions
 function openModal() {
     document.getElementById('modalOverlay').classList.add('active');
@@ -171,3 +176,4 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeDateRange();
     initializeCheckbox();
 });
+
