@@ -55,21 +55,16 @@
                     </div>
                     
                     <div class="search-filter">
-                        <div class="search-wrapper">
-                            <input type="text" 
-                                id="searchInput" 
-                                class="search-input" 
-                                placeholder="Search users..." 
-                                onkeyup="searchUsers(this.value)">
+                        <div class="search-filter">
+                            <input type="text" class="search-input" placeholder="Search here..." onkeyup="applyUserFilters(this.value)">
                         </div>
                         
-                        <select id="roleFilter" class="filter-select" onchange="filterByRole(this.value)">
+                        <select id="roleFilter" class="filter-select" onchange="applyUserFilters()">
                             <option value="all">All Roles</option>
-                            <option value="Admin">Admin</option>
-                            <option value="Moderator">Moderator</option>
-                            <option value="User">User</option>
+                            <option value="DEFAULT">Default</option>
+                            <option value="TOOLKEEPER">Toolkeeper</option>
+                            <option value="ADMIN">Admin</option>
                         </select>
-
                     </div>
                     
                     <!-- Users Table -->

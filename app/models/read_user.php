@@ -120,3 +120,48 @@ function getUserByUsername($username) {
         exit;
     }
 }
+
+
+function searchUsers(string $search = '', string $role = 'all'): array {
+    /*
+        Function to search users from the database with optional filters.
+        It applies a search query across username, first name, and last name,
+        and can also filter users based on their role.
+        
+        Parameters:
+            string $search - The search keyword (optional).
+            string $role   - The role filter (optional, default = 'all').
+
+        Returns:
+            array - A list of users matching the search and filter criteria.
+    */
+
+    global $pdo;
+
+    $sql = "
+        SELECT user_id, username, first_name, last_name, user_type
+        FROM users
+        WHERE 1=1
+    ";
+
+    $params = [];
+
+    // Apply search filter if provided
+    if (!empty($search)) {
+        $sql .= " AND (username LIKE :search OR first_name LIKE :search OR last_name LIKE :search)";
+        $params[':search'] = "%$search%";
+    }
+
+    // Apply role filter if not set to 'all'
+    if ($role !== 'all') {
+        $sql .= " AND user_type = :role";
+        $params[':role'] = $role;
+    }
+
+    $sql .= " ORDER BY user_id DESC";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}

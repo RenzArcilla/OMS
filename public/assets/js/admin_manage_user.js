@@ -215,3 +215,107 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeDateRange();
     initializeCheckbox();
 });
+
+/*
+    Utility function to debounce frequent calls to another function.
+    It ensures the given function only executes after the user has
+    stopped triggering it for the specified delay (in ms).
+    
+    Parameters:
+        func  (Function) - The function to debounce.
+        delay (Number)   - The time to wait (in milliseconds).
+*/
+function debounce(func, delay) {
+    let timer;
+    return function (...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => func.apply(this, args), delay);
+    };
+}
+
+/*
+    Function to apply search and role filters on the users table.
+    It sends an asynchronous request to the controller with the
+    current search input and selected role filter, then updates
+    the table dynamically with the results.
+*/
+async function applyUserFilters() {
+    const search = document.querySelector('.search-input').value.trim();
+    const role   = document.getElementById('roleFilter').value;
+
+    try {
+        const response = await fetch(`../controllers/search_user.php?search=${encodeURIComponent(search)}&role=${encodeURIComponent(role)}`);
+        const users = await response.json();
+
+        updateUsersTable(users);
+    } catch (err) {
+        console.error('Search failed:', err);
+    }
+}
+
+/*
+    Function to update the users table body with search results.
+    It rebuilds the <tbody> content using the user data returned
+    from the backend. If no users are found, a placeholder row is shown.
+    
+    Parameters:
+        users (Array) - List of users returned from the backend.
+*/
+function updateUsersTable(users) {
+    const tbody = document.getElementById('usersTableBody');
+    tbody.innerHTML = '';
+
+    if (!users.length) {
+        tbody.innerHTML = `<tr><td colspan="3">No users found.</td></tr>`;
+        return;
+    }
+
+    users.forEach(user => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>
+                <div class="actions">
+                    <button class="view-btn"
+                        onclick="openViewUserModal(this)"
+                        data-username="${user.username}"
+                        data-firstname="${user.first_name}"
+                        data-lastname="${user.last_name}"
+                        data-role="${user.user_type}">
+                        View
+                    </button>
+                    <button class="edit-btn"
+                        onclick="openEditUserModal(this)"
+                        data-id="${user.user_id}"
+                        data-username="${user.username}"
+                        data-firstname="${user.first_name}"
+                        data-lastname="${user.last_name}"
+                        data-role="${user.user_type}">
+                        Edit
+                    </button>
+                </div>
+            </td>
+            <td>
+                <div class="user-info">
+                    <div class="user-avatar">👤</div>
+                    <div class="user-details">
+                        <div class="user-name">${user.first_name} ${user.last_name}</div>
+                        <div class="user-email">${user.username}</div>
+                    </div>
+                </div>
+            </td>
+            <td><span class="role-badge">${user.user_type}</span></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+/*
+    Attach event listeners with debounce to reduce frequent queries.
+    The search input will wait 500ms after the user stops typing before
+    sending a request. The role filter triggers immediately on change.
+*/
+document.querySelector('.search-input')
+    .addEventListener('input', debounce(applyUserFilters, 500));
+
+document.getElementById('roleFilter')
+    .addEventListener('change', applyUserFilters);
