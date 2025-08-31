@@ -275,17 +275,25 @@
                 </div>
 
                 <!-- Table 2: Recently Deleted Machine -->
-                <div class="data-section">
+                <div class="data-section" id="disabled-machines-section">
                     <div class="section-header">
                         <div class="section-title">
                             🗑️ Recently Deleted Machine
                             <span class="section-badge">3</span>
                         </div>
                         <div class="expand-icon">▼</div>
-                    </div>
+                    </div> 
                     <div class="section-content expanded">
+                        <!-- Filters -->
                         <div class="search-filter">
-                            <input type="text" class="search-input" placeholder="Search deleted machines...">
+                            <div class="search-filter">
+                                <input type="text" class="search-input" placeholder="Search here..." onkeyup="applyDisabledMachineFilters()">
+                            </div>
+                            <select id="disabledMachineDescription" class="filter-select" onchange="applyDisabledMachineFilters()">  
+                                <option value="ALL">All</option>
+                                <option value="AUTOMATIC">Automatic</option>
+                                <option value="SEMI-AUTOMATIC">Semi-Automatic</option>
+                            </select>
                         </div>
                         <div class="table-container">
                             <table class="data-table">
@@ -308,10 +316,10 @@
                                                 Restore
                                             </button>
                                         </td>
-                                        <td><?php echo htmlspecialchars($machine['control_no']); ?></td>
-                                        <td><?php echo htmlspecialchars($machine['model']); ?></td>
-                                        <td><?php echo htmlspecialchars($machine['maker']); ?></td>
-                                        <td><?php echo htmlspecialchars($machine['last_encoded']); ?></td>
+                                        <td><?= htmlspecialchars($machine['control_no']) ?></td>
+                                        <td><?= htmlspecialchars($machine['model']) ?></td>
+                                        <td><?= htmlspecialchars($machine['maker']) ?></td>
+                                        <td><?= htmlspecialchars($machine['last_encoded']) ?></td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -674,5 +682,7 @@
 
     <script src="../../public/assets/js/dashboard_machine.js"></script>
     <script src="../../public/assets/js/sidebar.js"></script>
+    <!-- Search Disabled Machines -->
+    <script src="../../public/assets/js/search_disabled_machines.js"></script>
 </body>
 </html>

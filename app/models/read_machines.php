@@ -211,7 +211,7 @@ function getActiveMachineByControlNo($control_no) {
 }
 
 
-function getFilteredMachines(int $limit = 20, int $offset = 0, ?string $search = null, string $description = 'ALL'): array {
+function getFilteredMachines(int $limit = 20, int $offset = 0, ?string $search = null, string $description = 'ALL', int $is_active = 1): array {
     /*
         Function to fetch a list of machines with optional search and description filter.
         Supports pagination for efficient retrieval of machine records.
@@ -220,7 +220,7 @@ function getFilteredMachines(int $limit = 20, int $offset = 0, ?string $search =
         - $limit: Maximum number of rows to fetch (default is 20).
         - $offset: Number of rows to skip (default is 0), used for pagination.
         - $search: Optional search term to filter by control_no, model, maker,
-                   serial_no, or invoice_no.
+                serial_no, or invoice_no.
         - $description: Optional filter for description values ("ALL", "SIDE", "END").
                         Defaults to "ALL" (no filter applied).
 
@@ -232,10 +232,12 @@ function getFilteredMachines(int $limit = 20, int $offset = 0, ?string $search =
     $sql = "
         SELECT machine_id, control_no, description, model, maker, serial_no, invoice_no
         FROM machines
-        WHERE is_active = 1
+        WHERE is_active = :is_active
     ";
 
-    $params = [];
+    $params = [
+        ':is_active' => $is_active
+    ];
 
     // Add search condition if provided
     if (!empty($search)) {
