@@ -160,3 +160,94 @@ function getDisabledRecordsAndOutputs($limit = 20, $offset = 0, $search = null):
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
+function getFilteredRecords($limit, $offset, $search = null, $shift = 'ALL') {
+    /*
+        Function to fetch records and outputs from the database with optional search and shift filter.
+        Supports pagination via limit and offset, and prevents SQL injection.
+
+        Parameters:
+            int $limit        - Maximum number of rows to fetch.
+            int $offset       - Number of rows to skip for pagination.
+            string $search    - Optional search keyword across multiple columns.
+            string $shift     - Optional shift filter (default = 'ALL').
+
+        Returns:
+            array - Associative array of records matching the search and filter criteria.
+    */
+
+    global $pdo;
+
+    // Base query
+    $sql = "
+        SELECT 
+            r.record_id,
+            r.shift,
+            r.date_inspected,
+            r.date_encoded,
+            r.last_updated,
+            ao1.total_output AS app1_output,
+            ao2.total_output AS app2_output,
+            mo.total_machine_output AS machine_output,
+            a1.hp_no AS hp1_no,
+            a2.hp_no AS hp2_no,
+            m.control_no AS control_no
+        FROM records r
+        LEFT JOIN (
+            SELECT record_id, applicator_id, SUM(total_output) AS total_output
+            FROM applicator_outputs
+            GROUP BY record_id, applicator_id
+        ) ao1 ON r.record_id = ao1.record_id AND r.applicator1_id = ao1.applicator_id
+        LEFT JOIN (
+            SELECT record_id, applicator_id, SUM(total_output) AS total_output
+            FROM applicator_outputs
+            GROUP BY record_id, applicator_id
+        ) ao2 ON r.record_id = ao2.record_id AND r.applicator2_id = ao2.applicator_id
+        LEFT JOIN (
+            SELECT record_id, SUM(total_machine_output) AS total_machine_output
+            FROM machine_outputs
+            GROUP BY record_id
+        ) mo ON r.record_id = mo.record_id
+        LEFT JOIN applicators a1 ON r.applicator1_id = a1.applicator_id
+        LEFT JOIN applicators a2 ON r.applicator2_id = a2.applicator_id
+        LEFT JOIN machines m ON r.machine_id = m.machine_id
+        WHERE r.is_active = 1
+    ";
+
+    $params = [];
+
+    // Apply search filter
+    if (!empty($search)) {
+        $search = str_replace(['%', '_'], ['\%', '\_'], $search);
+        $sql .= " AND (
+            r.record_id LIKE :search OR
+            r.last_updated LIKE :search OR
+            a1.hp_no LIKE :search OR
+            a2.hp_no LIKE :search OR
+            m.control_no LIKE :search
+        )";
+        $params[':search'] = "%$search%";
+    }
+
+    // Apply shift filter
+    if ($shift !== 'ALL') {
+        $sql .= " AND r.shift = :shift";
+        $params[':shift'] = $shift;
+    }
+
+    // Pagination
+    $sql .= " ORDER BY r.record_id DESC LIMIT :limit OFFSET :offset";
+
+    $stmt = $pdo->prepare($sql);
+
+    foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value);
+    }
+    $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}

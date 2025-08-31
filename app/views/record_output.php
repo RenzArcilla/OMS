@@ -61,12 +61,18 @@ if (!isset($_SESSION['user_id'])) {
                     </div>
                 </div>
 
+                <!-- Filters -->
                 <div class="search-filter">
-                    <input type="text" class="search-input" placeholder="Search records..." onkeyup="filterTable(this.value)">
-                    <button class="filter-btn active" onclick="filterByStatus(this, 'all')">Search</button>
-                    <button class="filter-btn" onclick="filterByStatus(this, 'recent')">First Shift</button>
-                    <button class="filter-btn" onclick="filterByStatus(this, 'recent')">Second Shift</button>
-                    <button class="filter-btn" onclick="filterByStatus(this, 'recent')">Night Shift</button>
+                    <div class="search-filter">
+                        <input type="text" class="search-input" placeholder="Search here..." onkeyup="applyRecordFilters(this.value)">
+                    </div>
+                    <select id="recordShift" class="filter-select" onchange="applyRecordFilters()">  
+                        <option value="ALL">All</option>
+                        <option value="1st">1st</option>
+                        <option value="2nd">2nd</option>    
+                        <option value="NIGHT">Night</option>
+                    </select>
+                    <button type="button" class="tab-btn" onclick="refreshData()">Refresh</button>
                 </div>
 
                 <div class="section-content expanded" id="table-container" style="height: 500px; overflow-y: auto;">
@@ -138,7 +144,6 @@ if (!isset($_SESSION['user_id'])) {
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
-                        
                     </div>
                 </div>
             </div>
@@ -535,13 +540,15 @@ if (!isset($_SESSION['user_id'])) {
     </div>
 </div>
 
-<!-- Infinite scroll logic -->
-<script src="../../public/assets/js/load_records.js" defer></script>
 <!-- Load modal logic for editing records -->
 <script src="../../public/assets/js/edit_record_modal.js" defer></script>
 <!-- Load modal logic for editing records -->
 <script src="../../public/assets/js/record_output.js" defer></script>
 <!-- Sidebar functionality -->
-<script src="/SOMS/public/assets/js/sidebar.js" defer></script>
+<script src="../../public/assets/js/sidebar.js" defer></script>
+<!-- Search and filter functionality -->
+<script src="../../public/assets/js/search_records.js" defer></script>
+<!-- Infinite scroll logic>
+<script src="../../public/assets/js/load_records.js" defer></script -->
 </body>
 </html>
