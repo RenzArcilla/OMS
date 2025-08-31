@@ -46,7 +46,7 @@ function getMachineRecordsAndOutputs(int $limit = 10, int $offset = 0, $part_nam
     
     // If no filter is specified, automatically find the part with highest average output
     if (!$filter_by) {
-        $filter_by = findHighestOutputPart($part_names_array);
+        $filter_by = findHighestOutputMachinePart($part_names_array);
     }
     
     // Check if it's a standard column filter
@@ -109,7 +109,7 @@ function getMachineRecordsAndOutputs(int $limit = 10, int $offset = 0, $part_nam
     return $records;
 }
 
-function findHighestOutputPart($part_names_array): string {
+function findHighestOutputMachinePart($part_names_array): string {
     /*
         Function to find the part with the highest average output across all machines.
         This helps identify which parts are most likely to need replacement.
@@ -166,7 +166,7 @@ function findHighestOutputPart($part_names_array): string {
     return $highest_part;
 }
 
-function getPartsOrderedByOutput($part_names_array): array {
+function getPartsOrderedByMachineOutput($part_names_array): array {
     /*
         Function to get all parts ordered by their average output.
         Useful for dashboard analytics and identifying replacement priorities.
