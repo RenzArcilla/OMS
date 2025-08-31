@@ -72,7 +72,7 @@
                                 </div>
                             </div>
 
-                            <?php include __DIR__ . '/applicator_table.php'; ?>
+                            <!--?php include __DIR__ . '/applicator_table.php'; ?-->
 
                             <?php include __DIR__ . '/machine_table.php'; ?>
                         </div>
@@ -80,6 +80,6 @@
                 </div>
             </div>
         </section>
-        <script src="../../public/assets/js/sidebar.js"></script>
+    <script src="../../public/assets/js/sidebar.js"></script>
 </body>
 </html>

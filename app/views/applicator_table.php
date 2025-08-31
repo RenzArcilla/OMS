@@ -23,9 +23,6 @@
     <div class="section-content expanded">
         <div class="search-filter">
             <input type="text" class="search-input" placeholder="Search systems..." onkeyup="filterTable(this.value)">
-            <button class="filter-btn active" onclick="filterByStatus(this, 'all')">ALL</button>
-            <button class="filter-btn" onclick="filterByStatus(this, 'success')">ACTIVE</button>
-            <button class="filter-btn" onclick="filterByStatus(this, 'warning')">WARNING</button>
         </div>
         <table class="data-table">
             <thead>
