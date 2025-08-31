@@ -15,77 +15,14 @@
     <?php 
     include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/sidebar.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/header.php';
-    // First, get custom parts
-    require_once "../models/read_custom_parts.php";
-    $custom_applicator_parts = getCustomParts("APPLICATOR");
-    
-    // Initialize part names array
-    $part_names_array = [];
-    foreach ($custom_applicator_parts as $part) {
-        $part_names_array[] = $part['part_name'];
-    }
-    
-    // Include the read join function and the alert function
-    require_once __DIR__ . '/../models/read_joins/read_monitor_applicator_and_applicator.php';
-    require_once __DIR__ . '/../includes/js_alert.php';
-
-    // Handle search if HP number is provided
-    $search_hp = $_GET['search_hp'] ?? '';
-    $search_result = null;
-    $is_searching = false;
-    
-    if (!empty(trim($search_hp))) {
-        $is_searching = true;
-        $search_result = searchApplicatorByHpNo(trim($search_hp), $part_names_array);
-        
-        // CHECK FOR SEARCH RESULT AND REDIRECT IMMEDIATELY IF NOT FOUND
-        if (!$search_result) {
-            jsAlertRedirect("Applicator not found!", $_SERVER['PHP_SELF']);
-            exit(); // Stop execution to prevent any further output
-        }
-        
-        // If searching, use search result instead of all records
-        $applicator_total_outputs = [$search_result]; // Single result in array
-    } else {
-        // Use existing logic for all records
-        $applicator_total_outputs = getApplicatorRecordsAndOutputs(10, 0, $part_names_array);
-    }
-    
-    // Get current filter info (only if not searching)
-    if (!$is_searching) {
-        $current_filter = $_GET['filter_by'] ?? null;
-        if (!$current_filter) {
-            // Get the auto-selected highest output part
-            $current_filter = findHighestOutputPart($part_names_array);
-            $filter_display = "Auto-sorted by: " . str_replace('_output', '', ucwords(str_replace('_', ' ', $current_filter)));
-        } else {
-            $filter_display = "Filtered by: " . str_replace('_output', '', ucwords(str_replace('_', ' ', $current_filter)));
-        }
-    } else {
-        $filter_display = "Search Results";
-    }
-    
-    // Get parts priority data
-    $parts_ordered = getPartsOrderedByOutput($part_names_array);
-    $top_3_parts = array_slice($parts_ordered, 0, 3);
-
-    // Get disabled applicators
-    require_once __DIR__ . '/../models/read_applicators.php';
-    $disabled_applicators = getDisabledApplicators(10, 0);
     ?>
-
-
-
-
-
-
     
 <!-- Animated Background -->
     <div class="background-canvas">
-            <div class="floating-orb orb-1"></div>
-            <div class="floating-orb orb-2"></div>
-            <div class="floating-orb orb-3"></div>
-        </div>
+        <div class="floating-orb orb-1"></div>
+        <div class="floating-orb orb-2"></div>
+        <div class="floating-orb orb-3"></div>
+    </div>
 
         <!-- Hero Section -->
         <div class="container">
@@ -117,7 +54,7 @@
                     <div class="dashboard-main">
                         <div class="dashboard-header">
                             <h3 class="dashboard-title">CONTROL CENTER</h3>
-                            <div class="system-time" id="dashboardTime">14:23:47 UTC</div>
+                            
                         </div>
 
                         <div class="dashboard-content">
@@ -135,129 +72,15 @@
                                 </div>
                             </div>
 
-                            <!-- Applicator Status Section -->
-                            <div class="data-section">
-                                <div class="section-header expanded" onclick="toggleSection(this)">
-                                    <div class="section-title">
-                                        APPLICATOR STATUS
-                                        <span class="section-badge">24</span>
-                                    </div>
-                                    <svg class="expand-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </div>
-                                <div class="section-content expanded">
-                                    <div class="search-filter">
-                                        <input type="text" class="search-input" placeholder="Search systems..." onkeyup="filterTable(this.value)">
-                                        <button class="filter-btn active" onclick="filterByStatus(this, 'all')">ALL</button>
-                                        <button class="filter-btn" onclick="filterByStatus(this, 'success')">ACTIVE</button>
-                                        <button class="filter-btn" onclick="filterByStatus(this, 'warning')">WARNING</button>
-                                    </div>
-                                    <table class="data-table">
-                                        <thead>
-                                            <tr>
-                                                <th>HP UNIT</th>
-                                                <th>WIRE CRIMPER</th>
-                                                <th>WIRE ANVIL</th>
-                                                <th>INSULATION CRIMPER</th>
-                                                <th>INSULATION ANVIL</th>
-                                                <th>STATUS</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr data-status="success">
-                                                <td class="metric-value">HP-001</td>
-                                                <td class="metric-value">98.5%</td>
-                                                <td class="metric-value">97.2%</td>
-                                                <td class="metric-value">99.1%</td>
-                                                <td class="metric-value">96.8%</td>
-                                                <td class="status-cell">
-                                                    <div class="status-dot success"></div>
-                                                    OPTIMAL
-                                                </td>
-                                            </tr>
-                                            <tr data-status="success">
-                                                <td class="metric-value">HP-002</td>
-                                                <td class="metric-value">95.3%</td>
-                                                <td class="metric-value">96.7%</td>
-                                                <td class="metric-value">98.2%</td>
-                                                <td class="metric-value">97.5%</td>
-                                                <td class="status-cell">
-                                                    <div class="status-dot success"></div>
-                                                    OPTIMAL
-                                                </td>
-                                            </tr>
-                                            <tr data-status="warning">
-                                                <td class="metric-value">HP-003</td>
-                                                <td class="metric-value">87.2%</td>
-                                                <td class="metric-value">89.1%</td>
-                                                <td class="metric-value">85.6%</td>
-                                                <td class="metric-value">88.3%</td>
-                                                <td class="status-cell">
-                                                    <div class="status-dot warning"></div>
-                                                    MONITOR
-                                                </td>
-                                            </tr>
-                                            <tr data-status="success">
-                                                <td class="metric-value">HP-004</td>
-                                                <td class="metric-value">99.1%</td>
-                                                <td class="metric-value">98.7%</td>
-                                                <td class="metric-value">97.9%</td>
-                                                <td class="metric-value">99.2%</td>
-                                                <td class="status-cell">
-                                                    <div class="status-dot success"></div>
-                                                    OPTIMAL
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                            <!--?php include __DIR__ . '/applicator_table.php'; ?-->
 
-                            <!-- Machine Status Section -->
-                            <div class="data-section">
-                                <div class="section-header expanded" onclick="toggleSection(this)">
-                                    <div class="section-title">
-                                        MACHINE STATUS
-                                        <span class="section-badge">16</span>
-                                    </div>
-                                    <svg class="expand-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </div>
-                                <div class="section-content expanded">
-                                    <div class="search-filter">
-                                        <input type="text" class="search-input" placeholder="Search machines...">
-                                    <table class="data-table">
-                                        <thead>
-                                            <tr>
-                                                <th>AM UNIT</th>
-                                                <th>STRIP BLADE</th>
-                                                <th>CUT BLADE</th>
-                                                <th>STATUS</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr data-status="success">
-                                                <td class="metric-value">AM-001</td>
-                                                <td class="metric-value">94.7%</td>
-                                                <td class="metric-value">96.2%</td>
-                                                <td class="status-cell">
-                                                    <div class="status-dot success"></div>
-                                                    OPTIMAL
-                                                </td>
-                                            </tr>
-                                            <tr data-status="success">
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                            <?php include __DIR__ . '/machine_table.php'; ?>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
-        <script src="../../public/assets/js/sidebar.js"></script>
+    <script src="../../public/assets/js/sidebar.js"></script>
+    <script src="../../public/assets/js/home.js"></script>
 </body>
 </html>
