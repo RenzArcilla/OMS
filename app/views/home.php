@@ -54,7 +54,7 @@
                     <div class="dashboard-main">
                         <div class="dashboard-header">
                             <h3 class="dashboard-title">CONTROL CENTER</h3>
-                            <div class="system-time" id="dashboardTime">14:23:47 UTC</div>
+                            
                         </div>
 
                         <div class="dashboard-content">
@@ -81,5 +81,6 @@
             </div>
         </section>
     <script src="../../public/assets/js/sidebar.js"></script>
+    <script src="../../public/assets/js/home.js"></script>
 </body>
 </html>
