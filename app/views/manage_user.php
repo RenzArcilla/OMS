@@ -24,7 +24,7 @@
 
         // Require admin priveledge to view this page 
         require_once '../includes/auth.php';
-        requireAdmin(); 
+        //requireAdmin(); 
     ?>
     <div class="container">
         <div class="main-content">
