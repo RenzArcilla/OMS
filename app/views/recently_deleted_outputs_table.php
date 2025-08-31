@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../../public/assets/css/base/base.css">
     <link rel="stylesheet" href="../../public/assets/css/components/sidebar.css">
     <link rel="stylesheet" href="../../public/assets/css/components/tables.css">
-    <link rel="stylesheet" href="../../public/assets/css/components/buttons.css"
+    <link rel="stylesheet" href="../../public/assets/css/components/buttons.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/layout/grid.css">
     
 </head>
