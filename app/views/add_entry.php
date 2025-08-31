@@ -37,15 +37,6 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="/SOMS/public/assets/css/layout/grid.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/export_modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/base/header.css">
-    <!-- Load machine infinite scroll logic -->
-    <script src="../../public/assets/js/load_machines.js" defer></script>
-    <!-- Load applicator infinite scroll logic -->
-    <script src="../../public/assets/js/load_applicators.js" defer></script>
-    <!-- Load modal logic for editing machines -->
-    <script src="../../public/assets/js/edit_machine_modal.js" defer></script>
-    <!-- Load modal logic for editing applicators -->
-    <script src="../../public/assets/js/edit_applicator_modal.js" defer></script>
-    <!-- Load cancel forms of add modals form -->
 </head>
 <body>
     <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/sidebar.php'; ?>
@@ -78,23 +69,19 @@ if (!isset($_SESSION['user_id'])) {
                 </div>  
                 <!-- Applicator Status Section -->
                 <div class="data-section">
-                    <!-- Filters -->
-                    <div class="search-filter">
-                        <input type="text" id="searchInput" placeholder="Search entries..." class="search-input">
-                        <select id="typeFilter" class="filter-select">
-                            <option value="all">All Types</option>
-                            <option value="AUTOMATIC">Automatic</option>
-                            <option value="SEMI-AUTOMATIC">Semi-Automatic</option>
-                            <option value="SIDE">Side</option>
-                            <option value="END">End</option>
-                        </select>
-
-                        <button type="button" class="tab-btn" onclick="exportData()">Export</button>
-                        <button type="button" class="tab-btn" onclick="refreshData()">Refresh</button>
-                        
-                    </div>
-
                     <div id="machine-table" class="section-content expanded" style="height: 600px; overflow-y: auto;">
+                        <!-- Filters -->
+                        <div class="search-filter">
+                            <div class="search-filter">
+                                <input type="text" class="search-input" placeholder="Search here..." onkeyup="applyMachineFilters(this.value)">
+                            </div>
+                            <select id="machineDescription" class="filter-select">  
+                                <option value="ALL">All</option>
+                                <option value="SIDE">Semi-Automatic</option>
+                                <option value="END">Automatic</option>
+                            </select>
+                            <button type="button" class="tab-btn" onclick="refreshData()">Refresh</button>
+                        </div>
                         <div class="table-container">
                             <table class="data-table">
                                 <thead>
@@ -115,7 +102,7 @@ if (!isset($_SESSION['user_id'])) {
                                     require_once __DIR__ . '/../models/read_machines.php';
 
                                     // Fetch initial set of machines (first 10 entries)
-                                    $machines = getMachines($pdo, 10, 0);
+                                    $machines = getMachines($pdo, 20, 0);
                                     ?>
                                     <!-- Render fetched machine data as table rows -->
                                     <?php foreach ($machines as $row): ?>
@@ -158,6 +145,26 @@ if (!isset($_SESSION['user_id'])) {
 
                     <!-- Applicator Table -->
                     <div id="applicators-table" class="section-content expanded" style="height: 600px; overflow-y: auto;">
+                        <!-- Filters -->
+                        <div class="search-filter">
+                            <div class="search-filter">
+                                <input type="text" class="search-input" placeholder="Search here..." onkeyup="applyApplicatorFilters(this.value)">
+                            </div>
+                            <select id="applicatorDescription" class="filter-select">  
+                                <option value="ALL">All Types</option>
+                                <option value="SIDE">SIDE</option>
+                                <option value="END">END</option>
+                                <option value="CLAMP">CLAMP</option>
+                                <option value="STRIP AND CRIMP">STRIP AND CRIMP</option>
+                            </select>
+                            <select id="applicatorWireType" class="filter-select">  
+                                <option value="ALL">All Types</option>
+                                <option value="SMALL">Small</option>
+                                <option value="BIG">Big</option>
+                            </select>
+                            <button type="button" class="tab-btn" onclick="refreshData()">Refresh</button>
+                        </div>
+
                         <div class="table-container">
                             <table class="data-table">
                                 <thead>
@@ -178,7 +185,7 @@ if (!isset($_SESSION['user_id'])) {
                                     <?php
                                         require_once __DIR__ . '/../includes/db.php';
                                         require_once __DIR__ . '/../models/read_applicators.php';
-                                        $applicators = getApplicators($pdo, 10, 0);
+                                        $applicators = getApplicators($pdo, 20, 0);
                                         foreach ($applicators as $row):
                                     ?>
                                         <tr>
@@ -747,5 +754,11 @@ if (!isset($_SESSION['user_id'])) {
     <script src="../../public/assets/js/add_entry.js"></script>
     <script src="../../public/assets/js/export_entry.js"></script>
     <script src="../../public/assets/js/sidebar.js"></script>
+    <!-- Load infinite scroll logic -->
+    <script src="../../public/assets/js/load_machines.js" defer></script>
+    <script src="../../public/assets/js/load_applicators.js" defer></script>
+    <!-- Load edit modals -->
+    <script src="../../public/assets/js/edit_machine_modal.js" defer></script>
+    <script src="../../public/assets/js/edit_applicator_modal.js" defer></script>
 </body>
 </html>
