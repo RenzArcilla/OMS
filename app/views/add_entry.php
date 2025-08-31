@@ -75,10 +75,10 @@ if (!isset($_SESSION['user_id'])) {
                             <div class="search-filter">
                                 <input type="text" class="search-input" placeholder="Search here..." onkeyup="applyMachineFilters(this.value)">
                             </div>
-                            <select id="machineDescription" class="filter-select">  
+                            <select id="machineDescription" class="filter-select" onchange="applyMachineFilters()">  
                                 <option value="ALL">All</option>
-                                <option value="END">Automatic</option>
-                                <option value="SIDE">Semi-Automatic</option>
+                                <option value="AUTOMATIC">Automatic</option>
+                                <option value="SEMI-AUTOMATIC">Semi-Automatic</option>
                             </select>
                             <button type="button" class="tab-btn" onclick="refreshData()">Refresh</button>
                         </div>
