@@ -1,8 +1,8 @@
 // Infinite Scroll Logic for Applicator Table
 
 // State variables
-let applicatorOffset = 10;              // Tracks how many rows we've already loaded
-const applicatorLimit = 10;            // How many rows to fetch per scroll
+let applicatorOffset = 20;              // Tracks how many rows we've already loaded
+const applicatorLimit = 20;            // How many rows to fetch per scroll
 let applicatorLoading = false;         // Prevents overlapping AJAX calls
 
 /*
@@ -20,6 +20,58 @@ function loadApplicators() {
 
             data.forEach(row => {
                 const tr = document.createElement('tr');
+                
+                // Actions TD
+                    const tdActions = document.createElement('td');
+
+                    // Create actions wrapper div (matching server structure)
+                    const actionsDiv = document.createElement('div');
+                    actionsDiv.className = 'actions';
+                    
+                    // Edit button
+                        const editButton = document.createElement('button');
+                        editButton.textContent = 'Edit';
+                        editButton.setAttribute('type', 'button');
+                        editButton.setAttribute('class', 'edit-btn');
+
+                        // Set data attributes
+                        editButton.dataset.id = row.applicator_id;
+                        editButton.dataset.control = row.hp_no;
+                        editButton.dataset.terminal = row.terminal_no;
+                        editButton.dataset.description = row.description;
+                        editButton.dataset.wire = row.wire;
+                        editButton.dataset.terminalMaker = row.terminal_maker;
+                        editButton.dataset.applicatorMaker = row.applicator_maker;
+                        editButton.dataset.serial = row.serial_no;
+                        editButton.dataset.invoice = row.invoice_no;
+
+                        // Set onclick handler to open applicator modal
+                        editButton.onclick = () => openApplicatorEditModal(editButton);
+
+                        actionsDiv.appendChild(editButton);
+
+                    // Delete form
+                        const deleteForm = document.createElement('form');
+                        deleteForm.method = 'POST';
+                        deleteForm.action = '/SOMS/app/controllers/disable_applicator.php';
+                        deleteForm.style.display = 'inline';
+                        deleteForm.onsubmit = () => confirm('Are you sure you want to delete this applicator?');
+
+                        const hiddenId = document.createElement('input');
+                        hiddenId.type = 'hidden';
+                        hiddenId.name = 'applicator_id';
+                        hiddenId.value = row.applicator_id;
+                        deleteForm.appendChild(hiddenId);
+
+                        const deleteButton = document.createElement('button');
+                        deleteButton.type = 'submit';
+                        deleteButton.className = 'delete-btn';
+                        deleteButton.textContent = 'Delete';
+                        deleteForm.appendChild(deleteButton);
+
+                        actionsDiv.appendChild(deleteForm);
+                        tdActions.appendChild(actionsDiv);
+                        tr.appendChild(tdActions);
 
                 const tdId = document.createElement('td');
                 tdId.textContent = row.hp_no;
@@ -52,58 +104,6 @@ function loadApplicators() {
                 const tdInvoice = document.createElement('td');
                 tdInvoice.textContent = row.invoice_no || '';
                 tr.appendChild(tdInvoice);
-
-                // Actions TD
-                const tdActions = document.createElement('td');
-
-                // Create actions wrapper div (matching server structure)
-                const actionsDiv = document.createElement('div');
-                actionsDiv.className = 'actions';
-                
-                // Edit button
-                const editButton = document.createElement('button');
-                editButton.textContent = 'Edit';
-                editButton.setAttribute('type', 'button');
-                editButton.setAttribute('class', 'edit-btn');
-
-                // Set data attributes
-                editButton.dataset.id = row.applicator_id;
-                editButton.dataset.control = row.hp_no;
-                editButton.dataset.terminal = row.terminal_no;
-                editButton.dataset.description = row.description;
-                editButton.dataset.wire = row.wire;
-                editButton.dataset.terminalMaker = row.terminal_maker;
-                editButton.dataset.applicatorMaker = row.applicator_maker;
-                editButton.dataset.serial = row.serial_no;
-                editButton.dataset.invoice = row.invoice_no;
-
-                // Set onclick handler to open applicator modal
-                editButton.onclick = () => openApplicatorEditModal(editButton);
-
-                actionsDiv.appendChild(editButton);
-
-                // Delete form
-                const deleteForm = document.createElement('form');
-                deleteForm.method = 'POST';
-                deleteForm.action = '/SOMS/app/controllers/disable_applicator.php';
-                deleteForm.style.display = 'inline';
-                deleteForm.onsubmit = () => confirm('Are you sure you want to delete this applicator?');
-
-                const hiddenId = document.createElement('input');
-                hiddenId.type = 'hidden';
-                hiddenId.name = 'applicator_id';
-                hiddenId.value = row.applicator_id;
-                deleteForm.appendChild(hiddenId);
-
-                const deleteButton = document.createElement('button');
-                deleteButton.type = 'submit';
-                deleteButton.className = 'delete-btn';
-                deleteButton.textContent = 'Delete';
-                deleteForm.appendChild(deleteButton);
-
-                actionsDiv.appendChild(deleteForm);
-                tdActions.appendChild(actionsDiv);
-                tr.appendChild(tdActions);
 
                 tbody.appendChild(tr);
             });

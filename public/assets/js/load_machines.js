@@ -1,8 +1,8 @@
 // Infinite Scroll Logic for Machine Table
 
 // State variables
-let machineOffset = 10;            // Tracks how many rows already loaded
-const machineLimit = 10;           // How many rows to fetch per scroll
+let machineOffset = 20;            // Tracks how many rows already loaded
+const machineLimit = 20;           // How many rows to fetch per scroll
 let machineLoading = false;        // Prevents overlapping AJAX calls
 
 
@@ -21,39 +21,15 @@ function loadMachines() {
         // Create and append each machine row
             data.forEach(row => {
                 const tr = document.createElement('tr');
-
-                const tdControlNo = document.createElement('td');
-                tdControlNo.textContent = row.control_no;
-                tr.appendChild(tdControlNo);
-
-                const tdDesc = document.createElement('td');
-                tdDesc.textContent = row.description;
-                tr.appendChild(tdDesc);
-
-                const tdModel = document.createElement('td');
-                tdModel.textContent = row.model;
-                tr.appendChild(tdModel);
-
-                const tdMaker = document.createElement('td');
-                tdMaker.textContent = row.maker;
-                tr.appendChild(tdMaker);
-
-                const tdSerial = document.createElement('td');
-                tdSerial.textContent = row.serial_no || '';
-                tr.appendChild(tdSerial);
-
-                const tdInvoice = document.createElement('td');
-                tdInvoice.textContent = row.invoice_no || '';
-                tr.appendChild(tdInvoice);
-
+                
                 // Actions TD
-                const tdActions = document.createElement('td');
+                    const tdActions = document.createElement('td');
 
-                // Create actions wrapper div
-                const actionsDiv = document.createElement('div');
-                actionsDiv.className = 'actions';
+                    // Create actions wrapper div
+                    const actionsDiv = document.createElement('div');
+                    actionsDiv.className = 'actions';
 
-                // Edit link
+                    // Edit link
                     const editButton = document.createElement('button');
                     editButton.textContent = 'Edit';
                     editButton.setAttribute('type', 'button');
@@ -98,6 +74,30 @@ function loadMachines() {
                     actionsDiv.appendChild(deleteForm);
                     tdActions.appendChild(actionsDiv);
                     tr.appendChild(tdActions);
+
+                const tdControlNo = document.createElement('td');
+                tdControlNo.textContent = row.control_no;
+                tr.appendChild(tdControlNo);
+
+                const tdDesc = document.createElement('td');
+                tdDesc.textContent = row.description;
+                tr.appendChild(tdDesc);
+
+                const tdModel = document.createElement('td');
+                tdModel.textContent = row.model;
+                tr.appendChild(tdModel);
+
+                const tdMaker = document.createElement('td');
+                tdMaker.textContent = row.maker;
+                tr.appendChild(tdMaker);
+
+                const tdSerial = document.createElement('td');
+                tdSerial.textContent = row.serial_no || '';
+                tr.appendChild(tdSerial);
+
+                const tdInvoice = document.createElement('td');
+                tdInvoice.textContent = row.invoice_no || '';
+                tr.appendChild(tdInvoice);
 
                 tbody.appendChild(tr); 
             });
