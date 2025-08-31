@@ -704,7 +704,7 @@
     <!-- Export Modal -->
     <div id="exportModal" class="modal-overlay">
         <div class="form-container">
-            <button class="modal-close-btn" onclick="closeExportModal()">×</button>
+            <button class="modal-close-btn">×</button>
             
             <div class="form-header">
                 <h1 class="form-title">Export Data</h1>
@@ -808,7 +808,7 @@
 
             <!-- Action Buttons -->
             <div class="button-group">
-                <button type="button" class="cancel-btn" onclick="closeExportModal()">Cancel</button>
+                <button type="button" class="cancel-btn">Cancel</button>
                 <button type="button" class="export-btn" onclick="handleExport()">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -824,5 +824,6 @@
     <!-- Load JavaScript -->
     <script src="../../public/assets/js/dashboard_applicator.js"></script>
     <script src="../../public/assets/js/sidebar.js"></script>
+    <script src="../../public/assets/js/utils/exit.js"></script>
 </body>
 </html>
