@@ -140,6 +140,11 @@ function searchUsers(string $search = '', string $role = 'all', int $limit = 20,
 
     global $pdo;
 
+    // Escape LIKE wildcards if search is used
+    if (!empty($search)) {
+        $search = str_replace(['%', '_'], ['\%', '\_'], $search);
+    }
+
     $sql = "
         SELECT user_id, username, first_name, last_name, user_type
         FROM users
