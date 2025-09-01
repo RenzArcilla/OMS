@@ -72,15 +72,32 @@ if (!isset($_SESSION['user_id'])) {
                     <div id="machine-table" class="section-content expanded" style="height: 600px; overflow-y: auto;">
                         <!-- Filters -->
                         <div class="search-filter">
-                            <div class="search-filter">
-                                <input type="text" class="search-input" placeholder="Search here..." onkeyup="applyMachineFilters(this.value)">
-                            </div>
-                            <select id="machineDescription" class="filter-select" onchange="applyMachineFilters()">  
-                                <option value="ALL">All</option>
-                                <option value="AUTOMATIC">Automatic</option>
-                                <option value="SEMI-AUTOMATIC">Semi-Automatic</option>
-                            </select>
-                            <button type="button" class="tab-btn" onclick="refreshData()">Refresh</button>
+                            <form id="machineFilterForm" onsubmit="return false;" style="display: flex; gap: 10px; align-items: center;">
+                                <input 
+                                    type="text" 
+                                    class="search-input" 
+                                    id="machineSearchInput"
+                                    placeholder="Search here..." 
+                                    onkeyup="applyMachineFilters(this.value)"
+                                    autocomplete="off"
+                                >
+                                <select 
+                                    id="machineDescription" 
+                                    class="filter-select" 
+                                    onchange="applyMachineFilters()"
+                                    required
+                                >  
+                                    <option value="ALL">All</option>
+                                    <option value="AUTOMATIC">Automatic</option>
+                                    <option value="SEMI-AUTOMATIC">Semi-Automatic</option>
+                                </select>
+                                <button 
+                                    type="button" 
+                                    class="tab-btn" 
+                                    id="refreshMachineTableBtn"
+                                    onclick="refreshData()"
+                                >Refresh</button>
+                            </form>
                         </div>
                         <div class="table-container">
                             <table class="data-table">
