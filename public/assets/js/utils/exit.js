@@ -22,5 +22,6 @@ buttons.forEach(button => {
     button.addEventListener('click', function() {
         document.getElementById('exportMachineModal').style.display = 'none';
     });
+    
 });
 

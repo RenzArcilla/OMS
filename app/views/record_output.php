@@ -539,7 +539,8 @@ if (!isset($_SESSION['user_id'])) {
         </div>
     </div>
 </div>
-
+<script src="../../public/assets/js/utils/exit.js"></script>
+<script src="../../public/assets/js/utils/enter.js"></script>
 <!-- Load modal logic for editing records -->
 <script src="../../public/assets/js/edit_record_modal.js" defer></script>
 <!-- Load modal logic for editing records -->
