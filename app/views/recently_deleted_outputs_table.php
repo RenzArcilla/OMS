@@ -63,7 +63,7 @@
                             <?php foreach ($disabled_records as $row): ?>
                                 <tr>
                                     <td>
-                                    <button class="restore-btn" 
+                                    <button class="restore-btn restore-output-btn" 
                                         data-record-id="<?= htmlspecialchars($row['record_id']) ?>">
                                         Restore
                                     </button>

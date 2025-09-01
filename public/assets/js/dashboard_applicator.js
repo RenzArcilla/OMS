@@ -146,7 +146,7 @@ function confirmDeleteCustomPart(partId, type) {
 
 // Listen for clicks only on the restore buttons
 document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('restore-btn')) {
+    if (event.target.classList.contains('restore-applicator-btn')) {
         const applicatorId = event.target.dataset.applicatorId;
         confirmRestoreCustomPart(applicatorId);
     }

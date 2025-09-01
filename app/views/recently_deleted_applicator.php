@@ -42,7 +42,7 @@
                         <tr>
                             <td>
                                 <button id="restore-applicator-<?= htmlspecialchars($applicator['applicator_id']) ?>"
-                                        class="restore-btn"
+                                        class="restore-btn restore-applicator-btn"
                                         data-applicator-id="<?= htmlspecialchars($applicator['applicator_id']) ?>">
                                     Restore
                                 </button>
