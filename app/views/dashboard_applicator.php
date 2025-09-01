@@ -46,13 +46,15 @@
         $search_result = searchApplicatorByHpNo(trim($search_hp), $part_names_array);
         
         // CHECK FOR SEARCH RESULT AND REDIRECT IMMEDIATELY IF NOT FOUND
-        if (!$search_result) {
+        if (empty($search_result)) {
             jsAlertRedirect("Applicator not found!", $_SERVER['PHP_SELF']);
-            exit(); // Stop execution to prevent any further output
+            exit();
         }
-        
+
+        $search_result = searchApplicatorByHpNo(trim($search_hp), $part_names_array);
+
         // If searching, use search result instead of all records
-        $applicator_total_outputs = [$search_result]; // Single result in array
+        $applicator_total_outputs = $search_result;
     } else {
         // Use existing logic for all records
         $applicator_total_outputs = getApplicatorRecordsAndOutputs(10, 0, $part_names_array);
