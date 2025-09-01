@@ -112,7 +112,7 @@ function confirmDeleteCustomPart(partId, type) {
 
 // Listen for clicks only on the restore buttons
 document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('restore-btn')) {
+    if (event.target.classList.contains('restore-machine-btn')) {
         const machineId = event.target.dataset.machineId;
         confirmRestoreCustomPart(machineId);
     }

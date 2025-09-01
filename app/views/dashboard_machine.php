@@ -311,7 +311,7 @@
                                     <tr>
                                         <td>
                                             <button id="restore-machine-<?= htmlspecialchars($machine['machine_id']) ?>"
-                                                    class="restore-btn"
+                                                    class="restore-btn restore-machine-btn"
                                                     data-machine-id="<?= htmlspecialchars($machine['machine_id']) ?>">
                                                 Restore
                                             </button>
