@@ -54,19 +54,33 @@
                         </div>
                     </div>
                     
-                    <div class="search-filter">
-                        <div class="search-filter">
-                            <input type="text" class="search-input" placeholder="Search here..." onkeyup="applyUserFilters(this.value)">
-                        </div>
-                        
-                        <select id="roleFilter" class="filter-select" onchange="applyUserFilters()">
+                    <div class="search-filter" style="display: flex; gap: 10px; align-items: center;">
+                        <input 
+                            type="text" 
+                            class="search-input" 
+                            id="userSearchInput"
+                            placeholder="Search here..." 
+                            onkeyup="applyUserFilters(this.value)"
+                            autocomplete="off"
+                        >
+                        <select 
+                            id="roleFilter" 
+                            class="filter-select" 
+                            onchange="applyUserFilters()"
+                            required
+                        >
                             <option value="all">All Roles</option>
                             <option value="DEFAULT">Default</option>
                             <option value="TOOLKEEPER">Toolkeeper</option>
                             <option value="ADMIN">Admin</option>
                         </select>
+                        <button 
+                            type="button" 
+                            class="tab-btn" 
+                            id="refreshUserTableBtn"
+                            onclick="refreshData()"
+                        >Refresh</button>
                     </div>
-                    
                     <!-- Users Table -->
                     <?php 
                     require_once '../models/read_user.php'; 
