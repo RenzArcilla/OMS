@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/SOMS/public/assets/css/layout/grid.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/export_modal.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/stats_modal.css">
 </head>
 <body>
     <?php 
