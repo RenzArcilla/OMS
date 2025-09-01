@@ -11,6 +11,10 @@ document.addEventListener('click', function(event) {
         if (modal2) {
             modal2.style.display = 'block';
         }
+        const modal3 = document.getElementById('addCustomPartModalDashboardMachine');
+        if (modal3) {
+            modal3.style.display = 'block';
+        }
     }
     if (event.target.classList.contains('delete-btn')) {
         // This works even for dynamically added elements

@@ -339,9 +339,9 @@
     </div>
 
     <!-- Add Custom Part Modal -->
-    <div id="addCustomPartModalDashboardApplicator" class="modal-overlay">
-        <div class="modal">
-            <button class="modal-close-btn" onclick="closeAddCustomPartModal()">×</button>
+    <div id="addCustomPartModalDashboardMachine" class="modal-overlay">
+        <div class="form-container">
+            <button class="modal-close-btn">×</button>
             
             <div class="form-header">
                 <h1 class="form-title">➕ Add Custom Part</h1>
@@ -352,14 +352,40 @@
                 <input type="hidden" name="equipment_type" value="MACHINE">
 
                 <div class="form-section">
-                    <div class="form-group">
-                        <label for="customPartName">Part Name</label>
-                        <input type="text" id="custom_part_name" name="custom_part_name" class="form-input" placeholder="Enter part name..." required>
+                    <div class="section-header">
+                        <div class="section-icon">⚙️</div>
+                        <div class="section-info">
+                            <div class="section-title">Part Name</div>
+                            <div class="section-description">Enter the name of the custom part</div>
+                        </div>
+                    </div>
+                    <div class="form-grid-vertical">
+                        <div class="form-group">
+                            <label class="form-label" for="custom_part_name">
+                                Part Name
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="custom_part_name" 
+                                name="custom_part_name" 
+                                class="form-input" 
+                                placeholder="Enter part name..." 
+                                required
+                                maxlength="100"
+                                aria-describedby="part-name-help"
+                            >
+                        </div>
                     </div>
                 </div>
+                
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Add Part</button>
-                    <button type="button" class="btn btn-secondary" onclick="closeAddCustomPartModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        Add Part
+                    </button>
+                    <button type="button" class="cancel-btn" onclick="closeAddCustomPartModal()">
+                        Cancel
+                    </button>
                 </div>
             </form>
         </div>
