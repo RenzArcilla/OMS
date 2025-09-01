@@ -5,15 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Machine Dashboard</title>
     <link rel="stylesheet" href="../../public/assets/css/base/header.css">
+    <link rel="icon" href="/SOMS/public/assets/images/favicon.ico">
     <link rel="stylesheet" href="../../public/assets/css/base/base.css">
     <link rel="stylesheet" href="../../public/assets/css/dashboard_machine.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/layout/grid.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/export_modal.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/stats_modal.css">
 </head>
 <body>
     <?php
@@ -362,11 +364,64 @@
             </form>
         </div>
     </div>
+    
+    
+    <!-- Delete Custom Part Modal -->
+    <div id="deleteCustomPartModalDashboardMachine" class="modal-overlay">
+        <div class="form-container">
+            <button class="modal-close-btn">×</button>
+            
+            <div class="form-header">
+                <span class="delete-icon">🗑️</span>
+                <h1 class="form-title">Delete Custom Part</h1>
+                <p class="form-subtitle">Permanently remove this custom part</p>
+            </div>
+
+            <div class="warning-section">
+                <span class="warning-icon">⚠️</span>
+                <div class="warning-title">Permanent Action</div>
+                <div class="warning-text">
+                    This custom part will be permanently removed from this applicator. This action cannot be undone.
+                </div>
+            </div>
+
+            <div id="messageContainer"></div>
+
+            <div class="part-details">
+                <div class="part-info">
+                    <div class="part-icon">⚙️</div>
+                    <div class="part-content">
+                        <div class="part-name" id="partName">Custom Valve Assembly</div>
+                        <div class="part-meta">Added on March 15, 2024 • Part ID: #CP001</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="confirmation-section">
+                <label class="confirmation-checkbox">
+                    <input type="checkbox" id="confirmDelete" class="confirmation-input">
+                    <span class="confirmation-label">
+                        I understand that this action is permanent and cannot be undone. I want to delete this custom part.
+                    </span>
+                </label>
+            </div>
+
+            <form id="deleteCustomPartForm" method="POST" action="../controllers/delete_custom_part.php">
+                <input type="hidden" name="equipment_type" value="APPLICATOR">
+                <input type="hidden" name="part_id" value="" id="partIdInput">
+                
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary" id="deleteBtn" disabled>Delete Part Permanently</button>
+                    <button type="button" class="cancel-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Edit Custom Part Modal -->
     <div id="editCustomPartModalDashboardMachine" class="modal-overlay">
-        <div class="modal">
-            <button class="modal-close-btn" onclick="closeEditCustomPartModal()">×</button>
+        <div class="form-container">
+            <button class="modal-close-btn">×</button>
 
             <div class="form-header">
                 <h1 class="form-title">✏️ Edit Custom Part</h1>
@@ -378,14 +433,33 @@
                 <input type="hidden" name="part_id" id="edit_part_id">
 
                 <div class="form-section">
-                    <div class="form-group">
-                        <label for="customPartName">Part Name</label>
-                        <input type="text" id="edit_part_name" name="custom_part_name" class="form-input" placeholder="Enter part name..." required>
+                    <div class="section-header">
+                        <div class="section-icon">⚙️</div>
+                        <div class="section-info">
+                            <div class="section-title">Part Name</div>
+                            <div class="section-description">Edit the name of the custom part</div>
+                        </div>
+                    </div>
+                    <div class="form-grid-vertical">
+                        <div class="form-group">
+                            <label class="form-label" for="edit_part_name">
+                                Part Name
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="edit_part_name" 
+                                name="custom_part_name" 
+                                class="form-input" 
+                                placeholder="Enter part name..." 
+                                required
+                            >
+                        </div>
                     </div>
                 </div>
-                <div class="form-actions">
+                <div class="button-group">
                     <button type="submit" class="btn btn-primary">Save Changes</button>
-                    <button type="button" class="btn btn-secondary" onclick="closeEditCustomPartModal()">Cancel</button>
+                    <button type="button" class="cancel-btn">Cancel</button>
                 </div>
             </form>
         </div>
@@ -684,5 +758,8 @@
     <script src="../../public/assets/js/sidebar.js"></script>
     <!-- Search Disabled Machines -->
     <script src="../../public/assets/js/search_disabled_machines.js"></script>
+    <script src="../../public/assets/js/utils/enter.js"></script>
+    <script src="../../public/assets/js/utils/exit.js"></script>
+    <script src="../../public/assets/js/utils/checkbox.js"></script>
 </body>
 </html>

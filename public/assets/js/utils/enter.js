@@ -7,12 +7,20 @@ document.addEventListener('click', function(event) {
         if (modal) {
             modal.style.display = 'block';
         }
+        const modal2 = document.getElementById('editCustomPartModalDashboardMachine');
+        if (modal2) {
+            modal2.style.display = 'block';
+        }
     }
     if (event.target.classList.contains('delete-btn')) {
         // This works even for dynamically added elements
         const modal = document.getElementById('deleteCustomPartModalDashboardApplicator');
         if (modal) {
             modal.style.display = 'block';
+        }
+        const modal2 = document.getElementById('deleteCustomPartModalDashboardMachine');
+        if (modal2) {
+            modal2.style.display = 'block';
         }
     }
 });
