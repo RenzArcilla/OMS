@@ -203,7 +203,7 @@ function getActiveApplicatorByHpNo($hp_no) {
 }
 
 
-function getFilteredApplicators($limit, $offset, $search = null, $description = 'ALL', $type = 'ALL') {
+function getFilteredApplicators($limit, $offset, $search = null, $description = 'ALL', $type = 'ALL', $is_active = 1) {
     /*
         Function to fetch applicators from the database with optional search and filters.
         Supports pagination via limit and offset, and prevents SQL injection.
@@ -214,6 +214,7 @@ function getFilteredApplicators($limit, $offset, $search = null, $description = 
             string $search    - Optional search keyword for multiple fields.
             string $description - Optional filter for applicator description (default = 'ALL').
             string $type      - Optional filter for wire type (default = 'ALL').
+            int $is_active    - Optional filter for active status (default = 1).
 
         Returns:
             array - Associative array of applicators matching the search and filter criteria.
@@ -221,17 +222,20 @@ function getFilteredApplicators($limit, $offset, $search = null, $description = 
 
     global $pdo;
 
-    $query = "SELECT * FROM applicators WHERE 1=1";
-    $params = [];
+    $query = "SELECT * FROM applicators WHERE is_active = :is_active";
+    $params = [
+        ':is_active' => $is_active
+    ];
 
-    // Escape LIKE wildcards if search is used
+    // Add search condition if provided
     if (!empty($search)) {
-        $search = str_replace(['%', '_'], ['\%', '\_'], $search);
+        $search = str_replace(['%', '_'], ['\%', '\_'], $search); // escape LIKE wildcards
         $query .= " AND (
-                    hp_no LIKE :search OR 
-                    terminal_no LIKE :search OR 
-                    serial_no LIKE :search OR 
-                    invoice_no LIKE :search)";
+            hp_no LIKE :search OR 
+            terminal_no LIKE :search OR 
+            serial_no LIKE :search OR 
+            invoice_no LIKE :search
+        )";
         $params[':search'] = "%$search%";
     }
 
@@ -251,15 +255,15 @@ function getFilteredApplicators($limit, $offset, $search = null, $description = 
 
     $stmt = $pdo->prepare($query);
 
-    // Bind dynamic parameters securely
+    // Bind dynamic parameters
     foreach ($params as $key => $value) {
         $stmt->bindValue($key, $value);
     }
 
+    // Bind pagination
     $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
     $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
 
     $stmt->execute();
-
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }

@@ -325,7 +325,7 @@
                     </div>
                     
                 <!-- Table 2: Recently Deleted Applicators -->
-                    <div class="data-section">
+                    <div class="data-section" id="disabled-applicators-section">
                         <div class="section-header">
                             <div class="section-title">
                                 📤 Recently Deleted Applicators
@@ -334,8 +334,23 @@
                             <div class="expand-icon">▼</div>
                         </div>
                         <div class="section-content expanded">
+                            <!-- Filters -->
                             <div class="search-filter">
-                                <input type="text" class="search-input" placeholder="Search deleted applicators...">
+                                <div class="search-filter">
+                                    <input type="text" class="search-input" placeholder="Search here..." onkeyup="applyDisabledApplicatorFilters()">
+                                </div>
+                                <select id="applicatorDescription" class="filter-select" onchange="applyDisabledApplicatorFilters()">  
+                                    <option value="ALL">All Types</option>
+                                    <option value="SIDE">SIDE</option>
+                                    <option value="END">END</option>
+                                    <option value="CLAMP">CLAMP</option>
+                                    <option value="STRIP AND CRIMP">STRIP AND CRIMP</option>
+                                </select>
+                                <select id="applicatorWireType" class="filter-select" onchange="applyDisabledApplicatorFilters()">  
+                                    <option value="ALL">All Types</option>
+                                    <option value="SMALL">Small</option>
+                                    <option value="BIG">Big</option>
+                                </select>
                             </div>
                             <div class="table-container">
                                 <table class="data-table">
@@ -346,7 +361,7 @@
                                                 <th>Description</th>
                                                 <th>Terminal Maker</th>
                                                 <th>Applicator Maker</th>
-                                                <th>Last Encoded</th>
+                                                <th>Last Updated</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -927,5 +942,7 @@
     <script src="../../public/assets/js/utils/exit.js"></script>
     <script src="../../public/assets/js/utils/enter.js"></script>
     <script src="../../public/assets/js/utils/checkbox.js"></script>
+    <!-- Search Disabled Applicators -->
+    <script src="../../public/assets/js/search_disabled_applicators.js"></script>
 </body>
 </html>
