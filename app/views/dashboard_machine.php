@@ -365,7 +365,7 @@
 
     <!-- Edit Custom Part Modal -->
     <div id="editCustomPartModalDashboardMachine" class="modal-overlay">
-        <div class="modal">
+        <div class="form-container">
             <button class="modal-close-btn" onclick="closeEditCustomPartModal()">×</button>
 
             <div class="form-header">
@@ -378,12 +378,31 @@
                 <input type="hidden" name="part_id" id="edit_part_id">
 
                 <div class="form-section">
-                    <div class="form-group">
-                        <label for="customPartName">Part Name</label>
-                        <input type="text" id="edit_part_name" name="custom_part_name" class="form-input" placeholder="Enter part name..." required>
+                    <div class="section-header">
+                        <div class="section-icon">⚙️</div>
+                        <div class="section-info">
+                            <div class="section-title">Part Name</div>
+                            <div class="section-description">Edit the name of the custom part</div>
+                        </div>
+                    </div>
+                    <div class="form-grid-vertical">
+                        <div class="form-group">
+                            <label class="form-label" for="edit_part_name">
+                                Part Name
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="edit_part_name" 
+                                name="custom_part_name" 
+                                class="form-input" 
+                                placeholder="Enter part name..." 
+                                required
+                            >
+                        </div>
                     </div>
                 </div>
-                <div class="form-actions">
+                <div class="button-group">
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                     <button type="button" class="btn btn-secondary" onclick="closeEditCustomPartModal()">Cancel</button>
                 </div>
