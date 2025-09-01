@@ -235,7 +235,7 @@
             </div>
 
                 <!-- Table 3: Recently Deleted Outputs Section -->
-            <div class="full-width-table">
+            <div class="full-width-table" style="position: relative; top: -50px;">
                 <?php include_once __DIR__ . '/recently_deleted_outputs_table.php'; ?>
             </div>
         </div>
