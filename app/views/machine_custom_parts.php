@@ -11,7 +11,7 @@
             <input type="text" class="search-input" placeholder="Search custom parts...">
         </div>
         <div class="table-container">
-            <table class="data-table" id="partsTable"   >
+            <table class="data-table" id="partsTable">
                 <thead>
                     <tr>
                         <th>Part Name</th>
@@ -26,14 +26,14 @@
                         <td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $part['part_name']))) ?></td>
                         <td><?= htmlspecialchars(date('Y-m-d', strtotime($part['created_at']))) ?></td>
                         <td>
-                            <div class="actions">
+                            <div class="button-group">
                                 <?php $partNameTitle = ucwords(str_replace('_', ' ', strtolower($part['part_name']))); ?>
-                                <button class="edit-btn" 
+                                <button class="edit-btn btn btn-edit" 
                                         data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
                                         data-part-name="<?= htmlspecialchars($partNameTitle, ENT_QUOTES) ?>">
                                     Edit
                                 </button>
-                                <button class="delete-btn" 
+                                <button class="delete-btn btn btn-delete" 
                                         data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
                                         data-part-type="MACHINE">
                                     Delete
