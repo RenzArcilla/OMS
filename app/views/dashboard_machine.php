@@ -303,7 +303,7 @@
                                         <th>Control Number</th>
                                         <th>Model</th>
                                         <th>Maker</th>
-                                        <th>Last Encoded</th>
+                                        <th>Last Updated</th>
                                     </tr>
                                 </thead>
                                 <tbody>
