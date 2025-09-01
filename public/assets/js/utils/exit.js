@@ -19,5 +19,9 @@ buttons.forEach(button => {
     button.addEventListener('click', function() {
         document.getElementById('addCustomPartModalDashboardMachine').style.display = 'none';
     });
+    button.addEventListener('click', function() {
+        document.getElementById('exportMachineModal').style.display = 'none';
+    });
+    
 });
 
