@@ -40,16 +40,16 @@
     
     if (!empty(trim($search_ctrl))) {
         $is_searching = true;
-        $search_result = searchMachineByControlNo(trim($search_ctrl), $part_names_array);
+        $search_results = searchMachineByControlNo(trim($search_ctrl), $part_names_array);
         
         // CHECK FOR SEARCH RESULT AND REDIRECT IMMEDIATELY IF NOT FOUND
-        if (!$search_result) {
+        if (empty($search_results)) {
             jsAlertRedirect("Machine not found!", $_SERVER['PHP_SELF']);
-            exit(); // Stop execution to prevent any further output
+            exit();
         }
         
         // If searching, use search result instead of all records
-        $machine_total_outputs = [$search_result]; // Single result in array
+        $machine_total_outputs = $search_results;
     } else {
         // Use existing logic for all records
         $machine_total_outputs = getMachineRecordsAndOutputs(10, 0, $part_names_array);
