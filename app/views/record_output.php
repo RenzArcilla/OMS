@@ -63,16 +63,33 @@ if (!isset($_SESSION['user_id'])) {
 
                 <!-- Filters -->
                 <div class="search-filter">
-                    <div class="search-filter">
-                        <input type="text" class="search-input" placeholder="Search here..." onkeyup="applyRecordFilters(this.value)">
-                    </div>
-                    <select id="recordShift" class="filter-select" onchange="applyRecordFilters()">  
-                        <option value="ALL">All</option>
-                        <option value="1st">1st</option>
-                        <option value="2nd">2nd</option>    
-                        <option value="NIGHT">Night</option>
-                    </select>
-                    <button type="button" class="tab-btn" onclick="refreshData()">Refresh</button>
+                    <form id="recordFilterForm" onsubmit="return false;" style="display: flex; gap: 10px; align-items: center;">
+                        <input 
+                            type="text" 
+                            class="search-input" 
+                            id="recordSearchInput"
+                            placeholder="Search here..." 
+                            onkeyup="applyRecordFilters(this.value)"
+                            autocomplete="off"
+                        >
+                        <select 
+                            id="recordShift" 
+                            class="filter-select" 
+                            onchange="applyRecordFilters()"
+                            required
+                        >  
+                            <option value="ALL">All</option>
+                            <option value="1st">1st</option>
+                            <option value="2nd">2nd</option>    
+                            <option value="NIGHT">Night</option>
+                        </select>
+                        <button 
+                            type="button" 
+                            class="tab-btn" 
+                            id="refreshRecordTableBtn"
+                            onclick="refreshData()"
+                        >Refresh</button>
+                    </form>
                 </div>
 
                 <div class="section-content expanded" id="table-container" style="height: 500px; overflow-y: auto;">
