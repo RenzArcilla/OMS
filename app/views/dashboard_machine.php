@@ -684,7 +684,7 @@
 
             <!-- Action Buttons -->
             <div class="button-group">
-                <button type="button" class="cancel-btn" onclick="closeExportModal()">Cancel</button>
+                <button type="button" class="cancel-btn">Cancel</button>
                 <button type="button" class="export-btn" onclick="handleExport()">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
