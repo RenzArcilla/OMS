@@ -241,6 +241,7 @@
         </div>
     </div>
 
+    
     <!-- Add Custom Part Modal -->
     <div id="addCustomPartModalDashboardMachine" class="modal-overlay">
         <div class="form-container">
