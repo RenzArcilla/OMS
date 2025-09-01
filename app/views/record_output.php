@@ -282,6 +282,9 @@ if (!isset($_SESSION['user_id'])) {
                 <button type="submit" class="submit-btn">
                     Submit Record
                 </button>
+                <button type="button" class="cancel-btn">
+                    Cancel
+                </button>
             </div>
         </form>
     </div>
