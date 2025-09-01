@@ -6,6 +6,11 @@
     margin-bottom: 40px;
 }
 
+.tables-scroll-2 {
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
 .full-width-table {
     grid-column: 1 / -1;
 }
