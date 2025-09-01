@@ -235,16 +235,16 @@ function getPartsOrderedByMachineOutput($part_names_array): array {
     return $parts_data;
 }
 
-function searchMachineByControlNo($control_no, $part_names_array): ?array {
+function searchMachineByControlNo($control_no, $part_names_array): array {
     /*
-        Function to search for a specific machine by control number.
+        Function to search for machines by (partial) control number.
         
         Args:
-        - $control_no: The control number to search for
+        - $control_no: The control number (partial) to search for
         - $part_names_array: Array of custom part names
         
         Returns:
-        - Array with machine data if found, null if not found
+        - Array of machine records (can be empty if no match)
     */
     
     global $pdo;
@@ -254,18 +254,18 @@ function searchMachineByControlNo($control_no, $part_names_array): ?array {
         FROM monitor_machine
         LEFT JOIN machines
             USING (machine_id)
-        WHERE LOWER(control_no) = LOWER(:control_no)
-        LIMIT 1
+        WHERE LOWER(control_no) LIKE LOWER(:control_no)
     ";
     
     $stmt = $pdo->prepare($sql);
-    $stmt->bindValue(':control_no', trim($control_no), PDO::PARAM_STR);
+    // Add wildcards for partial matching
+    $stmt->bindValue(':control_no', '%' . trim(strtolower($control_no)) . '%', PDO::PARAM_STR);
     $stmt->execute();
     
-    $record = $stmt->fetch(PDO::FETCH_ASSOC);
+    $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-    if ($record) {
-        // Process custom parts output (same logic as getRecordsAndOutputs)
+    // Normalize custom_parts_output for each record
+    foreach ($records as &$record) {
         if (!empty($record['custom_parts_output'])) {
             if (is_string($record['custom_parts_output'])) {
                 $decoded = json_decode($record['custom_parts_output'], true);
@@ -278,9 +278,7 @@ function searchMachineByControlNo($control_no, $part_names_array): ?array {
         } else {
             $record['custom_parts_output'] = [];
         }
-        
-        return $record;
     }
     
-    return null;
+    return $records;
 }
