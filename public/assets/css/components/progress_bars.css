@@ -1,0 +1,194 @@
+/* Progress Bar Styles */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    margin-top: 4px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4CAF50, #45a049);
+    border-radius: 4px;
+    transition: width 0.5s ease-in-out, background-color 0.3s ease;
+    position: relative;
+    min-width: 4px;
+}
+
+/* Status-based colors */
+.progress-fill.status-green {
+    background: linear-gradient(90deg, #4CAF50, #45a049);
+}
+
+.progress-fill.status-yellow {
+    background: linear-gradient(90deg, #FF9800, #F57C00);
+}
+
+.progress-fill.status-red {
+    background: linear-gradient(90deg, #F44336, #D32F2F);
+}
+
+/* Warning state for high percentages */
+.progress-fill.warning {
+    animation: pulse 2s infinite;
+    box-shadow: 0 0 8px rgba(255, 152, 0, 0.6);
+}
+
+/* Pulse animation for warnings */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+/* Hover effects */
+.progress-bar:hover .progress-fill {
+    filter: brightness(1.1);
+}
+
+.progress-bar:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Progress tooltip */
+.progress-tooltip {
+    position: absolute;
+    background: #333;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    z-index: 1000;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.progress-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+
+/* Progress bar container styling */
+.progress-container {
+    margin: 8px 0;
+}
+
+.progress-label {
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.progress-value {
+    font-weight: 600;
+    color: #333;
+}
+
+.progress-limit {
+    color: #999;
+    font-size: 10px;
+}
+
+/* Responsive progress bars */
+@media (max-width: 768px) {
+    .progress-bar {
+        height: 6px;
+    }
+    
+    .progress-fill {
+        min-width: 3px;
+    }
+    
+    .progress-tooltip {
+        font-size: 11px;
+        padding: 6px 10px;
+    }
+}
+
+/* Dark theme support */
+.dark-theme .progress-bar {
+    background-color: #444;
+}
+
+.dark-theme .progress-fill.status-green {
+    background: linear-gradient(90deg, #66BB6A, #4CAF50);
+}
+
+.dark-theme .progress-fill.status-yellow {
+    background: linear-gradient(90deg, #FFB74D, #FF9800);
+}
+
+.dark-theme .progress-fill.status-red {
+    background: linear-gradient(90deg, #EF5350, #F44336);
+}
+
+/* Progress bar with text overlay */
+.progress-bar-with-text {
+    position: relative;
+    height: 20px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill-with-text {
+    height: 100%;
+    background: linear-gradient(90deg, #4CAF50, #45a049);
+    border-radius: 10px;
+    transition: width 0.5s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Compact progress bars for tables */
+.progress-bar-compact {
+    height: 6px;
+    margin-top: 2px;
+}
+
+.progress-fill-compact {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+/* Progress bar groups */
+.progress-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+}
+
+.progress-item {
+    text-align: center;
+}
+
+.progress-item .progress-bar {
+    margin: 8px 0;
+}
+
+.progress-item .progress-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 4px;
+}

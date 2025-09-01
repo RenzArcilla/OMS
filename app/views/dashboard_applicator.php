@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/export_modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/stats_modal.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/progress_bars.css">
 </head>
 <body>
     <?php 
@@ -206,10 +207,10 @@
                                             <td><?= htmlspecialchars($row['hp_no']) ?></td>
                                             <td><strong><?= htmlspecialchars(explode(' ', $row['last_updated'])[0]) ?></strong></td>
                                             <td><strong><?= htmlspecialchars($row['total_output']) ?></strong></td>
-                                            <td>
-                                                <div><strong><?= htmlspecialchars($row['wire_crimper_output']) ?></strong> / 1.5M</div>
+                                            <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="wire_crimper">
+                                                <div><strong><?= htmlspecialchars($row['wire_crimper_output']) ?></strong> / 400K</div>
                                                 <div class="progress-bar">
-                                                    <div class="progress-fill" style="width: 42%;"></div>
+                                                    <div class="progress-fill" style="width: 0%;"></div>
                                                 </div>
                                             </td>
                                             <td>
@@ -834,6 +835,7 @@
 
     <!-- Load JavaScript -->
     <script src="../../public/assets/js/dashboard_applicator.js"></script>
+    <script src="../../public/assets/js/dashboard.js"></script>
     <script src="../../public/assets/js/sidebar.js"></script>
     <script src="../../public/assets/js/utils/exit.js"></script>
     <script src="../../public/assets/js/utils/enter.js"></script>
