@@ -254,3 +254,87 @@ function getFilteredRecords($limit, $offset, $search = null, $shift = 'ALL', $is
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
+function getFilteredRecordsForExport($date_range = 'all', $start_date = null, $end_date = null) {
+    /*
+        Model function to fetch filtered records.
+        This function will be used for exporting records to Excel.
+
+        Parameters:
+            string $filters - The filters to apply when fetching records.
+    */
+    
+    global $pdo;
+
+    $params = [];
+    switch ($date_range) {
+        case 'today':
+            $filters = "DATE(r.date_inspected) = CURDATE()";
+            break;
+        case 'week':
+            $filters = "YEARWEEK(r.date_inspected, 1) = YEARWEEK(CURDATE(), 1)";
+            break;
+        case 'month':
+            $filters = "MONTH(r.date_inspected) = MONTH(CURDATE()) 
+                        AND YEAR(r.date_inspected) = YEAR(CURDATE())";
+            break;
+        case 'quarter':
+            $filters = "QUARTER(r.date_inspected) = QUARTER(CURDATE()) 
+                        AND YEAR(r.date_inspected) = YEAR(CURDATE())";
+            break;
+        case 'year':
+            $filters = "YEAR(r.date_inspected) = YEAR(CURDATE())";
+            break;
+        case 'custom':
+            $filters = "DATE(r.date_inspected) BETWEEN :start_date AND :end_date";
+            $params[':start_date'] = $start_date;
+            $params[':end_date']   = $end_date;
+            break;
+        default:
+            $filters = "1=1"; // all
+    }
+
+    $sql = "
+        SELECT 
+            r.record_id,
+            r.shift,
+            r.date_inspected,
+            r.date_encoded,
+            r.last_updated,
+            ao1.total_output AS app1_output,
+            ao2.total_output AS app2_output,
+            mo.total_machine_output AS machine_output,
+            a1.hp_no AS hp1_no,
+            a2.hp_no AS hp2_no,
+            m.control_no AS control_no
+        FROM records r
+        LEFT JOIN (
+            SELECT record_id, applicator_id, SUM(total_output) AS total_output
+            FROM applicator_outputs
+            GROUP BY record_id, applicator_id
+        ) ao1 ON r.record_id = ao1.record_id AND r.applicator1_id = ao1.applicator_id
+        LEFT JOIN (
+            SELECT record_id, applicator_id, SUM(total_output) AS total_output
+            FROM applicator_outputs
+            GROUP BY record_id, applicator_id
+        ) ao2 ON r.record_id = ao2.record_id AND r.applicator2_id = ao2.applicator_id
+        LEFT JOIN (
+            SELECT record_id, SUM(total_machine_output) AS total_machine_output
+            FROM machine_outputs
+            GROUP BY record_id
+        ) mo ON r.record_id = mo.record_id
+        LEFT JOIN applicators a1 ON r.applicator1_id = a1.applicator_id
+        LEFT JOIN applicators a2 ON r.applicator2_id = a2.applicator_id
+        LEFT JOIN machines m ON r.machine_id = m.machine_id
+        WHERE r.is_active = 1
+        AND $filters
+        ORDER BY r.date_inspected DESC
+    ";
+
+    $stmt = $pdo->prepare($sql);
+    echo "Using filter: $filters\n";
+    $stmt->execute($params);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
