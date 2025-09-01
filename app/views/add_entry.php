@@ -141,6 +141,7 @@ if (!isset($_SESSION['user_id'])) {
                             </table>
                         </div>
                     </div>
+                    
 
                     <!-- Applicator Table -->
                     <div id="applicators-table" class="section-content expanded" style="height: 600px; overflow-y: auto;">
