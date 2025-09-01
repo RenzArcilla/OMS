@@ -16,5 +16,8 @@ buttons.forEach(button => {
     button.addEventListener('click', function() {
         document.getElementById('editCustomPartModalDashboardMachine').style.display = 'none';
     });
+    button.addEventListener('click', function() {
+        document.getElementById('addCustomPartModalDashboardMachine').style.display = 'none';
+    });
 });
 
