@@ -226,118 +226,22 @@
             </div>
             <!-- Table 1: Custom Parts -->
             <div class="tables-grid">
-                <div class="data-section">
-                    <div class="section-header">
-                        <div class="section-title">
-                            🔧 Custom Parts
-                            <span class="section-badge">3</span>
-                        </div>
-                        <div class="expand-icon">▼</div>
-                    </div>
-                    <div class="section-content expanded">
-                        <div class="search-filter">
-                            <input type="text" class="search-input" placeholder="Search custom parts...">
-                        </div>
-                        <div class="table-container">
-                            <table class="data-table" id="partsTable"   >
-                                <thead>
-                                    <tr>
-                                        <th>Part Name</th>
-                                        <th>Created At</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableBody">
-                                    <?php foreach ($custom_machine_parts as $part): ?>
-                                    <!-- Wire Crimper -->
-                                    <tr>
-                                        <td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $part['part_name']))) ?></td>
-                                        <td><?= htmlspecialchars(date('Y-m-d', strtotime($part['created_at']))) ?></td>
-                                        <td>
-                                            <div class="actions">
-                                                <?php $partNameTitle = ucwords(str_replace('_', ' ', strtolower($part['part_name']))); ?>
-                                                <button class="edit-btn" 
-                                                        data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
-                                                        data-part-name="<?= htmlspecialchars($partNameTitle, ENT_QUOTES) ?>">
-                                                    Edit
-                                                </button>
-                                                <button class="delete-btn" 
-                                                        data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
-                                                        data-part-type="MACHINE">
-                                                    Delete
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                </tbody>  
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                <?php include_once __DIR__ . '/machine_custom_parts.php'; ?>
 
                 <!-- Table 2: Recently Deleted Machine -->
-                <div class="data-section" id="disabled-machines-section">
-                    <div class="section-header">
-                        <div class="section-title">
-                            🗑️ Recently Deleted Machine
-                            <span class="section-badge">3</span>
-                        </div>
-                        <div class="expand-icon">▼</div>
-                    </div> 
-                    <div class="section-content expanded">
-                        <!-- Filters -->
-                        <div class="search-filter">
-                            <div class="search-filter">
-                                <input type="text" class="search-input" placeholder="Search here..." onkeyup="applyDisabledMachineFilters()">
-                            </div>
-                            <select id="disabledMachineDescription" class="filter-select" onchange="applyDisabledMachineFilters()">  
-                                <option value="ALL">All</option>
-                                <option value="AUTOMATIC">Automatic</option>
-                                <option value="SEMI-AUTOMATIC">Semi-Automatic</option>
-                            </select>
-                        </div>
-                        <div class="table-container">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Actions</th>
-                                        <th>Control Number</th>
-                                        <th>Model</th>
-                                        <th>Maker</th>
-                                        <th>Last Updated</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($disabled_machines as $machine): ?>
-                                    <tr>
-                                        <td>
-                                            <button id="restore-machine-<?= htmlspecialchars($machine['machine_id']) ?>"
-                                                    class="restore-btn restore-machine-btn"
-                                                    data-machine-id="<?= htmlspecialchars($machine['machine_id']) ?>">
-                                                Restore
-                                            </button>
-                                        </td>
-                                        <td><?= htmlspecialchars($machine['control_no']) ?></td>
-                                        <td><?= htmlspecialchars($machine['model']) ?></td>
-                                        <td><?= htmlspecialchars($machine['maker']) ?></td>
-                                        <td><?= htmlspecialchars($machine['last_encoded']) ?></td>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                <div class="tables-scroll-2">
+                    <?php include_once __DIR__ . '/recently_deleted_machine.php'; ?>
                 </div>
             </div>
 
                 <!-- Table 3: Recently Deleted Outputs Section -->
-            <div class="full-width-table">
+            <div class="full-width-table" style="position: relative; top: -50px;">
                 <?php include_once __DIR__ . '/recently_deleted_outputs_table.php'; ?>
             </div>
         </div>
     </div>
 
+    
     <!-- Add Custom Part Modal -->
     <div id="addCustomPartModalDashboardMachine" class="modal-overlay">
         <div class="form-container">
