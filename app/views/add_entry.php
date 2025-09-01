@@ -757,6 +757,8 @@ if (!isset($_SESSION['user_id'])) {
     <script src="../../public/assets/js/add_entry.js"></script>
     <script src="../../public/assets/js/export_entry.js"></script>
     <script src="../../public/assets/js/sidebar.js"></script>
+    <script src="../../public/assets/js/utils/exit.js"></script>
+    <script src="../../public/assets/js/utils/enter.js"></script>
     <!-- Load edit modals -->
     <script src="../../public/assets/js/edit_machine_modal.js" defer></script>
     <script src="../../public/assets/js/edit_applicator_modal.js" defer></script>
@@ -766,5 +768,6 @@ if (!isset($_SESSION['user_id'])) {
     <!-- Load infinite scroll logic >
     <script src="../../public/assets/js/load_machines.js" defer></script>
     <script src="../../public/assets/js/load_applicators.js" defer></script -->
+
 </body>
 </html>
