@@ -280,11 +280,13 @@
                     <?php include_once __DIR__ . '/applicator_custom_parts.php'; ?>
                     
                 <!-- Table 2: Recently Deleted Applicators -->
-                    <?php include_once __DIR__ . '/recently_deleted_applicator.php'; ?>
+                    <div class="tables-scroll-2">
+                        <?php include_once __DIR__ . '/recently_deleted_applicator.php'; ?>
+                    </div>
                 </div>
 
                     <!-- Table 3: Recently Deleted Record -->
-                <div class="full-width-table" style="position: relative; top: -65px;">
+                <div class="full-width-table" style="position: relative; top: -50px;">
                     <?php include_once __DIR__ . '/recently_deleted_outputs_table.php'; ?>
                 </div>
             </div>
