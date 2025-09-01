@@ -412,7 +412,7 @@
                 
                 <div class="button-group">
                     <button type="submit" class="btn btn-primary" id="deleteBtn" disabled>Delete Part Permanently</button>
-                    <button type="button" class="btn btn-secondary" onclick="closeEditCustomPartModal()">Cancel</button>
+                    <button type="button" class="cancel-btn">Cancel</button>
                 </div>
             </form>
         </div>
@@ -421,7 +421,7 @@
     <!-- Edit Custom Part Modal -->
     <div id="editCustomPartModalDashboardMachine" class="modal-overlay">
         <div class="form-container">
-            <button class="modal-close-btn" onclick="closeEditCustomPartModal()">×</button>
+            <button class="modal-close-btn">×</button>
 
             <div class="form-header">
                 <h1 class="form-title">✏️ Edit Custom Part</h1>
@@ -459,7 +459,7 @@
                 </div>
                 <div class="button-group">
                     <button type="submit" class="btn btn-primary">Save Changes</button>
-                    <button type="button" class="btn btn-secondary" onclick="closeEditCustomPartModal()">Cancel</button>
+                    <button type="button" class="cancel-btn">Cancel</button>
                 </div>
             </form>
         </div>
