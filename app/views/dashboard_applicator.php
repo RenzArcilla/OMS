@@ -562,7 +562,7 @@
 
                 <div class="button-group">
                     <button type="button" class="cancel-btn" onclick="closeResetModal()">Cancel</button>
-                    <button type="submit" class="btn-confirm-dashboard">Confirm Reset</button>
+                    <button type="submit" class="reset-btn">Confirm Reset</button>
                 </div>
             </form>
         </div>
@@ -639,7 +639,7 @@
 
                 <div class="button-group">
                     <button type="button" class="cancel-btn" onclick="closeUndoModal()">Cancel</button>
-                    <button type="submit" class="btn-confirm-dashboard">Confirm Undo</button>
+                    <button type="submit" class="undo-btn">Confirm Undo</button>
                 </div>
             </form>
         </div>
