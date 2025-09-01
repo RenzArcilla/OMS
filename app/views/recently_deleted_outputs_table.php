@@ -20,16 +20,23 @@
     ?>
 
     <div id="dashboard-tab" class="tab-content">
-        <!-- Applicator Status Section -->
+        <!-- Disabled Records Section -->
         <div class="data-section">
             <div class="section-header expanded" onclick="toggleSection(this)">
                 <div class="section-title">
-                    Recently Deleted Outputs
+                    <span class="filter-info">Recently Deleted Outputs</span>
                 </div>
             </div>
 
+            <!-- Filters -->
             <div class="search-filter">
-                <input type="text" class="search-input" placeholder="Search for date encoded, record, applicator, or machine identifiers..." onkeyup="filterTable(this.value)">
+                <input type="text" class="search-input" placeholder="Search here..." onkeyup="applyDisabledRecordFilters(this.value)">
+                <select id="recordShiftDisabled" class="filter-select" onchange="applyDisabledRecordFilters()">  
+                    <option value="ALL">All</option>
+                    <option value="1st">1st</option>
+                    <option value="2nd">2nd</option>    
+                    <option value="NIGHT">Night</option>
+                </select>
             </div>
             
             <div class="section-content expanded">
@@ -81,4 +88,6 @@
         </div>
     </div>
     <script src="../../public/assets/js/recently_deleted_outputs_table.js"></script>
+    <!-- Search Disabled Records -->
+    <script src="../../public/assets/js/search_disabled_records.js"></script>
 </body>
