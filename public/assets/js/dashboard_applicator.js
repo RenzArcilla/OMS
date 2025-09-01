@@ -148,12 +148,12 @@ function confirmDeleteCustomPart(partId, type) {
 document.addEventListener('click', function(event) {
     if (event.target.classList.contains('restore-applicator-btn')) {
         const applicatorId = event.target.dataset.applicatorId;
-        confirmRestoreCustomPart(applicatorId);
+        confirmRestoreApplicator(applicatorId);
     }
 });
 
 // Restore confirmation
-function confirmRestoreCustomPart(applicatorId) {
+function confirmRestoreApplicator(applicatorId) {
     if (confirm("Are you sure you want to restore this applicator?")) {
         // Create a form dynamically
         const form = document.createElement("form");

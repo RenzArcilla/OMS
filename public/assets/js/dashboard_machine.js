@@ -114,12 +114,12 @@ function confirmDeleteCustomPart(partId, type) {
 document.addEventListener('click', function(event) {
     if (event.target.classList.contains('restore-machine-btn')) {
         const machineId = event.target.dataset.machineId;
-        confirmRestoreCustomPart(machineId);
+        confirmRestoreMachine(machineId);
     }
 });
 
 // Restore confirmation
-function confirmRestoreCustomPart(machineId) {
+function confirmRestoreMachine(machineId) {
     if (confirm("Are you sure you want to restore this machine?")) {
         // Create a form dynamically
         const form = document.createElement("form");
