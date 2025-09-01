@@ -493,7 +493,7 @@
 
     <!-- Reset Machine Modal -->
     <div id="resetModalDashboardMachine" class="modal-overlay">
-        <div class="modal modal-reset">
+        <div class="form-container">
             <button class="modal-close-btn" onclick="closeResetModal()">×</button>
             
             <div class="form-header">
@@ -504,23 +504,35 @@
             <form id="resetForm" method="POST" action="../controllers/reset_machine.php">
                 <input type="hidden" name="machine_id" id="reset_machine_id">
 
-                <div class="form-group">
-                    <label class="form-label">
-                        Select Machine Part to Reset
-                        <span class="required-badge">Required</span>
-                    </label>
-                    <select id="editWireType" name="part_name" class="form-input">
-                        <option value="">Select Part</option>
-                        <option value="cut_blade_output">Cut Blade</option>
-                        <option value="strip_blade_a_output">Strip Blade A</option>
-                        <option value="strip_blade_b_output">Strip Blade B</option>
-                        <?php foreach ($custom_machine_parts as $row): ?>
-                            <option value="<?= htmlspecialchars($row['part_name']) ?>">
-                                <?= ucwords(str_replace('_', ' ', htmlspecialchars($row['part_name']))) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon">⚙️</div>
+                        <div class="section-info">
+                            <div class="section-title">Component Selection</div>
+                            <div class="section-description">Choose the machine part to reset</div>
+                        </div>
+                    </div>
+                    <div class="form-grid-vertical">
+                        <div class="form-group">
+                            <label class="form-label">
+                                Select Machine Part to Reset
+                                <span class="required-badge">Required</span>
+                            </label>
+                            <select id="editWireType" name="part_name" class="form-input" required>
+                                <option value="">Select Part</option>
+                                <option value="cut_blade_output">Cut Blade</option>
+                                <option value="strip_blade_a_output">Strip Blade A</option>
+                                <option value="strip_blade_b_output">Strip Blade B</option>
+                                <?php foreach ($custom_machine_parts as $row): ?>
+                                    <option value="<?= htmlspecialchars($row['part_name']) ?>">
+                                        <?= ucwords(str_replace('_', ' ', htmlspecialchars($row['part_name']))) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="warning-section">
                     <div style="display: flex; align-items: flex-start; gap: 8px;">
                         <span class="warning-icon">⚠️</span>
@@ -530,9 +542,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-cancel" onclick="closeResetModal()">Cancel</button>
-                    <button type="submit" class="btn-confirm">Confirm Reset</button>
+
+                <div class="button-group">
+                    <button type="button" class="cancel-btn" onclick="closeResetModal()">Cancel</button>
+                    <button type="submit" class="reset-btn">Confirm Reset</button>
                 </div>
             </form>
         </div>
@@ -601,9 +614,9 @@
                     </div>
                 </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn-cancel" onclick="closeUndoModal()">Cancel</button>
-                    <button type="submit" class="btn-confirm">Confirm</button>
+                <div class="button-group">
+                    <button type="button" class="cancel-btn" onclick="closeUndoModal()">Cancel</button>
+                    <button type="submit" class="undo-btn">Confirm</button>
                 </div>
             </form>
         </div>      
