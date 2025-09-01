@@ -162,25 +162,26 @@ function getDisabledRecordsAndOutputs($limit = 20, $offset = 0, $search = null):
 }
 
 
-function getFilteredRecords($limit, $offset, $search = null, $shift = 'ALL') {
+function getFilteredRecords($limit, $offset, $search = null, $shift = 'ALL', $is_active = 1) {
     /*
-        Function to fetch records and outputs from the database with optional search and shift filter.
-        Supports pagination via limit and offset, and prevents SQL injection.
+        Function to fetch records with related applicator and machine outputs.
+        Supports search, optional shift filter, active/disabled toggle, and pagination.
+        Prevents SQL injection via parameter binding.
 
         Parameters:
-            int $limit        - Maximum number of rows to fetch.
-            int $offset       - Number of rows to skip for pagination.
-            string $search    - Optional search keyword across multiple columns.
-            string $shift     - Optional shift filter (default = 'ALL').
+            int $limit       - Maximum number of rows to fetch.
+            int $offset      - Number of rows to skip.
+            string $search   - Optional search keyword across multiple columns.
+            string $shift    - Optional shift filter (default = 'ALL').
+            int $is_active   - Filter by active status (1 = active, 0 = disabled).
 
         Returns:
-            array - Associative array of records matching the search and filter criteria.
+            array - Associative array of filtered records.
     */
 
     global $pdo;
 
-    // Base query
-    $sql = "
+    $query = "
         SELECT 
             r.record_id,
             r.shift,
@@ -212,15 +213,15 @@ function getFilteredRecords($limit, $offset, $search = null, $shift = 'ALL') {
         LEFT JOIN applicators a1 ON r.applicator1_id = a1.applicator_id
         LEFT JOIN applicators a2 ON r.applicator2_id = a2.applicator_id
         LEFT JOIN machines m ON r.machine_id = m.machine_id
-        WHERE r.is_active = 1
+        WHERE r.is_active = :is_active
     ";
 
-    $params = [];
+    $params = [':is_active' => $is_active];
 
     // Apply search filter
     if (!empty($search)) {
         $search = str_replace(['%', '_'], ['\%', '\_'], $search);
-        $sql .= " AND (
+        $query .= " AND (
             r.record_id LIKE :search OR
             r.last_updated LIKE :search OR
             a1.hp_no LIKE :search OR
@@ -232,18 +233,20 @@ function getFilteredRecords($limit, $offset, $search = null, $shift = 'ALL') {
 
     // Apply shift filter
     if ($shift !== 'ALL') {
-        $sql .= " AND r.shift = :shift";
+        $query .= " AND r.shift = :shift";
         $params[':shift'] = $shift;
     }
 
-    // Pagination
-    $sql .= " ORDER BY r.record_id DESC LIMIT :limit OFFSET :offset";
+    $query .= " ORDER BY r.record_id DESC LIMIT :limit OFFSET :offset";
 
-    $stmt = $pdo->prepare($sql);
+    $stmt = $pdo->prepare($query);
 
+    // Bind all parameters dynamically
     foreach ($params as $key => $value) {
         $stmt->bindValue($key, $value);
     }
+
+    // Bind pagination
     $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
     $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
 
