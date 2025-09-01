@@ -1,14 +1,14 @@
 // Listen for clicks only on the restore buttons
 document.addEventListener('click', function(event) {
-    const button = event.target.closest('.restore-btn');
+    const button = event.target.closest('.restore-output-btn');
     if (button) {
         const recordId = button.dataset.recordId;
-        confirmRestoreCustomPart(recordId);
+        confirmRestoreOutputRecord(recordId);
     }
 });
 
 // Restore confirmation
-function confirmRestoreCustomPart(recordId) {
+function confirmRestoreOutputRecord(recordId) {
     if (confirm("Are you sure you want to restore this record?")) {
         const form = document.createElement("form");
         form.method = "POST";
