@@ -385,3 +385,26 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeDateRange();
     initializeCheckbox();
 });
+
+// Export Recently Reset Modal functions
+function exportRecentlyResetModal() {
+    const modal = document.getElementById('exportModalRecentlyReset');
+    if (modal) {
+        modal.style.display = 'block';
+    }
+}
+
+function closeExportRecentlyResetModal() {
+    const modal = document.getElementById('exportModalRecentlyReset');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(e) {
+    const modal = document.getElementById('exportModalRecentlyReset');
+    if (modal && e.target === modal) {
+        closeExportRecentlyResetModal();
+    }
+});
