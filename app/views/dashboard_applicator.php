@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/export_modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/stats_modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/search_filter.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/pagination.css">
 </head>
 <body>
     <?php 
@@ -36,6 +37,13 @@
     // Include the read join function and the alert function
     require_once __DIR__ . '/../models/read_joins/read_monitor_applicator_and_applicator.php';
     require_once __DIR__ . '/../includes/js_alert.php';
+
+
+    // Pagination settings
+    $items_per_page = 20;
+    $offset = 0;
+    
+
 
     // Handle search if HP number is provided
     $search_hp = $_GET['search_hp'] ?? '';
@@ -269,6 +277,47 @@
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Pagination -->
+                <div class="pagination-container">
+                    <div class="pagination-info">
+                        Showing <strong>1</strong> to <strong>10</strong> of <strong>157</strong> results
+                    </div>
+                    
+                    <div class="pagination-controls">
+                        <div class="pagination-nav">
+                            <!-- Previous button -->
+                            <a href="#" class="pagination-btn nav-btn disabled">
+                                ← Previous
+                            </a>
+                            
+                            <!-- Page numbers -->
+                            <a href="#" class="pagination-btn active">1</a>
+                            <a href="#" class="pagination-btn">2</a>
+                            <a href="#" class="pagination-btn">3</a>
+                            <a href="#" class="pagination-btn">4</a>
+                            <a href="#" class="pagination-btn">5</a>
+                            
+                            <span class="pagination-ellipsis">...</span>
+                            
+                            <a href="#" class="pagination-btn">16</a>
+                            
+                            <!-- Next button -->
+                            <a href="#" class="pagination-btn nav-btn">
+                                Next →
+                            </a>
+                        </div>
+                        
+                        <div class="page-size-selector">
+                            <label class="page-size-label">Show:</label>
+                            <select class="page-size-select" onchange="changePageSize(this.value)">
+                                <option value="10" selected>10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
                         </div>
                     </div>
                 </div>
