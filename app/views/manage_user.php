@@ -83,13 +83,6 @@
                         >Refresh</button>
                     </div>
                     <!-- Users Table -->
-                    <?php 
-                    require_once '../models/read_user.php'; 
-                    $users = getUsers(10, 0);
-                    // Debug: Log users array
-                    error_log("Users in table: " . print_r($users, true));
-                    ?>
-                    
                     <div class="section-content expanded">
                         <div class="table-container">
                             <table class="data-table" id="usersTable">
@@ -101,52 +94,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="usersTableBody">
-                                    <?php if (empty($users)): ?>
-                                        <tr>
-                                            <td colspan="3">No users found.</td>
-                                        </tr>
-                                    <?php else: ?>
-                                        <?php foreach ($users as $user): ?>
-                                            <tr>
-                                                <td>
-                                                    <div class="actions">
-                                                        <button class="view-btn" 
-                                                                onclick="openViewUserModal(this)" 
-                                                                title="View Details"
-                                                                data-username="<?php echo htmlspecialchars($user['username'] ?? ''); ?>"
-                                                                data-firstname="<?php echo htmlspecialchars($user['first_name'] ?? ''); ?>"
-                                                                data-lastname="<?php echo htmlspecialchars($user['last_name'] ?? ''); ?>"
-                                                                data-role="<?php echo htmlspecialchars($user['user_type'] ?? ''); ?>">
-                                                            View
-                                                        </button>
-                                                        <button class="edit-btn" 
-                                                                onclick="openEditUserModal(this)" 
-                                                                title="Edit User"
-                                                                data-id="<?php echo htmlspecialchars($user['user_id'] ?? ''); ?>"
-                                                                data-username="<?php echo htmlspecialchars($user['username'] ?? ''); ?>"
-                                                                data-firstname="<?php echo htmlspecialchars($user['first_name'] ?? ''); ?>"
-                                                                data-lastname="<?php echo htmlspecialchars($user['last_name'] ?? ''); ?>"
-                                                                data-role="<?php echo htmlspecialchars($user['user_type'] ?? ''); ?>">
-                                                            Edit
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="user-info">
-                                                        <div class="user-avatar">👤</div>
-                                                        <div class="user-details">
-                                                            <div class="user-name"><?php echo htmlspecialchars($user['first_name'] . ' ' . $user['last_name']); ?></div>
-                                                            <div class="user-email"><?php echo htmlspecialchars($user['username']); ?></div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <span class="role-badge admin"><?php echo htmlspecialchars($user['user_type'] ?? 'Unknown'); ?></span>
-                                                </td>
-                                                
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    <?php endif; ?>
+                                    <tr><td colspan="3">Loading users...</td></tr>
                                 </tbody>
                             </table>
                         </div>

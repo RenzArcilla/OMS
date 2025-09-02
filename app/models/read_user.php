@@ -51,9 +51,9 @@ function loginUser($username, $password) {
 }
 
 
-
+/*
 function getUsers(int $limit = 10, int $offset = 0): array {
-    /*
+    
         Function to fetch a list of users from the database with pagination. Used to display
         users in manage_users.php.
         It prepares and executes a SELECT query that fetches users ordered by most recent,
@@ -65,7 +65,7 @@ function getUsers(int $limit = 10, int $offset = 0): array {
 
         Returns:
         - Array of users (associative arrays) on success.
-    */
+    
 
     global $pdo;
     // Prepare the SQL statement with placeholders for limit and offset
@@ -83,7 +83,7 @@ function getUsers(int $limit = 10, int $offset = 0): array {
     // Execute the query and return the results
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+} */
 
 
 function getUserByUsername($username) {
