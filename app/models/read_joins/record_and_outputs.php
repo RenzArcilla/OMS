@@ -256,7 +256,7 @@ function getFilteredRecords($limit, $offset, $search = null, $shift = 'ALL', $is
 }
 
 
-function getFilteredRecordsForExport($date_range = 'all', $start_date = null, $end_date = null) {
+function getFilteredRecordsForExport($date_range = 'today', $start_date = null, $end_date = null) {
     /*
         Model function to fetch filtered records.
         This function will be used for exporting records to Excel.
@@ -282,9 +282,6 @@ function getFilteredRecordsForExport($date_range = 'all', $start_date = null, $e
         case 'quarter':
             $filters = "QUARTER(r.date_inspected) = QUARTER(CURDATE()) 
                         AND YEAR(r.date_inspected) = YEAR(CURDATE())";
-            break;
-        case 'year':
-            $filters = "YEAR(r.date_inspected) = YEAR(CURDATE())";
             break;
         case 'custom':
             $filters = "DATE(r.date_inspected) BETWEEN :start_date AND :end_date";
