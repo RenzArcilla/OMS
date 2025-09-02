@@ -1,6 +1,6 @@
 <?php
 /*
-    This script serves as the controller that handles the export logic for machine outputs to excel.
+    This script serves as the controller that handles the export logic for applicator outputs to excel.
     It retrieves form data, sanitizes it, and updates the database record.
 */
 
@@ -8,8 +8,8 @@
 // Include necessary files
 require_once '../includes/auth.php';
 require_once '../includes/js_alert.php';
-require_once '../includes/export_helpers/export_machine_output_helper.php';
-require_once '../models/read_joins/read_monitor_machine_and_machine.php';
+require_once '../includes/export_helpers/export_applicator_output_helper.php';
+require_once '../models/read_joins/read_monitor_applicator_and_applicator.php';
 require_once '../models/read_custom_parts.php';
 
 
@@ -17,7 +17,7 @@ require_once '../models/read_custom_parts.php';
 requireToolkeeper();
 
 // Redirect url
-$redirect_url = "../views/dashboard_machine.php";
+$redirect_url = "../views/dashboard_applicator.php";
 
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -35,5 +35,5 @@ if (empty($include_headers)) {
 }
 
 // Pass data into export helper
-exportMachineOutputToExcel($include_headers);
+exportApplicatorOutputToExcel($include_headers);
 exit;
