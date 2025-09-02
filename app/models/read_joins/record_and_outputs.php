@@ -126,9 +126,12 @@ function getDisabledRecordsAndOutputs($limit = 20, $offset = 0, $search = null):
             ON r.record_id = ao2.record_id 
             AND r.applicator2_id = ao2.applicator_id
 
+
         LEFT JOIN machine_outputs mo ON r.record_id = mo.record_id
+
         LEFT JOIN applicators a1 ON r.applicator1_id = a1.applicator_id
         LEFT JOIN applicators a2 ON r.applicator2_id = a2.applicator_id
+
         LEFT JOIN machines m ON r.machine_id = m.machine_id
 
         WHERE r.is_active = 0
@@ -183,35 +186,37 @@ function getFilteredRecords($limit, $offset, $search = null, $shift = 'ALL', $is
 
     $query = "
         SELECT 
-            r.record_id,
-            r.shift,
-            r.date_inspected,
-            r.date_encoded,
-            r.last_updated,
+            r.record_id AS record_id,
+            r.shift AS shift,
+            r.date_inspected AS date_inspected,
+            r.date_encoded AS date_encoded,
+            r.last_updated AS last_updated,
+
             ao1.total_output AS app1_output,
             ao2.total_output AS app2_output,
+
             mo.total_machine_output AS machine_output,
+
             a1.hp_no AS hp1_no,
             a2.hp_no AS hp2_no,
+
             m.control_no AS control_no
+
         FROM records r
-        LEFT JOIN (
-            SELECT record_id, applicator_id, SUM(total_output) AS total_output
-            FROM applicator_outputs
-            GROUP BY record_id, applicator_id
-        ) ao1 ON r.record_id = ao1.record_id AND r.applicator1_id = ao1.applicator_id
-        LEFT JOIN (
-            SELECT record_id, applicator_id, SUM(total_output) AS total_output
-            FROM applicator_outputs
-            GROUP BY record_id, applicator_id
-        ) ao2 ON r.record_id = ao2.record_id AND r.applicator2_id = ao2.applicator_id
-        LEFT JOIN (
-            SELECT record_id, SUM(total_machine_output) AS total_machine_output
-            FROM machine_outputs
-            GROUP BY record_id
-        ) mo ON r.record_id = mo.record_id
+        LEFT JOIN applicator_outputs ao1 
+            ON r.record_id = ao1.record_id 
+            AND r.applicator1_id = ao1.applicator_id
+
+        LEFT JOIN applicator_outputs ao2 
+            ON r.record_id = ao2.record_id 
+            AND r.applicator2_id = ao2.applicator_id
+
+
+        LEFT JOIN machine_outputs mo ON r.record_id = mo.record_id
+
         LEFT JOIN applicators a1 ON r.applicator1_id = a1.applicator_id
         LEFT JOIN applicators a2 ON r.applicator2_id = a2.applicator_id
+
         LEFT JOIN machines m ON r.machine_id = m.machine_id
         WHERE r.is_active = :is_active
     ";
@@ -294,39 +299,40 @@ function getFilteredRecordsForExport($date_range = 'today', $start_date = null, 
 
     $sql = "
         SELECT 
-            r.record_id,
-            r.shift,
-            r.date_inspected,
-            r.date_encoded,
-            r.last_updated,
-            ao1.total_output AS app1_output,
-            ao2.total_output AS app2_output,
-            mo.total_machine_output AS machine_output,
+            r.record_id AS record_id,
+            r.shift AS shift,
+            r.date_inspected AS date_inspected,
+            r.date_encoded AS date_encoded,
+            r.last_updated AS last_updated,
+
             a1.hp_no AS hp1_no,
+            ao1.total_output AS app1_output,
+
             a2.hp_no AS hp2_no,
-            m.control_no AS control_no
+            ao2.total_output AS app2_output,
+
+            m.control_no AS control_no,
+            mo.total_machine_output AS machine_output
+
         FROM records r
-        LEFT JOIN (
-            SELECT record_id, applicator_id, SUM(total_output) AS total_output
-            FROM applicator_outputs
-            GROUP BY record_id, applicator_id
-        ) ao1 ON r.record_id = ao1.record_id AND r.applicator1_id = ao1.applicator_id
-        LEFT JOIN (
-            SELECT record_id, applicator_id, SUM(total_output) AS total_output
-            FROM applicator_outputs
-            GROUP BY record_id, applicator_id
-        ) ao2 ON r.record_id = ao2.record_id AND r.applicator2_id = ao2.applicator_id
-        LEFT JOIN (
-            SELECT record_id, SUM(total_machine_output) AS total_machine_output
-            FROM machine_outputs
-            GROUP BY record_id
-        ) mo ON r.record_id = mo.record_id
+        LEFT JOIN applicator_outputs ao1 
+            ON r.record_id = ao1.record_id 
+            AND r.applicator1_id = ao1.applicator_id
+
+        LEFT JOIN applicator_outputs ao2 
+            ON r.record_id = ao2.record_id 
+            AND r.applicator2_id = ao2.applicator_id
+
+
+        LEFT JOIN machine_outputs mo ON r.record_id = mo.record_id
+
         LEFT JOIN applicators a1 ON r.applicator1_id = a1.applicator_id
         LEFT JOIN applicators a2 ON r.applicator2_id = a2.applicator_id
+
         LEFT JOIN machines m ON r.machine_id = m.machine_id
         WHERE r.is_active = 1
         AND $filters
-        ORDER BY r.date_inspected DESC
+        ORDER BY r.record_id DESC
     ";
 
     $stmt = $pdo->prepare($sql);
