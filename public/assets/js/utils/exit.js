@@ -25,5 +25,22 @@ buttons.forEach(button => {
     button.addEventListener('click', function() {
         document.getElementById('modalOverlay').style.display = 'none';
     });
+    button.addEventListener('click', function() {
+        document.getElementById('logoutModalOverlay').style.display = 'none';
+    });
 });
 
+// Close modal when clicking outside
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('logoutModalOverlay');
+    if (event.target === modal) {
+        closeLogoutModal();
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeLogoutModal();
+    }
+});

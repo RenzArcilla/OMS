@@ -247,6 +247,61 @@
     opacity: 0.6;
 }
 
+/* logout BUTTON - Modification actions (Green with crimson accent) */
+.logout-btn {
+    background: linear-gradient(135deg, #16A085 0%, #27AE60 100%);
+    color: #FFFFFF;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(22, 160, 133, 0.3);
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    position: relative;
+    overflow: hidden;
+}
+
+.logout-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    transition: left 0.5s ease;
+}
+
+.logout-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(22, 160, 133, 0.4),
+                0 0 15px rgba(39, 174, 96, 0.2);
+    background: linear-gradient(135deg, #138D75 0%, #229954 100%);
+}
+
+.logout-btn:hover::before {
+    left: 100%;
+}
+
+.logout-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(22, 160, 133, 0.3);
+}
+.logout-btn:disabled {
+    background: #A5D6A7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.6;
+}
+
 /* CANCEL BUTTON - Neutral actions (Gray with red accent) */
 .cancel-btn {
     background: #F7FAFC;
