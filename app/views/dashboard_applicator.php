@@ -15,8 +15,9 @@
     <link rel="stylesheet" href="/SOMS/public/assets/css/layout/grid.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/export_modal.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/stats_modal.css">
+    <!--<link rel="stylesheet" href="/SOMS/public/assets/css/components/stats_modal.css">-->
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/search_filter.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/pagination.css">
 </head>
 <body>
     <?php 
@@ -37,6 +38,13 @@
     require_once __DIR__ . '/../models/read_joins/read_monitor_applicator_and_applicator.php';
     require_once __DIR__ . '/../includes/js_alert.php';
 
+
+    // Pagination settings
+    $items_per_page = isset($_GET['items_per_page']) ? max(5, min(50, (int)$_GET['items_per_page'])) : 10;
+    $current_page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+    $offset = ($current_page - 1) * $items_per_page;
+
+
     // Handle search if HP number is provided
     $search_hp = $_GET['search_hp'] ?? '';
     $search_result = null;
@@ -56,9 +64,15 @@
 
         // If searching, use search result instead of all records
         $applicator_total_outputs = $search_result;
+        $total_records = count($search_result);
+        $total_pages = 1;
     } else {
-        // Use existing logic for all records
-        $applicator_total_outputs = getApplicatorRecordsAndOutputs(10, 0, $part_names_array);
+        // Get total count for pagination
+        $total_records = getApplicatorRecordsCount($part_names_array);
+        $total_pages = ceil($total_records / $items_per_page);
+        
+        // Use existing logic for all records with pagination
+        $applicator_total_outputs = getApplicatorRecordsAndOutputs($items_per_page, $offset, $part_names_array);
     }
     
     // Get current filter info (only if not searching)
@@ -272,6 +286,88 @@
                         </div>
                     </div>
                 </div>
+                                
+                <!-- Pagination Controls -->
+                <?php if (!$is_searching && $total_pages > 1): ?>
+                <div class="pagination-container">
+                    <div class="pagination-info">
+                        <span class="pagination-text">
+                            Showing <?= ($offset + 1) ?> to <?= min($offset + $items_per_page, $total_records) ?> of <?= number_format($total_records) ?> results
+                        </span>
+                    </div>
+                    
+                    <div class="pagination-controls">
+                        <!-- Previous Button -->
+                        <?php if ($current_page > 1): ?>
+                            <a href="?page=<?= $current_page - 1 ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                class="pagination-btn pagination-prev">
+                                <span>←</span> Previous
+                            </a>
+                        <?php else: ?>
+                            <span class="pagination-btn pagination-prev disabled">
+                                <span>←</span> Previous
+                            </span>
+                        <?php endif; ?>
+                        
+                        <!-- Page Numbers -->
+                        <div class="pagination-numbers">
+                            <?php
+                            $start_page = max(1, $current_page - 2);
+                            $end_page = min($total_pages, $current_page + 2);
+                            
+                            // Show first page if not in range
+                            if ($start_page > 1): ?>
+                                <a href="?page=1<?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                    class="pagination-btn">1</a>
+                                <?php if ($start_page > 2): ?>
+                                    <span class="pagination-ellipsis">...</span>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            
+                            <?php for ($i = $start_page; $i <= $end_page; $i++): ?>
+                                <?php if ($i == $current_page): ?>
+                                    <span class="pagination-btn pagination-current"><?= $i ?></span>
+                                <?php else: ?>
+                                    <a href="?page=<?= $i ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                        class="pagination-btn"><?= $i ?></a>
+                                <?php endif; ?>
+                            <?php endfor; ?>
+                            
+                            <?php if ($end_page < $total_pages): ?>
+                                <?php if ($end_page < $total_pages - 1): ?>
+                                    <span class="pagination-ellipsis">...</span>
+                                <?php endif; ?>
+                                <a href="?page=<?= $total_pages ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                    class="pagination-btn"><?= $total_pages ?></a>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <!-- Next Button -->
+                        <?php if ($current_page < $total_pages): ?>
+                            <a href="?page=<?= $current_page + 1 ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                class="pagination-btn pagination-next">
+                                Next <span>→</span>
+                            </a>
+                        <?php else: ?>
+                            <span class="pagination-btn pagination-next disabled">
+                                Next <span>→</span>
+                            </span>
+                        <?php endif; ?>
+                    </div>
+                    
+                    <!-- Items Per Page Selector -->
+                    <div class="pagination-items-per-page">
+                        <label for="items-per-page">Show:</label>
+                        <select id="items-per-page" onchange="changeItemsPerPage(this.value)">
+                            <option value="5" <?= $items_per_page == 5 ? 'selected' : '' ?>>5</option>
+                            <option value="10" <?= $items_per_page == 10 ? 'selected' : '' ?>>10</option>
+                            <option value="20" <?= $items_per_page == 20 ? 'selected' : '' ?>>20</option>
+                            <option value="50" <?= $items_per_page == 50 ? 'selected' : '' ?>>50</option>
+                        </select>
+                        <span>per page</span>
+                    </div>
+                </div>
+                <?php endif; ?>
                 <!-- Table 1: Custom Parts -->
                 <div class="tables-grid">
                     <?php include_once __DIR__ . '/applicator_custom_parts.php'; ?>
