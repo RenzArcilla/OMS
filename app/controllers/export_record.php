@@ -9,8 +9,7 @@
 require_once '../includes/auth.php';
 require_once '../includes/js_alert.php';
 require_once '../includes/export_helpers/export_record_helper.php';
-require_once '../models/update_applicator.php';
-require_once '../models/read_applicators.php';
+require_once '../models/read_joins/record_and_outputs.php';
 
 // Require Toolkeeper/Admin Privileges
 requireToolkeeper();
