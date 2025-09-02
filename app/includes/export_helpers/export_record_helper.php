@@ -1,4 +1,13 @@
 <?php
+/*
+    This is a helper file for exporting records to Excel.
+*/
+
+// Include error handling and set max memory limits and execution time
+require_once '../includes/error_handler.php';
+ini_set('memory_limit', '512M');
+set_time_limit(300);
+
 require_once '../../vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
