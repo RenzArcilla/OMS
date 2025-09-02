@@ -16,6 +16,9 @@ try {
     // Get raw inputs
     $search = $_GET['search'] ?? '';
     $role   = $_GET['role'] ?? 'all';
+    $page  = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+    $limit = isset($_GET['limit']) ? max(1, intval($_GET['limit'])) : 10;
+    $offset = ($page - 1) * $limit;
 
     // Sanitize search term
     $search = trim($search);
@@ -27,7 +30,7 @@ try {
     }
 
     // Call model
-    $users = searchUsers($search, $role);
+    $users = searchUsers($search, $role, $limit, $offset);
 
     // Ensure we return valid JSON
     $json = json_encode($users);
