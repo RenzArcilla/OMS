@@ -360,7 +360,7 @@
 
             <form id="editCustomPartForm" method="POST" action="../controllers/edit_custom_part.php">
                 <input type="hidden" name="equipment_type" value="MACHINE">
-                <input type="hidden" name="part_id" id="edit_part_id">
+                <input type="hidden" name="edit_part_id" id="edit_part_id">
 
                 <div class="form-section">
                     <div class="section-header">
@@ -379,7 +379,7 @@
                             <input 
                                 type="text" 
                                 id="edit_part_name" 
-                                name="custom_part_name" 
+                                name="edit_part_name" 
                                 class="form-input" 
                                 placeholder="Enter part name..." 
                                 required
