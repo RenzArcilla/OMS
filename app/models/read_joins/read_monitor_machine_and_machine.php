@@ -346,3 +346,32 @@ function getMachineOutputsForExport() {
 
     return $records;
 }
+
+
+function getMachineRecordsCount($part_names_array): int {
+    /*
+        Function to get the total count of applicator records for pagination.
+        
+        Args:
+        - $part_names_array: Array of custom part names.
+        
+        Returns:
+        - int: Total number of machine records.
+    */
+    
+    global $pdo;
+    
+    // Simple count query without ordering or filtering
+    $sql = "
+        SELECT COUNT(*) as total
+        FROM monitor_machine
+        LEFT JOIN machines
+            USING (machine_id)
+    ";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    return (int)$result['total'];
+}
