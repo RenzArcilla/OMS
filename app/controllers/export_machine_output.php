@@ -17,7 +17,7 @@ require_once '../models/read_custom_parts.php';
 requireToolkeeper();
 
 // Redirect url
-$redirect_url = "../views/record_output.php";
+$redirect_url = "../views/dashboard_machine.php";
 
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
