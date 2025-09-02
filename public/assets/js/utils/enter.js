@@ -27,4 +27,11 @@ document.addEventListener('click', function(event) {
             modal2.style.display = 'block';
         }
     }
+    if (event.target.classList.contains('logout-btn')) {
+        // This works even for dynamically added elements
+        const modallogout = document.getElementById('logoutModalOverlay');
+        if (modal) {
+            modal.style.display = 'block';
+        }
+    }
 });
