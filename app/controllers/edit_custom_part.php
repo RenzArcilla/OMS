@@ -31,10 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $result = null;
 
 // 1. Sanitize input
-$part_id = isset($_POST['part_id']) ? intval($_POST['part_id']) : null;
+$part_id = isset($_POST['edit_part_id']) ? intval($_POST['edit_part_id']) : null;
 $type = isset($_POST['equipment_type']) ? strtoupper(trim($_POST['equipment_type'])) : null;
-$name = isset($_POST['custom_part_name']) 
-        ? strtolower(preg_replace('/\s+/', '_', trim($_POST['custom_part_name']))) 
+$name = isset($_POST['edit_part_name']) 
+        ? strtolower(preg_replace('/\s+/', '_', trim($_POST['edit_part_name']))) 
         : null;
 
 // 2. Validation
