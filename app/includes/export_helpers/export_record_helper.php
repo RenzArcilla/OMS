@@ -4,7 +4,7 @@
 */
 
 // Include error handling and set max memory limits and execution time
-require_once '../../includes/error_handler.php';
+require_once '../includes/error_handler.php';
 ini_set('memory_limit', '512M');
 set_time_limit(300);
 
