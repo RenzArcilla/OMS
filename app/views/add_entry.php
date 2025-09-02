@@ -37,6 +37,7 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="/SOMS/public/assets/css/layout/grid.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/export_modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/base/header.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/search_filter.css">
 </head>
 <body>
     <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/sidebar.php'; ?>
@@ -71,8 +72,8 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="data-section">
                     <div id="machine-table" class="section-content expanded" style="height: 600px; overflow-y: auto;">
                         <!-- Filters -->
-                        <div class="search-filter">
-                            <form id="machineFilterForm" onsubmit="return false;" style="display: flex; gap: 10px; align-items: center;">
+                        <div class="search-filter" style="display: flex; gap: 10px; align-items: center;">
+                            <form id="machineFilterForm" onsubmit="return false;">
                                 <input 
                                     type="text" 
                                     class="search-input" 

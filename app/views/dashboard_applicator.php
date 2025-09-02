@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/export_modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/stats_modal.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/search_filter.css">
 </head>
 <body>
     <?php 
@@ -125,7 +126,7 @@
                         </div>
                     </div>
                     
-                    <div class="search-filter">
+                    <div class="search-filter" style="display: flex; gap: 10px; align-items: center;">
                         <!-- Search form -->
                         <form method="GET" style="display: inline;">
                             <!-- Preserve existing filter parameter if present -->
@@ -141,12 +142,8 @@
                                     onkeyup="if(event.key==='Enter') this.form.submit()">
                             <button type="submit" class="filter-btn">Search</button>
                         </form>
-                        
-                        <?php if (!$is_searching): ?>
-                            <button class="filter-btn active" onclick="filterByStatus(this, 'all')">All</button>
-                        <?php endif; ?>
-                        
-                        <button style="position: relative; left: -10px;" class="tab-btn" onclick="window.location.href = window.location.pathname;">
+
+                        <button style="position: relative; left: -5px;" class="tab-btn" onclick="window.location.href = window.location.pathname;">
                             Auto-Sort
                         </button>
                     </div>
