@@ -30,8 +30,8 @@ document.addEventListener('click', function(event) {
     if (event.target.classList.contains('logout-btn')) {
         // This works even for dynamically added elements
         const modallogout = document.getElementById('logoutModalOverlay');
-        if (modal) {
-            modal.style.display = 'block';
+        if (modallogout) {
+            modallogout.style.display = 'block';
         }
     }
 });

@@ -11,3 +11,4 @@ confirmCheckbox.addEventListener('change', function() {
         }, 150);
     }
 });
+
