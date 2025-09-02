@@ -20,12 +20,11 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
     string $filters - SQL filter string for fetching records
 */
 function exportRecordsToExcel($include_headers, $date_range, $start_date = null, $end_date = null) {
-    require_once '../models/read_joins/record_and_outputs.php';
 
     $records = getFilteredRecordsForExport($date_range, $start_date, $end_date);
 
     if (!$records) {
-        die("No records found for export.");
+        jsAlertRedirect("No records found for export.", '../views/record_output.php');
     }
 
     $spreadsheet = new Spreadsheet();

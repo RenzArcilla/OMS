@@ -336,7 +336,6 @@ function getFilteredRecordsForExport($date_range = 'today', $start_date = null, 
     ";
 
     $stmt = $pdo->prepare($sql);
-    echo "Using filter: $filters\n";
     $stmt->execute($params);
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
