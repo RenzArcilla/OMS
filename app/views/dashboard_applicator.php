@@ -105,7 +105,10 @@
             <div id="dashboard-tab" class="tab-content">
                 <div class="page-header">
                     <h1 class="page-title">📊 Applicator Dashboard</h1>
-                    <div class="header-actions">    
+                    <div class="header-actions"> 
+                        <button type="button" class="modal-btn btn-secondary">
+                            Export Recently Reset Data
+                        </button>   
                         <button type="button" class="btn-secondary" onclick="exportData()">
                             Export Report
                         </button>
@@ -860,6 +863,8 @@
             </form>
         </div>
     </div>
+    <!-- Export Recently Reset Modal -->
+    <?php include_once __DIR__ . '/applicator_recently_reset.php'; ?>
 
     <!-- Load JavaScript -->
     <script src="../../public/assets/js/dashboard_applicator.js"></script>
