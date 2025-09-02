@@ -356,47 +356,15 @@
                     </div>
                     
                     <!-- Items Per Page Selector -->
-                    <div class="pagination-items-per-page" style="display: flex; align-items: center; gap: 24px;">
-                        <form id="items-per-page-form" method="get" style="display: flex; align-items: center; gap: 8px;">
-                            <?php
-                                // Preserve other GET parameters except items_per_page and page
-                                $query_params = $_GET;
-                                unset($query_params['items_per_page'], $query_params['page']);
-                                foreach ($query_params as $key => $value) {
-                                    echo '<input type="hidden" name="' . htmlspecialchars($key) . '" value="' . htmlspecialchars($value) . '">';
-                                }
-                            ?>
-                            <label for="items-per-page">Show:</label>
-                            <select id="items-per-page" name="items_per_page" onchange="document.getElementById('items-per-page-form').submit()">
-                                <option value="5" <?= $items_per_page == 5 ? 'selected' : '' ?>>5</option>
-                                <option value="10" <?= $items_per_page == 10 ? 'selected' : '' ?>>10</option>
-                                <option value="20" <?= $items_per_page == 20 ? 'selected' : '' ?>>20</option>
-                            </select>
-                            <span>per page</span>
-                        </form>
-                        <!-- Go to Page Form -->
-                        <form id="go-to-page-form" method="get" style="display: flex; align-items: center; gap: 8px;">
-                            <?php
-                                // Preserve other GET parameters except page
-                                $query_params = $_GET;
-                                unset($query_params['page']);
-                                foreach ($query_params as $key => $value) {
-                                    echo '<input type="hidden" name="' . htmlspecialchars($key) . '" value="' . htmlspecialchars($value) . '">';
-                                }
-                            ?>
-                            <label for="go-to-page-input">Go to page:</label>
-                            <input 
-                                type="number" 
-                                id="go-to-page-input" 
-                                name="page" 
-                                min="1" 
-                                max="<?= $total_pages ?>" 
-                                value="<?= $current_page ?>" 
-                                style="width: 60px; padding: 2px 6px;"
-                                required
-                            >
-                            <button type="submit" class="btn btn-secondary" style="padding: 2px 10px;">Go</button>
-                        </form>
+                    <div class="pagination-items-per-page">
+                        <label for="items-per-page">Show:</label>
+                        <select id="items-per-page" onchange="changeItemsPerPage(this.value)">
+                            <option value="5" <?= $items_per_page == 5 ? 'selected' : '' ?>>5</option>
+                            <option value="10" <?= $items_per_page == 10 ? 'selected' : '' ?>>10</option>
+                            <option value="20" <?= $items_per_page == 20 ? 'selected' : '' ?>>20</option>
+                            <option value="50" <?= $items_per_page == 50 ? 'selected' : '' ?>>50</option>
+                        </select>
+                        <span>per page</span>
                     </div>
                 </div>
                 <?php endif; ?>
@@ -965,5 +933,6 @@
     <script src="../../public/assets/js/utils/checkbox.js"></script>
     <!-- Search Disabled Applicators -->
     <script src="../../public/assets/js/search_disabled_applicators.js"></script>
+    <script src="../../public/assets/js/utils/pagination.js"></script>
 </body>
 </html>
