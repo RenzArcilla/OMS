@@ -138,11 +138,7 @@
                             <button type="submit" class="filter-btn">Search</button>
                         </form>
                         
-                        <?php if (!$is_searching): ?>
-                            <button class="filter-btn active" onclick="filterByStatus(this, 'all')">All</button>
-                        <?php endif; ?>
-                        
-                        <button class="tab-btn" onclick="window.location.href = window.location.pathname;">
+                        <button style="position: relative; left: -10px;" class="tab-btn" onclick="window.location.href = window.location.pathname;">
                             Auto-Filter
                         </button>
                     </div>
