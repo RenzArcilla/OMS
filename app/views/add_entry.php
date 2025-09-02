@@ -72,8 +72,8 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="data-section">
                     <div id="machine-table" class="section-content expanded" style="height: 600px; overflow-y: auto;">
                         <!-- Filters -->
-                        <div class="search-filter">
-                            <form id="machineFilterForm" onsubmit="return false;" style="display: flex; gap: 10px; align-items: center;">
+                        <div class="search-filter" style="display: flex; gap: 10px; align-items: center;">
+                            <form id="machineFilterForm" onsubmit="return false;">
                                 <input 
                                     type="text" 
                                     class="search-input" 
