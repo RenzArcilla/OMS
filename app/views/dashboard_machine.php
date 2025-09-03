@@ -707,23 +707,26 @@
     <!-- Export Modal -->
     <div id="exportMachineModal" class="modal-overlay">
         <div class="form-container">
-            <button class="modal-close-btn" onclick="closeExportModal()">×</button>
+            <button class="modal-close-btn">×</button>
             
             <form method="POST" action="../controllers/export_machine_output.php">
                 <div class="form-header">
                     <h1 class="form-title">Export Machine Output Data</h1>
-                    <p style="font-size: 14px; color: #6B7280;">Choose your export format and options</p>
+                    <p style="font-size: 14px; color: #6B7280;">Generate reports for machine outputs</p>
                 </div>
 
-                `<!-- Export Format Section -->
+                <!-- Export Format Section -->
                 <div class="form-section">
-                    <div class="section-header">
-                        <div class="section-icon">🎯</div>
-                        <div class="section-info">
-                            <div class="section-title">Export Configuration</div>
-                            <div class="section-description">Choose date range and data fields to include</div>
+                    <div class="info-section">
+                        <div style="display: flex; align-items: flex-start; gap: 8px;">
+                            <span class="info-icon">ℹ️</span>
+                            <div>
+                                <strong>Export Information</strong>
+                                <p>The report will include all current machine outputs. Machines without output will not be included. The data will be exported in Excel format.</p>
+                            </div>
                         </div>
                     </div>
+
 
                     <div class="checkbox-group">
                         <label class="checkbox-item">
@@ -733,15 +736,7 @@
                     </div>
                 </div>
 
-                <div class="info-section">
-                    <div style="display: flex; align-items: flex-start; gap: 8px;">
-                        <span class="info-icon">ℹ️</span>
-                        <div>
-                            <strong>Export Information</strong>
-                            <p>The report will include all output data within three months. Excel format will be used to export the data.</p>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <!-- Action Buttons -->
                 <div class="button-group">

@@ -811,60 +811,46 @@
     <!-- Export Modal -->
     <div id="exportModal" class="modal-overlay">
         <div class="form-container">
-            <button class="modal-close-btn" onclick="closeExportModal()">×</button>
+            <button class="modal-close-btn">×</button>
             
             <form method="POST" action="../controllers/export_applicator_output.php">
                 <div class="form-header">
-                    <h1 class="form-title">📊 Export Reset Data</h1>
-                    <p class="form-subtitle">Generate reports for recently reset machine</p>
+                    <h1 class="form-title">Export Applicator Output Data</h1>
+                    <p style="font-size: 14px; color: #6B7280;">Generate reports for machine outputs</p>
                 </div>
-                    <div class="form-section">
-                        <div class="section-header">
-                            <div class="section-icon">🎯</div>
-                            <div class="section-info">
-                                <div class="section-title">Export Configuration</div>
-                                <div class="section-description">Choose date range and data fields to include</div>
-                            </div>
-                        </div>
 
-                        <div class="form-group">
-                            <select id="dateRange" class="form-select" name="dateRange">
-                                <option value="today">Today</option>
-                                <option value="week">This Week</option>
-                                <option value="month">This Month</option>
-                                <option value="quarter">This Quarter</option>
-                                <option value="custom">Custom Date Range</option>
-                            </select>
-                        </div>
-
-                        <div id="customDates" class="date-inputs hidden">
-                            <div class="form-group">
-                                <label class="form-label" style="font-size: 12px; color: #6B7280;">Start Date</label>
-                                <input type="date" id="startDate" name="startDate" class="form-input">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" style="font-size: 12px; color: #6B7280;">End Date</label>
-                                <input type="date" id="endDate" name="endDate" class="form-input">
-                            </div>
-                        </div>
-                    </div>
-                    
+                <!-- Export Format Section -->
+                <div class="form-section">
                     <div class="info-section">
                         <div style="display: flex; align-items: flex-start; gap: 8px;">
                             <span class="info-icon">ℹ️</span>
                             <div>
                                 <strong>Export Information</strong>
-                                <p>The report will include all reset activities within the selected date range. Excel and CSV formats are suitable for data analysis, while PDF provides a formatted report for printing and sharing.</p>
+                                <p>The report will include all current applicator outputs. The data will be exported in Excel format.</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="button-group">
-                        <button type="button" class="cancel-btn" onclick="closeExportModal()">Cancel</button>
-                        <button type="submit" class="export-btn" onclick="handleExport(this)">
-                            📊 Generate Export
-                        </button>
+                    
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="includeHeaders" name="includeHeaders" class="checkbox-input" checked>
+                            <span class="checkbox-label">Include column headers</span>
+                        </label>
                     </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="button-group">
+                    <button type="button" class="cancel-btn">Cancel</button>
+                    <button type="submit" class="export-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7,10 12,15 17,10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Generate Data
+                    </button>
                 </div>
             </form>
         </div>
