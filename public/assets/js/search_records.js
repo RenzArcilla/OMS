@@ -4,41 +4,57 @@ let recordSearchTimeout = null;
     Apply search and shift filters to the records table.
     Debounced to reduce the number of AJAX requests while typing.
 */
-async function applyRecordFilters(searchQuery = '') {
+async function applyRecordFilters(searchQuery = '', page = 1, limit = 20) {
     clearTimeout(recordSearchTimeout);
 
     recordSearchTimeout = setTimeout(async () => {
         const shift = document.getElementById('recordShift').value;
 
+        // Show loading spinner row while fetching
+        const tbody = document.getElementById("recordsTableBody");
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="12" style="text-align:center;">
+                    <div class="loading-spinner"></div>
+                </td>
+            </tr>
+        `;
+
         try {
-            // Fetch filtered records from controller
-            const response = await fetch(`/SOMS/app/controllers/search_records.php?q=${encodeURIComponent(searchQuery)}&shift=${encodeURIComponent(shift)}`);
+            const response = await fetch(
+                `/SOMS/app/controllers/search_records.php?q=${encodeURIComponent(searchQuery)}&shift=${encodeURIComponent(shift)}&page=${page}&limit=${limit}`
+            );
             const data = await response.json();
 
             if (!data.success) {
                 console.error("Record search failed:", data.error);
-                updateRecordsTable([]); // show empty table if search fails
+                updateRecordsTable([], false);
                 return;
             }
 
-            // Update table with filtered results
-            updateRecordsTable(data.data);
+            // Pass empty_db from PHP to JS
+            updateRecordsTable(data.data, data.empty_db);
+
         } catch (err) {
             console.error("Record search failed:", err);
+            updateRecordsTable([], false);
         }
-    }, 300); // debounce delay
+    }, 300);
 }
+
 
 /*
     Dynamically update the records table rows.
     Clears previous rows and renders new ones.
 */
-function updateRecordsTable(records) {
+function updateRecordsTable(records, emptyDb) {
     const tbody = document.getElementById("recordsTableBody");
     tbody.innerHTML = "";
 
     if (records.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="12" style="text-align:center;">No results found</td></tr>`;
+        tbody.innerHTML = emptyDb 
+            ? `<tr><td colspan="12" style="text-align:center;">No records available yet</td></tr>`
+            : `<tr><td colspan="12" style="text-align:center;">No results found</td></tr>`;
         return;
     }
 
@@ -82,3 +98,9 @@ function updateRecordsTable(records) {
         tbody.appendChild(tr);
     });
 }
+
+
+// Load initial data
+document.addEventListener("DOMContentLoaded", () => {
+    applyRecordFilters();
+});
