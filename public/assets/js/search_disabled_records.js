@@ -12,6 +12,17 @@ async function applyDisabledRecordFilters(searchValue = '') {
         const search = searchValue.trim() || (searchInput ? searchInput.value.trim() : '');
         const shift = document.getElementById('recordShiftDisabled').value;
 
+        const tbody = document.getElementById('deletedRecordsMetricsBody');
+
+        // Show loading spinner while fetching
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="12" style="text-align:center;">
+                    <div class="loading-spinner"></div>
+                </td>
+            </tr>
+        `;
+
         try {
             const response = await fetch(
                 `/SOMS/app/controllers/search_disabled_records.php?q=${encodeURIComponent(search)}&shift=${encodeURIComponent(shift)}`
@@ -20,13 +31,17 @@ async function applyDisabledRecordFilters(searchValue = '') {
 
             if (!result.success) {
                 console.error("Disabled record search failed:", result.error);
-                updateDisabledRecordsTable([]);
+                updateDisabledRecordsTable([], false);
                 return;
             }
 
-            updateDisabledRecordsTable(result.data);
+            // Pass empty_db if backend provides it
+            const emptyDb = result.empty_db || false;
+            updateDisabledRecordsTable(result.data, emptyDb);
+
         } catch (err) {
             console.error("Disabled record search failed:", err);
+            updateDisabledRecordsTable([], false);
         }
     }, 300);
 }
