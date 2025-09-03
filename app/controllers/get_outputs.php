@@ -7,31 +7,42 @@ try {
     $applicator_id = $_GET['applicator_id'] ?? null;
     
     if ($applicator_id) {
-        // Get specific applicator
+        // Get and aggregate all active records for a specific applicator
         $sql = "SELECT * FROM applicator_outputs WHERE applicator_id = :applicator_id AND is_active = 1";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':applicator_id', $applicator_id, PDO::PARAM_INT);
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        if ($result) {
-            $outputs = calculateProgressPercentages($result);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($rows && count($rows) > 0) {
+            $aggregated = aggregateApplicatorRows($rows);
+            $outputs = calculateProgressPercentages($aggregated);
             echo json_encode(['success' => true, 'data' => $outputs]);
         } else {
             echo json_encode(['success' => false, 'message' => 'Applicator not found']);
         }
     } else {
-        // Get all active applicators
+        // Get and aggregate all active records for all applicators
         $sql = "SELECT * FROM applicator_outputs WHERE is_active = 1";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        $outputs = [];
-        foreach ($results as $result) {
-            $outputs[] = calculateProgressPercentages($result);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $by_applicator = [];
+        foreach ($rows as $row) {
+            $id = $row['applicator_id'];
+            if (!isset($by_applicator[$id])) {
+                $by_applicator[$id] = [];
+            }
+            $by_applicator[$id][] = $row;
         }
-        
+
+        $outputs = [];
+        foreach ($by_applicator as $id => $groupRows) {
+            $aggregated = aggregateApplicatorRows($groupRows);
+            $outputs[] = calculateProgressPercentages($aggregated);
+        }
+
         echo json_encode(['success' => true, 'data' => $outputs]);
     }
     
@@ -57,10 +68,13 @@ function calculateProgressPercentages($data) {
     
     // Custom parts progress
     $custom_parts_progress = 0;
+    $custom_data = [];
     if (!empty($data['custom_parts'])) {
-        $custom_data = json_decode($data['custom_parts'], true);
-        if (isset($custom_data['output'])) {
-            $custom_parts_progress = min(100, round(($custom_data['output'] / 600000.0) * 100, 2));
+        $decoded = json_decode($data['custom_parts'], true);
+        // When aggregated, we store a synthesized { output: total } for simplicity
+        if (is_array($decoded) && isset($decoded['output'])) {
+            $custom_data = $decoded;
+            $custom_parts_progress = min(100, round(($decoded['output'] / 600000.0) * 100, 2));
         }
     }
     
@@ -130,6 +144,56 @@ function calculateProgressPercentages($data) {
             ]
         ]
     ];
+}
+
+function aggregateApplicatorRows(array $rows) {
+    // Sum numeric columns across rows and synthesize custom_parts total
+    $numericFields = [
+        'total_output', 'wire_crimper', 'wire_anvil', 'insulation_crimper', 'insulation_anvil',
+        'slide_cutter', 'cutter_holder', 'shear_blade', 'cutter_a', 'cutter_b'
+    ];
+
+    $agg = [];
+    // Preserve applicator_id; hp_no if present on any row
+    $agg['applicator_id'] = $rows[0]['applicator_id'] ?? null;
+    if (isset($rows[0]['hp_no'])) {
+        $agg['hp_no'] = $rows[0]['hp_no'];
+    }
+
+    foreach ($numericFields as $field) {
+        $agg[$field] = 0;
+    }
+
+    $customTotal = 0;
+
+    foreach ($rows as $row) {
+        foreach ($numericFields as $field) {
+            if (isset($row[$field])) {
+                $agg[$field] += (int)$row[$field];
+            }
+        }
+
+        if (!empty($row['custom_parts'])) {
+            $decoded = json_decode($row['custom_parts'], true);
+            // Support either [{name, value}...] or {output: num}
+            if (is_array($decoded)) {
+                if (isset($decoded['output'])) {
+                    $customTotal += (int)$decoded['output'];
+                } else {
+                    foreach ($decoded as $entry) {
+                        if (is_array($entry) && isset($entry['value'])) {
+                            $customTotal += (int)$entry['value'];
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Store synthesized custom_parts as { output: total } for downstream logic
+    $agg['custom_parts'] = json_encode(['output' => $customTotal]);
+
+    return $agg;
 }
 
 function getStatusColor($percentage) {
