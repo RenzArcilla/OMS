@@ -162,25 +162,29 @@ if (!isset($_SESSION['user_id'])) {
                     
 
                     <!-- Applicator Table -->
-                    <div id="applicators-table" class="section-content expanded" style="height: 600px; overflow-y: auto;">
+                    <div id="applicators-table" class="section-content expanded">
                         <!-- Filters -->
-                        <div class="search-filter">
-                            <div class="search-filter">
-                                <input type="text" class="search-input" placeholder="Search here..." onkeyup="applyApplicatorFilters(this.value)">
-                            </div>
-                            <select id="applicatorDescription" class="filter-select" onchange="applyApplicatorFilters()">  
+                        <div class="search-filter" style="display: flex; gap: 10px; align-items: center;">
+                            <input 
+                                type="text" 
+                                class="search-input" 
+                                placeholder="Search here..." 
+                                onkeyup="applyApplicatorFilters(this.value)"
+                                style="flex: 1 1 200px; min-width: 0;"
+                            >
+                            <select id="applicatorDescription" class="filter-select" onchange="applyApplicatorFilters()" style="min-width: 140px;">
                                 <option value="ALL">All Types</option>
                                 <option value="SIDE">SIDE</option>
                                 <option value="END">END</option>
                                 <option value="CLAMP">CLAMP</option>
                                 <option value="STRIP AND CRIMP">STRIP AND CRIMP</option>
                             </select>
-                            <select id="applicatorWireType" class="filter-select" onchange="applyApplicatorFilters()">  
+                            <select id="applicatorWireType" class="filter-select" onchange="applyApplicatorFilters()" style="min-width: 120px;">
                                 <option value="ALL">All Types</option>
                                 <option value="SMALL">Small</option>
                                 <option value="BIG">Big</option>
                             </select>
-                            <button type="button" class="tab-btn" onclick="refreshData()">Refresh</button>
+                            <button type="button" class="tab-btn" onclick="refreshData()" style="min-width: 90px;">Refresh</button>
                         </div>
 
                         <div class="table-container">
