@@ -55,7 +55,7 @@ async function applyMachineFilters(searchValue = '', page = 1, limit = 20) {
 /*
     Update the table rows dynamically.
 */
-function updateMachineTable(machines, emptyDb) {
+function updateMachineTable(machines, emptyDb = false) {
     const tbody = document.getElementById("machine-body");
     tbody.innerHTML = ""; // Clear existing rows
 
