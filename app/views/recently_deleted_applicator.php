@@ -36,22 +36,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($disabled_applicators as $applicator): ?>
-                    <tr>
-                        <td>
-                            <button id="restore-applicator-<?= htmlspecialchars($applicator['applicator_id']) ?>"
-                                    class="restore-btn restore-applicator-btn"
-                                    data-applicator-id="<?= htmlspecialchars($applicator['applicator_id']) ?>">
-                                Restore
-                            </button>
-                        </td>
-                        <td><?php echo htmlspecialchars($applicator['hp_no']); ?></td>
-                        <td><?php echo htmlspecialchars($applicator['description']); ?></td>
-                        <td><?php echo htmlspecialchars($applicator['terminal_maker']); ?></td>
-                        <td><?php echo htmlspecialchars($applicator['applicator_maker']); ?></td>
-                        <td><?php echo htmlspecialchars($applicator['last_encoded']); ?></td>
-                    </tr>
-                    <?php endforeach; ?>
+                    <!-- Fetch disabled applicator data as table rows through AJAX -->
                 </tbody>
             </table>
         </div>

@@ -30,7 +30,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Render fetched disabled machine data as table rows through AJAX -->
+                    <!-- Fetch disabled machine data as table rows through AJAX -->
                 </tbody>
             </table>
         </div>
