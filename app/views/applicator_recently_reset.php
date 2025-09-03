@@ -75,4 +75,4 @@
 </div>
 
 <script src="../../public/assets/js/utils/exit.js"></script>
-    <script src="../../public/assets/js/utils/enter.js"></script>
+<script src="../../public/assets/js/utils/enter.js"></script>
