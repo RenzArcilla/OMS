@@ -51,8 +51,11 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="page-header">
                     <h1 class="page-title">Manage Entries</h1>
                     <div class="header-actions">
-                        <button type="button" class="btn-secondary" onclick="exportData()">
-                            Export Report
+                        <button type="button" class="btn-primary" onclick="showExportApplicatorModal()">
+                            Export Applicators
+                        </button>
+                        <button type="button" class="btn-primary" onclick="showExportMachineModal()">
+                            Export Machines
                         </button>
                         <button class="btn-primary" onclick="openMachineModal()">
                             Add Machine
@@ -653,6 +656,110 @@ if (!isset($_SESSION['user_id'])) {
                                 Export Data
                             </button>
                         </div>
+                    </div>
+                </div>
+                <!-- Applicator Export Report Modal -->
+                <div id="exportApplicatorReportModal" class="modal-overlay">
+                    <div class="form-container">
+                        <button class="modal-close-btn" onclick="closeExportApplicatorModal()">×</button>
+                        
+                        <form method="POST" action="../controllers/export_applicator_output.php">
+                            <div class="form-header">
+                                <h1 class="form-title">Export Applicator Output Data</h1>
+                                <p style="font-size: 14px; color: #6B7280;">Generate reports for applicator outputs</p>
+                            </div>
+
+                            <!-- Export Format Section -->
+                            <div class="form-section">
+                                <div class="info-section">
+                                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                                        <span class="info-icon">ℹ️</span>
+                                        <div>
+                                            <strong>Export Information</strong>
+                                            <p>The report will include all current applicator outputs. The data will be exported in Excel format.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="section-header">
+                                    <div class="section-icon">⚙️</div>
+                                    <div class="section-info">
+                                        <div class="section-title">Additional Options</div>
+                                        <div class="section-description">Configure export settings</div>
+                                    </div>
+                                </div>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" id="includeHeaders" name="includeHeaders" class="checkbox-input" checked>
+                                        <span class="checkbox-label">Include column headers</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="button-group">
+                                <button type="button" class="cancel-btn" onclick="closeExportApplicatorModal()">Cancel</button>
+                                <button type="submit" class="export-btn">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                        <polyline points="7,10 12,15 17,10"/>
+                                        <line x1="12" y1="15" x2="12" y2="3"/>
+                                    </svg>
+                                    Generate Data
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- Machine Export Report Modal -->
+                <div id="exportMachineReportModal" class="modal-overlay">
+                    <div class="form-container">
+                        <button class="modal-close-btn" onclick="closeExportMachineModal()">×</button>
+                        
+                        <form method="POST" action="../controllers/export_machine_output.php">
+                            <div class="form-header">
+                                <h1 class="form-title">Export Machine Output Data</h1>
+                                <p style="font-size: 14px; color: #6B7280;">Generate reports for machine outputs</p>
+                            </div>
+
+                            <!-- Export Format Section -->
+                            <div class="form-section">
+                                <div class="info-section">
+                                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                                        <span class="info-icon">ℹ️</span>
+                                        <div>
+                                            <strong>Export Information</strong>
+                                            <p>The report will include all current machine outputs. The data will be exported in Excel format.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="section-header">
+                                    <div class="section-icon">⚙️</div>
+                                    <div class="section-info">
+                                        <div class="section-title">Additional Options</div>
+                                        <div class="section-description">Configure export settings</div>
+                                    </div>
+                                </div>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" id="includeHeaders" name="includeHeaders" class="checkbox-input" checked>
+                                        <span class="checkbox-label">Include column headers</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="button-group">
+                                <button type="button" class="cancel-btn" onclick="closeExportMachineModal()">Cancel</button>
+                                <button type="submit" class="export-btn">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                        <polyline points="7,10 12,15 17,10"/>
+                                        <line x1="12" y1="15" x2="12" y2="3"/>
+                                    </svg>
+                                    Generate Data
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
 

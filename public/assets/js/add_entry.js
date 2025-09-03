@@ -440,3 +440,44 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeDateRange();
     initializeCheckbox();
 });
+
+// Export modal functions
+function showExportApplicatorModal() {
+    console.log('Showing exportApplicatorReportModal...');
+    const modal = document.getElementById('exportApplicatorReportModal');
+    if (modal) {
+        modal.style.display = 'block';
+        console.log('exportApplicatorReportModal shown successfully');
+    } else {
+        console.log('exportApplicatorReportModal not found!');
+    }
+}
+
+function showExportMachineModal() {
+    console.log('Showing exportMachineReportModal...');
+    const modal = document.getElementById('exportMachineReportModal');
+    if (modal) {
+        modal.style.display = 'block';
+        console.log('exportMachineReportModal shown successfully');
+    } else {
+        console.log('exportMachineReportModal not found!');
+    }
+}
+
+function closeExportApplicatorModal() {
+    console.log('Closing exportApplicatorReportModal...');
+    const modal = document.getElementById('exportApplicatorReportModal');
+    if (modal) {
+        modal.style.display = 'none';
+        console.log('exportApplicatorReportModal closed successfully');
+    }
+}
+
+function closeExportMachineModal() {
+    console.log('Closing exportMachineReportModal...');
+    const modal = document.getElementById('exportMachineReportModal');
+    if (modal) {
+        modal.style.display = 'none';
+        console.log('exportMachineReportModal closed successfully');
+    }
+}
