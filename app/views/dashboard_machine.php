@@ -18,6 +18,7 @@
     <!--<link rel="stylesheet" href="/SOMS/public/assets/css/components/stats_modal.css">-->
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/search_filter.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/pagination.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/info.css">
 </head>
 <body>
     <?php
@@ -732,6 +733,16 @@
                     </div>
                 </div>
 
+                <div class="info-section">
+                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Export Information</strong>
+                            <p>The report will include all output data within three months. Excel format will be used to export the data.</p>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Action Buttons -->
                 <div class="button-group">
                     <button type="button" class="cancel-btn">Cancel</button>
@@ -741,7 +752,7 @@
                             <polyline points="7,10 12,15 17,10"/>
                             <line x1="12" y1="15" x2="12" y2="3"/>
                         </svg>
-                        Export Data
+                        Generate Data
                     </button>
                 </div>
             </form>
