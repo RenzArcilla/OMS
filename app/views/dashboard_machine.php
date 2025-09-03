@@ -101,6 +101,9 @@
                 <div class="page-header">
                     <h1 class="page-title">📊 Machine Dashboard</h1>
                     <div class="header-actions">
+                        <button type="button" class="modal-btn btn-secondary">
+                            Export Recently Reset Data
+                        </button>   
                         <button type="button" class="btn-secondary" onclick="exportData()">
                             Export Report
                         </button>
@@ -755,6 +758,7 @@
             </form>
         </div>
     </div>
+    <?php include_once __DIR__ . '/machine_recently_reset.php'; ?>
 
     <script src="../../public/assets/js/dashboard_machine.js"></script>
     <script src="../../public/assets/js/sidebar.js"></script>
