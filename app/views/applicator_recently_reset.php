@@ -11,7 +11,7 @@
             <p class="form-subtitle">Generate reports for recently reset applicators</p>
         </div>
 
-        <form id="exportForm" method="POST" action="../controllers/export_reset_applicator.php">
+        <form id="exportForm" method="POST" action="../controllers/export_applicator_reset.php">
             <div class="form-section">
                 <div class="info-section">
                     <div style="display: flex; align-items: flex-start; gap: 8px;">
@@ -56,16 +56,11 @@
                         <span class="checkbox-label">Include column headers</span>
                     </label>
                 </div>
-
-
             </div>
-
-
-            
 
             <div class="button-group">
                 <button type="button" class="cancel-btn" onclick="closeExportModal()">Cancel</button>
-                <button type="submit" class="export-btn" onclick="handleExport(this)">
+                <button type="submit" class="export-btn">
                     📊 Generate Export
                 </button>
             </div>
