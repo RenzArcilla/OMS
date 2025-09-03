@@ -830,8 +830,13 @@
                             </div>
                         </div>
                     </div>
-
-                    
+                    <div class="section-header">
+                        <div class="section-icon">⚙️</div>
+                        <div class="section-info">
+                            <div class="section-title">Additional Options</div>
+                            <div class="section-description">Configure export settings</div>
+                        </div>
+                    </div>
                     <div class="checkbox-group">
                         <label class="checkbox-item">
                             <input type="checkbox" id="includeHeaders" name="includeHeaders" class="checkbox-input" checked>
