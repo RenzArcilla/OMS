@@ -663,10 +663,10 @@ if (!isset($_SESSION['user_id'])) {
                     <div class="form-container">
                         <button class="modal-close-btn" onclick="closeExportApplicatorModal()">×</button>
                         
-                        <form method="POST" action="../controllers/export_applicator_output.php">
+                        <form method="POST" action="../controllers/export_applicator.php">
                             <div class="form-header">
-                                <h1 class="form-title">Export Applicator Output Data</h1>
-                                <p style="font-size: 14px; color: #6B7280;">Generate reports for applicator outputs</p>
+                                <h1 class="form-title">Export Applicator Data</h1>
+                                <p style="font-size: 14px; color: #6B7280;">Generate reports for applicators</p>
                             </div>
 
                             <!-- Export Format Section -->
@@ -676,7 +676,7 @@ if (!isset($_SESSION['user_id'])) {
                                         <span class="info-icon">ℹ️</span>
                                         <div>
                                             <strong>Export Information</strong>
-                                            <p>The report will include all current applicator outputs. The data will be exported in Excel format.</p>
+                                            <p>The report will include all current applicator data. The data will be exported in Excel format.</p>
                                         </div>
                                     </div>
                                 </div>
