@@ -1013,6 +1013,40 @@ INSERT INTO `users` (`user_id`, `username`, `password`, `first_name`, `last_name
 --
 -- Indexes for dumped tables
 --
+-- Table structure for table `applicator_outputs_progress
+CREATE OR REPLACE VIEW v_applicator_progress AS
+SELECT 
+  ao.applicator_output_id,
+  ao.applicator_id,
+  ao.total_output,
+
+  -- 400k group
+  LEAST(100, ROUND((ao.wire_crimper        / 400000.0) * 100, 2)) AS wire_crimper_progress,
+  LEAST(100, ROUND((ao.wire_anvil          / 400000.0) * 100, 2)) AS wire_anvil_progress,
+  LEAST(100, ROUND((ao.insulation_crimper  / 400000.0) * 100, 2)) AS insulation_crimper_progress,
+  LEAST(100, ROUND((ao.insulation_anvil    / 400000.0) * 100, 2)) AS insulation_anvil_progress,
+  LEAST(100, ROUND(((COALESCE(ao.slide_cutter,0)) / 400000.0) * 100, 2)) AS slide_cutter_progress,
+
+  -- 500k group
+  LEAST(100, ROUND(((COALESCE(ao.cutter_holder,0)) / 500000.0) * 100, 2)) AS cutter_holder_progress,
+  LEAST(100, ROUND(((COALESCE(ao.shear_blade ,0)) / 500000.0) * 100, 2)) AS shear_blade_progress,
+
+  -- 600k group
+  LEAST(100, ROUND(((COALESCE(ao.cutter_a,0)) / 600000.0) * 100, 2)) AS cutter_a_progress,
+  LEAST(100, ROUND(((COALESCE(ao.cutter_b,0)) / 600000.0) * 100, 2)) AS cutter_b_progress,
+
+  -- Custom parts JSON { "output": 123456 }
+  LEAST(
+    100,
+    ROUND((
+      CAST(COALESCE(JSON_UNQUOTE(JSON_EXTRACT(ao.custom_parts, '$.output')), '0') AS UNSIGNED) 
+      / 600000.0
+    ) * 100, 2)
+  ) AS custom_parts_progress
+
+FROM applicator_outputs ao
+WHERE ao.is_active = 1;
+
 
 --
 -- Indexes for table `applicators`
@@ -1261,3 +1295,15 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+
+/* Add PRIMARY KEY and AUTO_INCREMENT to applicator_outputs */
+ALTER TABLE applicator_outputs
+  ADD PRIMARY KEY (applicator_output_id);
+
+ALTER TABLE applicator_outputs
+  MODIFY applicator_output_id INT(11) NOT NULL AUTO_INCREMENT;
+
+CREATE INDEX idx_applicator_active
+  ON applicator_outputs (applicator_id, is_active);

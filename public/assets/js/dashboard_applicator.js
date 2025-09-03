@@ -26,6 +26,14 @@ function closeResetModal() {
     document.getElementById('resetModalDashboardApplicator').style.display = 'none';
 }
 
+// Refresh progress bars after reset
+function refreshProgressBarsAfterReset() {
+    // If ProgressBarManager exists, refresh the data
+    if (window.progressBarManager) {
+        window.progressBarManager.loadProgressData();
+    }
+}
+
 // Open the undo modal
 function openUndoModal(button) {
     const applicatorId = button.getAttribute("data-id");
@@ -384,6 +392,17 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeFormatOptions();
     initializeDateRange();
     initializeCheckbox();
+
+    
+    // Add event listener for reset form submission
+    const resetForm = document.getElementById('resetForm');
+    if (resetForm) {
+        resetForm.addEventListener('submit', function() {
+            // After successful reset, refresh progress bars
+            setTimeout(function() {
+                refreshProgressBarsAfterReset();
+            }, 1000); // Wait 1 second for the reset to complete
+        });
 });
 
 // Export Recently Reset Modal functions
