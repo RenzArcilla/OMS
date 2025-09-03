@@ -125,6 +125,9 @@ function getApplicatorResetForExport($date_range = 'quarter', $start_date = null
         $query .= " AND $date_filter";
     }
 
+    // Apply sorting
+    $query .= " ORDER BY ar.reset_time DESC";
+
     $stmt = $pdo->prepare($query);
 
     // Bind parameters for custom date range
