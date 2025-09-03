@@ -1,3 +1,9 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +35,15 @@
             <div class="hero-container">
                 <div class="hero-content">
                     <div class="hero-badge">
-                        <span class="hero-text">Input Privilege Here</span>
+                        <span class="hero-text">
+                            <?php 
+                                echo htmlspecialchars(
+                                    (($_SESSION['user_type'] ?? '') !== "DEFAULT")
+                                        ? 'Welcome, ' . ucwords(strtolower(htmlspecialchars($_SESSION['user_type']))) . "!"
+                                        : 'Welcome!'
+                                ); 
+                            ?>
+                        </span>
                     </div>
                     
                     <h1 class="hero-title">
