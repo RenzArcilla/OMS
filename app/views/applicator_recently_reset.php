@@ -21,21 +21,24 @@
                     </div>
                 </div>
 
-                <div class="form-grid">
+                <div class="form-group">
+                    <select id="dateRange" class="form-select" name="dateRange">
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="quarter">This Quarter</option>
+                        <option value="custom">Custom Date Range</option>
+                    </select>
+                </div>
+
+                <div id="customDates" class="date-inputs hidden">
                     <div class="form-group">
-                        <label class="form-label">
-                            From Date
-                            <span class="required-badge">Required</span>
-                        </label>
-                        <input type="date" name="date_from" class="form-input" required>
+                        <label class="form-label" style="font-size: 12px; color: #6B7280;">Start Date</label>
+                        <input type="date" id="startDate" name="startDate" class="form-input">
                     </div>
-                    
                     <div class="form-group">
-                        <label class="form-label">
-                            To Date
-                            <span class="required-badge">Required</span>
-                        </label>
-                        <input type="date" name="date_to" class="form-input" required>
+                        <label class="form-label" style="font-size: 12px; color: #6B7280;">End Date</label>
+                        <input type="date" id="endDate" name="endDate" class="form-input">
                     </div>
                 </div>
 
