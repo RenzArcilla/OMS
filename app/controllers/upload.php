@@ -51,7 +51,7 @@ try {
 
     foreach ($_FILES['dataFiles']['tmp_name'] as $index => $tmpName) { // Loops through all uploaded files.
         $fileName = basename($_FILES['dataFiles']['name'][$index]); // Extracts the original filename of the uploaded file.
-        $targetPath = $tempDir . $fileName; // Constructs the full path (where to move the file) inside app/temp/ directory.
+        $targetPath = $tempDir . uniqid() . "_" . $fileName; // Constructs the full path (where to move the file) inside app/temp/ directory.
         
         //  Per-file size check 
         $maxFileSize = 5 * 1024 * 1024; // 5 MB
