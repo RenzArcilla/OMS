@@ -392,6 +392,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeFormatOptions();
     initializeDateRange();
     initializeCheckbox();
+
     
     // Add event listener for reset form submission
     const resetForm = document.getElementById('resetForm');
@@ -402,5 +403,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 refreshProgressBarsAfterReset();
             }, 1000); // Wait 1 second for the reset to complete
         });
+});
+
+// Export Recently Reset Modal functions
+function exportRecentlyResetModal() {
+    const modal = document.getElementById('exportModalRecentlyReset');
+    if (modal) {
+        modal.style.display = 'block';
+    }
+}
+
+function closeExportRecentlyResetModal() {
+    const modal = document.getElementById('exportModalRecentlyReset');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(e) {
+    const modal = document.getElementById('exportModalRecentlyReset');
+    if (modal && e.target === modal) {
+        closeExportRecentlyResetModal();
     }
 });

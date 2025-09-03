@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/export_modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/stats_modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/progress_bars.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/search_filter.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/pagination.css">
 </head>
 <body>
     <?php 
@@ -37,6 +39,13 @@
     require_once __DIR__ . '/../models/read_joins/read_monitor_applicator_and_applicator.php';
     require_once __DIR__ . '/../includes/js_alert.php';
 
+
+    // Pagination settings
+    $items_per_page = isset($_GET['items_per_page']) ? max(5, min(50, (int)$_GET['items_per_page'])) : 10;
+    $current_page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+    $offset = ($current_page - 1) * $items_per_page;
+
+
     // Handle search if HP number is provided
     $search_hp = $_GET['search_hp'] ?? '';
     $search_result = null;
@@ -56,9 +65,15 @@
 
         // If searching, use search result instead of all records
         $applicator_total_outputs = $search_result;
+        $total_records = count($search_result);
+        $total_pages = 1;
     } else {
-        // Use existing logic for all records
-        $applicator_total_outputs = getApplicatorRecordsAndOutputs(10, 0, $part_names_array);
+        // Get total count for pagination
+        $total_records = getApplicatorRecordsCount($part_names_array);
+        $total_pages = ceil($total_records / $items_per_page);
+        
+        // Use existing logic for all records with pagination
+        $applicator_total_outputs = getApplicatorRecordsAndOutputs($items_per_page, $offset, $part_names_array);
     }
     
     // Get current filter info (only if not searching)
@@ -78,10 +93,6 @@
     // Get parts priority data
     $parts_ordered = getPartsOrderedByApplicatorOutput($part_names_array);
     $top_3_parts = array_slice($parts_ordered, 0, 3);
-
-    // Get disabled applicators
-    require_once __DIR__ . '/../models/read_applicators.php';
-    $disabled_applicators = getDisabledApplicators(10, 0);
     ?>
 
     <div class="container">
@@ -91,9 +102,14 @@
             <div id="dashboard-tab" class="tab-content">
                 <div class="page-header">
                     <h1 class="page-title">📊 Applicator Dashboard</h1>
-                    <div class="header-actions">    
+                    <div class="header-actions"> 
+                        <button type="button" class="modal-btn btn-secondary">
+                            <div>Export</div> 
+                            <div>Reset Data</div>
+                        </button>   
                         <button type="button" class="btn-secondary" onclick="exportData()">
-                            Export Report
+                            <div>Export</div> 
+                            <div>Output Data</div>
                         </button>
                         <button type="button" class="btn-primary" onclick="refreshPage()">
                             Refresh Data
@@ -126,7 +142,7 @@
                         </div>
                     </div>
                     
-                    <div class="search-filter">
+                    <div class="search-filter" style="display: flex; gap: 10px; align-items: center;">
                         <!-- Search form -->
                         <form method="GET" style="display: inline;">
                             <!-- Preserve existing filter parameter if present -->
@@ -142,12 +158,8 @@
                                     onkeyup="if(event.key==='Enter') this.form.submit()">
                             <button type="submit" class="filter-btn">Search</button>
                         </form>
-                        
-                        <?php if (!$is_searching): ?>
-                            <button class="filter-btn active" onclick="filterByStatus(this, 'all')">All</button>
-                        <?php endif; ?>
-                        
-                        <button style="position: relative; left: -10px;" class="tab-btn" onclick="window.location.href = window.location.pathname;">
+
+                        <button style="position: relative; left: -5px;" class="tab-btn" onclick="window.location.href = window.location.pathname;">
                             Auto-Sort
                         </button>
                     </div>
@@ -276,6 +288,88 @@
                         </div>
                     </div>
                 </div>
+                                
+                <!-- Pagination Controls -->
+                <?php if (!$is_searching && $total_pages > 1): ?>
+                <div class="pagination-container">
+                    <div class="pagination-info">
+                        <span class="pagination-text">
+                            Showing <?= ($offset + 1) ?> to <?= min($offset + $items_per_page, $total_records) ?> of <?= number_format($total_records) ?> results
+                        </span>
+                    </div>
+                    
+                    <div class="pagination-controls">
+                        <!-- Previous Button -->
+                        <?php if ($current_page > 1): ?>
+                            <a href="?page=<?= $current_page - 1 ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                class="pagination-btn pagination-prev">
+                                <span>←</span> Previous
+                            </a>
+                        <?php else: ?>
+                            <span class="pagination-btn pagination-prev disabled">
+                                <span>←</span> Previous
+                            </span>
+                        <?php endif; ?>
+                        
+                        <!-- Page Numbers -->
+                        <div class="pagination-numbers">
+                            <?php
+                            $start_page = max(1, $current_page - 2);
+                            $end_page = min($total_pages, $current_page + 2);
+                            
+                            // Show first page if not in range
+                            if ($start_page > 1): ?>
+                                <a href="?page=1<?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                    class="pagination-btn">1</a>
+                                <?php if ($start_page > 2): ?>
+                                    <span class="pagination-ellipsis">...</span>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            
+                            <?php for ($i = $start_page; $i <= $end_page; $i++): ?>
+                                <?php if ($i == $current_page): ?>
+                                    <span class="pagination-btn pagination-current"><?= $i ?></span>
+                                <?php else: ?>
+                                    <a href="?page=<?= $i ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                        class="pagination-btn"><?= $i ?></a>
+                                <?php endif; ?>
+                            <?php endfor; ?>
+                            
+                            <?php if ($end_page < $total_pages): ?>
+                                <?php if ($end_page < $total_pages - 1): ?>
+                                    <span class="pagination-ellipsis">...</span>
+                                <?php endif; ?>
+                                <a href="?page=<?= $total_pages ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                    class="pagination-btn"><?= $total_pages ?></a>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <!-- Next Button -->
+                        <?php if ($current_page < $total_pages): ?>
+                            <a href="?page=<?= $current_page + 1 ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                class="pagination-btn pagination-next">
+                                Next <span>→</span>
+                            </a>
+                        <?php else: ?>
+                            <span class="pagination-btn pagination-next disabled">
+                                Next <span>→</span>
+                            </span>
+                        <?php endif; ?>
+                    </div>
+                    
+                    <!-- Items Per Page Selector -->
+                    <div class="pagination-items-per-page">
+                        <label for="items-per-page">Show:</label>
+                        <select id="items-per-page" onchange="changeItemsPerPage(this.value)">
+                            <option value="5" <?= $items_per_page == 5 ? 'selected' : '' ?>>5</option>
+                            <option value="10" <?= $items_per_page == 10 ? 'selected' : '' ?>>10</option>
+                            <option value="20" <?= $items_per_page == 20 ? 'selected' : '' ?>>20</option>
+                            <option value="50" <?= $items_per_page == 50 ? 'selected' : '' ?>>50</option>
+                        </select>
+                        <span>per page</span>
+                    </div>
+                </div>
+                <?php endif; ?>
                 <!-- Table 1: Custom Parts -->
                 <div class="tables-grid">
                     <?php include_once __DIR__ . '/applicator_custom_parts.php'; ?>
@@ -411,7 +505,7 @@
 
             <form id="editCustomPartForm" method="POST" action="../controllers/edit_custom_part.php">
                 <input type="hidden" name="equipment_type" value="APPLICATOR">
-                <input type="hidden" name="part_id" id="edit_part_id">
+                <input type="hidden" name="edit_part_id" id="edit_part_id">
 
                 <div class="form-section">
                     <div class="section-header">
@@ -430,7 +524,7 @@
                             <input 
                                 type="text" 
                                 id="edit_part_name" 
-                                name="custom_part_name" 
+                                name="edit_part_name" 
                                 class="form-input" 
                                 placeholder="Enter part name..." 
                                 required
@@ -718,120 +812,55 @@
         <div class="form-container">
             <button class="modal-close-btn">×</button>
             
-            <div class="form-header">
-                <h1 class="form-title">Export Data</h1>
-                <p style="font-size: 14px; color: #6B7280;">Choose your export format and options</p>
-            </div>
-
-            <!-- Export Format Section -->
-            <div class="form-section">
-                <div class="section-header">
-                    <div class="section-icon">📄</div>
-                    <div class="section-info">
-                        <div class="section-title">Export Format</div>
-                        <div class="section-description">Choose the file format for your export</div>
-                    </div>
+            <form method="POST" action="../controllers/export_applicator_output.php">
+                <div class="form-header">
+                    <h1 class="form-title">Export Applicator Output Data</h1>
+                    <p style="font-size: 14px; color: #6B7280;">Generate reports for machine outputs</p>
                 </div>
-                
-                <div class="format-options">
-                    <div class="format-option selected" data-format="csv">
-                        <div class="format-option-content">
-                            <svg class="format-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                <polyline points="14,2 14,8 20,8"/>
-                                <line x1="16" y1="13" x2="8" y2="13"/>
-                                <line x1="16" y1="17" x2="8" y2="17"/>
-                                <polyline points="10,9 9,9 8,9"/>
-                            </svg>
-                            <div class="format-details">
-                                <div class="format-label">CSV File</div>
-                                <div class="format-description">Comma-separated values, compatible with Excel</div>
+
+                <!-- Export Format Section -->
+                <div class="form-section">
+                    <div class="info-section">
+                        <div style="display: flex; align-items: flex-start; gap: 8px;">
+                            <span class="info-icon">ℹ️</span>
+                            <div>
+                                <strong>Export Information</strong>
+                                <p>The report will include all current applicator outputs. The data will be exported in Excel format.</p>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="format-option" data-format="xlsx">
-                        <div class="format-option-content">
-                            <svg class="format-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <ellipse cx="12" cy="5" rx="9" ry="3"/>
-                                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
-                                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
-                            </svg>
-                            <div class="format-details">
-                                <div class="format-label">Excel File</div>
-                                <div class="format-description">Native Excel format with formatting</div>
-                            </div>
+                    <div class="section-header">
+                        <div class="section-icon">⚙️</div>
+                        <div class="section-info">
+                            <div class="section-title">Additional Options</div>
+                            <div class="section-description">Configure export settings</div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Date Range Section -->
-            <div class="form-section">
-                <div class="section-header">
-                    <div class="section-icon">📅</div>
-                    <div class="section-info">
-                        <div class="section-title">Date Range</div>
-                        <div class="section-description">Select the time period for your export</div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="includeHeaders" name="includeHeaders" class="checkbox-input" checked>
+                            <span class="checkbox-label">Include column headers</span>
+                        </label>
                     </div>
                 </div>
-                
-                <div class="form-group">
-                    <select id="dateRange" class="form-select">
-                        <option value="all">All Time</option>
-                        <option value="today">Today</option>
-                        <option value="week">Last 7 Days</option>
-                        <option value="month">Last 30 Days</option>
-                        <option value="quarter">Last 3 Months</option>
-                        <option value="year">Last Year</option>
-                        <option value="custom">Custom Date Range</option>
-                    </select>
-                </div>
 
-                <div id="customDates" class="date-inputs hidden">
-                    <div class="form-group">
-                        <label class="form-label" style="font-size: 12px; color: #6B7280;">Start Date</label>
-                        <input type="date" id="startDate" class="form-input">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" style="font-size: 12px; color: #6B7280;">End Date</label>
-                        <input type="date" id="endDate" class="form-input">
-                    </div>
+                <!-- Action Buttons -->
+                <div class="button-group">
+                    <button type="button" class="cancel-btn">Cancel</button>
+                    <button type="submit" class="export-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7,10 12,15 17,10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Generate Data
+                    </button>
                 </div>
-            </div>
-
-            <!-- Additional Options Section -->
-            <div class="form-section">
-                <div class="section-header">
-                    <div class="section-icon">⚙️</div>
-                    <div class="section-info">
-                        <div class="section-title">Additional Options</div>
-                        <div class="section-description">Configure export settings</div>
-                    </div>
-                </div>
-                
-                <div class="checkbox-group">
-                    <label class="checkbox-item">
-                        <input type="checkbox" id="includeHeaders" class="checkbox-input" checked>
-                        <span class="checkbox-label">Include column headers</span>
-                    </label>
-                </div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="button-group">
-                <button type="button" class="cancel-btn">Cancel</button>
-                <button type="button" class="export-btn" onclick="handleExport()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                        <polyline points="7,10 12,15 17,10"/>
-                        <line x1="12" y1="15" x2="12" y2="3"/>
-                    </svg>
-                    Export Data
-                </button>
-            </div>
+            </form>
         </div>
     </div>
+    <!-- Export Recently Reset Modal -->
+    <?php include_once __DIR__ . '/applicator_recently_reset.php'; ?>
 
     <!-- Load JavaScript -->
     <script src="../../public/assets/js/dashboard_applicator.js"></script>
@@ -842,5 +871,6 @@
     <script src="../../public/assets/js/utils/checkbox.js"></script>
     <!-- Search Disabled Applicators -->
     <script src="../../public/assets/js/search_disabled_applicators.js"></script>
+    <script src="../../public/assets/js/utils/pagination.js"></script>
 </body>
 </html>

@@ -107,11 +107,13 @@ if (is_string($app1_status)) {
 }
 
 // Submit applicator2 output
-$app2_status = submitApplicatorOutput($app2_data, $app2_out, $record_id);
-if (is_string($app2_status)) {
-    $pdo->rollBack();
-    jsAlertRedirect($app2_status, $redirect);
-    exit;
+if (!empty($app2)) {
+    $app2_status = submitApplicatorOutput($app2_data, $app2_out, $record_id);
+    if (is_string($app2_status)) {
+        $pdo->rollBack();
+        jsAlertRedirect($app2_status, $redirect);
+        exit;
+    }
 }
 
 // Submit machine output

@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/layout/grid.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/export_modal.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/search_filter.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/info.css">
 </head>
 <body>
     <?php 
@@ -82,13 +84,6 @@
                         >Refresh</button>
                     </div>
                     <!-- Users Table -->
-                    <?php 
-                    require_once '../models/read_user.php'; 
-                    $users = getUsers(10, 0);
-                    // Debug: Log users array
-                    error_log("Users in table: " . print_r($users, true));
-                    ?>
-                    
                     <div class="section-content expanded">
                         <div class="table-container">
                             <table class="data-table" id="usersTable">
@@ -100,52 +95,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="usersTableBody">
-                                    <?php if (empty($users)): ?>
-                                        <tr>
-                                            <td colspan="3">No users found.</td>
-                                        </tr>
-                                    <?php else: ?>
-                                        <?php foreach ($users as $user): ?>
-                                            <tr>
-                                                <td>
-                                                    <div class="actions">
-                                                        <button class="view-btn" 
-                                                                onclick="openViewUserModal(this)" 
-                                                                title="View Details"
-                                                                data-username="<?php echo htmlspecialchars($user['username'] ?? ''); ?>"
-                                                                data-firstname="<?php echo htmlspecialchars($user['first_name'] ?? ''); ?>"
-                                                                data-lastname="<?php echo htmlspecialchars($user['last_name'] ?? ''); ?>"
-                                                                data-role="<?php echo htmlspecialchars($user['user_type'] ?? ''); ?>">
-                                                            View
-                                                        </button>
-                                                        <button class="edit-btn" 
-                                                                onclick="openEditUserModal(this)" 
-                                                                title="Edit User"
-                                                                data-id="<?php echo htmlspecialchars($user['user_id'] ?? ''); ?>"
-                                                                data-username="<?php echo htmlspecialchars($user['username'] ?? ''); ?>"
-                                                                data-firstname="<?php echo htmlspecialchars($user['first_name'] ?? ''); ?>"
-                                                                data-lastname="<?php echo htmlspecialchars($user['last_name'] ?? ''); ?>"
-                                                                data-role="<?php echo htmlspecialchars($user['user_type'] ?? ''); ?>">
-                                                            Edit
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="user-info">
-                                                        <div class="user-avatar">👤</div>
-                                                        <div class="user-details">
-                                                            <div class="user-name"><?php echo htmlspecialchars($user['first_name'] . ' ' . $user['last_name']); ?></div>
-                                                            <div class="user-email"><?php echo htmlspecialchars($user['username']); ?></div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <span class="role-badge admin"><?php echo htmlspecialchars($user['user_type'] ?? 'Unknown'); ?></span>
-                                                </td>
-                                                
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    <?php endif; ?>
+                                    <tr><td colspan="3">Loading users...</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -154,16 +104,7 @@
             </div>
         </div>
 
-            <!-- Pagination>
-            <div class="pagination">
-                <div class="pagination-info" id="paginationInfo">
-                    Showing 1 to 1 of 1 users
-                </div>
-                <div class="pagination-controls">
-                    <button id="prevBtn" class="pagination-btn" onclick="previousPage()" disabled>Previous</button>
-                    <button id="nextBtn" class="pagination-btn" onclick="nextPage()" disabled>Next</button>
-                </div>
-            </div -->
+
 
     <!-- View User Modal -->
     <div id="viewUserModal" class="modal-overlay">
@@ -436,49 +377,17 @@
 
             <!-- Export Format Section -->
             <div class="form-section">
-                <div class="section-header">
-                    <div class="section-icon">📄</div>
-                    <div class="section-info">
-                        <div class="section-title">Export Format</div>
-                        <div class="section-description">Choose the file format for your export</div>
-                    </div>
-                </div>
-                
-                <div class="format-options">
-                    <div class="format-option selected" data-format="csv">
-                        <div class="format-option-content">
-                            <svg class="format-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                <polyline points="14,2 14,8 20,8"/>
-                                <line x1="16" y1="13" x2="8" y2="13"/>
-                                <line x1="16" y1="17" x2="8" y2="17"/>
-                                <polyline points="10,9 9,9 8,9"/>
-                            </svg>
-                            <div class="format-details">
-                                <div class="format-label">CSV File</div>
-                                <div class="format-description">Comma-separated values, compatible with Excel</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="format-option" data-format="xlsx">
-                        <div class="format-option-content">
-                            <svg class="format-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <ellipse cx="12" cy="5" rx="9" ry="3"/>
-                                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
-                                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
-                            </svg>
-                            <div class="format-details">
-                                <div class="format-label">Excel File</div>
-                                <div class="format-description">Native Excel format with formatting</div>
-                            </div>
+                <div class="info-section">
+                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Export Information</strong>
+                            <p>The report will include all current users. The data will be exported in Excel format.</p>
                         </div>
                     </div>
                 </div>
-            </div>
 
             <!-- Date Range Section -->
-            <div class="form-section">
                 <div class="section-header">
                     <div class="section-icon">📅</div>
                     <div class="section-info">

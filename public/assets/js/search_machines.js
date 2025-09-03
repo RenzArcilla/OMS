@@ -1,47 +1,73 @@
+// Timer for debouncing search input to reduce number of fetch requests
 let machineSearchTimeout = null;
 
 /*
     Apply search and description filters to the machine table.
     Debounced to prevent too many requests.
 */
-async function applyMachineFilters() {
+async function applyMachineFilters(searchValue = '', page = 1, limit = 20) {
+    // Clear any pending timeout to debounce
     clearTimeout(machineSearchTimeout);
 
+    // Set a new debounce timeout
     machineSearchTimeout = setTimeout(async () => {
-        const search = document.querySelector('.search-input').value.trim();
+        // Get search query from input field if not passed directly
+        const search = searchValue.trim() || document.getElementById('machineSearchInput').value.trim();
+
+        // Get selected machine description filter
         const description = document.getElementById('machineDescription').value;
 
+        const tbody = document.getElementById("machine-body");
+
+        // Show loading spinner while fetching data
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="12" style="text-align:center;">
+                    <div class="loading-spinner"></div>
+                </td>
+            </tr>
+        `;
+
         try {
+            // Fetch filtered machine data from the controller
             const response = await fetch(
-                `../controllers/search_machines.php?q=${encodeURIComponent(search)}&description=${encodeURIComponent(description)}`
+                `../controllers/search_machines.php?q=${encodeURIComponent(search)}&description=${encodeURIComponent(description)}&page=${page}&limit=${limit}`
             );
             const result = await response.json();
 
+            // If fetch failed or controller returned error
             if (!result.success) {
                 console.error("Machine search failed:", result.error);
-                updateMachineTable([]); // show empty table if failed
+                updateMachineTable([], false); // Render empty table
                 return;
             }
 
-            updateMachineTable(result.data);
+            // Update table with fetched data and emptyDb info
+            updateMachineTable(result.data, result.empty_db);
         } catch (err) {
+            // Log network or unexpected errors
             console.error("Machine search failed:", err);
+            updateMachineTable([], false);
         }
-    }, 300);
+    }, 300); // Wait 300ms before triggering fetch
 }
 
 /*
     Update the table rows dynamically.
 */
-function updateMachineTable(machines) {
+function updateMachineTable(machines, emptyDb = false) {
     const tbody = document.getElementById("machine-body");
-    tbody.innerHTML = "";
+    tbody.innerHTML = ""; // Clear existing rows
 
+    // Handle empty table
     if (!machines.length) {
-        tbody.innerHTML = "<tr><td colspan='7'>No machines found</td></tr>";
+        tbody.innerHTML = emptyDb
+            ? `<tr><td colspan="12" style="text-align:center;">No machines available yet</td></tr>`
+            : `<tr><td colspan="12" style="text-align:center;">No results found</td></tr>`;
         return;
     }
 
+    // Loop through each machine and create table rows
     machines.forEach(machine => {
         const row = `
             <tr>
@@ -71,6 +97,11 @@ function updateMachineTable(machines) {
                 <td>${machine.invoice_no}</td>
             </tr>
         `;
-        tbody.insertAdjacentHTML("beforeend", row);
+        tbody.insertAdjacentHTML("beforeend", row); // Append new row
     });
 }
+
+// Load initial machine data on page load
+document.addEventListener("DOMContentLoaded", () => {
+    applyMachineFilters(); // Initial fetch without filters
+});

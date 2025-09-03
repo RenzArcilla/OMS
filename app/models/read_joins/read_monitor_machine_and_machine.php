@@ -282,3 +282,96 @@ function searchMachineByControlNo($control_no, $part_names_array): array {
     
     return $records;
 }
+
+
+function getMachineOutputsForExport() {
+    /*
+        Model function to fetch Machine Output records.
+        This function will be used for exporting Machine Output to Excel.
+    */
+
+    global $pdo;
+
+    // Build the SQL query
+    $sql = "
+        SELECT m.machine_id,
+                mm.last_updated,
+                m.control_no,
+                m.description,
+                m.model,
+                m.maker,
+                m.serial_no,
+                m.invoice_no,
+                mm.total_machine_output,
+                mm.cut_blade_output,
+                mm.strip_blade_a_output,
+                mm.strip_blade_b_output,
+                mm.custom_parts_output
+        FROM monitor_machine as mm
+        LEFT JOIN machines as m
+            USING (machine_id)
+        ORDER BY m.machine_id
+    ";
+    
+    // Prepare the SQL statement
+    $stmt = $pdo->prepare($sql);
+
+    // Execute the query and return the results
+    $stmt->execute();
+    $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Get the custom part names of machines
+    require_once '../models/read_custom_parts.php';
+    $custom_parts = getCustomParts("MACHINE");
+
+    // Process custom parts output
+    foreach ($records as &$row) {
+        if (!empty($row['custom_parts_output'])) {
+            // Check if it's already an array or if it's a JSON string that needs decoding
+            if (is_string($row['custom_parts_output'])) {
+                // It's a JSON string, decode it
+                $decoded = json_decode($row['custom_parts_output'], true);
+                $row['custom_parts_output'] = is_array($decoded) ? $decoded : [];
+            } elseif (is_array($row['custom_parts_output'])) {
+                // It's already an array, use it as is
+                $row['custom_parts_output'] = $row['custom_parts_output'];
+            } else {
+                // Neither string nor array, set to empty array
+                $row['custom_parts_output'] = [];
+            }
+        } else {
+            $row['custom_parts_output'] = [];
+        }
+    }
+
+    return $records;
+}
+
+
+function getMachineRecordsCount($part_names_array): int {
+    /*
+        Function to get the total count of applicator records for pagination.
+        
+        Args:
+        - $part_names_array: Array of custom part names.
+        
+        Returns:
+        - int: Total number of machine records.
+    */
+    
+    global $pdo;
+    
+    // Simple count query without ordering or filtering
+    $sql = "
+        SELECT COUNT(*) as total
+        FROM monitor_machine
+        LEFT JOIN machines
+            USING (machine_id)
+    ";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    return (int)$result['total'];
+}

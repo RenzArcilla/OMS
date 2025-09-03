@@ -37,6 +37,8 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="/SOMS/public/assets/css/layout/grid.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/export_modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/base/header.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/search_filter.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/info.css">
 </head>
 <body>
     <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/sidebar.php'; ?>
@@ -49,8 +51,11 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="page-header">
                     <h1 class="page-title">Manage Entries</h1>
                     <div class="header-actions">
-                        <button type="button" class="btn-secondary" onclick="exportData()">
-                            Export Report
+                        <button type="button" class="btn-primary" onclick="showExportApplicatorModal()">
+                            Export Applicators
+                        </button>
+                        <button type="button" class="btn-primary" onclick="showExportMachineModal()">
+                            Export Machines
                         </button>
                         <button class="btn-primary" onclick="openMachineModal()">
                             Add Machine
@@ -71,8 +76,8 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="data-section">
                     <div id="machine-table" class="section-content expanded" style="height: 600px; overflow-y: auto;">
                         <!-- Filters -->
-                        <div class="search-filter">
-                            <form id="machineFilterForm" onsubmit="return false;" style="display: flex; gap: 10px; align-items: center;">
+                        <div class="search-filter" style="display: flex; gap: 10px; align-items: center;">
+                            <form id="machineFilterForm" onsubmit="return false;">
                                 <input 
                                     type="text" 
                                     class="search-input" 
@@ -113,47 +118,7 @@ if (!isset($_SESSION['user_id'])) {
                                     </tr>
                                 </thead>
                                 <tbody id="machine-body">
-                                    <?php
-                                    // Include database connection and machine reader logic
-                                    require_once __DIR__ . '/../includes/db.php';
-                                    require_once __DIR__ . '/../models/read_machines.php';
-
-                                    // Fetch initial set of machines (first 10 entries)
-                                    $machines = getMachines($pdo, 20, 0);?>
-
-                                    <!-- Render fetched machine data as table rows -->
-                                    <?php foreach ($machines as $row): ?>
-                                        <tr>
-                                            <td>
-                                            <!-- Edit link with data attributes -->
-                                                <div class="actions">
-                                                    <button class="edit-btn"
-                                                        type="button"
-                                                        onclick="openEditModal(this)"
-                                                        data-id="<?= $row['machine_id'] ?>"
-                                                        data-control="<?= htmlspecialchars($row['control_no'], ENT_QUOTES) ?>"
-                                                        data-description="<?= $row['description'] ?>"
-                                                        data-model="<?= htmlspecialchars($row['model'], ENT_QUOTES) ?>"
-                                                        data-maker="<?= htmlspecialchars($row['maker'], ENT_QUOTES) ?>"
-                                                        data-serial="<?= htmlspecialchars($row['serial_no'], ENT_QUOTES) ?>"
-                                                        data-invoice="<?= htmlspecialchars($row['invoice_no'], ENT_QUOTES) ?>"
-                                                    >Edit</button>
-
-                                            <!-- Delete form -->
-                                                    <form action="/SOMS/app/controllers/disable_machine.php" method="POST" style="display:inline;">
-                                                        <input type="hidden" name="machine_id" value="<?= $row['machine_id'] ?>">
-                                                        <button class="delete-btn" type="button" onclick="openMachineDeleteModal(this)">Delete</button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                            <td><?= htmlspecialchars($row['control_no']) ?></td>
-                                            <td><?= htmlspecialchars($row['description']) ?></td>
-                                            <td><?= htmlspecialchars($row['model']) ?></td>
-                                            <td><?= htmlspecialchars($row['maker']) ?></td>
-                                            <td><?= htmlspecialchars($row['serial_no']) ?></td>
-                                            <td><?= htmlspecialchars($row['invoice_no']) ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
+                                    <!-- Fetch machine data as table rows via AJAX-->
                                 </tbody>
                             </table>
                         </div>
@@ -161,25 +126,29 @@ if (!isset($_SESSION['user_id'])) {
                     
 
                     <!-- Applicator Table -->
-                    <div id="applicators-table" class="section-content expanded" style="height: 600px; overflow-y: auto;">
+                    <div id="applicators-table" class="section-content expanded">
                         <!-- Filters -->
-                        <div class="search-filter">
-                            <div class="search-filter">
-                                <input type="text" class="search-input" placeholder="Search here..." onkeyup="applyApplicatorFilters(this.value)">
-                            </div>
-                            <select id="applicatorDescription" class="filter-select" onchange="applyApplicatorFilters()">  
+                        <div class="search-filter" style="display: flex; gap: 10px; align-items: center;">
+                            <input 
+                                type="text" 
+                                class="search-input" 
+                                placeholder="Search here..." 
+                                onkeyup="applyApplicatorFilters(this.value)"
+                                style="flex: 1 1 200px; min-width: 0;"
+                            >
+                            <select id="applicatorDescription" class="filter-select" onchange="applyApplicatorFilters()" style="min-width: 140px;">
                                 <option value="ALL">All Types</option>
                                 <option value="SIDE">SIDE</option>
                                 <option value="END">END</option>
                                 <option value="CLAMP">CLAMP</option>
                                 <option value="STRIP AND CRIMP">STRIP AND CRIMP</option>
                             </select>
-                            <select id="applicatorWireType" class="filter-select" onchange="applyApplicatorFilters()">  
+                            <select id="applicatorWireType" class="filter-select" onchange="applyApplicatorFilters()" style="min-width: 120px;">
                                 <option value="ALL">All Types</option>
                                 <option value="SMALL">Small</option>
                                 <option value="BIG">Big</option>
                             </select>
-                            <button type="button" class="tab-btn" onclick="refreshData()">Refresh</button>
+                            <button type="button" class="tab-btn" onclick="refreshData()" style="min-width: 90px;">Refresh</button>
                         </div>
 
                         <div class="table-container">
@@ -199,54 +168,7 @@ if (!isset($_SESSION['user_id'])) {
                                 </thead>
 
                                 <tbody id="applicator-body">
-                                    <?php
-                                    // Include database connection and machine reader logic
-                                    require_once __DIR__ . '/../includes/db.php';
-                                    require_once __DIR__ . '/../models/read_applicators.php';
-
-                                    // Fetch initial set of machines (first 10 entries)
-                                    $applicators = getApplicators($pdo, 20, 0);?>
-                                    
-                                    <!-- Render fetched machine data as table rows -->
-                                    <?php foreach ($applicators as $row): ?>
-                                        <tr>
-                                            <td>
-                                            <!-- Edit link with data attributes -->
-                                            <div class="actions">
-                                                <button class="edit-btn"
-                                                    type="button"
-                                                    onclick="openApplicatorEditModal(this)"
-                                                    data-id="<?= $row['applicator_id'] ?>"
-                                                    data-control="<?= htmlspecialchars($row['hp_no']) ?>"
-                                                    data-terminal="<?= htmlspecialchars($row['terminal_no']) ?>"
-                                                    data-description="<?= htmlspecialchars($row['description']) ?>"
-                                                    data-wire="<?= htmlspecialchars($row['wire']) ?>"
-                                                    data-terminal-maker="<?= htmlspecialchars($row['terminal_maker']) ?>"
-                                                    data-applicator-maker="<?= htmlspecialchars($row['applicator_maker']) ?>"
-                                                    data-serial="<?= htmlspecialchars($row['serial_no']) ?>"
-                                                    data-invoice="<?= htmlspecialchars($row['invoice_no']) ?>"
-                                            >Edit</button>
-
-                                            <!-- Delete form -->
-                                            <form action="/SOMS/app/controllers/disable_applicator.php" method="POST" style="display:inline;">
-                                                <input type="hidden" name="applicator_id" value="<?= htmlspecialchars($row['applicator_id']) ?>">
-                                                <button 
-                                                    type="button"
-                                                    class="delete-btn"
-                                                    onclick="openApplicatorDeleteModal(this)"
-                                                >Delete</button>
-                                            </form>
-                                            </td>
-                                            <td><?= htmlspecialchars($row['hp_no']) ?></td>
-                                            <td><?= htmlspecialchars($row['terminal_no']) ?></td>
-                                            <td><?= htmlspecialchars($row['description']) ?></td>
-                                            <td><?= htmlspecialchars($row['wire']) ?></td>
-                                            <td><?= htmlspecialchars($row['terminal_maker']) ?></td>
-                                            <td><?= htmlspecialchars($row['applicator_maker']) ?></td>
-                                            <td><?= htmlspecialchars($row['serial_no']) ?></td>
-                                            <td><?= htmlspecialchars($row['invoice_no']) ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
+                                    <!-- Fetch applicator data as table rows via AJAX-->
                                 </tbody>
                             </table>
                         </div>
@@ -654,58 +576,24 @@ if (!isset($_SESSION['user_id'])) {
                 <!-- Export Modal -->
                 <div id="exportModal" class="modal-overlay">
                     <div class="form-container">
-                        <button class="modal-close-btn" onclick="closeExportModal()">×</button>
+                        <button class="modal-close-btn">×</button>
                         
                         <div class="form-header">
                             <h1 class="form-title">Export Data</h1>
                             <p style="font-size: 14px; color: #6B7280;">Choose your export format and options</p>
                         </div>
 
-                        <!-- Export Format Section -->
-                        <div class="form-section">
-                            <div class="section-header">
-                                <div class="section-icon">📄</div>
-                                <div class="section-info">
-                                    <div class="section-title">Export Format</div>
-                                    <div class="section-description">Choose the file format for your export</div>
-                                </div>
-                            </div>
-                            
-                            <div class="format-options">
-                                <div class="format-option selected" data-format="csv">
-                                    <div class="format-option-content">
-                                        <svg class="format-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                            <polyline points="14,2 14,8 20,8"/>
-                                            <line x1="16" y1="13" x2="8" y2="13"/>
-                                            <line x1="16" y1="17" x2="8" y2="17"/>
-                                            <polyline points="10,9 9,9 8,9"/>
-                                        </svg>
-                                        <div class="format-details">
-                                            <div class="format-label">CSV File</div>
-                                            <div class="format-description">Comma-separated values, compatible with Excel</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="format-option" data-format="xlsx">
-                                    <div class="format-option-content">
-                                        <svg class="format-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <ellipse cx="12" cy="5" rx="9" ry="3"/>
-                                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
-                                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
-                                        </svg>
-                                        <div class="format-details">
-                                            <div class="format-label">Excel File</div>
-                                            <div class="format-description">Native Excel format with formatting</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Date Range Section -->
                         <div class="form-section">
+                            <div class="info-section">
+                                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                                    <span class="info-icon">ℹ️</span>
+                                    <div>
+                                        <strong>Export Information</strong>
+                                        <p>The report will include all current production outputs. The data will be exported in Excel format.</p>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="section-header">
                                 <div class="section-icon">📅</div>
                                 <div class="section-info">
@@ -758,7 +646,7 @@ if (!isset($_SESSION['user_id'])) {
 
                         <!-- Action Buttons -->
                         <div class="button-group">
-                            <button type="button" class="cancel-btn" onclick="closeExportModal()">Cancel</button>
+                            <button type="button" class="cancel-btn">Cancel</button>
                             <button type="button" class="export-btn" onclick="handleExport()">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -770,9 +658,113 @@ if (!isset($_SESSION['user_id'])) {
                         </div>
                     </div>
                 </div>
+                <!-- Applicator Export Report Modal -->
+                <div id="exportApplicatorReportModal" class="modal-overlay">
+                    <div class="form-container">
+                        <button class="modal-close-btn" onclick="closeExportApplicatorModal()">×</button>
+                        
+                        <form method="POST" action="../controllers/export_applicator_output.php">
+                            <div class="form-header">
+                                <h1 class="form-title">Export Applicator Output Data</h1>
+                                <p style="font-size: 14px; color: #6B7280;">Generate reports for applicator outputs</p>
+                            </div>
+
+                            <!-- Export Format Section -->
+                            <div class="form-section">
+                                <div class="info-section">
+                                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                                        <span class="info-icon">ℹ️</span>
+                                        <div>
+                                            <strong>Export Information</strong>
+                                            <p>The report will include all current applicator outputs. The data will be exported in Excel format.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="section-header">
+                                    <div class="section-icon">⚙️</div>
+                                    <div class="section-info">
+                                        <div class="section-title">Additional Options</div>
+                                        <div class="section-description">Configure export settings</div>
+                                    </div>
+                                </div>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" id="includeHeaders" name="includeHeaders" class="checkbox-input" checked>
+                                        <span class="checkbox-label">Include column headers</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="button-group">
+                                <button type="button" class="cancel-btn" onclick="closeExportApplicatorModal()">Cancel</button>
+                                <button type="submit" class="export-btn">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                        <polyline points="7,10 12,15 17,10"/>
+                                        <line x1="12" y1="15" x2="12" y2="3"/>
+                                    </svg>
+                                    Generate Data
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- Machine Export Report Modal -->
+                <div id="exportMachineReportModal" class="modal-overlay">
+                    <div class="form-container">
+                        <button class="modal-close-btn" onclick="closeExportMachineModal()">×</button>
+                        
+                        <form method="POST" action="../controllers/export_machine_output.php">
+                            <div class="form-header">
+                                <h1 class="form-title">Export Machine Output Data</h1>
+                                <p style="font-size: 14px; color: #6B7280;">Generate reports for machine outputs</p>
+                            </div>
+
+                            <!-- Export Format Section -->
+                            <div class="form-section">
+                                <div class="info-section">
+                                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                                        <span class="info-icon">ℹ️</span>
+                                        <div>
+                                            <strong>Export Information</strong>
+                                            <p>The report will include all current machine outputs. The data will be exported in Excel format.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="section-header">
+                                    <div class="section-icon">⚙️</div>
+                                    <div class="section-info">
+                                        <div class="section-title">Additional Options</div>
+                                        <div class="section-description">Configure export settings</div>
+                                    </div>
+                                </div>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" id="includeHeaders" name="includeHeaders" class="checkbox-input" checked>
+                                        <span class="checkbox-label">Include column headers</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="button-group">
+                                <button type="button" class="cancel-btn" onclick="closeExportMachineModal()">Cancel</button>
+                                <button type="submit" class="export-btn">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                        <polyline points="7,10 12,15 17,10"/>
+                                        <line x1="12" y1="15" x2="12" y2="3"/>
+                                    </svg>
+                                    Generate Data
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
 
     <script src="../../public/assets/js/add_entry.js"></script>
-    <script src="../../public/assets/js/export_entry.js"></script>
+    <!-- script src="../../public/assets/js/export_entry.js"></script -->
     <script src="../../public/assets/js/sidebar.js"></script>
     <script src="../../public/assets/js/utils/exit.js"></script>
     <script src="../../public/assets/js/utils/enter.js"></script>

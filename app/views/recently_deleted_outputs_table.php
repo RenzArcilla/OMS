@@ -13,12 +13,6 @@
     
 </head>
 <body>
-    <?php 
-    // Include the necessary PHP files
-    require_once '../models/read_joins/record_and_outputs.php';
-    $disabled_records = getDisabledRecordsAndOutputs(20, 0);
-    ?>
-
     <div id="dashboard-tab" class="tab-content">
         <!-- Disabled Records Section -->
         <div class="data-section">
@@ -59,28 +53,6 @@
                             </tr>
                         </thead>
                         <tbody id="deletedRecordsMetricsBody">
-                            <!-- Render fetched record data as table rows -->
-                            <?php foreach ($disabled_records as $row): ?>
-                                <tr>
-                                    <td>
-                                    <button class="restore-btn restore-output-btn" 
-                                        data-record-id="<?= htmlspecialchars($row['record_id']) ?>">
-                                        Restore
-                                    </button>
-                                    </td>
-                                    <td><?= htmlspecialchars($row['record_id']) ?></td>
-                                    <td><?= htmlspecialchars($row['date_inspected']) ?></td>
-                                    <td><?= htmlspecialchars(explode(' ', $row['date_encoded'])[0]) ?></td>
-                                    <td><?= htmlspecialchars(explode(' ', $row['last_updated'])[0]) ?></td>
-                                    <td><?= htmlspecialchars($row['shift']) ?></td>
-                                    <td><?= htmlspecialchars($row['hp1_no']) ?></td>
-                                    <td><?= htmlspecialchars($row['app1_output']) ?></td>
-                                    <td><?= htmlspecialchars($row['hp2_no']) ?></td>
-                                    <td><?= htmlspecialchars($row['app2_output']) ?></td>
-                                    <td><?= htmlspecialchars($row['control_no']) ?></td>
-                                    <td><?= htmlspecialchars($row['machine_output']) ?></td>
-                                </tr>
-                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>

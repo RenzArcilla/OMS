@@ -5,6 +5,7 @@
         <a href="/SOMS/app/views/home.php">
             <div class="logo">SOMS</div>
         </a>
-        <button class="tab-btn"> Log out * dapat magsshow to kapag nakalogin na</button>
+        <button class="tab-btn logout-btn"> Log out</button>
     </div>
 </nav>
+<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/views/logout.php'; ?>

@@ -1,6 +1,6 @@
 <?php
 /*
-    This is a helper file for exporting records to Excel.
+    This is a helper file for exporting applicator resets to Excel.
 */
 
 // Include error handling and set max memory limits and execution time
@@ -11,20 +11,23 @@ set_time_limit(300);
 require_once '../../vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+require_once '../models/read_applicator_reset.php';
 
 /*
-    Export records to Excel, splitting into multiple sheets if > 5000 rows.
+    Export applicator resets to Excel, splitting into multiple sheets if > 5000 rows.
 
     Params: 
     bool $include_headers - Whether to include column headers
-    string $filters - SQL filter string for fetching records
+    string $date_range    - The selected date filter (today, week, month, quarter, year, or custom)
+    string $start_date    - Start date if custom range
+    string $end_date      - End date if custom range
 */
-function exportRecordsToExcel($include_headers, $date_range, $start_date = null, $end_date = null) {
+function exportApplicatorResetsToExcel($include_headers, $date_range, $start_date = null, $end_date = null) {
 
-    $records = getFilteredRecordsForExport($date_range, $start_date, $end_date);
+    $records = getApplicatorResetForExport($date_range, $start_date, $end_date);
 
     if (!$records) {
-        jsAlertRedirect("No records found for export.", '../views/record_output.php');
+        jsAlertRedirect("No applicator reset records found for export.", '../views/applicator_reset.php');
     }
 
     $spreadsheet = new Spreadsheet();
@@ -39,7 +42,7 @@ function exportRecordsToExcel($include_headers, $date_range, $start_date = null,
             $sheet = $spreadsheet->createSheet($i);
         }
 
-        $sheet->setTitle("Records_" . ($i + 1));
+        $sheet->setTitle("Resets_" . ($i + 1));
 
         $rowNum = 1;
 
@@ -81,7 +84,7 @@ function exportRecordsToExcel($include_headers, $date_range, $start_date = null,
     }
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename="records_export.xlsx"');
+    header('Content-Disposition: attachment;filename="applicator_resets_export.xlsx"');
     header('Cache-Control: max-age=0');
     header('Cache-Control: max-age=1'); // For IE compatibility
     header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');

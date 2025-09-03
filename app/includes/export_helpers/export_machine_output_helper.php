@@ -1,6 +1,6 @@
 <?php
 /*
-    This is a helper file for exporting records to Excel.
+    This is a helper file for exporting machine output to Excel.
 */
 
 // Include error handling and set max memory limits and execution time
@@ -19,13 +19,19 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
     bool $include_headers - Whether to include column headers
     string $filters - SQL filter string for fetching records
 */
-function exportRecordsToExcel($include_headers, $date_range, $start_date = null, $end_date = null) {
+function exportMachineOutputToExcel($include_headers) {
 
-    $records = getFilteredRecordsForExport($date_range, $start_date, $end_date);
+    $records = getMachineOutputsForExport();
 
     if (!$records) {
-        jsAlertRedirect("No records found for export.", '../views/record_output.php');
+        jsAlertRedirect("No records found for export.", '../views/dashboard_applicator.php');
     }
+
+    // Extract only the part_name values from custom MACHINE parts 
+    // to use as dynamic column headers in the export
+    $custom_parts = array_map(function($row) {
+        return $row['part_name'];
+    }, getCustomParts("MACHINE"));
 
     $spreadsheet = new Spreadsheet();
 
@@ -39,30 +45,58 @@ function exportRecordsToExcel($include_headers, $date_range, $start_date = null,
             $sheet = $spreadsheet->createSheet($i);
         }
 
-        $sheet->setTitle("Records_" . ($i + 1));
+        $sheet->setTitle("Machine_Output_" . ($i + 1));
 
         $rowNum = 1;
 
         // Headers
         if ($include_headers && isset($chunk[0])) {
             $col = 1;
-            foreach (array_keys($chunk[0]) as $header) {
+            foreach ($chunk[0] as $header => $value) {
+                if ($header === 'custom_parts_output') {
+                    continue; // skip placeholder column
+                }
                 $cell = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($col) . $rowNum;
                 $sheet->setCellValue($cell, ucfirst(str_replace("_", " ", $header)));
                 $sheet->getStyle($cell)->getFont()->setBold(true);
                 $col++;
             }
+
+            // Add headers for each custom part
+            foreach ($custom_parts as $part_name) {
+                $cell = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($col) . $rowNum;
+                $sheet->setCellValue($cell, ucfirst(str_replace("_", " ", $part_name)));
+                $sheet->getStyle($cell)->getFont()->setBold(true);
+                $col++;
+            }
+
             $rowNum++;
         }
 
         // Data rows
         foreach ($chunk as $record) {
             $col = 1;
-            foreach ($record as $value) {
+
+            // Write normal fields first
+            foreach ($record as $key => $value) {
+                if ($key === 'custom_parts_output') {
+                    continue; // Skip this field, we’ll expand it later
+                }
+
                 $cell = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($col) . $rowNum;
                 $sheet->setCellValue($cell, $value);
                 $col++;
             }
+
+            // Expand custom parts into their own columns
+            $custom_output = $record['custom_parts_output'] ?? [];
+            foreach ($custom_parts as $part_name) {
+                $value = $custom_output[$part_name] ?? 0;
+                $cell = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($col) . $rowNum;
+                $sheet->setCellValue($cell, $value);
+                $col++;
+            }
+
             $rowNum++;
         }
 
@@ -81,7 +115,7 @@ function exportRecordsToExcel($include_headers, $date_range, $start_date = null,
     }
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename="records_export.xlsx"');
+    header('Content-Disposition: attachment;filename="machine_output_export.xlsx"');
     header('Cache-Control: max-age=0');
     header('Cache-Control: max-age=1'); // For IE compatibility
     header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');

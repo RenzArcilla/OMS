@@ -10,8 +10,8 @@
 // Include the database connection
 require_once __DIR__ . '/../../includes/db.php'; 
 
+/*
 function getRecordsAndOutputs(int $limit = 20, int $offset = 0): array {
-    /*
         Function to fetch a list of machines from the database with pagination.
         It prepares and executes a SELECT query that fetches machines ordered by most recent,
         and returns them as an associative array.
@@ -23,7 +23,6 @@ function getRecordsAndOutputs(int $limit = 20, int $offset = 0): array {
 
         Returns:
         - Array of machines (associative arrays) on success.
-    */
 
     global $pdo;
 
@@ -75,7 +74,7 @@ function getRecordsAndOutputs(int $limit = 20, int $offset = 0): array {
     // Execute the query and return the results
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+} */
 
 
 function getDisabledRecordsAndOutputs($limit = 20, $offset = 0, $search = null): array {
@@ -126,9 +125,12 @@ function getDisabledRecordsAndOutputs($limit = 20, $offset = 0, $search = null):
             ON r.record_id = ao2.record_id 
             AND r.applicator2_id = ao2.applicator_id
 
+
         LEFT JOIN machine_outputs mo ON r.record_id = mo.record_id
+
         LEFT JOIN applicators a1 ON r.applicator1_id = a1.applicator_id
         LEFT JOIN applicators a2 ON r.applicator2_id = a2.applicator_id
+
         LEFT JOIN machines m ON r.machine_id = m.machine_id
 
         WHERE r.is_active = 0
@@ -183,35 +185,37 @@ function getFilteredRecords($limit, $offset, $search = null, $shift = 'ALL', $is
 
     $query = "
         SELECT 
-            r.record_id,
-            r.shift,
-            r.date_inspected,
-            r.date_encoded,
-            r.last_updated,
+            r.record_id AS record_id,
+            r.shift AS shift,
+            r.date_inspected AS date_inspected,
+            r.date_encoded AS date_encoded,
+            r.last_updated AS last_updated,
+
             ao1.total_output AS app1_output,
             ao2.total_output AS app2_output,
+
             mo.total_machine_output AS machine_output,
+
             a1.hp_no AS hp1_no,
             a2.hp_no AS hp2_no,
+
             m.control_no AS control_no
+
         FROM records r
-        LEFT JOIN (
-            SELECT record_id, applicator_id, SUM(total_output) AS total_output
-            FROM applicator_outputs
-            GROUP BY record_id, applicator_id
-        ) ao1 ON r.record_id = ao1.record_id AND r.applicator1_id = ao1.applicator_id
-        LEFT JOIN (
-            SELECT record_id, applicator_id, SUM(total_output) AS total_output
-            FROM applicator_outputs
-            GROUP BY record_id, applicator_id
-        ) ao2 ON r.record_id = ao2.record_id AND r.applicator2_id = ao2.applicator_id
-        LEFT JOIN (
-            SELECT record_id, SUM(total_machine_output) AS total_machine_output
-            FROM machine_outputs
-            GROUP BY record_id
-        ) mo ON r.record_id = mo.record_id
+        LEFT JOIN applicator_outputs ao1 
+            ON r.record_id = ao1.record_id 
+            AND r.applicator1_id = ao1.applicator_id
+
+        LEFT JOIN applicator_outputs ao2 
+            ON r.record_id = ao2.record_id 
+            AND r.applicator2_id = ao2.applicator_id
+
+
+        LEFT JOIN machine_outputs mo ON r.record_id = mo.record_id
+
         LEFT JOIN applicators a1 ON r.applicator1_id = a1.applicator_id
         LEFT JOIN applicators a2 ON r.applicator2_id = a2.applicator_id
+
         LEFT JOIN machines m ON r.machine_id = m.machine_id
         WHERE r.is_active = :is_active
     ";
@@ -256,7 +260,7 @@ function getFilteredRecords($limit, $offset, $search = null, $shift = 'ALL', $is
 }
 
 
-function getFilteredRecordsForExport($date_range = 'all', $start_date = null, $end_date = null) {
+function getFilteredRecordsForExport($date_range = 'today', $start_date = null, $end_date = null) {
     /*
         Model function to fetch filtered records.
         This function will be used for exporting records to Excel.
@@ -283,9 +287,6 @@ function getFilteredRecordsForExport($date_range = 'all', $start_date = null, $e
             $filters = "QUARTER(r.date_inspected) = QUARTER(CURDATE()) 
                         AND YEAR(r.date_inspected) = YEAR(CURDATE())";
             break;
-        case 'year':
-            $filters = "YEAR(r.date_inspected) = YEAR(CURDATE())";
-            break;
         case 'custom':
             $filters = "DATE(r.date_inspected) BETWEEN :start_date AND :end_date";
             $params[':start_date'] = $start_date;
@@ -297,43 +298,43 @@ function getFilteredRecordsForExport($date_range = 'all', $start_date = null, $e
 
     $sql = "
         SELECT 
-            r.record_id,
-            r.shift,
-            r.date_inspected,
-            r.date_encoded,
-            r.last_updated,
-            ao1.total_output AS app1_output,
-            ao2.total_output AS app2_output,
-            mo.total_machine_output AS machine_output,
+            r.record_id AS record_id,
+            r.shift AS shift,
+            r.date_inspected AS date_inspected,
+            r.date_encoded AS date_encoded,
+            r.last_updated AS last_updated,
+
             a1.hp_no AS hp1_no,
+            ao1.total_output AS app1_output,
+
             a2.hp_no AS hp2_no,
-            m.control_no AS control_no
+            ao2.total_output AS app2_output,
+
+            m.control_no AS control_no,
+            mo.total_machine_output AS machine_output
+
         FROM records r
-        LEFT JOIN (
-            SELECT record_id, applicator_id, SUM(total_output) AS total_output
-            FROM applicator_outputs
-            GROUP BY record_id, applicator_id
-        ) ao1 ON r.record_id = ao1.record_id AND r.applicator1_id = ao1.applicator_id
-        LEFT JOIN (
-            SELECT record_id, applicator_id, SUM(total_output) AS total_output
-            FROM applicator_outputs
-            GROUP BY record_id, applicator_id
-        ) ao2 ON r.record_id = ao2.record_id AND r.applicator2_id = ao2.applicator_id
-        LEFT JOIN (
-            SELECT record_id, SUM(total_machine_output) AS total_machine_output
-            FROM machine_outputs
-            GROUP BY record_id
-        ) mo ON r.record_id = mo.record_id
+        LEFT JOIN applicator_outputs ao1 
+            ON r.record_id = ao1.record_id 
+            AND r.applicator1_id = ao1.applicator_id
+
+        LEFT JOIN applicator_outputs ao2 
+            ON r.record_id = ao2.record_id 
+            AND r.applicator2_id = ao2.applicator_id
+
+
+        LEFT JOIN machine_outputs mo ON r.record_id = mo.record_id
+
         LEFT JOIN applicators a1 ON r.applicator1_id = a1.applicator_id
         LEFT JOIN applicators a2 ON r.applicator2_id = a2.applicator_id
+
         LEFT JOIN machines m ON r.machine_id = m.machine_id
         WHERE r.is_active = 1
         AND $filters
-        ORDER BY r.date_inspected DESC
+        ORDER BY r.record_id DESC
     ";
 
     $stmt = $pdo->prepare($sql);
-    echo "Using filter: $filters\n";
     $stmt->execute($params);
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);

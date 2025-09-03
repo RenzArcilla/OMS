@@ -26,6 +26,14 @@ try {
     // Fetch filtered results
     $machines = getFilteredMachines(20, 0, $search, $description, 0);
 
+    if (empty($machines)) {
+        echo json_encode([
+            'success' => false,
+            'error' => 'emptyDb'
+        ]);
+        exit;
+    }
+
     echo json_encode([
         'success' => true,
         'data' => $machines
@@ -37,4 +45,4 @@ try {
         'success' => false,
         'error' => $e->getMessage()
     ]);
-}   
+}  

@@ -1,6 +1,6 @@
 <?php
 /*
-    This is a helper file for exporting records to Excel.
+    This is a helper file for exporting machine reset records to Excel.
 */
 
 // Include error handling and set max memory limits and execution time
@@ -13,18 +13,21 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 /*
-    Export records to Excel, splitting into multiple sheets if > 5000 rows.
+    Export machine reset records to Excel, splitting into multiple sheets if > 5000 rows.
 
-    Params: 
-    bool $include_headers - Whether to include column headers
-    string $filters - SQL filter string for fetching records
+    Params:
+    bool   $include_headers - Whether to include column headers
+    string $date_range      - The date range for export (e.g., 'today', 'week', 'month', 'quarter', 'custom')
+    string $start_date      - Start date for custom range (optional)
+    string $end_date        - End date for custom range (optional)
 */
-function exportRecordsToExcel($include_headers, $date_range, $start_date = null, $end_date = null) {
+function exportMachineResetsToExcel($include_headers, $date_range, $start_date = null, $end_date = null) {
+    require_once '../models/read_machine_reset.php';
 
-    $records = getFilteredRecordsForExport($date_range, $start_date, $end_date);
+    $records = getMachineResetForExport($date_range, $start_date, $end_date);
 
     if (!$records) {
-        jsAlertRedirect("No records found for export.", '../views/record_output.php');
+        jsAlertRedirect("No machine reset records found for export.", '../views/dashboard_machine.php');
     }
 
     $spreadsheet = new Spreadsheet();
@@ -39,7 +42,7 @@ function exportRecordsToExcel($include_headers, $date_range, $start_date = null,
             $sheet = $spreadsheet->createSheet($i);
         }
 
-        $sheet->setTitle("Records_" . ($i + 1));
+        $sheet->setTitle("MachineResets_" . ($i + 1));
 
         $rowNum = 1;
 
@@ -81,7 +84,7 @@ function exportRecordsToExcel($include_headers, $date_range, $start_date = null,
     }
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename="records_export.xlsx"');
+    header('Content-Disposition: attachment;filename="machine_resets_export.xlsx"');
     header('Cache-Control: max-age=0');
     header('Cache-Control: max-age=1'); // For IE compatibility
     header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');

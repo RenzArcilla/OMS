@@ -30,21 +30,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($disabled_machines as $machine): ?>
-                    <tr>
-                        <td>
-                            <button id="restore-machine-<?= htmlspecialchars($machine['machine_id']) ?>"
-                                    class="restore-btn restore-machine-btn"
-                                    data-machine-id="<?= htmlspecialchars($machine['machine_id']) ?>">
-                                Restore
-                            </button>
-                        </td>
-                        <td><?= htmlspecialchars($machine['control_no']) ?></td>
-                        <td><?= htmlspecialchars($machine['model']) ?></td>
-                        <td><?= htmlspecialchars($machine['maker']) ?></td>
-                        <td><?= htmlspecialchars($machine['last_encoded']) ?></td>
-                    </tr>
-                    <?php endforeach; ?>
+                    <!-- Fetch disabled machine data as table rows through AJAX -->
                 </tbody>
             </table>
         </div>

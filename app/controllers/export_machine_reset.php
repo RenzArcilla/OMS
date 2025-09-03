@@ -1,6 +1,6 @@
 <?php
 /*
-    This script handles the export logic for records within the database.
+    This script handles the export logic for machine reset records within the database.
     It retrieves form data, sanitizes it, and updates the database record.
 */
 
@@ -8,14 +8,14 @@
 // Include necessary files
 require_once '../includes/auth.php';
 require_once '../includes/js_alert.php';
-require_once '../includes/export_helpers/export_record_helper.php';
-require_once '../models/read_joins/record_and_outputs.php';
+require_once '../includes/export_helpers/export_machine_reset_helper.php';
+require_once '../models/read_machine_reset.php';
 
 // Require Toolkeeper/Admin Privileges
 requireToolkeeper();
 
 // Redirect url
-$redirect_url = "../views/record_output.php";
+$redirect_url = "../views/dashboard_machine.php";
 
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -56,17 +56,13 @@ if ($date_range === 'custom') {
         jsAlertRedirect("Start date cannot be later than end date.", $redirect_url);
         exit;
     } else {
-        // Validate interval does not exceed 3 months
+        // Validate interval does not exceed 12 months
         $start = new DateTime($start_date);
         $end   = new DateTime($end_date);
 
-        // Get the difference between dates
         $diff = $start->diff($end);
-
-        // Calculate total months
         $totalMonths = ($diff->y * 12) + $diff->m;
 
-        // If there are leftover days, count as an extra month
         if ($diff->d > 0) {
             $totalMonths += 1;
         }
@@ -79,5 +75,5 @@ if ($date_range === 'custom') {
 }
 
 // Pass data into export helper
-exportRecordsToExcel($include_headers, $date_range, $start_date, $end_date);
+exportMachineResetsToExcel($include_headers, $date_range, $start_date, $end_date);
 exit;

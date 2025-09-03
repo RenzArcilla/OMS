@@ -239,13 +239,29 @@ function debounce(func, delay) {
     current search input and selected role filter, then updates
     the table dynamically with the results.
 */
-async function applyUserFilters() {
+async function applyUserFilters(page = 1, limit = 10) {
     const search = document.querySelector('.search-input').value.trim();
     const role   = document.getElementById('roleFilter').value;
 
+    // Show loading indicator
+    showLoading();
+
     try {
-        const response = await fetch(`../controllers/search_user.php?search=${encodeURIComponent(search)}&role=${encodeURIComponent(role)}`);
+        const response = await fetch(`../controllers/search_user.php?search=${encodeURIComponent(search)}&role=${encodeURIComponent(role)}&page=${page}&limit=${limit}`);
+        
+        if (!response.ok) {
+            console.error('Network error:', response.status, response.statusText);
+            const text = await response.text();
+            console.error('Response text:', text);
+            return;
+        }
+
         const users = await response.json();
+
+        if (users.error) {
+            console.error('Server error:', users.error);
+            return;
+        }
 
         updateUsersTable(users);
     } catch (err) {
@@ -319,3 +335,15 @@ document.querySelector('.search-input')
 
 document.getElementById('roleFilter')
     .addEventListener('change', applyUserFilters);
+
+
+// Fetch initial users when the page loads
+document.addEventListener("DOMContentLoaded", () => {
+    applyUserFilters(); // this will load page 1 with default filters
+});
+
+// Show loading indicator
+function showLoading() {
+    const tbody = document.getElementById('usersTableBody');
+    tbody.innerHTML = `<tr><td colspan="3">Loading...</td></tr>`;
+}

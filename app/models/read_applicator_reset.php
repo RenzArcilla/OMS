@@ -82,3 +82,60 @@ function getApplicatorResetOnTimeStamp($applicator_id, $part_name, $reset_time) 
         return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
+
+function getApplicatorResetForExport($date_range = 'quarter', $start_date = null, $end_date = null) {
+    /*
+        Model function to fetch applicator reset records.
+        This function will be used for exporting applicator reset records to Excel.
+
+        Parameters:
+            str $date_range - The date range for the export (e.g., 'today', 'week', 'month', 'quarter', 'custom').
+            str $start_date - The start date for the custom date range (optional).
+            str $end_date - The end date for the custom date range (optional).
+    */
+    global $pdo;
+
+    $query = "
+        SELECT a.hp_no,
+            a.terminal_no,
+            u.first_name,
+            u.last_name,
+            ar.reset_time,
+            ar.part_reset,
+            ar.previous_value
+        FROM applicator_reset ar
+        LEFT JOIN applicators a
+            ON ar.applicator_id = a.applicator_id
+        LEFT JOIN users u
+            ON ar.reset_by = u.user_id
+        WHERE ar.undone_by IS NULL
+    ";
+
+    // Apply date range filters
+    if ($date_range === 'custom' && $start_date && $end_date) {
+        $query .= " AND reset_time BETWEEN :start_date AND :end_date";
+    } else {
+        $date_filter = match ($date_range) {
+            'today' => "DATE(reset_time) = CURDATE()",
+            'week' => "YEARWEEK(reset_time, 1) = YEARWEEK(CURDATE(), 1)",
+            'month' => "MONTH(reset_time) = MONTH(CURDATE()) AND YEAR(reset_time) = YEAR(CURDATE())",
+            'quarter' => "QUARTER(reset_time) = QUARTER(CURDATE()) AND YEAR(reset_time) = YEAR(CURDATE())",
+            default => "1=1"
+        };
+        $query .= " AND $date_filter";
+    }
+
+    // Apply sorting
+    $query .= " ORDER BY ar.reset_time DESC";
+
+    $stmt = $pdo->prepare($query);
+
+    // Bind parameters for custom date range
+    if ($date_range === 'custom' && $start_date && $end_date) {
+        $stmt->bindParam(':start_date', $start_date);
+        $stmt->bindParam(':end_date', $end_date);
+    }
+
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}

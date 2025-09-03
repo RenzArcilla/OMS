@@ -30,11 +30,15 @@ try {
     }
 
     // Fetch filtered results
-    $records = getFilteredrecords(20, 0, $search, $shift, 0);
+    $records = getDisabledRecordsAndOutputs(20, 0, $search);
+
+    // simplest efficient check
+    $emptyDb = empty($records) && $search === null && $shift === 'ALL';
 
     echo json_encode([
         'success' => true,
-        'data' => $records
+        'data' => $records,
+        'empty_db' => $emptyDb
     ]);
 
 } catch (Exception $e) {

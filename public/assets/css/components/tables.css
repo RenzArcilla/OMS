@@ -159,29 +159,3 @@
 .status-warning { background: #fef3c7; color: #92400e; }
 .status-critical { background: #fee2e2; color: #991b1b; }
 
-/* Filter Section */
-.search-filter {
-    display: flex;
-    gap: 16px;
-    padding: 24px 32px;
-    background: linear-gradient(135deg, #F9FAFB, #F3F4F6);
-    border-bottom: 1px solid rgba(229, 231, 235, 0.8);
-    backdrop-filter: blur(10px);
-}
-
-.search-input {
-    flex: 1;
-    padding: 12px 20px;
-    border: 2px solid rgba(229, 231, 235, 0.8);
-    border-radius: 16px;
-    font-size: 14px;
-    background: linear-gradient(135deg, #FFFFFF, #F9FAFB);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-}
-
-.search-input:focus {
-    outline: none;
-    border-color: #2F80ED;
-    box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.1);
-}
