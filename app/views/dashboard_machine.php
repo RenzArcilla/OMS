@@ -87,10 +87,6 @@
     // Get parts priority data
     $parts_ordered = getPartsOrderedByMachineOutput($part_names_array);
     $top_3_parts = array_slice($parts_ordered, 0, 3);
-
-    // Get disabled machines
-    require_once __DIR__ . '/../models/read_machines.php';
-    $disabled_machines = getDisabledMachines(10, 0);
     ?>
 
     <div class="container">
