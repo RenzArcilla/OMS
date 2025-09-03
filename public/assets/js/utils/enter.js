@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 modal5.style.display = 'block';
             }
         }
-        if (event.target.classList.contains('modal-btn')) {
+        if (event.target.closest('.modal-btn')) {
             // This works even for dynamically added elements
             //console.log('Modal button clicked!');
             const modal6 = document.getElementById('exportModalRecentlyReset');
