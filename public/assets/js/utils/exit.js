@@ -47,6 +47,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (modal10) {
                 modal10.style.display = 'none';
             }
+            const modal11 = document.getElementById('exportModalRecentlyReset');
+            if (modal11) {
+                modal11.style.display = 'none';
+            }
+            
         }
     });
     
