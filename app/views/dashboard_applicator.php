@@ -92,10 +92,6 @@
     // Get parts priority data
     $parts_ordered = getPartsOrderedByApplicatorOutput($part_names_array);
     $top_3_parts = array_slice($parts_ordered, 0, 3);
-
-    // Get disabled applicators
-    require_once __DIR__ . '/../models/read_applicators.php';
-    $disabled_applicators = getDisabledApplicators(10, 0);
     ?>
 
     <div class="container">
