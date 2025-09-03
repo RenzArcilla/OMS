@@ -11,7 +11,7 @@
             <p class="form-subtitle">Generate reports for recently reset machine</p>
         </div>
 
-        <form id="exportForm" method="POST" action="../controllers/export_reset_applicator.php">
+        <form id="exportForm" method="POST" action="../controllers/export_machine_reset.php">
             <div class="form-section">
                 <div class="section-header">
                     <div class="section-icon">🎯</div>
@@ -60,7 +60,7 @@
 
             <div class="button-group">
                 <button type="button" class="cancel-btn" onclick="closeExportModal()">Cancel</button>
-                <button type="submit" class="export-btn" onclick="handleExport(this)">
+                <button type="submit" class="export-btn">
                     📊 Generate Export
                 </button>
             </div>
