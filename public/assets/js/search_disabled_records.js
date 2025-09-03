@@ -34,12 +34,14 @@ async function applyDisabledRecordFilters(searchValue = '') {
 /*
     Update the disabled records table dynamically.
 */
-function updateDisabledRecordsTable(records) {
+function updateDisabledRecordsTable(records, emptyDb = false) {
     const tbody = document.getElementById('deletedRecordsMetricsBody');
     tbody.innerHTML = '';
 
     if (!records.length) {
-        tbody.innerHTML = `<tr><td colspan="12" style="text-align:center;">No results found</td></tr>`;
+        tbody.innerHTML = emptyDb
+            ? `<tr><td colspan="12" style="text-align:center;">No disabled records yet</td></tr>`
+            : `<tr><td colspan="12" style="text-align:center;">No results found</td></tr>`;
         return;
     }
 
@@ -47,7 +49,7 @@ function updateDisabledRecordsTable(records) {
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>
-                <button class="restore-btn" data-record-id="${record.record_id}" onclick="restoreRecord(this)">Restore</button>
+                <button class="restore-btn restore-output-btn" data-record-id="${record.record_id}">Restore</button>
             </td>
             <td>${record.record_id}</td>
             <td>${record.date_inspected || ''}</td>
@@ -64,3 +66,8 @@ function updateDisabledRecordsTable(records) {
         tbody.appendChild(tr);
     });
 }
+
+// Load initial disabled records on page load
+document.addEventListener("DOMContentLoaded", () => {
+    applyDisabledRecordFilters();
+});
