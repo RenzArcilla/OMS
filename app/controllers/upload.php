@@ -31,16 +31,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['dataFiles'])) { // I
         foreach ($_FILES['dataFiles']['tmp_name'] as $index => $tmpName) { // Loops through all uploaded files.
             $fileName = basename($_FILES['dataFiles']['name'][$index]); // Extracts the original filename of the uploaded file.
             $targetPath = $tempDir . $fileName; // Constructs the full path (where to move the file) inside app/temp/ directory.
+            
+            // File size limit check
+            $maxFileSize = 5 * 1024 * 1024; // 5 MB
+            if ($_FILES['dataFiles']['size'][$index] > $maxFileSize) {
+                jsAlertRedirect("Error: File '$fileName' exceeds the 5MB size limit.", $redirect_url);
+                exit();
+            }
 
-            if (move_uploaded_file($tmpName, $targetPath)) { // Moves the uploaded file to the target path.
+            // Moves the uploaded file to the target path.
+            if (move_uploaded_file($tmpName, $targetPath)) { 
                 $pdo->beginTransaction();
-                    $rawData = extractData($targetPath); // Calls extractData() function from includes/extract.php.
+                    // Extract
+                    $rawData = extractData($targetPath); 
                     if (is_string($rawData)) {
                         jsAlertRedirect($rawData, $redirect_url);
                         exit();
                     }
-                    $cleanData = transformData($rawData); // Calls transformData() function from includes/transform.php.
-                    $result = loadData($cleanData); // Passes the cleaned data to loadData() from includes/load.php.
+
+                    // Transform and Load
+                    $cleanData = transformData($rawData); 
+                    $result = loadData($cleanData); 
                     if ($result === "All outputs recorded successfully!") {
                         $pdo->commit();
                         unlink($targetPath); // Deletes the file after ETL
