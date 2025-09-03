@@ -213,59 +213,59 @@
                                                     <div class="progress-fill" style="width: 0%;"></div>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div><strong><?= htmlspecialchars($row['wire_anvil_output']) ?></strong> / 1.5M</div>
+                                            <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="wire_anvil">
+                                                <div><strong><?= htmlspecialchars($row['wire_anvil_output']) ?></strong> / 400K</div>
                                                 <div class="progress-bar">
-                                                    <div class="progress-fill" style="width: 38%;"></div>
+                                                    <div class="progress-fill" style="width: 0%;"></div>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div><strong><?= htmlspecialchars($row['insulation_crimper_output']) ?></strong> / 1.5M</div>
+                                            <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="insulation_crimper">
+                                                <div><strong><?= htmlspecialchars($row['insulation_crimper_output']) ?></strong> / 400K</div>
                                                 <div class="progress-bar">
-                                                    <div class="progress-fill" style="width: 51%;"></div>
+                                                    <div class="progress-fill" style="width: 0%;"></div>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div><strong><?= htmlspecialchars($row['insulation_anvil_output']) ?></strong> / 1.5M</div>
+                                            <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="insulation_anvil">
+                                                <div><strong><?= htmlspecialchars($row['insulation_anvil_output']) ?></strong> / 400K</div>
                                                 <div class="progress-bar">
-                                                    <div class="progress-fill" style="width: 46%;"></div>
+                                                    <div class="progress-fill" style="width: 0%;"></div>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div><strong><?= htmlspecialchars($row['slide_cutter_output']) ?></strong> / 1.5M</div>
+                                            <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="slide_cutter">
+                                                <div><strong><?= htmlspecialchars($row['slide_cutter_output']) ?></strong> / 400K</div>
                                                 <div class="progress-bar">
-                                                    <div class="progress-fill" style="width: 55%;"></div>
+                                                    <div class="progress-fill" style="width: 0%;"></div>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div><strong><?= htmlspecialchars($row['cutter_holder_output']) ?></strong> / 1.5M</div>
+                                            <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="cutter_holder">
+                                                <div><strong><?= htmlspecialchars($row['cutter_holder_output']) ?></strong> / 500K</div>
                                                 <div class="progress-bar">
-                                                    <div class="progress-fill" style="width: 30%;"></div>
+                                                    <div class="progress-fill" style="width: 0%;"></div>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div><strong><?= htmlspecialchars($row['shear_blade_output']) ?></strong> / 1.5M</div>
+                                            <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="shear_blade">
+                                                <div><strong><?= htmlspecialchars($row['shear_blade_output']) ?></strong> / 500K</div>
                                                 <div class="progress-bar">
-                                                    <div class="progress-fill" style="width: 26%;"></div>
+                                                    <div class="progress-fill" style="width: 0%;"></div>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div><?= htmlspecialchars($row['cutter_a_output']) ?> / 1.5M</div>
+                                            <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="cutter_a">
+                                                <div><?= htmlspecialchars($row['cutter_a_output']) ?> / 600K</div>
                                                 <div class="progress-bar">
-                                                    <div class="progress-fill" style="width: 26%;"></div>
+                                                    <div class="progress-fill" style="width: 0%;"></div>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div><strong><?= htmlspecialchars($row['cutter_b_output']) ?></strong> / 1.5M</div>
+                                            <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="cutter_b">
+                                                <div><strong><?= htmlspecialchars($row['cutter_b_output']) ?></strong> / 600K</div>
                                                 <div class="progress-bar">
-                                                    <div class="progress-fill" style="width: 21%;"></div>
+                                                    <div class="progress-fill" style="width: 0%;"></div>
                                                 </div>
                                             </td>
                                             <?php foreach ($part_names_array as $part_name): ?>
-                                                <td>
-                                                    <div><strong><?= htmlspecialchars($row['custom_parts_output'][$part_name] ?? 0) ?></strong> / 1.5M</div>
+                                                <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="custom_parts_<?= $part_name ?>">
+                                                    <div><strong><?= htmlspecialchars($row['custom_parts_output'][$part_name] ?? 0) ?></strong> / 600K</div>
                                                     <div class="progress-bar">
-                                                        <div class="progress-fill" style="width: 26%;"></div>
+                                                        <div class="progress-fill" style="width: 0%;"></div>
                                                     </div>
                                                 </td>
                                             <?php endforeach; ?>

@@ -15,11 +15,15 @@ class ProgressBarManager {
     // Load progress data from API
     async loadProgressData() {
         try {
+            console.log('Loading progress data...');
             const response = await fetch('/SOMS/app/controllers/get_outputs.php');
             const result = await response.json();
             
+            console.log('Progress data response:', result);
+            
             if (result.success) {
                 this.progressData = result.data;
+                console.log('Progress data loaded:', this.progressData);
                 this.updateAllProgressBars();
             } else {
                 console.error('Failed to load progress data:', result.message);
@@ -31,13 +35,18 @@ class ProgressBarManager {
 
     // Update all progress bars on the page
     updateAllProgressBars() {
+        console.log('Updating all progress bars...');
+        console.log('Progress data type:', Array.isArray(this.progressData) ? 'array' : 'object');
+        
         if (Array.isArray(this.progressData)) {
             // Multiple applicators
+            console.log(`Updating ${this.progressData.length} applicators`);
             this.progressData.forEach(applicator => {
                 this.updateApplicatorProgress(applicator);
             });
         } else {
             // Single applicator
+            console.log('Updating single applicator');
             this.updateApplicatorProgress(this.progressData);
         }
     }
@@ -46,6 +55,9 @@ class ProgressBarManager {
     updateApplicatorProgress(applicator) {
         const applicatorId = applicator.applicator_id;
         const progress = applicator.progress;
+
+        console.log(`Updating applicator ${applicatorId}:`, applicator);
+        console.log(`Progress parts:`, Object.keys(progress));
 
         // Update each part's progress bar
         Object.keys(progress).forEach(partName => {
@@ -57,9 +69,12 @@ class ProgressBarManager {
     // Update individual progress bar
     updateProgressBar(applicatorId, partName, partData) {
         // Find the progress bar element
-        const progressBar = document.querySelector(
-            `[data-applicator-id="${applicatorId}"][data-part="${partName}"] .progress-fill`
-        );
+        const selector = `[data-applicator-id="${applicatorId}"][data-part="${partName}"] .progress-fill`;
+        const progressBar = document.querySelector(selector);
+
+        console.log(`Looking for progress bar: ${selector}`);
+        console.log(`Found progress bar:`, progressBar);
+        console.log(`Part data:`, partData);
 
         if (progressBar) {
             // Update width
@@ -75,6 +90,10 @@ class ProgressBarManager {
             if (partData.percentage >= 90) {
                 progressBar.classList.add('warning');
             }
+            
+            console.log(`Updated progress bar for ${partName}: ${partData.percentage}%`);
+        } else {
+            console.warn(`Progress bar not found for applicator ${applicatorId}, part ${partName}`);
         }
     }
 

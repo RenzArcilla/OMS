@@ -66,83 +66,98 @@ function calculateProgressPercentages($data) {
     $cutter_a_progress = min(100, round(($data['cutter_a'] / 600000.0) * 100, 2));
     $cutter_b_progress = min(100, round(($data['cutter_b'] / 600000.0) * 100, 2));
     
-    // Custom parts progress
-    $custom_parts_progress = 0;
-    $custom_data = [];
+    // Build the progress array
+    $progress = [
+        'wire_crimper' => [
+            'current' => $data['wire_crimper'],
+            'limit' => 400000,
+            'percentage' => $wire_crimper_progress,
+            'status' => getStatusColor($wire_crimper_progress)
+        ],
+        'wire_anvil' => [
+            'current' => $data['wire_anvil'],
+            'limit' => 400000,
+            'percentage' => $wire_anvil_progress,
+            'status' => getStatusColor($wire_anvil_progress)
+        ],
+        'insulation_crimper' => [
+            'current' => $data['insulation_crimper'],
+            'limit' => 400000,
+            'percentage' => $insulation_crimper_progress,
+            'status' => getStatusColor($insulation_crimper_progress)
+        ],
+        'insulation_anvil' => [
+            'current' => $data['insulation_anvil'],
+            'limit' => 400000,
+            'percentage' => $insulation_anvil_progress,
+            'status' => getStatusColor($insulation_anvil_progress)
+        ],
+        'slide_cutter' => [
+            'current' => $data['slide_cutter'],
+            'limit' => 400000,
+            'percentage' => $slide_cutter_progress,
+            'status' => getStatusColor($slide_cutter_progress)
+        ],
+        'cutter_holder' => [
+            'current' => $data['cutter_holder'],
+            'limit' => 500000,
+            'percentage' => $cutter_holder_progress,
+            'status' => getStatusColor($cutter_holder_progress)
+        ],
+        'shear_blade' => [
+            'current' => $data['shear_blade'],
+            'limit' => 500000,
+            'percentage' => $shear_blade_progress,
+            'status' => getStatusColor($shear_blade_progress)
+        ],
+        'cutter_a' => [
+            'current' => $data['cutter_a'],
+            'limit' => 600000,
+            'percentage' => $cutter_a_progress,
+            'status' => getStatusColor($cutter_a_progress)
+        ],
+        'cutter_b' => [
+            'current' => $data['cutter_b'],
+            'limit' => 600000,
+            'percentage' => $cutter_b_progress,
+            'status' => getStatusColor($cutter_b_progress)
+        ]
+    ];
+    
+    // Add custom parts to progress data
     if (!empty($data['custom_parts'])) {
-        $decoded = json_decode($data['custom_parts'], true);
-        // When aggregated, we store a synthesized { output: total } for simplicity
-        if (is_array($decoded) && isset($decoded['output'])) {
-            $custom_data = $decoded;
-            $custom_parts_progress = min(100, round(($decoded['output'] / 600000.0) * 100, 2));
+        if (is_array($data['custom_parts'])) {
+            // New format with individual part totals
+            foreach ($data['custom_parts'] as $partName => $total) {
+                if ($partName !== 'legacy_total') {
+                    $custom_progress = min(100, round(($total / 600000.0) * 100, 2));
+                    $progress["custom_parts_$partName"] = [
+                        'current' => $total,
+                        'limit' => 600000,
+                        'percentage' => $custom_progress,
+                        'status' => getStatusColor($custom_progress)
+                    ];
+                }
+            }
+        } else {
+            // Legacy format - decode JSON
+            $decoded = json_decode($data['custom_parts'], true);
+            if (is_array($decoded) && isset($decoded['output'])) {
+                $custom_progress = min(100, round(($decoded['output'] / 600000.0) * 100, 2));
+                $progress['custom_parts'] = [
+                    'current' => $decoded['output'],
+                    'limit' => 600000,
+                    'percentage' => $custom_progress,
+                    'status' => getStatusColor($custom_progress)
+                ];
+            }
         }
     }
     
     return [
         'applicator_id' => $data['applicator_id'],
         'hp_no' => $data['hp_no'] ?? '',
-        'progress' => [
-            'wire_crimper' => [
-                'current' => $data['wire_crimper'],
-                'limit' => 400000,
-                'percentage' => $wire_crimper_progress,
-                'status' => getStatusColor($wire_crimper_progress)
-            ],
-            'wire_anvil' => [
-                'current' => $data['wire_anvil'],
-                'limit' => 400000,
-                'percentage' => $wire_anvil_progress,
-                'status' => getStatusColor($wire_anvil_progress)
-            ],
-            'insulation_crimper' => [
-                'current' => $data['insulation_crimper'],
-                'limit' => 400000,
-                'percentage' => $insulation_crimper_progress,
-                'status' => getStatusColor($insulation_crimper_progress)
-            ],
-            'insulation_anvil' => [
-                'current' => $data['insulation_anvil'],
-                'limit' => 400000,
-                'percentage' => $insulation_anvil_progress,
-                'status' => getStatusColor($insulation_anvil_progress)
-            ],
-            'slide_cutter' => [
-                'current' => $data['slide_cutter'],
-                'limit' => 400000,
-                'percentage' => $slide_cutter_progress,
-                'status' => getStatusColor($slide_cutter_progress)
-            ],
-            'cutter_holder' => [
-                'current' => $data['cutter_holder'],
-                'limit' => 500000,
-                'percentage' => $cutter_holder_progress,
-                'status' => getStatusColor($cutter_holder_progress)
-            ],
-            'shear_blade' => [
-                'current' => $data['shear_blade'],
-                'limit' => 500000,
-                'percentage' => $shear_blade_progress,
-                'status' => getStatusColor($shear_blade_progress)
-            ],
-            'cutter_a' => [
-                'current' => $data['cutter_a'],
-                'limit' => 600000,
-                'percentage' => $cutter_a_progress,
-                'status' => getStatusColor($cutter_a_progress)
-            ],
-            'cutter_b' => [
-                'current' => $data['cutter_b'],
-                'limit' => 600000,
-                'percentage' => $cutter_b_progress,
-                'status' => getStatusColor($cutter_b_progress)
-            ],
-            'custom_parts' => [
-                'current' => $custom_data['output'] ?? 0,
-                'limit' => 600000,
-                'percentage' => $custom_parts_progress,
-                'status' => getStatusColor($custom_parts_progress)
-            ]
-        ]
+        'progress' => $progress
     ];
 }
 
@@ -164,7 +179,8 @@ function aggregateApplicatorRows(array $rows) {
         $agg[$field] = 0;
     }
 
-    $customTotal = 0;
+    // Track custom parts individually
+    $customPartsTotals = [];
 
     foreach ($rows as $row) {
         foreach ($numericFields as $field) {
@@ -178,11 +194,20 @@ function aggregateApplicatorRows(array $rows) {
             // Support either [{name, value}...] or {output: num}
             if (is_array($decoded)) {
                 if (isset($decoded['output'])) {
-                    $customTotal += (int)$decoded['output'];
+                    // Legacy format - distribute total across all custom parts
+                    if (!isset($customPartsTotals['legacy_total'])) {
+                        $customPartsTotals['legacy_total'] = 0;
+                    }
+                    $customPartsTotals['legacy_total'] += (int)$decoded['output'];
                 } else {
+                    // New format with individual part names
                     foreach ($decoded as $entry) {
-                        if (is_array($entry) && isset($entry['value'])) {
-                            $customTotal += (int)$entry['value'];
+                        if (is_array($entry) && isset($entry['name']) && isset($entry['value'])) {
+                            $partName = $entry['name'];
+                            if (!isset($customPartsTotals[$partName])) {
+                                $customPartsTotals[$partName] = 0;
+                            }
+                            $customPartsTotals[$partName] += (int)$entry['value'];
                         }
                     }
                 }
@@ -190,8 +215,8 @@ function aggregateApplicatorRows(array $rows) {
         }
     }
 
-    // Store synthesized custom_parts as { output: total } for downstream logic
-    $agg['custom_parts'] = json_encode(['output' => $customTotal]);
+    // Store custom parts data
+    $agg['custom_parts'] = $customPartsTotals;
 
     return $agg;
 }
