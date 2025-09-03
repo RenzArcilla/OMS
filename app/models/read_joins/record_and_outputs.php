@@ -10,8 +10,8 @@
 // Include the database connection
 require_once __DIR__ . '/../../includes/db.php'; 
 
+/*
 function getRecordsAndOutputs(int $limit = 20, int $offset = 0): array {
-    /*
         Function to fetch a list of machines from the database with pagination.
         It prepares and executes a SELECT query that fetches machines ordered by most recent,
         and returns them as an associative array.
@@ -23,7 +23,6 @@ function getRecordsAndOutputs(int $limit = 20, int $offset = 0): array {
 
         Returns:
         - Array of machines (associative arrays) on success.
-    */
 
     global $pdo;
 
@@ -75,7 +74,7 @@ function getRecordsAndOutputs(int $limit = 20, int $offset = 0): array {
     // Execute the query and return the results
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+} */
 
 
 function getDisabledRecordsAndOutputs($limit = 20, $offset = 0, $search = null): array {
