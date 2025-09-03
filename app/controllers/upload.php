@@ -25,41 +25,72 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
+// Check if the temp dir is empty
+if (!isset($_FILES['dataFiles'])) { 
+    jsAlertRedirect("No files uploaded.", $redirect_url);
+    exit();
+}
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['dataFiles'])) { // If the dataFiles field exists in the $_FILES array (means user uploaded one or more files).
-    try {
-        foreach ($_FILES['dataFiles']['tmp_name'] as $index => $tmpName) { // Loops through all uploaded files.
-            $fileName = basename($_FILES['dataFiles']['name'][$index]); // Extracts the original filename of the uploaded file.
-            $targetPath = $tempDir . $fileName; // Constructs the full path (where to move the file) inside app/temp/ directory.
+try {
+    $fileCount = count($_FILES['dataFiles']['name']);
+    $totalSize = array_sum($_FILES['dataFiles']['size']);
 
-            if (move_uploaded_file($tmpName, $targetPath)) { // Moves the uploaded file to the target path.
-                $pdo->beginTransaction();
-                    $rawData = extractData($targetPath); // Calls extractData() function from includes/extract.php.
-                    if (is_string($rawData)) {
-                        jsAlertRedirect($rawData, $redirect_url);
-                        exit();
-                    }
-                    $cleanData = transformData($rawData); // Calls transformData() function from includes/transform.php.
-                    $result = loadData($cleanData); // Passes the cleaned data to loadData() from includes/load.php.
-                    if ($result === "All outputs recorded successfully!") {
-                        $pdo->commit();
-                        unlink($targetPath); // Deletes the file after ETL
-                        jsAlertRedirect($result, $redirect_url); // Redirects to the etl_form.php with success message
-                    } else {
-                        $pdo->rollBack(); // Rollback transaction in case of error
-                        unlink($targetPath); // Deletes the file if there was an error
-                        jsAlertRedirect($result, $redirect_url); // Redirects to the etl_form.php with error message
-                        exit();
-                    }
-            }
-        }
-
-    } catch (Exception $e) {
-        $pdo->rollBack(); // Rollback transaction in case of exception
-        if (isset($targetPath) && file_exists($targetPath)) {
-            unlink($targetPath); // Delete uploaded file if it exists
-        }
-        jsAlertRedirect("Error processing files: " . $e->getMessage() . " Trashing the uploaded file.", $redirect_url); // Redirect with error message
+    // Max file count check
+    $maxFiles = 3;
+    if ($fileCount > $maxFiles) {
+        jsAlertRedirect("Error: You can only upload up to $maxFiles files at once.", $redirect_url);
         exit();
     }
+
+    // Max total size check (15 MB)
+    $maxTotalSize = 15 * 1024 * 1024; // 15 MB
+    if ($totalSize > $maxTotalSize) {
+        jsAlertRedirect("Error: Total upload size exceeds 15MB.", $redirect_url);
+        exit();
+    }
+
+    foreach ($_FILES['dataFiles']['tmp_name'] as $index => $tmpName) { // Loops through all uploaded files.
+        $fileName = basename($_FILES['dataFiles']['name'][$index]); // Extracts the original filename of the uploaded file.
+        $targetPath = $tempDir . $fileName; // Constructs the full path (where to move the file) inside app/temp/ directory.
+        
+        //  Per-file size check 
+        $maxFileSize = 5 * 1024 * 1024; // 5 MB
+        if ($_FILES['dataFiles']['size'][$index] > $maxFileSize) {
+            jsAlertRedirect("Error: File '$fileName' exceeds the 5MB size limit.", $redirect_url);
+            exit();
+        }
+
+        // Moves the uploaded file to the target path.
+        if (move_uploaded_file($tmpName, $targetPath)) { 
+            $pdo->beginTransaction();
+                // Extract
+                $rawData = extractData($targetPath); 
+                if (is_string($rawData)) {
+                    jsAlertRedirect($rawData, $redirect_url);
+                    exit();
+                }
+
+                // Transform and Load
+                $cleanData = transformData($rawData); 
+                $result = loadData($cleanData); 
+                if ($result === "All outputs recorded successfully!") {
+                    $pdo->commit();
+                    unlink($targetPath); // Deletes the file after ETL
+                    jsAlertRedirect($result, $redirect_url); // Redirects to the etl_form.php with success message
+                } else {
+                    $pdo->rollBack(); // Rollback transaction in case of error
+                    unlink($targetPath); // Deletes the file if there was an error
+                    jsAlertRedirect($result, $redirect_url); // Redirects to the etl_form.php with error message
+                    exit();
+                }
+        }
+    }
+
+} catch (Exception $e) {
+    $pdo->rollBack(); // Rollback transaction in case of exception
+    if (isset($targetPath) && file_exists($targetPath)) {
+        unlink($targetPath); // Delete uploaded file if it exists
+    }
+    jsAlertRedirect("Error processing files: " . $e->getMessage() . " Trashing the uploaded file.", $redirect_url); // Redirect with error message
+    exit();
 }
