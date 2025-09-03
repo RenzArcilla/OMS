@@ -16,7 +16,7 @@ class ProgressBarManager {
     async loadProgressData() {
         try {
             console.log('Loading progress data...');
-            const response = await fetch('/SOMS/app/controllers/get_outputs.php');
+            const response = await fetch('/SOMS/app/controllers/get_dashboard_outputs.php');
             const result = await response.json();
             
             console.log('Progress data response:', result);
@@ -68,16 +68,19 @@ class ProgressBarManager {
 
     // Update individual progress bar
     updateProgressBar(applicatorId, partName, partData) {
-        // Find the progress bar element
-        const selector = `[data-applicator-id="${applicatorId}"][data-part="${partName}"] .progress-fill`;
-        const progressBar = document.querySelector(selector);
+        // Find the progress bar container (td element with both data attributes)
+        const container = document.querySelector(`td[data-applicator-id="${applicatorId}"][data-part="${partName}"]`);
+        const progressBar = container?.querySelector('.progress-fill');
+        const textDisplay = container?.querySelector('div:first-child');
 
-        console.log(`Looking for progress bar: ${selector}`);
+        console.log(`Looking for progress bar: td[data-applicator-id="${applicatorId}"][data-part="${partName}"]`);
+        console.log(`Found container:`, container);
         console.log(`Found progress bar:`, progressBar);
+        console.log(`Found text display:`, textDisplay);
         console.log(`Part data:`, partData);
 
-        if (progressBar) {
-            // Update width
+        if (progressBar && textDisplay) {
+            // Update progress bar width
             progressBar.style.width = `${partData.percentage}%`;
             
             // Update status color
@@ -91,9 +94,14 @@ class ProgressBarManager {
                 progressBar.classList.add('warning');
             }
             
+            // Update the text display
+            const limitText = (partData.limit / 1000) + 'K';
+            textDisplay.innerHTML = `<strong>${partData.current.toLocaleString()}</strong> / ${limitText}`;
+            
             console.log(`Updated progress bar for ${partName}: ${partData.percentage}%`);
+            console.log(`Updated text display: ${partData.current.toLocaleString()} / ${limitText}`);
         } else {
-            console.warn(`Progress bar not found for applicator ${applicatorId}, part ${partName}`);
+            console.warn(`Progress bar or text display not found for applicator ${applicatorId}, part ${partName}`);
         }
     }
 
@@ -191,8 +199,20 @@ class ProgressBarManager {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    window.progressManager = new ProgressBarManager();
+    console.log('Dashboard.js: DOM loaded, initializing ProgressBarManager...');
+    window.progressBarManager = new ProgressBarManager();
+    console.log('Dashboard.js: ProgressBarManager initialized:', window.progressBarManager);
 });
 
 // Export for global use
 window.ProgressBarManager = ProgressBarManager;
+
+// Manual refresh function for testing
+window.refreshProgressBars = function() {
+    console.log('Manual refresh called');
+    if (window.progressBarManager) {
+        window.progressBarManager.loadProgressData();
+    } else {
+        console.error('ProgressBarManager not initialized');
+    }
+};

@@ -7,8 +7,15 @@ try {
     $applicator_id = $_GET['applicator_id'] ?? null;
     
     if ($applicator_id) {
-        // Get and aggregate all active records for a specific applicator
-        $sql = "SELECT * FROM applicator_outputs WHERE applicator_id = :applicator_id AND is_active = 1";
+        // Get and aggregate all active records for a specific applicator with reset data
+        $sql = "SELECT ao.*, ma.wire_crimper_output as ma_wire_crimper, ma.wire_anvil_output as ma_wire_anvil, 
+                       ma.insulation_crimper_output as ma_insulation_crimper, ma.insulation_anvil_output as ma_insulation_anvil,
+                       ma.slide_cutter_output as ma_slide_cutter, ma.cutter_holder_output as ma_cutter_holder,
+                       ma.shear_blade_output as ma_shear_blade, ma.cutter_a_output as ma_cutter_a, ma.cutter_b_output as ma_cutter_b,
+                       ma.custom_parts_output as ma_custom_parts
+                FROM applicator_outputs ao 
+                LEFT JOIN monitor_applicator ma ON ao.applicator_id = ma.applicator_id
+                WHERE ao.applicator_id = :applicator_id AND ao.is_active = 1";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':applicator_id', $applicator_id, PDO::PARAM_INT);
         $stmt->execute();
@@ -22,8 +29,15 @@ try {
             echo json_encode(['success' => false, 'message' => 'Applicator not found']);
         }
     } else {
-        // Get and aggregate all active records for all applicators
-        $sql = "SELECT * FROM applicator_outputs WHERE is_active = 1";
+        // Get and aggregate all active records for all applicators with reset data
+        $sql = "SELECT ao.*, ma.wire_crimper_output as ma_wire_crimper, ma.wire_anvil_output as ma_wire_anvil, 
+                       ma.insulation_crimper_output as ma_insulation_crimper, ma.insulation_anvil_output as ma_insulation_anvil,
+                       ma.slide_cutter_output as ma_slide_cutter, ma.cutter_holder_output as ma_cutter_holder,
+                       ma.shear_blade_output as ma_shear_blade, ma.cutter_a_output as ma_cutter_a, ma.cutter_b_output as ma_cutter_b,
+                       ma.custom_parts_output as ma_custom_parts
+                FROM applicator_outputs ao 
+                LEFT JOIN monitor_applicator ma ON ao.applicator_id = ma.applicator_id
+                WHERE ao.is_active = 1";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -182,6 +196,23 @@ function aggregateApplicatorRows(array $rows) {
     // Track custom parts individually
     $customPartsTotals = [];
 
+    // Get reset data from monitor_applicator (use first row since all rows have same applicator_id)
+    $resetData = null;
+    if (!empty($rows) && isset($rows[0]['ma_wire_crimper'])) {
+        $resetData = [
+            'wire_crimper' => $rows[0]['ma_wire_crimper'],
+            'wire_anvil' => $rows[0]['ma_wire_anvil'],
+            'insulation_crimper' => $rows[0]['ma_insulation_crimper'],
+            'insulation_anvil' => $rows[0]['ma_insulation_anvil'],
+            'slide_cutter' => $rows[0]['ma_slide_cutter'],
+            'cutter_holder' => $rows[0]['ma_cutter_holder'],
+            'shear_blade' => $rows[0]['ma_shear_blade'],
+            'cutter_a' => $rows[0]['ma_cutter_a'],
+            'cutter_b' => $rows[0]['ma_cutter_b'],
+            'custom_parts' => $rows[0]['ma_custom_parts']
+        ];
+    }
+
     foreach ($rows as $row) {
         foreach ($numericFields as $field) {
             if (isset($row[$field])) {
@@ -209,6 +240,27 @@ function aggregateApplicatorRows(array $rows) {
                             }
                             $customPartsTotals[$partName] += (int)$entry['value'];
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    // Apply reset logic - if a part was reset to 0, use 0 instead of aggregated value
+    if ($resetData) {
+        foreach ($numericFields as $field) {
+            if ($field !== 'total_output' && isset($resetData[$field]) && $resetData[$field] === 0) {
+                $agg[$field] = 0;
+            }
+        }
+        
+        // Handle custom parts reset
+        if (!empty($resetData['custom_parts'])) {
+            $resetCustomParts = json_decode($resetData['custom_parts'], true);
+            if (is_array($resetCustomParts)) {
+                foreach ($resetCustomParts as $partName => $value) {
+                    if ($value === 0) {
+                        $customPartsTotals[$partName] = 0;
                     }
                 }
             }
