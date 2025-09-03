@@ -13,6 +13,15 @@
 
         <form id="exportForm" method="POST" action="../controllers/export_reset_applicator.php">
             <div class="form-section">
+                <div class="info-section">
+                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Export Information</strong>
+                            <p>The report will include all reset activities within the selected date range. Excel and CSV formats are suitable for data analysis, while PDF provides a formatted report for printing and sharing.</p>
+                        </div>
+                    </div>
+                </div>
                 <div class="section-header">
                     <div class="section-icon">🎯</div>
                     <div class="section-info">
@@ -41,20 +50,18 @@
                         <input type="date" id="endDate" name="endDate" class="form-input">
                     </div>
                 </div>
-
-
-            </div>
-
-
-            <div class="info-section">
-                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                    <span class="info-icon">ℹ️</span>
-                    <div>
-                        <strong>Export Information</strong>
-                        <p>The report will include all reset activities within the selected date range. Excel and CSV formats are suitable for data analysis, while PDF provides a formatted report for printing and sharing.</p>
-                    </div>
+                <div class="checkbox-group">
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="includeHeaders" name="includeHeaders" class="checkbox-input" checked>
+                        <span class="checkbox-label">Include column headers</span>
+                    </label>
                 </div>
+
+
             </div>
+
+
+            
 
             <div class="button-group">
                 <button type="button" class="cancel-btn" onclick="closeExportModal()">Cancel</button>
