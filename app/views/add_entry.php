@@ -114,47 +114,7 @@ if (!isset($_SESSION['user_id'])) {
                                     </tr>
                                 </thead>
                                 <tbody id="machine-body">
-                                    <?php
-                                    // Include database connection and machine reader logic
-                                    require_once __DIR__ . '/../includes/db.php';
-                                    require_once __DIR__ . '/../models/read_machines.php';
-
-                                    // Fetch initial set of machines (first 10 entries)
-                                    $machines = getMachines($pdo, 20, 0);?>
-
-                                    <!-- Render fetched machine data as table rows -->
-                                    <?php foreach ($machines as $row): ?>
-                                        <tr>
-                                            <td>
-                                            <!-- Edit link with data attributes -->
-                                                <div class="actions">
-                                                    <button class="edit-btn"
-                                                        type="button"
-                                                        onclick="openEditModal(this)"
-                                                        data-id="<?= $row['machine_id'] ?>"
-                                                        data-control="<?= htmlspecialchars($row['control_no'], ENT_QUOTES) ?>"
-                                                        data-description="<?= $row['description'] ?>"
-                                                        data-model="<?= htmlspecialchars($row['model'], ENT_QUOTES) ?>"
-                                                        data-maker="<?= htmlspecialchars($row['maker'], ENT_QUOTES) ?>"
-                                                        data-serial="<?= htmlspecialchars($row['serial_no'], ENT_QUOTES) ?>"
-                                                        data-invoice="<?= htmlspecialchars($row['invoice_no'], ENT_QUOTES) ?>"
-                                                    >Edit</button>
-
-                                            <!-- Delete form -->
-                                                    <form action="/SOMS/app/controllers/disable_machine.php" method="POST" style="display:inline;">
-                                                        <input type="hidden" name="machine_id" value="<?= $row['machine_id'] ?>">
-                                                        <button class="delete-btn" type="button" onclick="openMachineDeleteModal(this)">Delete</button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                            <td><?= htmlspecialchars($row['control_no']) ?></td>
-                                            <td><?= htmlspecialchars($row['description']) ?></td>
-                                            <td><?= htmlspecialchars($row['model']) ?></td>
-                                            <td><?= htmlspecialchars($row['maker']) ?></td>
-                                            <td><?= htmlspecialchars($row['serial_no']) ?></td>
-                                            <td><?= htmlspecialchars($row['invoice_no']) ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
+                                    <!-- Fetch machine data as table rows via AJAX-->
                                 </tbody>
                             </table>
                         </div>
