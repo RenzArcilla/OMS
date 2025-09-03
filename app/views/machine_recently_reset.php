@@ -8,7 +8,7 @@
 
         <div class="form-header">
             <h1 class="form-title">📊 Export Reset Data</h1>
-            <p class="form-subtitle">Generate reports for recently reset applicators</p>
+            <p class="form-subtitle">Generate reports for recently reset machine</p>
         </div>
 
         <form id="exportForm" method="POST" action="../controllers/export_reset_applicator.php">

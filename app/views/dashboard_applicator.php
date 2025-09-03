@@ -811,27 +811,25 @@
     <!-- Export Modal -->
     <div id="exportModal" class="modal-overlay">
         <div class="form-container">
-            <button class="modal-close-btn" onclick="closeExportModal()">×</button>
+            <button class="modal-close-btn">×</button>
             
             <form method="POST" action="../controllers/export_applicator_output.php">
                 <div class="form-header">
                     <h1 class="form-title">Export Applicator Output Data</h1>
-                    <p style="font-size: 14px; color: #6B7280;">Choose your export format and options</p>
+                    <p style="font-size: 14px; color: #6B7280;">Generate reports for machine outputs</p>
                 </div>
 
                 <!-- Export Format Section -->
                 <div class="form-section">
-                    <div class="section-header">
-                        <div class="section-icon">📄</div>
-                        <div class="section-info">
-                            <div class="section-title">Export To Excel</div>
-                            <div class="section-description">Native Excel format with formatting</div>
+                    <div class="info-section">
+                        <div style="display: flex; align-items: flex-start; gap: 8px;">
+                            <span class="info-icon">ℹ️</span>
+                            <div>
+                                <strong>Export Information</strong>
+                                <p>The report will include all current applicator outputs. The data will be exported in Excel format.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Additional Options Section -->
-                <div class="form-section">
                     <div class="section-header">
                         <div class="section-icon">⚙️</div>
                         <div class="section-info">
@@ -839,7 +837,6 @@
                             <div class="section-description">Configure export settings</div>
                         </div>
                     </div>
-                    
                     <div class="checkbox-group">
                         <label class="checkbox-item">
                             <input type="checkbox" id="includeHeaders" name="includeHeaders" class="checkbox-input" checked>
@@ -857,7 +854,7 @@
                             <polyline points="7,10 12,15 17,10"/>
                             <line x1="12" y1="15" x2="12" y2="3"/>
                         </svg>
-                        Export Data
+                        Generate Data
                     </button>
                 </div>
             </form>

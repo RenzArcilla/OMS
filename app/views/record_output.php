@@ -34,6 +34,7 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="/SOMS/public/assets/css/layout/grid.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/export_modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/search_filter.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/info.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -409,17 +410,18 @@ if (!isset($_SESSION['user_id'])) {
 
             <!-- Export Format Section -->
             <div class="form-section">
-                <div class="section-header">
-                    <div class="section-icon">📄</div>
-                    <div class="section-info">
-                        <div class="section-title">Export To Excel</div>
-                        <div class="section-description">Native Excel format with formatting</div>
+                <div class="info-section">
+                    <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <span class="info-icon">ℹ️</span>
+                        <div>
+                            <strong>Export Information</strong>
+                            <p>The report will include all current production outputs. The data will be exported in Excel format.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+ 
 
             <!-- Date Range Section -->
-            <div class="form-section">
                 <div class="section-header">
                     <div class="section-icon">📅</div>
                     <div class="section-info">
