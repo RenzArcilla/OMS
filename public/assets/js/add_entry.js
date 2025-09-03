@@ -369,6 +369,7 @@ function initializeCheckbox() {
     });
 }
 
+/*
 // Export handling
 async function handleExport() {
     if (isExporting) return;
@@ -417,6 +418,7 @@ async function handleExport() {
         `;
     }
 }
+*/
 
 // Close modal when clicking outside
 document.getElementById('exportModal').addEventListener('click', function(e) {

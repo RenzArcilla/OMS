@@ -777,7 +777,7 @@ if (!isset($_SESSION['user_id'])) {
                 </div>
 
     <script src="../../public/assets/js/add_entry.js"></script>
-    <script src="../../public/assets/js/export_entry.js"></script>
+    <!-- script src="../../public/assets/js/export_entry.js"></script -->
     <script src="../../public/assets/js/sidebar.js"></script>
     <script src="../../public/assets/js/utils/exit.js"></script>
     <script src="../../public/assets/js/utils/enter.js"></script>
