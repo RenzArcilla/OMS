@@ -5,20 +5,33 @@ let applicatorSearchTimeout = null;
     Debounced to reduce the number of AJAX requests on typing.
 */
 async function applyApplicatorFilters(searchQuery = '') {
-    clearTimeout(applicatorSearchTimeout);
+    clearTimeout(applicatorSearchTimeout); // cancel any previous scheduled fetch
 
     applicatorSearchTimeout = setTimeout(async () => {
         const description = document.getElementById('applicatorDescription').value;
         const type = document.getElementById('applicatorWireType').value;
 
+        const tbody = document.getElementById("applicator-body");
+        
+        // Show loading spinner
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="9" style="text-align:center;">
+                    <div class="loading-spinner"></div>
+                </td>
+            </tr>
+        `;
+
         try {
             // Fetch filtered applicators from controller
-            const response = await fetch(`/SOMS/app/controllers/search_applicators.php?q=${encodeURIComponent(searchQuery)}&description=${encodeURIComponent(description)}&type=${encodeURIComponent(type)}`);
+            const response = await fetch(
+                `/SOMS/app/controllers/search_applicators.php?q=${encodeURIComponent(searchQuery)}&description=${encodeURIComponent(description)}&type=${encodeURIComponent(type)}`
+            );
             const data = await response.json();
 
             if (!data.success) {
                 console.error("Applicator search failed:", data.error);
-                updateApplicatorTable([]); // show empty table if search fails
+                updateApplicatorTable([]); // Show empty table if search fails
                 return;
             }
 
@@ -34,12 +47,14 @@ async function applyApplicatorFilters(searchQuery = '') {
     Dynamically update the applicator table rows.
     Clears previous rows and renders new ones.
 */
-function updateApplicatorTable(applicators) {
+function updateApplicatorTable(applicators, emptyDb = false) {
     const tbody = document.getElementById("applicator-body");
     tbody.innerHTML = "";
 
     if (applicators.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;">No results found</td></tr>`;
+        tbody.innerHTML = emptyDb
+            ? `<tr><td colspan="9" style="text-align:center;">No applicators available yet</td></tr>`
+            : `<tr><td colspan="9" style="text-align:center;">No results found</td></tr>`;
         return;
     }
 
@@ -85,3 +100,8 @@ function updateApplicatorTable(applicators) {
         tbody.appendChild(tr);
     });
 }
+
+// Load initial applicator data on page load
+document.addEventListener("DOMContentLoaded", () => {
+    applyApplicatorFilters(); // Initial fetch without filters
+});

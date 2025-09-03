@@ -164,54 +164,7 @@ if (!isset($_SESSION['user_id'])) {
                                 </thead>
 
                                 <tbody id="applicator-body">
-                                    <?php
-                                    // Include database connection and machine reader logic
-                                    require_once __DIR__ . '/../includes/db.php';
-                                    require_once __DIR__ . '/../models/read_applicators.php';
-
-                                    // Fetch initial set of machines (first 10 entries)
-                                    $applicators = getApplicators($pdo, 20, 0);?>
-                                    
-                                    <!-- Render fetched machine data as table rows -->
-                                    <?php foreach ($applicators as $row): ?>
-                                        <tr>
-                                            <td>
-                                            <!-- Edit link with data attributes -->
-                                            <div class="actions">
-                                                <button class="edit-btn"
-                                                    type="button"
-                                                    onclick="openApplicatorEditModal(this)"
-                                                    data-id="<?= $row['applicator_id'] ?>"
-                                                    data-control="<?= htmlspecialchars($row['hp_no']) ?>"
-                                                    data-terminal="<?= htmlspecialchars($row['terminal_no']) ?>"
-                                                    data-description="<?= htmlspecialchars($row['description']) ?>"
-                                                    data-wire="<?= htmlspecialchars($row['wire']) ?>"
-                                                    data-terminal-maker="<?= htmlspecialchars($row['terminal_maker']) ?>"
-                                                    data-applicator-maker="<?= htmlspecialchars($row['applicator_maker']) ?>"
-                                                    data-serial="<?= htmlspecialchars($row['serial_no']) ?>"
-                                                    data-invoice="<?= htmlspecialchars($row['invoice_no']) ?>"
-                                            >Edit</button>
-
-                                            <!-- Delete form -->
-                                            <form action="/SOMS/app/controllers/disable_applicator.php" method="POST" style="display:inline;">
-                                                <input type="hidden" name="applicator_id" value="<?= htmlspecialchars($row['applicator_id']) ?>">
-                                                <button 
-                                                    type="button"
-                                                    class="delete-btn"
-                                                    onclick="openApplicatorDeleteModal(this)"
-                                                >Delete</button>
-                                            </form>
-                                            </td>
-                                            <td><?= htmlspecialchars($row['hp_no']) ?></td>
-                                            <td><?= htmlspecialchars($row['terminal_no']) ?></td>
-                                            <td><?= htmlspecialchars($row['description']) ?></td>
-                                            <td><?= htmlspecialchars($row['wire']) ?></td>
-                                            <td><?= htmlspecialchars($row['terminal_maker']) ?></td>
-                                            <td><?= htmlspecialchars($row['applicator_maker']) ?></td>
-                                            <td><?= htmlspecialchars($row['serial_no']) ?></td>
-                                            <td><?= htmlspecialchars($row['invoice_no']) ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
+                                    <!-- Fetch applicator data as table rows via AJAX-->
                                 </tbody>
                             </table>
                         </div>

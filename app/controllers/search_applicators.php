@@ -29,12 +29,16 @@ try {
         $type = 'ALL';
     }
 
-    // Fetch filtered results
+        // Fetch filtered results
     $applicators = getFilteredApplicators(20, 0, $search, $description, $type);
+
+    // Determine empty database
+    $emptyDb = empty($applicators) && $search === null && $description === 'ALL' && $type === 'ALL';
 
     echo json_encode([
         'success' => true,
-        'data' => $applicators
+        'data' => $applicators,
+        'empty_db' => $emptyDb
     ]);
 
 } catch (Exception $e) {
