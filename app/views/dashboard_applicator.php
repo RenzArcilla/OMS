@@ -103,10 +103,12 @@
                     <h1 class="page-title">📊 Applicator Dashboard</h1>
                     <div class="header-actions"> 
                         <button type="button" class="modal-btn btn-secondary">
-                            Export Recently Reset Data
+                            <div>Export</div> 
+                            <div>Reset Data</div>
                         </button>   
                         <button type="button" class="btn-secondary" onclick="exportData()">
-                            Export Report
+                            <div>Export</div> 
+                            <div>Output Data</div>
                         </button>
                         <button type="button" class="btn-primary" onclick="refreshPage()">
                             Refresh Data
