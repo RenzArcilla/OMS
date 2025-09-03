@@ -674,7 +674,7 @@ if (!isset($_SESSION['user_id'])) {
                                     <span class="info-icon">ℹ️</span>
                                     <div>
                                         <strong>Export Information</strong>
-                                        <p>The report will include all current applicator outputs. The data will be exported in Excel format.</p>
+                                        <p>The report will include all current production outputs. The data will be exported in Excel format.</p>
                                     </div>
                                 </div>
                             </div>
