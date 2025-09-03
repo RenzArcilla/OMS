@@ -2,7 +2,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Listen for clicks on the entire document
     document.addEventListener('click', function(event) {
         // Check if the clicked element has the class we want
-        if (event.target.classList.contains('modal-close-btn , cancel-btn')) {
+        if (
+            event.target.classList.contains('modal-close-btn') ||
+            event.target.classList.contains('cancel-btn')
+        ) {
             // This works even for dynamically added elements
             const modal = document.getElementById('exportModal');
             if (modal) {
@@ -46,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+    
 
     // Close modal when clicking outside
     document.addEventListener('click', function(event) {
