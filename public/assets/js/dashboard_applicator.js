@@ -403,6 +403,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 refreshProgressBarsAfterReset();
             }, 1000); // Wait 1 second for the reset to complete
         });
+    }
 });
 
 // Export Recently Reset Modal functions
