@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/search_filter.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/pagination.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/info.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/progress_bars.css">
 </head>
 <body>
     <?php
@@ -201,26 +202,26 @@
                                             <td><?= htmlspecialchars($row['control_no']) ?></td>
                                             <td><strong><?= htmlspecialchars(explode(' ', $row['last_updated'])[0]) ?></strong></td>
                                             <td><strong><?= htmlspecialchars($row['total_machine_output']) ?></strong></td>
-                                            <td>
-                                                <div><strong><?= htmlspecialchars($row['cut_blade_output']) ?></strong> / 1.5M</div>
+                                            <td data-machine-id="<?= htmlspecialchars($row['machine_id']) ?>" data-part="cut_blade">
+                                                <div><strong><?= htmlspecialchars($row['cut_blade_output']) ?></strong> / 2M</div>
                                                 <div class="progress-bar">
                                                     <div class="progress-fill" style="width: 42%;"></div>
                                                 </div>
                                             </td>
-                                            <td>
+                                            <td data-machine-id="<?= htmlspecialchars($row['machine_id']) ?>" data-part="strip_blade_a">
                                                 <div><strong><?= htmlspecialchars($row['strip_blade_a_output']) ?></strong> / 1.5M</div>
                                                 <div class="progress-bar">
                                                     <div class="progress-fill" style="width: 42%;"></div>
                                                 </div>
                                             </td>
-                                            <td>
+                                            <td data-machine-id="<?= htmlspecialchars($row['machine_id']) ?>" data-part="strip_blade_b">
                                                 <div><strong><?= htmlspecialchars($row['strip_blade_b_output']) ?></strong> / 1.5M</div>
                                                 <div class="progress-bar">
                                                     <div class="progress-fill" style="width: 38%;"></div>
                                                 </div>
                                             </td>
                                             <?php foreach ($part_names_array as $part_name): ?>
-                                                <td>
+                                                <td data-machine-id="<?= htmlspecialchars($row['machine_id']) ?>" data-part="custom_parts_<?= htmlspecialchars($part_name) ?>">
                                                     <div><strong><?= htmlspecialchars($row['custom_parts_output'][$part_name] ?? 0) ?></strong> / 1.5M</div>
                                                     <div class="progress-bar">
                                                         <div class="progress-fill" style="width: 26%;"></div>
@@ -758,6 +759,7 @@
     <?php include_once __DIR__ . '/machine_recently_reset.php'; ?>
 
     <script src="../../public/assets/js/dashboard_machine.js"></script>
+    <script src="../../public/assets/js/dashboard_machine_progress.js"></script>
     <script src="../../public/assets/js/sidebar.js"></script>
     <!-- Search Disabled Machines -->
     <script src="../../public/assets/js/search_disabled_machines.js"></script>
