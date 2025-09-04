@@ -56,11 +56,14 @@ if (session_status() === PHP_SESSION_NONE) {
                         Monitor and control your storage and output devices with ease.
                     </p>
                     
-                    <div class="hero-actions">
-                        <button class="btn-primary">
-                            <a href="dashboard_applicator.php">Dashboard</a>
+                    <div class="buttons-group">
+                        <button class="dashboard-btn">
+                            <a href="dashboard_applicator.php">Applicator Dashboard</a>
                         </button>
-                        <button class="btn-primary"><a href="login.php">Log In</a></button>
+                        <button class="dashboard-btn">
+                            <a href="dashboard_machine.php">Machine Dashboard</a>
+                        </button>
+                        <button class="login-btn"><a href="login.php">Log In</a></button>
                     </div>
                 </div>
 
