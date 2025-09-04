@@ -267,3 +267,40 @@ function getFilteredApplicators($limit, $offset, $search = null, $description = 
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
+function getApplicatorsForExport() {
+    /*
+        Function to fetch all active applicators for export.
+
+        Returns:
+        - Array of applicators (associative arrays) on success.
+        - Empty array if no records found.
+    */
+
+    global $pdo;
+
+    // Prepare the SQL statement
+    $stmt = $pdo->prepare("
+        SELECT 
+            hp_no, 
+            terminal_no, 
+            description, 
+            wire, 
+            terminal_maker, 
+            applicator_maker, 
+            serial_no, 
+            invoice_no,
+            last_encoded
+        FROM 
+            applicators
+        WHERE 
+            is_active = 1
+        ORDER BY
+            applicator_id DESC
+    ");
+
+    // Execute the query and return the results
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}

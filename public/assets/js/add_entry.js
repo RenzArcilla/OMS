@@ -120,48 +120,7 @@ function clearFilters() {
     applicatorRows.forEach(row => row.style.display = '');
 }
 
-// Export functionality
-/*function exportData() {
-    // Get current active tab
-    const currentTab = document.querySelector('.tab-btn.active').textContent.toLowerCase();
-    let tableId, filename;
-    
-    if (currentTab.includes('machines')) {
-        tableId = 'machine-table';
-        filename = 'machines_export.csv';
-    } else {
-        tableId = 'applicators-table';
-        filename = 'applicators_export.csv';
-    }
-    
-    const table = document.querySelector(`#${tableId} table`);
-    const rows = Array.from(table.querySelectorAll('tr'));
-    
-    let csvContent = "data:text/csv;charset=utf-8,";
-    
-    rows.forEach(row => {
-        const cells = Array.from(row.querySelectorAll('th, td'));
-        const rowData = cells.map(cell => {
-            // Remove action buttons and get only text content
-            if (cell.querySelector('.actions')) {
-                return '';
-            }
-            return `"${cell.textContent.trim()}"`;
-        }).filter(cell => cell !== '""'); // Remove empty cells
-        
-        if (rowData.length > 0) {
-            csvContent += rowData.join(',') + '\r\n';
-        }
-    });
-    
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', filename);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-} */
+
 
 // Refresh functionality
 function refreshData() {
@@ -369,56 +328,6 @@ function initializeCheckbox() {
     });
 }
 
-/*
-// Export handling
-async function handleExport() {
-    if (isExporting) return;
-
-    isExporting = true;
-    const exportBtn = document.querySelector('.export-btn');
-    
-    // Update button to loading state
-    exportBtn.disabled = true;
-    exportBtn.innerHTML = `
-        <div class="loading-spinner"></div>
-        Exporting...
-    `;
-
-    try {
-        // Simulate export process
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        // Here you would normally make an API call or generate the file
-        console.log('Export configuration:', {
-            format: selectedFormat,
-            dateRange: selectedDateRange,
-            customStartDate,
-            customEndDate,
-            includeHeaders
-        });
-
-        // Show success message (you could add a toast notification here)
-        alert('Export completed successfully!');
-        
-        closeExportModal();
-    } catch (error) {
-        console.error('Export failed:', error);
-        alert('Export failed. Please try again.');
-    } finally {
-        // Reset button state
-        isExporting = false;
-        exportBtn.disabled = false;
-        exportBtn.innerHTML = `
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <polyline points="7,10 12,15 17,10"/>
-                <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
-            Export Data
-        `;
-    }
-}
-*/
 
 // Close modal when clicking outside
 document.getElementById('exportModal').addEventListener('click', function(e) {
