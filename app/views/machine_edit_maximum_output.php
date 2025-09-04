@@ -4,11 +4,11 @@
         
         <div class="form-header">
             <h1 class="form-title">⚡ Edit Maximum Output</h1>
-            <p class="form-subtitle">Configure applicator maximum output capacity</p>
+            <p class="form-subtitle">Configure machine maximum output capacity</p>
         </div>
 
         <form id="editMaxOutputForm" method="POST" action="../controllers/edit_max_output.php">
-            <input type="hidden" name="applicator_id" value="123">
+            <input type="hidden" name="machine_id" value="123">
 
             <!-- HP Selection Section -->
             <div class="form-section">
@@ -16,17 +16,17 @@
                     <div class="section-icon">🔧</div>
                     <div class="section-info">
                         <div class="section-title">Maximum Output Configuration</div>
-                        <div class="section-description">Select the maximum output capacity for this applicator</div>
+                        <div class="section-description">Select the maximum output capacity for this machine</div>
                     </div>
                 </div>
                 <div class="form-grid">
                     <div class="form-group">
                         <label class="form-label" for="hp_rating">
-                            Applicator Number
+                            Machine Number
                             <span class="required-badge">Required</span>
                         </label>
                         <select id="hp_rating" name="hp_rating" class="form-select" required>
-                            <option value="">Select applicator number...</option>
+                            <option value="">Select machine number...</option>
                             <option value="25">HP001</option>
                             <option value="40">HP002</option>
                         </select>
