@@ -31,9 +31,20 @@ try {
 
     // Call model
     $users = searchUsers($search, $role, $limit, $offset);
+    $total = countUsers($search, $role);
+
+    $response = [
+        'data' => $users,
+        'pagination' => [
+            'page' => $page,
+            'limit' => $limit,
+            'total' => $total,
+            'total_pages' => max(1, (int)ceil($total / $limit))
+        ]
+    ];
 
     // Ensure we return valid JSON
-    $json = json_encode($users);
+    $json = json_encode($response);
 
     if ($json === false) {
         // Encoding failed — respond with error

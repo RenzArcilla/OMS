@@ -182,3 +182,36 @@ function searchUsers(string $search = '', string $role = 'all', int $limit = 20,
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+/**
+ * Count users for pagination with optional search and role filters.
+ */
+function countUsers(string $search = '', string $role = 'all'): int {
+    global $pdo;
+
+    // Escape LIKE wildcards if search is used
+    if (!empty($search)) {
+        $search = str_replace(['%', '_'], ['\\%', '\\_'], $search);
+    }
+
+    $sql = "SELECT COUNT(*) AS total FROM users WHERE 1=1";
+    $params = [];
+
+    if (!empty($search)) {
+        $sql .= " AND (username LIKE :search OR first_name LIKE :search OR last_name LIKE :search)";
+        $params[':search'] = "%$search%";
+    }
+
+    if ($role !== 'all') {
+        $sql .= " AND user_type = :role";
+        $params[':role'] = $role;
+    }
+
+    $stmt = $pdo->prepare($sql);
+    foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value, PDO::PARAM_STR);
+    }
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    return (int)($row['total'] ?? 0);
+}
