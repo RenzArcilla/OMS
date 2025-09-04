@@ -31,11 +31,11 @@ function extractData($filePath) {
     $sheet = $spreadsheet->getActiveSheet()->toArray();
 
     // Exit early if not enough rows for header and data
-    if (count($sheet) < 4) return "Invalid row count";
+    if (count($sheet) < 10) return "Invalid row count";
 
-    // Try to detect header row by checking rows 1–3 (index 0–2)
+    // Try to detect header row by checking rows 7-9 (index 6-8) 
     $headerRowIndex = -1;
-    foreach (range(0, 2) as $i) { // Check only rows 1–3 (index 0–2)
+    foreach (range(6, 8) as $i) { // Check only rows 7–9 (index 6–8)
         if (isset($sheet[$i]) && in_array('Production Date', $sheet[$i]) && in_array('Machine No', $sheet[$i])) {
             $headerRowIndex = $i;
             break;
@@ -50,8 +50,18 @@ function extractData($filePath) {
     // Trim and set headers
     $headers = array_map('trim', $sheet[$headerRowIndex]);
 
-    // Slice data starting from the index 3 (Excel row 4)
-    $rows = array_slice($sheet, 3); 
+    // Define only the required columns
+    $requiredCols = [
+        'Production Date',
+        'Machine No',
+        'Shift',
+        'Total Output Qty',
+        'Applicator 1',
+        'Applicator 2'
+    ];
+    
+    // Slice data starting from the index 9 (Excel row 10)
+    $rows = array_slice($sheet, 9);
 
     $data = [];
     foreach ($rows as $row) {
@@ -68,6 +78,9 @@ function extractData($filePath) {
                 break;
             }
         }
+
+        // Skip rows where Applicator1 is missing or empty
+        if (empty(trim($combined['Applicator1'] ?? ''))) continue;
 
         if (!$isHeaderRow) {
             $data[] = $combined;
