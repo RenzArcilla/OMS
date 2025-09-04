@@ -558,17 +558,19 @@ if (!isset($_SESSION['user_id'])) {
                         <button class="modal-close-btn" onclick="closeMachineDeleteModal()">×</button>
                         
                         <!-- Delete Icon -->
-                        <div class="delete-btn" id="deleteIcon">🗑️</div>
+                        <div class="delete-icon-wrapper">
+                            <span class="delete-icon" id="deleteIcon" style="font-size: 48px; display: flex; justify-content: center; align-items: center; margin-bottom: 16px;">🗑️</span>
+                        </div>
                         
                         <!-- Title and Message -->
-                        <h2 class="delete-title" id="deleteTitle">Delete Confirmation</h2>
-                        <p class="delete-message" id="deleteMessage">
+                        <h2 class="delete-title" id="deleteTitle" style="text-align: center; margin-bottom: 8px;">Delete Confirmation</h2>
+                        <p class="delete-message" id="deleteMessage" style="text-align: center; color: #b91c1c; margin-bottom: 24px;">
                             Are you sure you want to delete this item? This action cannot be undone.
                         </p>
                         
                         <!-- Action Buttons -->
-                        <div class="delete-actions">
-                            <button type="button" class="cancel-btn" style="position: relative; left: 150px; top: 50px;" onclick="closeMachineDeleteModal()">Cancel</button>
+                        <div class="delete-actions" style="display: flex; justify-content: center; gap: 16px; margin-top: 16px;">
+                            <button type="button" class="cancel-btn" onclick="closeMachineDeleteModal()">Cancel</button>
                             <button type="button" class="delete-btn" onclick="confirmDelete()">Delete</button>
                         </div>
                     </div>
