@@ -198,27 +198,25 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('Reset form found, adding event listener');
         resetForm.addEventListener('submit', function(e) {
             console.log('Reset form submitted');
-            
-            // After successful reset, refresh progress bars
-            setTimeout(function() {
-                console.log('Refreshing machine progress bars after reset...');
-                if (window.machineProgressBarManager) {
-                    window.machineProgressBarManager.loadProgressData();
-                } else {
-                    console.error('MachineProgressBarManager not found');
-                }
-            }, 1500); // Wait 1.5 seconds for the reset to complete
-            
-            // Also try refreshing again after a longer delay
-            setTimeout(function() {
-                console.log('Second refresh attempt...');
-                if (window.machineProgressBarManager) {
-                    window.machineProgressBarManager.loadProgressData();
-                }
-            }, 3000); // Wait 3 seconds and try again
+            // Don't refresh here - let the page reload handle it
         });
     } else {
         console.error('Reset form not found');
+    }
+    
+    // Check if we're returning from a successful reset
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('filter_by') === 'last_updated') {
+        console.log('Detected successful reset, refreshing progress bars...');
+        // Wait a bit for the page to fully load, then refresh
+        setTimeout(function() {
+            if (window.machineProgressBarManager) {
+                console.log('Refreshing machine progress bars after successful reset...');
+                window.machineProgressBarManager.loadProgressData();
+            } else {
+                console.error('MachineProgressBarManager not found');
+            }
+        }, 1000);
     }
     
     // Add manual refresh function for testing
@@ -230,6 +228,30 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             console.error('MachineProgressBarManager not found!');
         }
+    };
+    
+    // Add function to check current data
+    window.checkMachineData = function() {
+        console.log('Checking current machine data...');
+        fetch('/SOMS/app/controllers/get_machine_outputs.php')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Current machine data:', data);
+                if (data.success && data.data) {
+                    console.log('Progress data:', data.data);
+                    if (Array.isArray(data.data)) {
+                        data.data.forEach((machine, index) => {
+                            console.log(`Machine ${index + 1} (ID: ${machine.machine_id}):`, machine);
+                            if (machine.progress) {
+                                Object.keys(machine.progress).forEach(part => {
+                                    console.log(`  ${part}: ${machine.progress[part].current} / ${machine.progress[part].limit} (${machine.progress[part].percentage}%)`);
+                                });
+                            }
+                        });
+                    }
+                }
+            })
+            .catch(error => console.error('Error fetching machine data:', error));
     };
 });
 
