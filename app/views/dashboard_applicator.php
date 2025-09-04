@@ -15,10 +15,11 @@
     <link rel="stylesheet" href="/SOMS/public/assets/css/layout/grid.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/export_modal.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/stats_modal.css">
+    <!--<link rel="stylesheet" href="/SOMS/public/assets/css/components/stats_modal.css">-->
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/progress_bars.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/search_filter.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/pagination.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/checkbox.css">
 </head>
 <body>
     <?php 
@@ -103,18 +104,20 @@
                 <div class="page-header">
                     <h1 class="page-title">📊 Applicator Dashboard</h1>
                     <div class="header-actions"> 
-                        <button type="button" class="modal-btn btn-secondary">
+                        <button type="button" class="modal-btn btn-primary">
+                            <div>Edit Maximum Output</div> 
+                        </button> 
+                        <button type="button" class="modal-btn btn-primary">
                             <div>Export</div> 
                             <div>Reset Data</div>
                         </button>   
-                        <button type="button" class="btn-secondary" onclick="exportData()">
+                        <button type="button" class="btn-primary" onclick="exportData()">
                             <div>Export</div> 
                             <div>Output Data</div>
                         </button>
                         <button type="button" class="btn-primary" onclick="refreshPage()">
                             Refresh Data
                         </button>
-
                         <button type="button" class="btn-primary" onclick="openAddCustomPartModal()">
                             Add Parts
                         </button>
@@ -861,6 +864,8 @@
     </div>
     <!-- Export Recently Reset Modal -->
     <?php include_once __DIR__ . '/applicator_recently_reset.php'; ?>
+    <!-- Edit Maximum Output Modal -->
+    <?php include_once __DIR__ . '/applicator_edit_maximum_output.php'; ?>
 
     <!-- Load JavaScript -->
     <script src="../../public/assets/js/dashboard_applicator.js"></script>

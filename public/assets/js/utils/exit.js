@@ -51,6 +51,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (modal11) {
                 modal11.style.display = 'none';
             }
+            const modal12 = document.getElementById('editMaxOutputModal');
+            if (modal12) {
+                modal12.style.display = 'none';
+            }
             
         }
     });
