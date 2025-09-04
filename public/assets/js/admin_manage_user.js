@@ -256,14 +256,15 @@ async function applyUserFilters(page = 1, limit = 10) {
             return;
         }
 
-        const users = await response.json();
+        const payload = await response.json();
 
-        if (users.error) {
-            console.error('Server error:', users.error);
+        if (payload.error) {
+            console.error('Server error:', payload.error);
             return;
         }
 
-        updateUsersTable(users);
+        updateUsersTable(payload.data || []);
+        renderUsersPagination(payload.pagination || { page, limit, total: 0, total_pages: 1 });
     } catch (err) {
         console.error('Search failed:', err);
     }
@@ -346,4 +347,61 @@ document.addEventListener("DOMContentLoaded", () => {
 function showLoading() {
     const tbody = document.getElementById('usersTableBody');
     tbody.innerHTML = `<tr><td colspan="3">Loading...</td></tr>`;
+}
+
+// Render pagination controls for users table
+function renderUsersPagination(pagination) {
+    const containerId = 'usersPaginationContainer';
+    let container = document.getElementById(containerId);
+    if (!container) {
+        container = document.createElement('div');
+        container.id = containerId;
+        container.className = 'pagination-container';
+        const table = document.getElementById('usersTable');
+        table.parentNode.appendChild(container);
+    }
+
+    const { page, total_pages, total, limit } = pagination;
+
+    const makeBtn = (label, targetPage, disabled = false, current = false) => {
+        const cls = ['pagination-btn'];
+        if (disabled) cls.push('disabled');
+        if (current) cls.push('pagination-current');
+        return `<button class="${cls.join(' ')}" ${disabled ? 'disabled' : ''} data-page="${targetPage}">${label}</button>`;
+    };
+
+    const prevDisabled = page <= 1;
+    const nextDisabled = page >= total_pages;
+    const start = Math.max(1, page - 2);
+    const end = Math.min(total_pages, page + 2);
+
+    let numbers = '';
+    if (start > 1) {
+        numbers += makeBtn('1', 1, false, page === 1);
+        if (start > 2) numbers += `<span class="pagination-ellipsis">...</span>`;
+    }
+    for (let i = start; i <= end; i++) {
+        numbers += makeBtn(String(i), i, false, i === page);
+    }
+    if (end < total_pages) {
+        if (end < total_pages - 1) numbers += `<span class="pagination-ellipsis">...</span>`;
+        numbers += makeBtn(String(total_pages), total_pages, false, page === total_pages);
+    }
+
+    container.innerHTML = `
+        <div class="pagination-info">
+            <span class="pagination-text">Page ${page} of ${total_pages} • ${total.toLocaleString()} users</span>
+        </div>
+        <div class="pagination-controls">
+            ${makeBtn('← Previous', page - 1, prevDisabled)}
+            <div class="pagination-numbers">${numbers}</div>
+            ${makeBtn('Next →', page + 1, nextDisabled)}
+        </div>
+    `;
+
+    container.querySelectorAll('button[data-page]')
+        .forEach(btn => btn.addEventListener('click', () => {
+            const target = parseInt(btn.getAttribute('data-page'), 10);
+            applyUserFilters(target, limit);
+        }));
 }
