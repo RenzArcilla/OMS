@@ -50,8 +50,18 @@ function extractData($filePath) {
     // Trim and set headers
     $headers = array_map('trim', $sheet[$headerRowIndex]);
 
-    // Slice data starting from the index 9 (Excel row 10) to skip metadata and header rows
-    $rows = array_slice($sheet, 9);
+    // Define only the required columns
+    $requiredCols = [
+        'Production Date',
+        'Machine No',
+        'Shift',
+        'Total Output Qty',
+        'Applicator 1',
+        'Applicator 2'
+    ];
+
+    // Slice data starting from row after the detected header row
+    $rows = array_slice($sheet, $headerRowIndex + 1);
 
     $data = [];
     foreach ($rows as $row) {
@@ -70,10 +80,15 @@ function extractData($filePath) {
         }
 
         // Skip rows where Applicator1 is missing or empty
-        if (empty(trim($combined['Applicator 1'] ?? ''))) continue;
+        if (empty(trim($combined['Applicator1'] ?? ''))) continue;
 
         if (!$isHeaderRow) {
-            $data[] = $combined;
+            // Keep only required columns
+            $filtered = [];
+            foreach ($requiredCols as $col) {
+                $filtered[$col] = $combined[$col] ?? null;
+            }
+            $data[] = $filtered;
         }
     }
 
