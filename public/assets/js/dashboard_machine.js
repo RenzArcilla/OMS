@@ -191,6 +191,46 @@ document.addEventListener('DOMContentLoaded', function () {
         if (event.target === machineModal) closeMachineModal();
         if (event.target === addCustomPartModal) closeAddCustomPartModal();
     });
+
+    // Add event listener for reset form submission
+    const resetForm = document.getElementById('resetForm');
+    if (resetForm) {
+        console.log('Reset form found, adding event listener');
+        resetForm.addEventListener('submit', function(e) {
+            console.log('Reset form submitted');
+            
+            // After successful reset, refresh progress bars
+            setTimeout(function() {
+                console.log('Refreshing machine progress bars after reset...');
+                if (window.machineProgressBarManager) {
+                    window.machineProgressBarManager.loadProgressData();
+                } else {
+                    console.error('MachineProgressBarManager not found');
+                }
+            }, 1500); // Wait 1.5 seconds for the reset to complete
+            
+            // Also try refreshing again after a longer delay
+            setTimeout(function() {
+                console.log('Second refresh attempt...');
+                if (window.machineProgressBarManager) {
+                    window.machineProgressBarManager.loadProgressData();
+                }
+            }, 3000); // Wait 3 seconds and try again
+        });
+    } else {
+        console.error('Reset form not found');
+    }
+    
+    // Add manual refresh function for testing
+    window.testMachineReset = function() {
+        console.log('Manual test of machine reset refresh...');
+        if (window.machineProgressBarManager) {
+            console.log('MachineProgressBarManager found, refreshing...');
+            window.machineProgressBarManager.loadProgressData();
+        } else {
+            console.error('MachineProgressBarManager not found!');
+        }
+    };
 });
 
 
