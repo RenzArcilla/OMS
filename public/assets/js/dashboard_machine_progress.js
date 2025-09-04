@@ -16,20 +16,35 @@ class MachineProgressBarManager {
     async loadProgressData() {
         try {
             console.log('Loading machine progress data...');
-            const response = await fetch('/SOMS/app/controllers/get_machine_outputs.php');
+            // Add cache-busting parameter to force fresh data
+            const timestamp = new Date().getTime();
+            const response = await fetch(`/SOMS/app/controllers/get_machine_outputs.php?t=${timestamp}`);
             const result = await response.json();
             
             console.log('Machine progress data response:', result);
             
             if (result.success) {
                 this.progressData = result.data;
-                console.log('Machine progress data loaded:', this.progressData);
+                console.log('Progress data loaded:', this.progressData);
+                
+                // Log each machine's data for debugging
+                if (Array.isArray(this.progressData)) {
+                    this.progressData.forEach((machine, index) => {
+                        console.log(`Machine ${index + 1}:`, machine);
+                        if (machine.progress) {
+                            console.log(`Machine ${machine.machine_id} progress:`, machine.progress);
+                        }
+                    });
+                } else {
+                    console.log('Single machine data:', this.progressData);
+                }
+                
                 this.updateAllProgressBars();
             } else {
-                console.error('Failed to load machine progress data:', result.message);
+                console.error('Failed to load progress data:', result.message);
             }
         } catch (error) {
-            console.error('Error loading machine progress data:', error);
+            console.error('Error loading progress data:', error);
         }
     }
 
@@ -68,18 +83,33 @@ class MachineProgressBarManager {
 
     // Update individual progress bar
     updateProgressBar(machineId, partName, partData) {
+        console.log(`=== UPDATING PROGRESS BAR ===`);
+        console.log(`Machine ID: ${machineId}`);
+        console.log(`Part Name: ${partName}`);
+        console.log(`Part Data:`, partData);
+        
         // Find the progress bar container (td element with both data attributes)
-        const container = document.querySelector(`td[data-machine-id="${machineId}"][data-part="${partName}"]`);
+        const escapedPartName = (window.CSS && CSS.escape) ? CSS.escape(partName) : partName;
+        const container = document.querySelector(`td[data-machine-id="${machineId}"][data-part="${escapedPartName}"]`);
         const progressBar = container?.querySelector('.progress-fill');
         const textDisplay = container?.querySelector('div:first-child');
 
-        console.log(`Looking for machine progress bar: td[data-machine-id="${machineId}"][data-part="${partName}"]`);
+        console.log(`Container selector: td[data-machine-id="${machineId}"][data-part="${escapedPartName}"]`);
         console.log(`Found container:`, container);
         console.log(`Found progress bar:`, progressBar);
         console.log(`Found text display:`, textDisplay);
-        console.log(`Part data:`, partData);
 
         if (progressBar && textDisplay) {
+            // Log current state before update
+            console.log(`Before update - Progress bar width: ${progressBar.style.width}`);
+            console.log(`Before update - Text display: ${textDisplay.innerHTML}`);
+            
+            // Force clear any existing width and set to 0 first if percentage is 0
+            if (partData.percentage === 0) {
+                progressBar.style.width = '0px';
+                progressBar.style.minWidth = '0px';
+            }
+            
             // Update progress bar width
             progressBar.style.width = `${partData.percentage}%`;
             
@@ -98,10 +128,22 @@ class MachineProgressBarManager {
             const limitText = (partData.limit / 1000000) + 'M';
             textDisplay.innerHTML = `<strong>${partData.current.toLocaleString()}</strong> / ${limitText}`;
             
-            console.log(`Updated machine progress bar for ${partName}: ${partData.percentage}%`);
-            console.log(`Updated text display: ${partData.current.toLocaleString()} / ${limitText}`);
+            // Log after update
+            console.log(`After update - Progress bar width: ${progressBar.style.width}`);
+            console.log(`After update - Text display: ${textDisplay.innerHTML}`);
+            console.log(`Successfully updated machine progress bar for ${partName}: ${partData.percentage}%`);
         } else {
-            console.warn(`Machine progress bar or text display not found for machine ${machineId}, part ${partName}`);
+            console.error(`❌ Machine progress bar or text display not found for machine ${machineId}, part ${partName}`);
+            console.error(`Container selector: td[data-machine-id="${machineId}"][data-part="${partName}"]`);
+            console.error(`All td elements with data-machine-id:`, document.querySelectorAll(`td[data-machine-id]`));
+            console.error(`All td elements with data-part:`, document.querySelectorAll(`td[data-part]`));
+            
+            // Try alternative selectors
+            const allContainers = document.querySelectorAll('td[data-machine-id]');
+            console.error(`All containers with data-machine-id:`, allContainers);
+            
+            const allParts = document.querySelectorAll('td[data-part]');
+            console.error(`All containers with data-part:`, allParts);
         }
     }
 
@@ -214,5 +256,24 @@ window.refreshMachineProgressBars = function() {
         window.machineProgressBarManager.loadProgressData();
     } else {
         console.error('MachineProgressBarManager not initialized');
+    }
+};
+
+// Force refresh function to clear cached progress bars
+window.forceRefreshMachineProgressBars = function() {
+    console.log('🔄 Force refreshing machine progress bars...');
+    if (window.machineProgressBarManager) {
+        // Force clear all progress bars first
+        const allProgressBars = document.querySelectorAll('.progress-fill');
+        allProgressBars.forEach(bar => {
+            if (bar.style.width === '0%' || bar.style.width === '0px') {
+                bar.style.width = '0px';
+                bar.style.minWidth = '0px';
+            }
+        });
+        // Then reload data
+        window.machineProgressBarManager.loadProgressData();
+    } else {
+        console.error('Machine progress bar manager not found');
     }
 };

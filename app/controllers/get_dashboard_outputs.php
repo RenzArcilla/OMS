@@ -45,19 +45,34 @@ try {
 
 function calculateDashboardProgressPercentages($data) {
     // 400k group - handle reset values (0 means reset)
-    $wire_crimper_progress = $data['wire_crimper_output'] == 0 ? 0 : min(100, round(($data['wire_crimper_output'] / 400000.0) * 100, 2));
-    $wire_anvil_progress = $data['wire_anvil_output'] == 0 ? 0 : min(100, round(($data['wire_anvil_output'] / 400000.0) * 100, 2));
-    $insulation_crimper_progress = $data['insulation_crimper_output'] == 0 ? 0 : min(100, round(($data['insulation_crimper_output'] / 400000.0) * 100, 2));
-    $insulation_anvil_progress = $data['insulation_anvil_output'] == 0 ? 0 : min(100, round(($data['insulation_anvil_output'] / 400000.0) * 100, 2));
-    $slide_cutter_progress = $data['slide_cutter_output'] == 0 ? 0 : min(100, round(($data['slide_cutter_output'] / 400000.0) * 100, 2));
+    $wire_crimper_progress = $data['wire_crimper_output'] <= 0 ? 0 : min(100, round(($data['wire_crimper_output'] / 400000.0) * 100, 2));
+    if ($wire_crimper_progress < 0.01) $wire_crimper_progress = 0;
+    
+    $wire_anvil_progress = $data['wire_anvil_output'] <= 0 ? 0 : min(100, round(($data['wire_anvil_output'] / 400000.0) * 100, 2));
+    if ($wire_anvil_progress < 0.01) $wire_anvil_progress = 0;
+    
+    $insulation_crimper_progress = $data['insulation_crimper_output'] <= 0 ? 0 : min(100, round(($data['insulation_crimper_output'] / 400000.0) * 100, 2));
+    if ($insulation_crimper_progress < 0.01) $insulation_crimper_progress = 0;
+    
+    $insulation_anvil_progress = $data['insulation_anvil_output'] <= 0 ? 0 : min(100, round(($data['insulation_anvil_output'] / 400000.0) * 100, 2));
+    if ($insulation_anvil_progress < 0.01) $insulation_anvil_progress = 0;
+    
+    $slide_cutter_progress = $data['slide_cutter_output'] <= 0 ? 0 : min(100, round(($data['slide_cutter_output'] / 400000.0) * 100, 2));
+    if ($slide_cutter_progress < 0.01) $slide_cutter_progress = 0;
     
     // 500k group
-    $cutter_holder_progress = $data['cutter_holder_output'] == 0 ? 0 : min(100, round(($data['cutter_holder_output'] / 500000.0) * 100, 2));
-    $shear_blade_progress = $data['shear_blade_output'] == 0 ? 0 : min(100, round(($data['shear_blade_output'] / 500000.0) * 100, 2));
+    $cutter_holder_progress = $data['cutter_holder_output'] <= 0 ? 0 : min(100, round(($data['cutter_holder_output'] / 500000.0) * 100, 2));
+    if ($cutter_holder_progress < 0.01) $cutter_holder_progress = 0;
+    
+    $shear_blade_progress = $data['shear_blade_output'] <= 0 ? 0 : min(100, round(($data['shear_blade_output'] / 500000.0) * 100, 2));
+    if ($shear_blade_progress < 0.01) $shear_blade_progress = 0;
     
     // 600k group
-    $cutter_a_progress = $data['cutter_a_output'] == 0 ? 0 : min(100, round(($data['cutter_a_output'] / 600000.0) * 100, 2));
-    $cutter_b_progress = $data['cutter_b_output'] == 0 ? 0 : min(100, round(($data['cutter_b_output'] / 600000.0) * 100, 2));
+    $cutter_a_progress = $data['cutter_a_output'] <= 0 ? 0 : min(100, round(($data['cutter_a_output'] / 600000.0) * 100, 2));
+    if ($cutter_a_progress < 0.01) $cutter_a_progress = 0;
+    
+    $cutter_b_progress = $data['cutter_b_output'] <= 0 ? 0 : min(100, round(($data['cutter_b_output'] / 600000.0) * 100, 2));
+    if ($cutter_b_progress < 0.01) $cutter_b_progress = 0;
     
     // Build the progress array
     $progress = [
@@ -120,8 +135,21 @@ function calculateDashboardProgressPercentages($data) {
     // Add custom parts to progress data
     if (!empty($data['custom_parts_output']) && is_array($data['custom_parts_output'])) {
         foreach ($data['custom_parts_output'] as $partName => $total) {
-            // Handle reset values (0 means reset)
-            $custom_progress = $total == 0 ? 0 : min(100, round(($total / 600000.0) * 100, 2));
+            // Ensure total is a valid number and default to 0 if not
+            $total = is_numeric($total) ? (int)$total : 0;
+            
+            // For custom parts, ensure 0 shows as exactly 0% (no tiny progress bar)
+            // Use strict comparison and handle very small values
+            if ($total <= 0) {
+                $custom_progress = 0;
+            } else {
+                $custom_progress = min(100, round(($total / 600000.0) * 100, 2));
+                // Additional check: if the calculated percentage is very small (less than 0.01%), set it to 0
+                if ($custom_progress < 0.01) {
+                    $custom_progress = 0;
+                }
+            }
+            
             $progress["custom_parts_$partName"] = [
                 'current' => $total,
                 'limit' => 600000,
