@@ -228,7 +228,7 @@
                                                 <td data-machine-id="<?= htmlspecialchars($row['machine_id']) ?>" data-part="custom_parts_<?= htmlspecialchars($part_name) ?>">
                                                     <div><strong><?= htmlspecialchars($row['custom_parts_output'][$part_name] ?? 0) ?></strong> / 1.5M</div>
                                                     <div class="progress-bar">
-                                                        <div class="progress-fill" style="width: 26%;"></div>
+                                                        <div class="progress-fill" style="width: 0%;"></div>
                                                     </div>
                                                 </td>
                                             <?php endforeach; ?>

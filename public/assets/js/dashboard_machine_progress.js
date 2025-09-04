@@ -89,11 +89,12 @@ class MachineProgressBarManager {
         console.log(`Part Data:`, partData);
         
         // Find the progress bar container (td element with both data attributes)
-        const container = document.querySelector(`td[data-machine-id="${machineId}"][data-part="${partName}"]`);
+        const escapedPartName = (window.CSS && CSS.escape) ? CSS.escape(partName) : partName;
+        const container = document.querySelector(`td[data-machine-id="${machineId}"][data-part="${escapedPartName}"]`);
         const progressBar = container?.querySelector('.progress-fill');
         const textDisplay = container?.querySelector('div:first-child');
 
-        console.log(`Container selector: td[data-machine-id="${machineId}"][data-part="${partName}"]`);
+        console.log(`Container selector: td[data-machine-id="${machineId}"][data-part="${escapedPartName}"]`);
         console.log(`Found container:`, container);
         console.log(`Found progress bar:`, progressBar);
         console.log(`Found text display:`, textDisplay);
