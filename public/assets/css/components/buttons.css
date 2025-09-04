@@ -249,7 +249,7 @@
 
 /* logout BUTTON - Modification actions (Green with crimson accent) */
 .logout-btn {
-    background: linear-gradient(135deg, #16A085 0%, #27AE60 100%);
+    background: linear-gradient(135deg, #DC143C 0%, #B22222 100%);
     color: #FFFFFF;
     border: none;
     padding: 14px 20px;
@@ -258,7 +258,7 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 12px rgba(22, 160, 133, 0.3);
+    box-shadow: 0 4px 12px rgba(220, 20, 60, 0.3);
     letter-spacing: 0.3px;
     display: flex;
     align-items: center;
@@ -281,9 +281,9 @@
 
 .logout-btn:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(22, 160, 133, 0.4),
-                0 0 15px rgba(39, 174, 96, 0.2);
-    background: linear-gradient(135deg, #138D75 0%, #229954 100%);
+    box-shadow: 0 8px 20px rgba(220, 20, 60, 0.4),
+                0 0 15px rgba(178, 34, 34, 0.2);
+    background: linear-gradient(135deg, #B22222 0%, #8B0000 100%);
 }
 
 .logout-btn:hover::before {
@@ -292,10 +292,11 @@
 
 .logout-btn:active {
     transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(22, 160, 133, 0.3);
+    box-shadow: 0 2px 8px rgba(220, 20, 60, 0.3);
 }
 .logout-btn:disabled {
-    background: #A5D6A7;
+    background: #F8B4B4;
+    color: #B22222;
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
@@ -813,3 +814,53 @@ a:hover:not(.btn-primary):not(.btn-secondary):not(.edit-btn):not(.delete-btn):no
     color: #DC143C;
 }
 
+
+/* Tab Buttons */
+.dashboard-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #DC143C;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #DC143C 0%, #B22222 100%);
+    color: #FFFFFF;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard-btn.active {
+    border-color: #DC143C;
+    background: linear-gradient(135deg, #DC143C 0%, #B22222 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+}
+
+.dashboard-btn:hover:not(.active) {
+    border-color: #DC143C;
+    background: rgba(220, 20, 60, 0.05);
+    color: #DC143C;
+}
+
+/* Tab Buttons */
+.login-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #DC143C;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #DC143C 0%, #B22222 100%);
+    color: #FFFFFF;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.login-btn.active {
+    border-color: #DC143C;
+    background: linear-gradient(135deg, #DC143C 0%, #B22222 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+}
+
+.login-btn:hover:not(.active) {
+    border-color: #DC143C;
+    background: rgba(220, 20, 60, 0.05);
+    color: #DC143C;
+}

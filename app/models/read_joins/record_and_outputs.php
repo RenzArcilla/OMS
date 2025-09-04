@@ -339,3 +339,67 @@ function getFilteredRecordsForExport($date_range = 'today', $start_date = null, 
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function getDisabledRecordsCount($search = null, $shift = 'ALL') {
+    /*
+        Function to count disabled records from the database with optional search and filters.
+        Used for pagination calculations.
+
+        Parameters:
+            string $search    - Optional search keyword for multiple fields.
+            string $shift     - Optional filter for shift (default = 'ALL').
+
+        Returns:
+            int - Count of disabled records matching the search and filter criteria.
+    */
+
+    global $pdo;
+
+    $query = "SELECT COUNT(*) FROM records r
+        LEFT JOIN applicator_outputs ao1 
+            ON r.record_id = ao1.record_id 
+            AND r.applicator1_id = ao1.applicator_id
+
+        LEFT JOIN applicator_outputs ao2 
+            ON r.record_id = ao2.record_id 
+            AND r.applicator2_id = ao2.applicator_id
+
+        LEFT JOIN machine_outputs mo ON r.record_id = mo.record_id
+
+        LEFT JOIN applicators a1 ON r.applicator1_id = a1.applicator_id
+        LEFT JOIN applicators a2 ON r.applicator2_id = a2.applicator_id
+
+        LEFT JOIN machines m ON r.machine_id = m.machine_id
+        WHERE r.is_active = 0";
+    
+    $params = [];
+
+    // Add search condition if provided
+    if (!empty($search)) {
+        $search = str_replace(['%', '_'], ['\%', '\_'], $search); // escape LIKE wildcards
+        $query .= " AND (
+            r.record_id LIKE :search OR
+            r.last_updated LIKE :search OR
+            a1.hp_no LIKE :search OR
+            a2.hp_no LIKE :search OR
+            m.control_no LIKE :search
+        )";
+        $params[':search'] = "%$search%";
+    }
+
+    // Apply shift filter if provided
+    if ($shift !== 'ALL') {
+        $query .= " AND r.shift = :shift";
+        $params[':shift'] = $shift;
+    }
+
+    $stmt = $pdo->prepare($query);
+
+    // Bind dynamic parameters
+    foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value);
+    }
+
+    $stmt->execute();
+    return (int)$stmt->fetchColumn();
+}

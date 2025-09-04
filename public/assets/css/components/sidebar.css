@@ -29,6 +29,12 @@
     padding: 20px 0;
 }
 
+/* Move specific navigation items lower */
+.nav-item.move-lower {
+    margin-top: 20px; /* Adjust this value to move items lower */
+}
+
+
 .toggle-btn {
     position: fixed;
     top: 25px;

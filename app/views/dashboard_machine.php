@@ -761,8 +761,8 @@
     <script src="../../public/assets/js/dashboard_machine.js"></script>
     <script src="../../public/assets/js/dashboard_machine_progress.js"></script>
     <script src="../../public/assets/js/sidebar.js"></script>
-    <!-- Search Disabled Machines -->
-    <script src="../../public/assets/js/search_disabled_machines.js"></script>
+    <!-- Disabled Machines Pagination -->
+    <script src="../../public/assets/js/disabled_machines_pagination.js"></script>
     <!-- Include utility scripts -->
     <script src="../../public/assets/js/utils/enter.js"></script>
     <script src="../../public/assets/js/utils/exit.js"></script>
