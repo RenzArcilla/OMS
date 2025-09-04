@@ -29,6 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $part_name = isset($_POST['part_name']) ? trim($_POST['part_name']) : null;
 $machine_id = isset($_POST['machine_id']) ? trim($_POST['machine_id']) : null;
 
+// Debug logging
+error_log("Reset machine request - Machine ID: $machine_id, Part: $part_name");
+
 // Check if fields are empty
 if (empty($part_name) || empty($machine_id)) {
     jsAlertRedirect("Missing required fields.", $redirect_url);

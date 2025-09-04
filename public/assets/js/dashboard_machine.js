@@ -217,6 +217,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error('MachineProgressBarManager not found');
             }
         }, 1000);
+        
+        // Also try refreshing again after a longer delay to ensure data is updated
+        setTimeout(function() {
+            if (window.machineProgressBarManager) {
+                console.log('Second refresh attempt after reset...');
+                window.machineProgressBarManager.loadProgressData();
+            }
+        }, 3000);
     }
     
     // Add manual refresh function for testing
@@ -252,6 +260,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             })
             .catch(error => console.error('Error fetching machine data:', error));
+    };
+    
+    // Add function to force refresh progress bars
+    window.forceRefreshProgressBars = function() {
+        console.log('Force refreshing progress bars...');
+        if (window.machineProgressBarManager) {
+            window.machineProgressBarManager.loadProgressData();
+        } else {
+            console.error('MachineProgressBarManager not found');
+        }
     };
 });
 

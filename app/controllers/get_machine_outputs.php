@@ -28,8 +28,10 @@ try {
             echo json_encode(['success' => false, 'message' => 'Machine not found']);
         }
     } else {
-        // Get all machines using same logic as dashboard
-        $machine_total_outputs = getMachineRecordsAndOutputs(1000, 0, $part_names_array);
+        // Get all machines using same logic as dashboard - IMPORTANT: Use same pagination as dashboard
+        $items_per_page = 1000; // Get all machines
+        $offset = 0;
+        $machine_total_outputs = getMachineRecordsAndOutputs($items_per_page, $offset, $part_names_array);
         
         $outputs = [];
         foreach ($machine_total_outputs as $row) {
@@ -47,6 +49,11 @@ function calculateMachineProgressPercentages($data) {
     // Debug: Log the data being processed
     error_log("Processing machine data: " . json_encode($data));
     
+    // Additional debugging for custom parts
+    if (!empty($data['custom_parts_output']) && is_array($data['custom_parts_output'])) {
+        error_log("Custom parts data: " . json_encode($data['custom_parts_output']));
+    }
+    
     // Handle missing or null values
     $cut_blade_output = isset($data['cut_blade_output']) ? (int)$data['cut_blade_output'] : 0;
     $strip_blade_a_output = isset($data['strip_blade_a_output']) ? (int)$data['strip_blade_a_output'] : 0;
@@ -54,13 +61,16 @@ function calculateMachineProgressPercentages($data) {
     
     // Machine parts have different limits than applicators
     // Cut Blade: 2M limit
-    $cut_blade_progress = $cut_blade_output == 0 ? 0 : min(100, round(($cut_blade_output / 2000000.0) * 100, 2));
+    $cut_blade_progress = $cut_blade_output <= 0 ? 0 : min(100, round(($cut_blade_output / 2000000.0) * 100, 2));
+    if ($cut_blade_progress < 0.01) $cut_blade_progress = 0;
     
     // Strip Blade A: 1.5M limit
-    $strip_blade_a_progress = $strip_blade_a_output == 0 ? 0 : min(100, round(($strip_blade_a_output / 1500000.0) * 100, 2));
+    $strip_blade_a_progress = $strip_blade_a_output <= 0 ? 0 : min(100, round(($strip_blade_a_output / 1500000.0) * 100, 2));
+    if ($strip_blade_a_progress < 0.01) $strip_blade_a_progress = 0;
     
     // Strip Blade B: 1.5M limit
-    $strip_blade_b_progress = $strip_blade_b_output == 0 ? 0 : min(100, round(($strip_blade_b_output / 1500000.0) * 100, 2));
+    $strip_blade_b_progress = $strip_blade_b_output <= 0 ? 0 : min(100, round(($strip_blade_b_output / 1500000.0) * 100, 2));
+    if ($strip_blade_b_progress < 0.01) $strip_blade_b_progress = 0;
     
     // Build the progress array
     $progress = [
@@ -87,8 +97,21 @@ function calculateMachineProgressPercentages($data) {
     // Add custom parts to progress data
     if (!empty($data['custom_parts_output']) && is_array($data['custom_parts_output'])) {
         foreach ($data['custom_parts_output'] as $partName => $total) {
-            // Handle reset values (0 means reset)
-            $custom_progress = $total == 0 ? 0 : min(100, round(($total / 1500000.0) * 100, 2));
+            // Ensure total is a valid number and default to 0 if not
+            $total = is_numeric($total) ? (int)$total : 0;
+            
+            // For custom parts, ensure 0 shows as exactly 0% (no tiny progress bar)
+            // Use strict comparison and handle very small values
+            if ($total <= 0) {
+                $custom_progress = 0;
+            } else {
+                $custom_progress = min(100, round(($total / 1500000.0) * 100, 2));
+                // Additional check: if the calculated percentage is very small (less than 0.01%), set it to 0
+                if ($custom_progress < 0.01) {
+                    $custom_progress = 0;
+                }
+            }
+            
             $progress["custom_parts_$partName"] = [
                 'current' => $total,
                 'limit' => 1500000,

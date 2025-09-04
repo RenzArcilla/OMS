@@ -115,6 +115,9 @@ function resetMachinePartOutput($machine_id, $part_name) {
 
     global $pdo;
     
+    // Debug logging
+    error_log("resetMachinePartOutput called - Machine ID: $machine_id, Part: $part_name");
+    
     $accepted_part_names = [
         'cut_blade_output',
         'strip_blade_a_output',
@@ -130,6 +133,11 @@ function resetMachinePartOutput($machine_id, $part_name) {
     }
 
     $custom_part_names = array_column($custom_parts, "part_name");
+    
+    // Debug logging
+    error_log("Custom part names: " . json_encode($custom_part_names));
+    error_log("Part name to reset: $part_name");
+    error_log("Is custom part: " . (in_array($part_name, $custom_part_names, true) ? 'YES' : 'NO'));
 
     // Case 1: part is a defined DB column
     if (in_array($part_name, $accepted_part_names, true)) {
@@ -200,16 +208,23 @@ function resetMachinePartOutput($machine_id, $part_name) {
             $exists = $checkStmt->fetchColumn() > 0;
             
             if (!$exists) {
-                // Create a new record with all outputs set to 0
+                // Create a new record with all outputs set to 0, including custom_parts_output
+                $initial_custom_parts = [];
+                foreach ($custom_part_names as $custom_part) {
+                    $initial_custom_parts[$custom_part] = 0;
+                }
+                $initial_custom_json = json_encode($initial_custom_parts);
+                
                 $createStmt = $pdo->prepare("
                     INSERT INTO monitor_machine (
                         machine_id, total_machine_output, cut_blade_output, 
-                        strip_blade_a_output, strip_blade_b_output, is_active, last_updated
+                        strip_blade_a_output, strip_blade_b_output, custom_parts_output, is_active, last_updated
                     ) VALUES (
-                        :machine_id, 0, 0, 0, 0, 1, CURRENT_TIMESTAMP
+                        :machine_id, 0, 0, 0, 0, :custom_json, 1, CURRENT_TIMESTAMP
                     )
                 ");
                 $createStmt->bindParam(':machine_id', $machine_id, PDO::PARAM_INT);
+                $createStmt->bindParam(':custom_json', $initial_custom_json, PDO::PARAM_STR);
                 $createStmt->execute();
             }
             
@@ -229,19 +244,17 @@ function resetMachinePartOutput($machine_id, $part_name) {
             $decoded = json_decode($row["custom_parts_output"], true) ?: [];
 
             // Reset just the requested part
-            if (isset($decoded[$part_name])) {
-                $decoded[$part_name] = 0;
-            }
+            $decoded[$part_name] = 0;
 
             // Save back JSON
-            $updatedJson = empty($decoded) ? null : json_encode((object) $decoded);
+            $updatedJson = json_encode($decoded);
             $updateStmt = $pdo->prepare("
                 UPDATE monitor_machine
                 SET custom_parts_output = :json
                 WHERE machine_id = :machine_id
             ");
 
-            $updateStmt->bindValue(':json', $updatedJson, is_null($updatedJson) ? PDO::PARAM_NULL : PDO::PARAM_STR);
+            $updateStmt->bindParam(':json', $updatedJson, PDO::PARAM_STR);
             $updateStmt->bindParam(':machine_id', $machine_id, PDO::PARAM_INT);
             $updateStmt->execute();
             

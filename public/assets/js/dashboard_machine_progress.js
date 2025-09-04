@@ -16,7 +16,9 @@ class MachineProgressBarManager {
     async loadProgressData() {
         try {
             console.log('Loading machine progress data...');
-            const response = await fetch('/SOMS/app/controllers/get_machine_outputs.php');
+            // Add cache-busting parameter to force fresh data
+            const timestamp = new Date().getTime();
+            const response = await fetch(`/SOMS/app/controllers/get_machine_outputs.php?t=${timestamp}`);
             const result = await response.json();
             
             console.log('Machine progress data response:', result);
@@ -100,6 +102,12 @@ class MachineProgressBarManager {
             // Log current state before update
             console.log(`Before update - Progress bar width: ${progressBar.style.width}`);
             console.log(`Before update - Text display: ${textDisplay.innerHTML}`);
+            
+            // Force clear any existing width and set to 0 first if percentage is 0
+            if (partData.percentage === 0) {
+                progressBar.style.width = '0px';
+                progressBar.style.minWidth = '0px';
+            }
             
             // Update progress bar width
             progressBar.style.width = `${partData.percentage}%`;
@@ -247,5 +255,24 @@ window.refreshMachineProgressBars = function() {
         window.machineProgressBarManager.loadProgressData();
     } else {
         console.error('MachineProgressBarManager not initialized');
+    }
+};
+
+// Force refresh function to clear cached progress bars
+window.forceRefreshMachineProgressBars = function() {
+    console.log('🔄 Force refreshing machine progress bars...');
+    if (window.machineProgressBarManager) {
+        // Force clear all progress bars first
+        const allProgressBars = document.querySelectorAll('.progress-fill');
+        allProgressBars.forEach(bar => {
+            if (bar.style.width === '0%' || bar.style.width === '0px') {
+                bar.style.width = '0px';
+                bar.style.minWidth = '0px';
+            }
+        });
+        // Then reload data
+        window.machineProgressBarManager.loadProgressData();
+    } else {
+        console.error('Machine progress bar manager not found');
     }
 };
