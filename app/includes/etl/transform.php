@@ -37,7 +37,7 @@ function transformData($data) {
         } elseif (strpos($shift, "6pm to 3am") !== false) {
             $row['Shift'] = 'NIGHT';
         } else {
-            $row['Shift'] = null;
+            return "Invalid shift value in data: " . ($row['Shift'] ?? ''); // Return error if shift is invalid
         }
 
         // Cast output to int, if exists

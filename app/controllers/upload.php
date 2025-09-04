@@ -63,24 +63,30 @@ try {
         // Moves the uploaded file to the target path.
         if (move_uploaded_file($tmpName, $targetPath)) { 
             $pdo->beginTransaction();
-                // Extract
+                // Extract from file
                 $rawData = extractData($targetPath); 
                 if (is_string($rawData)) {
                     jsAlertRedirect($rawData, $redirect_url);
                     exit();
                 }
 
-                // Transform and Load
+                // Transform data
                 $cleanData = transformData($rawData); 
+                if (is_string($cleanData)) {
+                    jsAlertRedirect($cleanData, $redirect_url);
+                    exit();
+                }
+
+                // Load to db
                 $result = loadData($cleanData); 
                 if ($result === "All outputs recorded successfully!") {
-                    $pdo->commit();
+                    $pdo->commit(); // Commit transaction if all operations succeed
                     unlink($targetPath); // Deletes the file after ETL
-                    jsAlertRedirect($result, $redirect_url); // Redirects to the etl_form.php with success message
+                    jsAlertRedirect($result, $redirect_url); 
                 } else {
                     $pdo->rollBack(); // Rollback transaction in case of error
                     unlink($targetPath); // Deletes the file if there was an error
-                    jsAlertRedirect($result, $redirect_url); // Redirects to the etl_form.php with error message
+                    jsAlertRedirect($result, $redirect_url);
                     exit();
                 }
         }
