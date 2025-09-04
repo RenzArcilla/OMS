@@ -632,10 +632,10 @@ if (!isset($_SESSION['user_id'])) {
                     <div class="form-container">
                         <button class="modal-close-btn" onclick="closeExportMachineModal()">×</button>
                         
-                        <form method="POST" action="../controllers/export_machine_output.php">
+                        <form method="POST" action="../controllers/export_machine.php">
                             <div class="form-header">
-                                <h1 class="form-title">Export Machine Output Data</h1>
-                                <p style="font-size: 14px; color: #6B7280;">Generate reports for machine outputs</p>
+                                <h1 class="form-title">Export Machine Data</h1>
+                                <p style="font-size: 14px; color: #6B7280;">Generate reports for machine data</p>
                             </div>
 
                             <!-- Export Format Section -->
@@ -645,7 +645,7 @@ if (!isset($_SESSION['user_id'])) {
                                         <span class="info-icon">ℹ️</span>
                                         <div>
                                             <strong>Export Information</strong>
-                                            <p>The report will include all current machine outputs. The data will be exported in Excel format.</p>
+                                            <p>The report will include all current machine data. The data will be exported in Excel format.</p>
                                         </div>
                                     </div>
                                 </div>

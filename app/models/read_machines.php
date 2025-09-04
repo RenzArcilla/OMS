@@ -270,3 +270,38 @@ function getFilteredMachines(int $limit = 20, int $offset = 0, ?string $search =
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
+function getMachinesForExport() {
+    /*
+        Function to fetch all active machines for export.
+
+        Returns:
+        - Array of machines (associative arrays) on success.
+        - Empty array if no records found.
+    */
+
+    global $pdo;
+
+    // Prepare the SQL statement
+    $stmt = $pdo->prepare("
+        SELECT 
+            control_no, 
+            description,
+            model,
+            maker, 
+            serial_no, 
+            invoice_no,
+            last_encoded
+        FROM 
+            machines
+        WHERE 
+            is_active = 1
+        ORDER BY
+            machine_id DESC
+    ");
+
+    // Execute the query and return the results
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
