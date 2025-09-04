@@ -69,6 +69,9 @@ function extractData($filePath) {
             }
         }
 
+        // Skip rows where Applicator1 is missing or empty
+        if (empty(trim($combined['Applicator 1'] ?? ''))) continue;
+
         if (!$isHeaderRow) {
             $data[] = $combined;
         }
