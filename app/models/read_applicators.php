@@ -304,3 +304,58 @@ function getApplicatorsForExport() {
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
+function getDisabledApplicatorsCount($search = null, $description = 'ALL', $type = 'ALL') {
+    /*
+        Function to count disabled applicators from the database with optional search and filters.
+        Used for pagination calculations.
+
+        Parameters:
+            string $search    - Optional search keyword for multiple fields.
+            string $description - Optional filter for applicator description (default = 'ALL').
+            string $type      - Optional filter for wire type (default = 'ALL').
+
+        Returns:
+            int - Count of disabled applicators matching the search and filter criteria.
+    */
+
+    global $pdo;
+
+    $query = "SELECT COUNT(*) FROM applicators WHERE is_active = 0";
+    $params = [];
+
+    // Add search condition if provided
+    if (!empty($search)) {
+        $search = str_replace(['%', '_'], ['\%', '\_'], $search); // escape LIKE wildcards
+        $query .= " AND (
+            hp_no LIKE :search OR 
+            terminal_no LIKE :search OR 
+            serial_no LIKE :search OR 
+            invoice_no LIKE :search
+        )";
+        $params[':search'] = "%$search%";
+    }
+
+    // Apply description filter if provided
+    if ($description !== 'ALL') {
+        $query .= " AND description = :description";
+        $params[':description'] = $description;
+    }
+
+    // Apply wire type filter if provided
+    if ($type !== 'ALL') {
+        $query .= " AND wire = :type";
+        $params[':type'] = $type;
+    }
+
+    $stmt = $pdo->prepare($query);
+
+    // Bind dynamic parameters
+    foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value);
+    }
+
+    $stmt->execute();
+    return (int)$stmt->fetchColumn();
+}

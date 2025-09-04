@@ -358,15 +358,30 @@
                     </div>
                     
                     <!-- Items Per Page Selector -->
-                    <div class="pagination-items-per-page">
-                        <label for="items-per-page">Show:</label>
-                        <select id="items-per-page" onchange="changeItemsPerPage(this.value)">
-                            <option value="5" <?= $items_per_page == 5 ? 'selected' : '' ?>>5</option>
-                            <option value="10" <?= $items_per_page == 10 ? 'selected' : '' ?>>10</option>
-                            <option value="20" <?= $items_per_page == 20 ? 'selected' : '' ?>>20</option>
-                            <option value="50" <?= $items_per_page == 50 ? 'selected' : '' ?>>50</option>
-                        </select>
-                        <span>per page</span>
+                    <div class="pagination-items-per-page" style="display: flex; align-items: center; gap: 1.5em;">
+                        <div>
+                            <label for="items-per-page">Show:</label>
+                            <select id="items-per-page" onchange="changeItemsPerPage(this.value)">
+                                <option value="5" <?= $items_per_page == 5 ? 'selected' : '' ?>>5</option>
+                                <option value="10" <?= $items_per_page == 10 ? 'selected' : '' ?>>10</option>
+                                <option value="20" <?= $items_per_page == 20 ? 'selected' : '' ?>>20</option>
+                                <option value="50" <?= $items_per_page == 50 ? 'selected' : '' ?>>50</option>
+                            </select>
+                            <span>per page</span>
+                        </div>
+                        <form method="get" action="" style="display: flex; align-items: center; gap: 0.5em;">
+                            <?php
+                                // Preserve other query params except 'page'
+                                $query_params = $_GET;
+                                unset($query_params['page']);
+                                foreach ($query_params as $key => $value) {
+                                    echo '<input type="hidden" name="' . htmlspecialchars($key) . '" value="' . htmlspecialchars($value) . '">';
+                                }
+                            ?>
+                            <label for="page-search" style="margin-bottom:0;">Go to page:</label>
+                            <input type="number" min="1" max="<?= $total_pages ?>" id="page-search" name="page" value="<?= $current_page ?>" style="width: 60px; padding: 2px 6px;">
+                            <button type="submit" class="pagination-btn" style="padding: 2px 10px;">Go</button>
+                        </form>
                     </div>
                 </div>
                 <?php endif; ?>
@@ -869,8 +884,10 @@
     <script src="../../public/assets/js/utils/exit.js"></script>
     <script src="../../public/assets/js/utils/enter.js"></script>
     <script src="../../public/assets/js/utils/checkbox.js"></script>
-    <!-- Search Disabled Applicators -->
-    <script src="../../public/assets/js/search_disabled_applicators.js"></script>
+    <!-- Disabled Applicators Pagination -->
+    <script src="../../public/assets/js/disabled_applicators_pagination.js"></script>
+    <!-- Disabled Records Pagination -->
+    <script src="../../public/assets/js/disabled_records_pagination.js"></script>
     <script src="../../public/assets/js/utils/pagination.js"></script>
 </body>
 </html>
