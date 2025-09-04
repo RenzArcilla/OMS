@@ -573,91 +573,7 @@ if (!isset($_SESSION['user_id'])) {
                         </div>
                     </div>
                 </div>
-                <!-- Export Modal -->
-                <div id="exportModal" class="modal-overlay">
-                    <div class="form-container">
-                        <button class="modal-close-btn">×</button>
-                        
-                        <div class="form-header">
-                            <h1 class="form-title">Export Data</h1>
-                            <p style="font-size: 14px; color: #6B7280;">Choose your export format and options</p>
-                        </div>
-
-
-                        <div class="form-section">
-                            <div class="info-section">
-                                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                                    <span class="info-icon">ℹ️</span>
-                                    <div>
-                                        <strong>Export Information</strong>
-                                        <p>The report will include all current production outputs. The data will be exported in Excel format.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="section-header">
-                                <div class="section-icon">📅</div>
-                                <div class="section-info">
-                                    <div class="section-title">Date Range</div>
-                                    <div class="section-description">Select the time period for your export</div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <select id="dateRange" class="form-select">
-                                    <option value="all">All Time</option>
-                                    <option value="today">Today</option>
-                                    <option value="week">Last 7 Days</option>
-                                    <option value="month">Last 30 Days</option>
-                                    <option value="quarter">Last 3 Months</option>
-                                    <option value="year">Last Year</option>
-                                    <option value="custom">Custom Date Range</option>
-                                </select>
-                            </div>
-
-                            <div id="customDates" class="date-inputs hidden">
-                                <div class="form-group">
-                                    <label class="form-label" style="font-size: 12px; color: #6B7280;">Start Date</label>
-                                    <input type="date" id="startDate" class="form-input">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label" style="font-size: 12px; color: #6B7280;">End Date</label>
-                                    <input type="date" id="endDate" class="form-input">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Additional Options Section -->
-                        <div class="form-section">
-                            <div class="section-header">
-                                <div class="section-icon">⚙️</div>
-                                <div class="section-info">
-                                    <div class="section-title">Additional Options</div>
-                                    <div class="section-description">Configure export settings</div>
-                                </div>
-                            </div>
-                            
-                            <div class="checkbox-group">
-                                <label class="checkbox-item">
-                                    <input type="checkbox" id="includeHeaders" class="checkbox-input" checked>
-                                    <span class="checkbox-label">Include column headers</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Action Buttons -->
-                        <div class="button-group">
-                            <button type="button" class="cancel-btn">Cancel</button>
-                            <button type="button" class="export-btn" onclick="handleExport()">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                    <polyline points="7,10 12,15 17,10"/>
-                                    <line x1="12" y1="15" x2="12" y2="3"/>
-                                </svg>
-                                Export Data
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                
                 <!-- Applicator Export Report Modal -->
                 <div id="exportApplicatorReportModal" class="modal-overlay">
                     <div class="form-container">
@@ -668,7 +584,7 @@ if (!isset($_SESSION['user_id'])) {
                                 <h1 class="form-title">Export Applicator Data</h1>
                                 <p style="font-size: 14px; color: #6B7280;">Generate reports for applicators</p>
                             </div>
-
+                            
                             <!-- Export Format Section -->
                             <div class="form-section">
                                 <div class="info-section">
@@ -710,6 +626,7 @@ if (!isset($_SESSION['user_id'])) {
                         </form>
                     </div>
                 </div>
+
                 <!-- Machine Export Report Modal -->
                 <div id="exportMachineReportModal" class="modal-overlay">
                     <div class="form-container">
