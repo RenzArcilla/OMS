@@ -31,6 +31,8 @@ if (!isset($_FILES['dataFiles'])) {
     exit();
 }
 
+$pdo->beginTransaction();
+
 try {
     $fileCount = count($_FILES['dataFiles']['name']);
     $totalSize = array_sum($_FILES['dataFiles']['size']);
@@ -70,7 +72,6 @@ try {
 
     // Moves the uploaded file to the target path.
     if (move_uploaded_file($tmpName, $targetPath)) { 
-        $pdo->beginTransaction();
         
         // Extract from file
         $rawData = extractData($targetPath); 
