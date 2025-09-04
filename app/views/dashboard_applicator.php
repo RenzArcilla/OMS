@@ -869,8 +869,10 @@
     <script src="../../public/assets/js/utils/exit.js"></script>
     <script src="../../public/assets/js/utils/enter.js"></script>
     <script src="../../public/assets/js/utils/checkbox.js"></script>
-    <!-- Search Disabled Applicators -->
-    <script src="../../public/assets/js/search_disabled_applicators.js"></script>
+    <!-- Disabled Applicators Pagination -->
+    <script src="../../public/assets/js/disabled_applicators_pagination.js"></script>
+    <!-- Disabled Records Pagination -->
+    <script src="../../public/assets/js/disabled_records_pagination.js"></script>
     <script src="../../public/assets/js/utils/pagination.js"></script>
 </body>
 </html>
