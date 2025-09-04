@@ -5,7 +5,8 @@
 */
 
 // Include necessary files
-require_once __DIR__ . '../../js_alert.php';
+require_once __DIR__ . '/../../includes/db.php';
+require_once __DIR__ . '/../../includes/js_alert.php';
 require_once __DIR__ . '/../../models/read_applicators.php';
 require_once __DIR__ . '/../../models/read_machines.php';
 require_once __DIR__ . '/../../models/create_record.php';
@@ -32,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 function loadData($data) {
     debugLog("=== STARTING loadData function ===");
     debugLog("Input data count: " . (is_array($data) ? count($data) : 'NOT_ARRAY'));
+    debugLog("Sample input data: " . json_encode(array_slice($data, 0, 1)));
     
     global $pdo;
     
@@ -79,9 +81,9 @@ function loadData($data) {
                 return "Row " . ($index + 1) . ": Machine control number is required.";
             }
             
-            if (empty($row['Applicator1'])) {
-                debugLog("ERROR: Row $index missing Applicator1");
-                return "Row " . ($index + 1) . ": Applicator1 is required.";
+            if (empty($row['Applicator 1'])) {
+                debugLog("ERROR: Row $index missing Applicator 1");
+                return "Row " . ($index + 1) . ": Applicator 1 is required.";
             }
             
             if (empty($row['Date'])) {
@@ -100,8 +102,8 @@ function loadData($data) {
             }
             
             $machine_id = trim($row['Machine No']);
-            $app1_id = trim($row['Applicator1']);
-            $app2_id = !empty($row['Applicator2']) ? trim($row['Applicator2']) : null;
+            $app1_id = trim($row['Applicator 1']);
+            $app2_id = !empty($row['Applicator 2']) ? trim($row['Applicator 2']) : null;
             
             // Collect unique IDs
             $unique_machines[$machine_id] = true;
@@ -153,8 +155,8 @@ function loadData($data) {
         
         foreach ($data as $index => $row) {
             $machine_id = trim($row['Machine No']);
-            $app1_id = trim($row['Applicator1']);
-            $app2_id = !empty($row['Applicator2']) ? trim($row['Applicator2']) : null;
+            $app1_id = trim($row['Applicator 1']);
+            $app2_id = !empty($row['Applicator 2']) ? trim($row['Applicator 2']) : null;
             
             if (!isset($machine_data_cache[$machine_id])) {
                 $missing_machines[] = $machine_id;
@@ -188,8 +190,8 @@ function loadData($data) {
         foreach ($data as $row) {
             $shift = $row['Shift'];
             $machine_id = trim($row['Machine No']);
-            $app1_id = trim($row['Applicator1']);
-            $app2_id = !empty($row['Applicator2']) ? trim($row['Applicator2']) : null;
+            $app1_id = trim($row['Applicator 1']);
+            $app2_id = !empty($row['Applicator 2']) ? trim($row['Applicator 2']) : null;
             $date = $row['Date'];
             $total_output = (int) $row['Output'];
             
@@ -219,8 +221,85 @@ function loadData($data) {
         
         debugLog("Created records with IDs: " . implode(', ', $record_ids));
         
-        // Continue with the rest of your code...
-        // (keeping the rest the same for now)
+        // Step 7: Prepare batch data for outputs
+        $machine_outputs = [];
+        $applicator_outputs = [];
+        $monitor_machine_data = [];
+        $monitor_applicator_data = [];
+        
+        for ($i = 0; $i < count($records_data); $i++) {
+            $record_id = $record_ids[$i];
+            $row_data = $records_data[$i];
+            $output = $row_data['output'];
+            
+            // Machine outputs
+            $machine_outputs[] = [
+                'record_id' => $record_id,
+                'machine_data' => $row_data['machine_data'],
+                'output' => $output
+            ];
+            
+            // Applicator outputs
+            $applicator_outputs[] = [
+                'record_id' => $record_id,
+                'applicator_data' => $row_data['app1_data'],
+                'output' => $output
+            ];
+            
+            if ($row_data['app2_data']) {
+                $applicator_outputs[] = [
+                    'record_id' => $record_id,
+                    'applicator_data' => $row_data['app2_data'],
+                    'output' => $output
+                ];
+            }
+            
+            // Monitor data
+            $monitor_machine_data[] = [
+                'machine_data' => $row_data['machine_data'],
+                'output' => $output
+            ];
+            
+            $monitor_applicator_data[] = [
+                'applicator_data' => $row_data['app1_data'],
+                'output' => $output
+            ];
+            
+            if ($row_data['app2_data']) {
+                $monitor_applicator_data[] = [
+                    'applicator_data' => $row_data['app2_data'],
+                    'output' => $output
+                ];
+            }
+        }
+        
+        // Step 8: Batch submit outputs
+        debugLog("=== Step 8: Submitting outputs ===");
+        $result = batchSubmitMachineOutputs($machine_outputs);
+        if (is_string($result)) {
+            debugLog("ERROR: batchSubmitMachineOutputs failed: $result");
+            return $result;
+        }
+        
+        $result = batchSubmitApplicatorOutputs($applicator_outputs);
+        if (is_string($result)) {
+            debugLog("ERROR: batchSubmitApplicatorOutputs failed: $result");
+            return $result;
+        }
+        
+        // Step 9: Batch update monitoring tables
+        debugLog("=== Step 9: Updating monitors ===");
+        $result = batchUpdateMonitorMachine($monitor_machine_data);
+        if (is_string($result)) {
+            debugLog("ERROR: batchUpdateMonitorMachine failed: $result");
+            return $result;
+        }
+        
+        $result = batchUpdateMonitorApplicator($monitor_applicator_data);
+        if (is_string($result)) {
+            debugLog("ERROR: batchUpdateMonitorApplicator failed: $result");
+            return $result;
+        }
         
         debugLog("=== SUCCESS: All operations completed ===");
         return "All outputs recorded successfully! Processed " . count($data) . " records.";
@@ -244,12 +323,6 @@ function batchCreateRecords($records_data, $created_by) {
             debugLog("ERROR: No records data provided");
             return "No records data provided";
         }
-        
-        // Check if we're in autocommit mode
-        debugLog("PDO autocommit status: " . ($pdo->getAttribute(PDO::ATTR_AUTOCOMMIT) ? 'ON' : 'OFF'));
-        
-        // Start transaction explicitly
-        debugLog("Transaction started");
         
         $stmt = $pdo->prepare("
             INSERT INTO records 
@@ -321,23 +394,18 @@ function batchCreateRecords($records_data, $created_by) {
             debugLog("Record $index created with ID: $lastId");
         }
         
-        // Commit transaction
-        debugLog("Transaction committed successfully");
-        debugLog("=== batchCreateRecords SUCCESS ===");
-        
+        if ($pdo->inTransaction()) {
+            debugLog("Transaction committed for batchCreateRecords");
+        }
         return $record_ids;
         
     } catch (PDOException $e) {
-        if ($pdo->inTransaction()) {
-            debugLog("Transaction rolled back due to exception");
-        }
         debugLog("PDO EXCEPTION: " . $e->getMessage());
         error_log("Database Error in batchCreateRecords: " . $e->getMessage());
         return "Database error creating records: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
 
-// Update other batch functions with similar debugging...
 function batchCheckMachines($machine_ids) {
     debugLog("=== batchCheckMachines START ===");
     debugLog("Machine IDs to check: " . implode(', ', $machine_ids));
@@ -410,15 +478,132 @@ function batchCheckApplicators($applicator_ids) {
     }
 }
 
-// Add this function to test the complete flow
+// Placeholder functions for the missing batch operations
+function batchSubmitMachineOutputs($machine_outputs) {
+    debugLog("=== batchSubmitMachineOutputs START ===");
+    debugLog("Machine outputs to submit: " . count($machine_outputs));
+    global $pdo;
+    if (empty($machine_outputs)) { return true; }
+    try {
+        $placeholders = [];
+        $params = [];
+        foreach ($machine_outputs as $row) {
+            $record_id = (int)$row['record_id'];
+            $machine_id = (int)$row['machine_data']['machine_id'];
+            $val = (int)$row['output'];
+            $placeholders[] = "(?, ?, ?, ?, ?, ?, NULL)";
+            array_push($params, $record_id, $machine_id, $val, $val, $val, $val);
+        }
+        $sql = "INSERT INTO machine_outputs (record_id, machine_id, total_machine_output, cut_blade, strip_blade_a, strip_blade_b, custom_parts) VALUES " . implode(',', $placeholders);
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        debugLog("=== batchSubmitMachineOutputs SUCCESS ===");
+        return true;
+    } catch (PDOException $e) {
+        error_log("DB Error in batchSubmitMachineOutputs: " . $e->getMessage());
+        return "Database error in batchSubmitMachineOutputs: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}
+
+function batchSubmitApplicatorOutputs($applicator_outputs) {
+    debugLog("=== batchSubmitApplicatorOutputs START ===");
+    debugLog("Applicator outputs to submit: " . count($applicator_outputs));
+    global $pdo;
+    if (empty($applicator_outputs)) { return true; }
+    try {
+        $sideRows = [];
+        $endRows = [];
+        $sideParams = [];
+        $endParams = [];
+        foreach ($applicator_outputs as $row) {
+            $record_id = (int)$row['record_id'];
+            $applicator = $row['applicator_data'];
+            $applicator_id = (int)$applicator['applicator_id'];
+            $type = trim($applicator['description']);
+            $val = (int)$row['output'];
+            if ($type === 'SIDE') {
+                $sideRows[] = "(?, ?, ?, ?, ?, ?, ?, ?, NULL)";
+                array_push($sideParams, $record_id, $applicator_id, $val, $val, $val, $val, $val, $val);
+            } else {
+                $endRows[] = "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL)";
+                array_push($endParams, $record_id, $applicator_id, $val, $val, $val, $val, $val, $val, $val, $val);
+            }
+        }
+        if (!empty($sideRows)) {
+            $sqlSide = "INSERT INTO applicator_outputs (record_id, applicator_id, total_output, wire_crimper, wire_anvil, insulation_crimper, insulation_anvil, slide_cutter, cutter_holder, custom_parts) VALUES " . implode(',', $sideRows);
+            $stmtSide = $pdo->prepare($sqlSide);
+            $stmtSide->execute($sideParams);
+        }
+        if (!empty($endRows)) {
+            $sqlEnd = "INSERT INTO applicator_outputs (record_id, applicator_id, total_output, wire_crimper, wire_anvil, insulation_crimper, insulation_anvil, shear_blade, cutter_a, cutter_b, custom_parts) VALUES " . implode(',', $endRows);
+            $stmtEnd = $pdo->prepare($sqlEnd);
+            $stmtEnd->execute($endParams);
+        }
+        debugLog("=== batchSubmitApplicatorOutputs SUCCESS ===");
+        return true;
+    } catch (PDOException $e) {
+        error_log("DB Error in batchSubmitApplicatorOutputs: " . $e->getMessage());
+        return "Database error in batchSubmitApplicatorOutputs: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}
+
+function batchUpdateMonitorMachine($monitor_data) {
+    debugLog("=== batchUpdateMonitorMachine START ===");
+    debugLog("Monitor machine data to update: " . count($monitor_data));
+    global $pdo;
+    if (empty($monitor_data)) { return true; }
+    $agg = [];
+    foreach ($monitor_data as $row) {
+        $id = (int)$row['machine_data']['machine_id'];
+        $val = (int)$row['output'];
+        $agg[$id] = ($agg[$id] ?? 0) + $val;
+    }
+    try {
+        $stmt = $pdo->prepare("\n            INSERT INTO monitor_machine (machine_id, total_machine_output, cut_blade_output, strip_blade_a_output, strip_blade_b_output, custom_parts_output)\n            VALUES (:id, :v, :v, :v, :v, NULL)\n            ON DUPLICATE KEY UPDATE\n                total_machine_output = total_machine_output + VALUES(total_machine_output),\n                cut_blade_output = cut_blade_output + VALUES(cut_blade_output),\n                strip_blade_a_output = strip_blade_a_output + VALUES(strip_blade_a_output),\n                strip_blade_b_output = strip_blade_b_output + VALUES(strip_blade_b_output),\n                last_updated = CURRENT_TIMESTAMP\n        ");
+        foreach ($agg as $id => $sum) {
+            $stmt->execute([':id' => $id, ':v' => $sum]);
+        }
+        debugLog("=== batchUpdateMonitorMachine SUCCESS ===");
+        return true;
+    } catch (PDOException $e) {
+        error_log("DB Error in batchUpdateMonitorMachine: " . $e->getMessage());
+        return "Database error in batchUpdateMonitorMachine: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}
+
+function batchUpdateMonitorApplicator($monitor_data) {
+    debugLog("=== batchUpdateMonitorApplicator START ===");
+    debugLog("Monitor applicator data to update: " . count($monitor_data));
+    global $pdo;
+    if (empty($monitor_data)) { return true; }
+    $agg = [];
+    foreach ($monitor_data as $row) {
+        $id = (int)$row['applicator_data']['applicator_id'];
+        $val = (int)$row['output'];
+        $agg[$id] = ($agg[$id] ?? 0) + $val;
+    }
+    try {
+        $stmt = $pdo->prepare("\n            INSERT INTO monitor_applicator (applicator_id, total_output, wire_crimper_output, wire_anvil_output, insulation_crimper_output, insulation_anvil_output, custom_parts_output)\n            VALUES (:id, :v, :v, :v, :v, :v, NULL)\n            ON DUPLICATE KEY UPDATE\n                total_output = total_output + VALUES(total_output),\n                wire_crimper_output = wire_crimper_output + VALUES(wire_crimper_output),\n                wire_anvil_output = wire_anvil_output + VALUES(wire_anvil_output),\n                insulation_crimper_output = insulation_crimper_output + VALUES(insulation_crimper_output),\n                insulation_anvil_output = insulation_anvil_output + VALUES(insulation_anvil_output),\n                last_updated = CURRENT_TIMESTAMP\n        ");
+        foreach ($agg as $id => $sum) {
+            $stmt->execute([':id' => $id, ':v' => $sum]);
+        }
+        debugLog("=== batchUpdateMonitorApplicator SUCCESS ===");
+        return true;
+    } catch (PDOException $e) {
+        error_log("DB Error in batchUpdateMonitorApplicator: " . $e->getMessage());
+        return "Database error in batchUpdateMonitorApplicator: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    }
+}
+
+// Test function
 function testLoadData() {
     debugLog("=== TESTING loadData with sample data ===");
     
     $testData = [
         [
             'Machine No' => 'TEST001',
-            'Applicator1' => 'APP001',
-            'Applicator2' => null,
+            'Applicator 1' => 'APP001',
+            'Applicator 2' => null,
             'Date' => '2025-01-09',
             'Shift' => 'FIRST',
             'Output' => 100

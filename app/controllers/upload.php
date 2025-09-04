@@ -76,6 +76,7 @@ try {
         // Extract from file
         $rawData = extractData($targetPath); 
         if (is_string($rawData)) {
+            unlink($targetPath);
             jsAlertRedirect($rawData, $redirect_url);
             exit();
         }
@@ -83,6 +84,7 @@ try {
         // Transform data
         $cleanData = transformData($rawData); 
         if (is_string($cleanData)) {
+            unlink($targetPath);
             jsAlertRedirect($cleanData, $redirect_url);
             exit();
         }
