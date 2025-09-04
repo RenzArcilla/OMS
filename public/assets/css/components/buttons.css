@@ -813,3 +813,53 @@ a:hover:not(.btn-primary):not(.btn-secondary):not(.edit-btn):not(.delete-btn):no
     color: #DC143C;
 }
 
+
+/* Tab Buttons */
+.dashboard-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #DC143C;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #DC143C 0%, #B22222 100%);
+    color: #FFFFFF;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard-btn.active {
+    border-color: #DC143C;
+    background: linear-gradient(135deg, #DC143C 0%, #B22222 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+}
+
+.dashboard-btn:hover:not(.active) {
+    border-color: #DC143C;
+    background: rgba(220, 20, 60, 0.05);
+    color: #DC143C;
+}
+
+/* Tab Buttons */
+.login-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #DC143C;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #DC143C 0%, #B22222 100%);
+    color: #FFFFFF;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.login-btn.active {
+    border-color: #DC143C;
+    background: linear-gradient(135deg, #DC143C 0%, #B22222 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+}
+
+.login-btn:hover:not(.active) {
+    border-color: #DC143C;
+    background: rgba(220, 20, 60, 0.05);
+    color: #DC143C;
+}

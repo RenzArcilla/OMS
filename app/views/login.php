@@ -47,7 +47,11 @@
                         >
                     </div>
 
+
                     <div class="forgot-password">
+                        
+                        <p style="display: inline; margin: 0 0 0 0px; position: relative; left: -85px;"> Log in as </p>
+                        <a href="home.php" style="font-size: 17px; position: relative; left: -93px; top: 1px">Guest</a>
                         <a href="forgot_password.php">Forgot your password?</a>
                     </div>
 
