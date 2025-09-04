@@ -50,6 +50,14 @@ try {
     $tmpName    = $_FILES['dataFiles']['tmp_name'][0];
     $fileSize   = $_FILES['dataFiles']['size'][0];
 
+    // Validate file extension
+    $allowedExtensions = ['xls', 'xlsx'];
+    $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+    if (!in_array($ext, $allowedExtensions)) {
+        jsAlertRedirect("Error: Invalid file type. Only XLS and XLSX are allowed.", $redirect_url);
+        exit();
+    }
+
     // Max file size check (10 MB)
     $maxFileSize = 10 * 1024 * 1024; 
     if ($fileSize > $maxFileSize) {
