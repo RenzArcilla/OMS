@@ -59,9 +59,9 @@ function extractData($filePath) {
         'Applicator 1',
         'Applicator 2'
     ];
-
-    // Slice data starting from row after the detected header row
-    $rows = array_slice($sheet, $headerRowIndex + 1);
+    
+    // Slice data starting from the index 9 (Excel row 10)
+    $rows = array_slice($sheet, 9);
 
     $data = [];
     foreach ($rows as $row) {
@@ -83,12 +83,7 @@ function extractData($filePath) {
         if (empty(trim($combined['Applicator1'] ?? ''))) continue;
 
         if (!$isHeaderRow) {
-            // Keep only required columns
-            $filtered = [];
-            foreach ($requiredCols as $col) {
-                $filtered[$col] = $combined[$col] ?? null;
-            }
-            $data[] = $filtered;
+            $data[] = $combined;
         }
     }
 
