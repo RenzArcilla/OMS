@@ -265,6 +265,30 @@ This database system is designed to track machine and applicator usage in a manu
 
 **Standard Part Values**: `'ALL'`, `'wire_crimper'`, `'wire_anvil'`, `'insulation_crimper'`, `'insulation_anvil'`, `'slide_cutter'`, `'cutter_holder'`, `'shear_blade'`, `'cutter_a'`, `'cutter_b'`
 
+### 12. `applicator_part_limits`
+**Purpose**: Keep track of part limits for applicators.
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| `applicator_limit_id ` | INT | PRIMARY KEY, AUTO_INCREMENT | Unique identifier |
+| `applicator_id` | INT | NOT NULL, FK → applicators, ON UPDATE CASCADE, ON DELETE CASCADE| Applicator identifier |
+| `applicator_part ` | VARCHAR(50) | NOT NULL, FK → users | User who performed the reset |
+| `part_limit` | INT | NOT NULL | Value before reset |
+
+**Indexes**: `idx_applicator_id`
+
+### 13. `machine_part_limits`
+**Purpose**: Keep track of part limits for machines.
+
+| Column | Type | Constraints | Description |
+|--------|------|-------------|-------------|
+| `machine_limit_id ` | INT | PRIMARY KEY, AUTO_INCREMENT | Unique identifier |
+| `machine_id` | INT | NOT NULL, FK → machines, ON UPDATE CASCADE, ON DELETE CASCADE| Machine identifier |
+| `machine_part ` | VARCHAR(50) | NOT NULL, FK → users | User who performed the reset |
+| `part_limit` | INT | NOT NULL | Value before reset |
+
+**Indexes**: `idx_machine_id`
+
 ---
 
 ## Hybrid Architecture Benefits
