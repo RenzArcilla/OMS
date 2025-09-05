@@ -290,104 +290,105 @@
                             </table>
                         </div>
                     </div>
+                    <!-- Pagination Controls -->
+                    <?php if (!$is_searching && $total_pages > 1): ?>
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            <span class="pagination-text">
+                                Showing <?= ($offset + 1) ?> to <?= min($offset + $items_per_page, $total_records) ?> of <?= number_format($total_records) ?> results
+                            </span>
+                        </div>
+                        
+                        <div class="pagination-controls">
+                            <!-- Previous Button -->
+                            <?php if ($current_page > 1): ?>
+                                <a href="?page=<?= $current_page - 1 ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                    class="pagination-btn pagination-prev">
+                                    <span>←</span> Previous
+                                </a>
+                            <?php else: ?>
+                                <span class="pagination-btn pagination-prev disabled">
+                                    <span>←</span> Previous
+                                </span>
+                            <?php endif; ?>
+                            
+                            <!-- Page Numbers -->
+                            <div class="pagination-numbers">
+                                <?php
+                                $start_page = max(1, $current_page - 2);
+                                $end_page = min($total_pages, $current_page + 2);
+                                
+                                // Show first page if not in range
+                                if ($start_page > 1): ?>
+                                    <a href="?page=1<?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                        class="pagination-btn">1</a>
+                                    <?php if ($start_page > 2): ?>
+                                        <span class="pagination-ellipsis">...</span>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                                
+                                <?php for ($i = $start_page; $i <= $end_page; $i++): ?>
+                                    <?php if ($i == $current_page): ?>
+                                        <span class="pagination-btn pagination-current"><?= $i ?></span>
+                                    <?php else: ?>
+                                        <a href="?page=<?= $i ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                            class="pagination-btn"><?= $i ?></a>
+                                    <?php endif; ?>
+                                <?php endfor; ?>
+                                
+                                <?php if ($end_page < $total_pages): ?>
+                                    <?php if ($end_page < $total_pages - 1): ?>
+                                        <span class="pagination-ellipsis">...</span>
+                                    <?php endif; ?>
+                                    <a href="?page=<?= $total_pages ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                        class="pagination-btn"><?= $total_pages ?></a>
+                                <?php endif; ?>
+                            </div>
+                            
+                            <!-- Next Button -->
+                            <?php if ($current_page < $total_pages): ?>
+                                <a href="?page=<?= $current_page + 1 ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                    class="pagination-btn pagination-next">
+                                    Next <span>→</span>
+                                </a>
+                            <?php else: ?>
+                                <span class="pagination-btn pagination-next disabled">
+                                    Next <span>→</span>
+                                </span>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <!-- Items Per Page Selector -->
+                        <div class="pagination-items-per-page" style="display: flex; align-items: center; gap: 1.5em;">
+                            <div>
+                                <label for="items-per-page">Show:</label>
+                                <select id="items-per-page" onchange="changeItemsPerPage(this.value)">
+                                    <option value="5" <?= $items_per_page == 5 ? 'selected' : '' ?>>5</option>
+                                    <option value="10" <?= $items_per_page == 10 ? 'selected' : '' ?>>10</option>
+                                    <option value="20" <?= $items_per_page == 20 ? 'selected' : '' ?>>20</option>
+                                    <option value="50" <?= $items_per_page == 50 ? 'selected' : '' ?>>50</option>
+                                </select>
+                                <span>per page</span>
+                            </div>
+                            <form method="get" action="" style="display: flex; align-items: center; gap: 0.5em;">
+                                <?php
+                                    // Preserve other query params except 'page'
+                                    $query_params = $_GET;
+                                    unset($query_params['page']);
+                                    foreach ($query_params as $key => $value) {
+                                        echo '<input type="hidden" name="' . htmlspecialchars($key) . '" value="' . htmlspecialchars($value) . '">';
+                                    }
+                                ?>
+                                <label for="page-search" style="margin-bottom:0;">Go to page:</label>
+                                <input type="number" min="1" max="<?= $total_pages ?>" id="page-search" name="page" value="<?= $current_page ?>" style="width: 60px; padding: 2px 6px;">
+                                <button type="submit" class="pagination-btn" style="padding: 2px 10px;">Go</button>
+                            </form>
+                        </div>
+                    </div>
+                    <?php endif; ?>
                 </div>
                                 
-                <!-- Pagination Controls -->
-                <?php if (!$is_searching && $total_pages > 1): ?>
-                <div class="pagination-container">
-                    <div class="pagination-info">
-                        <span class="pagination-text">
-                            Showing <?= ($offset + 1) ?> to <?= min($offset + $items_per_page, $total_records) ?> of <?= number_format($total_records) ?> results
-                        </span>
-                    </div>
-                    
-                    <div class="pagination-controls">
-                        <!-- Previous Button -->
-                        <?php if ($current_page > 1): ?>
-                            <a href="?page=<?= $current_page - 1 ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
-                                class="pagination-btn pagination-prev">
-                                <span>←</span> Previous
-                            </a>
-                        <?php else: ?>
-                            <span class="pagination-btn pagination-prev disabled">
-                                <span>←</span> Previous
-                            </span>
-                        <?php endif; ?>
-                        
-                        <!-- Page Numbers -->
-                        <div class="pagination-numbers">
-                            <?php
-                            $start_page = max(1, $current_page - 2);
-                            $end_page = min($total_pages, $current_page + 2);
-                            
-                            // Show first page if not in range
-                            if ($start_page > 1): ?>
-                                <a href="?page=1<?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
-                                    class="pagination-btn">1</a>
-                                <?php if ($start_page > 2): ?>
-                                    <span class="pagination-ellipsis">...</span>
-                                <?php endif; ?>
-                            <?php endif; ?>
-                            
-                            <?php for ($i = $start_page; $i <= $end_page; $i++): ?>
-                                <?php if ($i == $current_page): ?>
-                                    <span class="pagination-btn pagination-current"><?= $i ?></span>
-                                <?php else: ?>
-                                    <a href="?page=<?= $i ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
-                                        class="pagination-btn"><?= $i ?></a>
-                                <?php endif; ?>
-                            <?php endfor; ?>
-                            
-                            <?php if ($end_page < $total_pages): ?>
-                                <?php if ($end_page < $total_pages - 1): ?>
-                                    <span class="pagination-ellipsis">...</span>
-                                <?php endif; ?>
-                                <a href="?page=<?= $total_pages ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
-                                    class="pagination-btn"><?= $total_pages ?></a>
-                            <?php endif; ?>
-                        </div>
-                        
-                        <!-- Next Button -->
-                        <?php if ($current_page < $total_pages): ?>
-                            <a href="?page=<?= $current_page + 1 ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
-                                class="pagination-btn pagination-next">
-                                Next <span>→</span>
-                            </a>
-                        <?php else: ?>
-                            <span class="pagination-btn pagination-next disabled">
-                                Next <span>→</span>
-                            </span>
-                        <?php endif; ?>
-                    </div>
-                    
-                    <!-- Items Per Page Selector -->
-                    <div class="pagination-items-per-page" style="display: flex; align-items: center; gap: 1.5em;">
-                        <div>
-                            <label for="items-per-page">Show:</label>
-                            <select id="items-per-page" onchange="changeItemsPerPage(this.value)">
-                                <option value="5" <?= $items_per_page == 5 ? 'selected' : '' ?>>5</option>
-                                <option value="10" <?= $items_per_page == 10 ? 'selected' : '' ?>>10</option>
-                                <option value="20" <?= $items_per_page == 20 ? 'selected' : '' ?>>20</option>
-                                <option value="50" <?= $items_per_page == 50 ? 'selected' : '' ?>>50</option>
-                            </select>
-                            <span>per page</span>
-                        </div>
-                        <form method="get" action="" style="display: flex; align-items: center; gap: 0.5em;">
-                            <?php
-                                // Preserve other query params except 'page'
-                                $query_params = $_GET;
-                                unset($query_params['page']);
-                                foreach ($query_params as $key => $value) {
-                                    echo '<input type="hidden" name="' . htmlspecialchars($key) . '" value="' . htmlspecialchars($value) . '">';
-                                }
-                            ?>
-                            <label for="page-search" style="margin-bottom:0;">Go to page:</label>
-                            <input type="number" min="1" max="<?= $total_pages ?>" id="page-search" name="page" value="<?= $current_page ?>" style="width: 60px; padding: 2px 6px;">
-                            <button type="submit" class="pagination-btn" style="padding: 2px 10px;">Go</button>
-                        </form>
-                    </div>
-                </div>
-                <?php endif; ?>
+                
                 <!-- Table 1: Custom Parts -->
                 <div class="tables-grid">
                     <?php include_once __DIR__ . '/applicator_custom_parts.php'; ?>
@@ -406,64 +407,10 @@
         </div>
     </div>
 
-    <!-- Parts Inventory Modal -->
-    <div id="partsInventoryModalDashboardApplicator" class="modal-overlay" style="display: none;">
-        <div class="modal">
-            <button class="modal-close-btn" onclick="closePartsInventoryModal()">×</button>
-            
-            <div class="form-header">
-                <h1 class="form-title">📋 Parts Inventory</h1>
-                <p class="form-subtitle">View and manage custom applicator parts</p>
-            </div>
-            
-            <div class="section-content">
-
-                <!-- Data Table -->
-                <div class="table-container">
-                    <table class="data-table" id="partsTable">
-                        <thead>
-                            <tr>
-                                <th>Part Name</th>
-                                <th>Created At</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                            <?php foreach ($custom_applicator_parts as $part): ?>
-                            <!-- Wire Crimper -->
-                            <tr>
-                                <td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $part['part_name']))) ?></td>
-                                <td><?= htmlspecialchars(date('Y-m-d', strtotime($part['created_at']))) ?></td>
-                                <td>
-                                    <?php $partNameTitle = ucwords(str_replace('_', ' ', strtolower($part['part_name']))); ?>
-                                    <button class="btn btn-edit" 
-                                            data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
-                                            data-part-name="<?= htmlspecialchars($partNameTitle, ENT_QUOTES) ?>">
-                                        Edit
-                                    </button>
-                                    <button class="btn btn-delete" 
-                                            data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
-                                            data-part-type="MACHINE">
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                            <?php endforeach; ?>
-                        </tbody>    
-                    </table>
-                </div>
-            </div>
-            
-            <div class="form-actions">
-                <button type="button" class="btn btn-secondary" onclick="closePartsInventoryModal()">Close</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Delete Custom Part Modal -->
     <div id="deleteCustomPartModalDashboardApplicator" class="modal-overlay">
         <div class="form-container">
-            <button class="modal-close-btn">×</button>
+            <button class="modal-close-btn" onclick="closeDeleteCustomPartModal()">×</button>
             
             <div class="form-header">
                 <span class="delete-icon">🗑️</span>
@@ -471,43 +418,41 @@
                 <p class="form-subtitle">Permanently remove this custom part</p>
             </div>
 
-            <div class="warning-section">
-                <span class="warning-icon">⚠️</span>
-                <div class="warning-title">Permanent Action</div>
-                <div class="warning-text">
-                    This custom part will be permanently removed from this applicator. This action cannot be undone.
-                </div>
-            </div>
-
-            <div id="messageContainer"></div>
-
-            <div class="part-details">
-                <div class="part-info">
-                    <div class="part-icon">⚙️</div>
-                    <div class="part-content">
-                        <div class="part-name" id="partName">Custom Valve Assembly</div>
-                        <div class="part-meta">Added on March 15, 2024 • Part ID: #CP001</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="confirmation-section">
-                <label class="confirmation-checkbox">
-                    <input type="checkbox" id="confirmDelete" class="confirmation-input">
-                    <span class="confirmation-label">
-                        I understand that this action is permanent and cannot be undone. I want to delete this custom part.
-                    </span>
-                </label>
-            </div>
-
             <form id="deleteCustomPartForm" method="POST" action="../controllers/delete_custom_part.php">
                 <input type="hidden" name="equipment_type" value="APPLICATOR">
-                <input type="hidden" name="part_id" value="" id="partIdInput">
+                <input type="hidden" name="part_id" value="" id="delete_part_id">
                 
-                <div class="button-group">
-                    <button type="submit" class="btn btn-primary" id="deleteBtn" disabled>Delete Part Permanently</button>
-                    <button type="button" class="btn btn-secondary" onclick="closeEditCustomPartModal()">Cancel</button>
+                <div class="warning-section">
+                    <span class="warning-icon">⚠️</span>
+                    <div class="warning-title">Permanent Action</div>
+                    <div class="warning-text">
+                        This custom part will be permanently removed from this applicator. This action cannot be undone.
+                    </div>
                 </div>
+
+                <div class="part-details">
+                    <div class="part-info">
+                        <div class="part-icon">⚙️</div>
+                        <div class="part-content">
+                            <div class="part-name" id="delete_part_name">Custom Part</div>
+                            <div class="part-meta">Part ID: <span id="delete_part_id_display">#CP001</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="confirmation-section">
+                    <label class="confirmation-checkbox">
+                        <input type="checkbox" id="confirmDelete" class="confirmation-input" onchange="toggleDeleteButton()">
+                        <span class="confirmation-label">
+                            I understand that this action is permanent and cannot be undone. I want to delete this custom part.
+                        </span>
+                    </label>
+                </div>
+                <div class="button-group">
+                    <button type="button" class="cancel-btn" onclick="closeDeleteCustomPartModal()">Cancel</button>
+                    <button type="submit" class="btn delete-btn" id="deleteBtn" disabled>Delete Part Permanently</button>
+                </div>
+            
             </form>
         </div>
     </div>
@@ -601,13 +546,14 @@
                     </div>
                 </div>
                 
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary" id="submitBtn">
-                        Add Part
-                    </button>
+                <div class="button-group">
                     <button type="button" class="btn btn-secondary" onclick="closeAddCustomPartModal()">
                         Cancel
                     </button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        Add Part
+                    </button>
+                    
                 </div>
             </form>
         </div>
@@ -881,6 +827,8 @@
     <?php include_once __DIR__ . '/applicator_recently_reset.php'; ?>
     <!-- Edit Maximum Output Modal -->
     <?php include_once __DIR__ . '/applicator_edit_maximum_output.php'; ?>
+    <!-- Restore Applicator Modal -->
+    <?php include_once __DIR__ . '/applicator_restore_modal.php'; ?>
 
     <!-- Load JavaScript -->
     <script src="../../public/assets/js/dashboard_applicator.js"></script>
