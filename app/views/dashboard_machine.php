@@ -378,7 +378,7 @@
             
             <div class="form-header">
                 <h1 class="form-title">➕ Add Custom Part</h1>
-                <p class="form-subtitle">Add a new custom part to this applicator</p>
+                <p class="form-subtitle">Add a new custom part to this machine</p>
             </div>
 
             <form id="addCustomPartForm" method="POST" action="../controllers/add_custom_part.php">
@@ -412,13 +412,14 @@
                     </div>
                 </div>
                 
-                <div class="form-actions">
+                <div class="button-group">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddCustomPartModal()">
+                        Cancel
+                    </button>
                     <button type="submit" class="btn btn-primary" id="submitBtn">
                         Add Part
                     </button>
-                    <button type="button" class="cancel-btn" onclick="closeAddCustomPartModal()">
-                        Cancel
-                    </button>
+                    
                 </div>
             </form>
         </div>
