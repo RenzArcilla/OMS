@@ -458,3 +458,70 @@ function restoreMachineCumulativeOutputs($machine_id) {
         return "Database error occurred when restoring machine cumulative outputs: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
+
+
+function applyMachineMonitoringAggregates(PDO $pdo, array $agg, array $customTemplate): void {
+    /*
+        Apply aggregated increments to monitor_machine.
+        Used when recording outputs for machines or applicators in batchLoadData.
+    */
+
+
+    if (empty($agg)) return;
+
+    // Fetch existing custom_parts (output of custom parts) for all machines
+    $ids = array_keys($agg);
+    $placeholders = implode(',', array_fill(0, count($ids), '?'));
+    $existingStmt = $pdo->prepare("
+        SELECT machine_id, custom_parts_output
+        FROM monitor_machine
+        WHERE machine_id IN ($placeholders)
+    ");
+
+    // Bind and execute for each id
+    foreach ($ids as $i => $id) {
+        $existingStmt->bindValue($i + 1, $id, PDO::PARAM_INT);
+    }
+    $existingStmt->execute();
+    $existingMap = [];
+
+    // Map by machine_id
+    while ($row = $existingStmt->fetch(PDO::FETCH_ASSOC)) {
+        $existingMap[$row['machine_id']] = $row['custom_parts_output'];
+    }
+
+    $sql = "
+        INSERT INTO monitor_machine
+            (machine_id, total_machine_output, cut_blade_output,
+            strip_blade_a_output, strip_blade_b_output, custom_parts_output, last_updated)
+        VALUES
+            (:id, :delta, :delta, :delta, :delta, :json, CURRENT_TIMESTAMP)
+        ON DUPLICATE KEY UPDATE
+            total_machine_output = total_machine_output + VALUES(total_machine_output),
+            cut_blade_output = cut_blade_output + VALUES(cut_blade_output),
+            strip_blade_a_output = strip_blade_a_output + VALUES(strip_blade_a_output),
+            strip_blade_b_output = strip_blade_b_output + VALUES(strip_blade_b_output),
+            custom_parts_output = VALUES(custom_parts_output),
+            last_updated = CURRENT_TIMESTAMP
+    ";
+
+    $stmt = $pdo->prepare($sql);
+
+    // Apply each aggregate
+    foreach ($agg as $machineId => $delta) {
+        $existingJson = $existingMap[$machineId] ?? null;
+        $existingParts = $existingJson ? json_decode($existingJson, true) : [];
+        if (!is_array($existingParts)) $existingParts = [];
+
+        foreach ($customTemplate as $name) {
+            $existingParts[$name] = ($existingParts[$name] ?? 0) + $delta;
+        }
+        $newJson = json_encode($existingParts);
+
+        $stmt->execute([
+            ':id' => $machineId,
+            ':delta' => $delta,
+            ':json' => $newJson
+        ]);
+    }
+}

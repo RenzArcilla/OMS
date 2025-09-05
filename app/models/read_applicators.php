@@ -359,3 +359,29 @@ function getDisabledApplicatorsCount($search = null, $description = 'ALL', $type
     $stmt->execute();
     return (int)$stmt->fetchColumn();
 }
+
+function fetchApplicatorsByHpNos(array $hpNos, PDO $pdo): array {
+    /*
+        Fetch applicators by their HP numbers
+        Used when recording outputs for machines or applicators in batchLoadData.
+    */
+    
+    // Return empty if no HP numbers
+    if (empty($hpNos)) return [];
+
+    // Execute the query using placeholders
+    $placeholders = implode(',', array_fill(0, count($hpNos), '?'));
+    $sql = "SELECT * FROM applicators WHERE hp_no IN ($placeholders)";
+    $stmt = $pdo->prepare($sql);
+    foreach ($hpNos as $i => $val) {
+        $stmt->bindValue($i + 1, $val, PDO::PARAM_STR);
+    }
+    $stmt->execute();
+    $out = [];
+
+    // Map by hp_no
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $out[$row['hp_no']] = $row;
+    }
+    return $out;
+}
