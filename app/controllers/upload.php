@@ -76,21 +76,20 @@ try {
         // Extract from file
         $rawData = extractData($targetPath); 
         if (is_string($rawData)) {
+            unlink($targetPath);
             jsAlertRedirect($rawData, $redirect_url);
             exit();
         }
 
         // Transform data
         $cleanData = transformData($rawData); 
-        unlink($targetPath); // Deletes the file after ETL
-        echo print_r($cleanData);
-        exit();
         if (is_string($cleanData)) {
+            unlink($targetPath);
             jsAlertRedirect($cleanData, $redirect_url);
             exit();
-        }
+        }   
 
-        // Load to db
+        // Load to db`
         $result = loadData($cleanData); 
         if ($result === "All outputs recorded successfully!") {
             $pdo->commit(); // Commit transaction if all operations succeed
