@@ -290,104 +290,105 @@
                             </table>
                         </div>
                     </div>
+                    <!-- Pagination Controls -->
+                    <?php if (!$is_searching && $total_pages > 1): ?>
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            <span class="pagination-text">
+                                Showing <?= ($offset + 1) ?> to <?= min($offset + $items_per_page, $total_records) ?> of <?= number_format($total_records) ?> results
+                            </span>
+                        </div>
+                        
+                        <div class="pagination-controls">
+                            <!-- Previous Button -->
+                            <?php if ($current_page > 1): ?>
+                                <a href="?page=<?= $current_page - 1 ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                    class="pagination-btn pagination-prev">
+                                    <span>←</span> Previous
+                                </a>
+                            <?php else: ?>
+                                <span class="pagination-btn pagination-prev disabled">
+                                    <span>←</span> Previous
+                                </span>
+                            <?php endif; ?>
+                            
+                            <!-- Page Numbers -->
+                            <div class="pagination-numbers">
+                                <?php
+                                $start_page = max(1, $current_page - 2);
+                                $end_page = min($total_pages, $current_page + 2);
+                                
+                                // Show first page if not in range
+                                if ($start_page > 1): ?>
+                                    <a href="?page=1<?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                        class="pagination-btn">1</a>
+                                    <?php if ($start_page > 2): ?>
+                                        <span class="pagination-ellipsis">...</span>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                                
+                                <?php for ($i = $start_page; $i <= $end_page; $i++): ?>
+                                    <?php if ($i == $current_page): ?>
+                                        <span class="pagination-btn pagination-current"><?= $i ?></span>
+                                    <?php else: ?>
+                                        <a href="?page=<?= $i ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                            class="pagination-btn"><?= $i ?></a>
+                                    <?php endif; ?>
+                                <?php endfor; ?>
+                                
+                                <?php if ($end_page < $total_pages): ?>
+                                    <?php if ($end_page < $total_pages - 1): ?>
+                                        <span class="pagination-ellipsis">...</span>
+                                    <?php endif; ?>
+                                    <a href="?page=<?= $total_pages ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                        class="pagination-btn"><?= $total_pages ?></a>
+                                <?php endif; ?>
+                            </div>
+                            
+                            <!-- Next Button -->
+                            <?php if ($current_page < $total_pages): ?>
+                                <a href="?page=<?= $current_page + 1 ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                    class="pagination-btn pagination-next">
+                                    Next <span>→</span>
+                                </a>
+                            <?php else: ?>
+                                <span class="pagination-btn pagination-next disabled">
+                                    Next <span>→</span>
+                                </span>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <!-- Items Per Page Selector -->
+                        <div class="pagination-items-per-page" style="display: flex; align-items: center; gap: 1.5em;">
+                            <div>
+                                <label for="items-per-page">Show:</label>
+                                <select id="items-per-page" onchange="changeItemsPerPage(this.value)">
+                                    <option value="5" <?= $items_per_page == 5 ? 'selected' : '' ?>>5</option>
+                                    <option value="10" <?= $items_per_page == 10 ? 'selected' : '' ?>>10</option>
+                                    <option value="20" <?= $items_per_page == 20 ? 'selected' : '' ?>>20</option>
+                                    <option value="50" <?= $items_per_page == 50 ? 'selected' : '' ?>>50</option>
+                                </select>
+                                <span>per page</span>
+                            </div>
+                            <form method="get" action="" style="display: flex; align-items: center; gap: 0.5em;">
+                                <?php
+                                    // Preserve other query params except 'page'
+                                    $query_params = $_GET;
+                                    unset($query_params['page']);
+                                    foreach ($query_params as $key => $value) {
+                                        echo '<input type="hidden" name="' . htmlspecialchars($key) . '" value="' . htmlspecialchars($value) . '">';
+                                    }
+                                ?>
+                                <label for="page-search" style="margin-bottom:0;">Go to page:</label>
+                                <input type="number" min="1" max="<?= $total_pages ?>" id="page-search" name="page" value="<?= $current_page ?>" style="width: 60px; padding: 2px 6px;">
+                                <button type="submit" class="pagination-btn" style="padding: 2px 10px;">Go</button>
+                            </form>
+                        </div>
+                    </div>
+                    <?php endif; ?>
                 </div>
                                 
-                <!-- Pagination Controls -->
-                <?php if (!$is_searching && $total_pages > 1): ?>
-                <div class="pagination-container">
-                    <div class="pagination-info">
-                        <span class="pagination-text">
-                            Showing <?= ($offset + 1) ?> to <?= min($offset + $items_per_page, $total_records) ?> of <?= number_format($total_records) ?> results
-                        </span>
-                    </div>
-                    
-                    <div class="pagination-controls">
-                        <!-- Previous Button -->
-                        <?php if ($current_page > 1): ?>
-                            <a href="?page=<?= $current_page - 1 ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
-                                class="pagination-btn pagination-prev">
-                                <span>←</span> Previous
-                            </a>
-                        <?php else: ?>
-                            <span class="pagination-btn pagination-prev disabled">
-                                <span>←</span> Previous
-                            </span>
-                        <?php endif; ?>
-                        
-                        <!-- Page Numbers -->
-                        <div class="pagination-numbers">
-                            <?php
-                            $start_page = max(1, $current_page - 2);
-                            $end_page = min($total_pages, $current_page + 2);
-                            
-                            // Show first page if not in range
-                            if ($start_page > 1): ?>
-                                <a href="?page=1<?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
-                                    class="pagination-btn">1</a>
-                                <?php if ($start_page > 2): ?>
-                                    <span class="pagination-ellipsis">...</span>
-                                <?php endif; ?>
-                            <?php endif; ?>
-                            
-                            <?php for ($i = $start_page; $i <= $end_page; $i++): ?>
-                                <?php if ($i == $current_page): ?>
-                                    <span class="pagination-btn pagination-current"><?= $i ?></span>
-                                <?php else: ?>
-                                    <a href="?page=<?= $i ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
-                                        class="pagination-btn"><?= $i ?></a>
-                                <?php endif; ?>
-                            <?php endfor; ?>
-                            
-                            <?php if ($end_page < $total_pages): ?>
-                                <?php if ($end_page < $total_pages - 1): ?>
-                                    <span class="pagination-ellipsis">...</span>
-                                <?php endif; ?>
-                                <a href="?page=<?= $total_pages ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
-                                    class="pagination-btn"><?= $total_pages ?></a>
-                            <?php endif; ?>
-                        </div>
-                        
-                        <!-- Next Button -->
-                        <?php if ($current_page < $total_pages): ?>
-                            <a href="?page=<?= $current_page + 1 ?><?= isset($_GET['filter_by']) ? '&filter_by=' . htmlspecialchars($_GET['filter_by']) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
-                                class="pagination-btn pagination-next">
-                                Next <span>→</span>
-                            </a>
-                        <?php else: ?>
-                            <span class="pagination-btn pagination-next disabled">
-                                Next <span>→</span>
-                            </span>
-                        <?php endif; ?>
-                    </div>
-                    
-                    <!-- Items Per Page Selector -->
-                    <div class="pagination-items-per-page" style="display: flex; align-items: center; gap: 1.5em;">
-                        <div>
-                            <label for="items-per-page">Show:</label>
-                            <select id="items-per-page" onchange="changeItemsPerPage(this.value)">
-                                <option value="5" <?= $items_per_page == 5 ? 'selected' : '' ?>>5</option>
-                                <option value="10" <?= $items_per_page == 10 ? 'selected' : '' ?>>10</option>
-                                <option value="20" <?= $items_per_page == 20 ? 'selected' : '' ?>>20</option>
-                                <option value="50" <?= $items_per_page == 50 ? 'selected' : '' ?>>50</option>
-                            </select>
-                            <span>per page</span>
-                        </div>
-                        <form method="get" action="" style="display: flex; align-items: center; gap: 0.5em;">
-                            <?php
-                                // Preserve other query params except 'page'
-                                $query_params = $_GET;
-                                unset($query_params['page']);
-                                foreach ($query_params as $key => $value) {
-                                    echo '<input type="hidden" name="' . htmlspecialchars($key) . '" value="' . htmlspecialchars($value) . '">';
-                                }
-                            ?>
-                            <label for="page-search" style="margin-bottom:0;">Go to page:</label>
-                            <input type="number" min="1" max="<?= $total_pages ?>" id="page-search" name="page" value="<?= $current_page ?>" style="width: 60px; padding: 2px 6px;">
-                            <button type="submit" class="pagination-btn" style="padding: 2px 10px;">Go</button>
-                        </form>
-                    </div>
-                </div>
-                <?php endif; ?>
+                
                 <!-- Table 1: Custom Parts -->
                 <div class="tables-grid">
                     <?php include_once __DIR__ . '/applicator_custom_parts.php'; ?>

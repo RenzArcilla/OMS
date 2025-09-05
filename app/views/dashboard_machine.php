@@ -763,6 +763,8 @@
     <?php include_once __DIR__ . '/machine_recently_reset.php'; ?>
     <!-- Edit Maximum Output Modal -->
     <?php include_once __DIR__ . '/machine_edit_maximum_output.php'; ?>
+    <!-- Restore Machine Modal -->
+    <?php include_once __DIR__ . '/machine_restore_modal.php'; ?>
 
     <script src="../../public/assets/js/dashboard_machine.js"></script>
     <script src="../../public/assets/js/dashboard_machine_progress.js"></script>
