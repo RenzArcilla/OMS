@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 28, 2025 at 06:17 AM
+-- Generation Time: Sep 05, 2025 at 08:01 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -66,6 +66,19 @@ CREATE TABLE `applicator_outputs` (
   `cutter_a` int(11) DEFAULT NULL,
   `cutter_b` int(11) DEFAULT NULL,
   `custom_parts` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`custom_parts`))
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `applicator_part_limits`
+--
+
+CREATE TABLE `applicator_part_limits` (
+  `applicator_limit_id` int(11) NOT NULL,
+  `applicator_id` int(11) NOT NULL,
+  `applicator_part` varchar(50) NOT NULL,
+  `part_limit` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
@@ -134,6 +147,19 @@ CREATE TABLE `machine_outputs` (
   `strip_blade_a` int(11) NOT NULL,
   `strip_blade_b` int(11) NOT NULL,
   `custom_parts` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`custom_parts`))
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `machine_part_limits`
+--
+
+CREATE TABLE `machine_part_limits` (
+  `machine_limit_id` int(11) NOT NULL,
+  `machine_id` int(11) NOT NULL,
+  `machine_part` varchar(50) NOT NULL,
+  `part_limit` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
@@ -254,6 +280,13 @@ ALTER TABLE `applicator_outputs`
   ADD KEY `idx_is_active` (`is_active`);
 
 --
+-- Indexes for table `applicator_part_limits`
+--
+ALTER TABLE `applicator_part_limits`
+  ADD PRIMARY KEY (`applicator_limit_id`),
+  ADD KEY `idx_applicator_id` (`applicator_id`);
+
+--
 -- Indexes for table `applicator_reset`
 --
 ALTER TABLE `applicator_reset`
@@ -292,6 +325,13 @@ ALTER TABLE `machine_outputs`
   ADD KEY `idx_record_id` (`record_id`),
   ADD KEY `idx_machine_id` (`machine_id`),
   ADD KEY `idx_is_active` (`is_active`);
+
+--
+-- Indexes for table `machine_part_limits`
+--
+ALTER TABLE `machine_part_limits`
+  ADD PRIMARY KEY (`machine_limit_id`),
+  ADD KEY `idx_machine_id` (`machine_id`);
 
 --
 -- Indexes for table `machine_reset`
@@ -362,6 +402,12 @@ ALTER TABLE `applicator_outputs`
   MODIFY `applicator_output_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `applicator_part_limits`
+--
+ALTER TABLE `applicator_part_limits`
+  MODIFY `applicator_limit_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `applicator_reset`
 --
 ALTER TABLE `applicator_reset`
@@ -384,6 +430,12 @@ ALTER TABLE `machines`
 --
 ALTER TABLE `machine_outputs`
   MODIFY `machine_output_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `machine_part_limits`
+--
+ALTER TABLE `machine_part_limits`
+  MODIFY `machine_limit_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `machine_reset`
@@ -427,6 +479,12 @@ ALTER TABLE `applicator_outputs`
   ADD CONSTRAINT `applicator_outputs_ibfk_2` FOREIGN KEY (`applicator_id`) REFERENCES `applicators` (`applicator_id`);
 
 --
+-- Constraints for table `applicator_part_limits`
+--
+ALTER TABLE `applicator_part_limits`
+  ADD CONSTRAINT `fk_applicator_part_limits_applicator` FOREIGN KEY (`applicator_id`) REFERENCES `applicators` (`applicator_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `applicator_reset`
 --
 ALTER TABLE `applicator_reset`
@@ -446,6 +504,12 @@ ALTER TABLE `custom_part_definitions`
 ALTER TABLE `machine_outputs`
   ADD CONSTRAINT `machine_outputs_ibfk_1` FOREIGN KEY (`record_id`) REFERENCES `records` (`record_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `machine_outputs_ibfk_2` FOREIGN KEY (`machine_id`) REFERENCES `machines` (`machine_id`);
+
+--
+-- Constraints for table `machine_part_limits`
+--
+ALTER TABLE `machine_part_limits`
+  ADD CONSTRAINT `fk_machine_part_limits_machine` FOREIGN KEY (`machine_id`) REFERENCES `machines` (`machine_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `machine_reset`
