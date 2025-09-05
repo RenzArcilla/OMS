@@ -601,13 +601,14 @@
                     </div>
                 </div>
                 
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary" id="submitBtn">
-                        Add Part
-                    </button>
+                <div class="button-group">
                     <button type="button" class="btn btn-secondary" onclick="closeAddCustomPartModal()">
                         Cancel
                     </button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        Add Part
+                    </button>
+                    
                 </div>
             </form>
         </div>
