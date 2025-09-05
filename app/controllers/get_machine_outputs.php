@@ -17,6 +17,7 @@ try {
         $part_names_array[] = $part['part_name'];
     }
     
+    
     if ($machine_id) {
         // Get specific machine using same logic as dashboard
         $search_result = searchMachineByControlNo($machine_id, $part_names_array);
@@ -133,4 +134,3 @@ function getStatusColor($percentage) {
     if ($percentage < 90) return 'yellow';   // Warning
     return 'red';                            // Replace
 }
-?>
