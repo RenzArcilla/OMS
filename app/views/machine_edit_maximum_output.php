@@ -95,11 +95,11 @@
             </div>
             
             <div class="button-group">
-                <button type="submit" class="submit-btn" id="submitBtn">
-                    💾 Save Configuration
-                </button>
                 <button type="button" class="cancel-btn" onclick="closeEditOutputModal()">
                     Cancel
+                </button>   
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    💾 Save Configuration
                 </button>
             </div>
         </form>
