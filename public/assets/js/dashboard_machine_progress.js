@@ -201,36 +201,6 @@ class MachineProgressBarManager {
         }
     }
 
-    // Update specific machine output
-    async updateOutput(machineId, updates) {
-        try {
-            const response = await fetch('/SOMS/app/controllers/update_machine_outputs.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    machine_id: machineId,
-                    updates: updates
-                })
-            });
-
-            const result = await response.json();
-            
-            if (result.success) {
-                // Reload progress data to reflect changes
-                await this.loadProgressData();
-                return true;
-            } else {
-                console.error('Failed to update machine output:', result.message);
-                return false;
-            }
-        } catch (error) {
-            console.error('Error updating machine output:', error);
-            return false;
-        }
-    }
-
     // Cleanup
     destroy() {
         if (this.updateInterval) {
