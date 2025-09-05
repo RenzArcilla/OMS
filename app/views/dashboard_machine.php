@@ -429,7 +429,7 @@
     <!-- Delete Custom Part Modal -->
     <div id="deleteCustomPartModalDashboardMachine" class="modal-overlay">
         <div class="form-container">
-            <button class="modal-close-btn">×</button>
+            <button class="modal-close-btn" onclick="closeDeleteCustomPartModal()">×</button>
             
             <div class="form-header">
                 <span class="delete-icon">🗑️</span>
@@ -437,43 +437,41 @@
                 <p class="form-subtitle">Permanently remove this custom part</p>
             </div>
 
-            <div class="warning-section">
-                <span class="warning-icon">⚠️</span>
-                <div class="warning-title">Permanent Action</div>
-                <div class="warning-text">
-                    This custom part will be permanently removed from this applicator. This action cannot be undone.
-                </div>
-            </div>
-
-            <div id="messageContainer"></div>
-
-            <div class="part-details">
-                <div class="part-info">
-                    <div class="part-icon">⚙️</div>
-                    <div class="part-content">
-                        <div class="part-name" id="partName">Custom Valve Assembly</div>
-                        <div class="part-meta">Added on March 15, 2024 • Part ID: #CP001</div>
+            <form id="deleteCustomPartForm" method="POST" action="../controllers/delete_custom_part.php">
+                <input type="hidden" name="equipment_type" value="MACHINE">
+                <input type="hidden" name="part_id" value="" id="delete_part_id">
+                
+                <div class="warning-section">
+                    <span class="warning-icon">⚠️</span>
+                    <div class="warning-title">Permanent Action</div>
+                    <div class="warning-text">
+                        This custom part will be permanently removed from this machine. This action cannot be undone.
                     </div>
                 </div>
-            </div>
 
-            <div class="confirmation-section">
-                <label class="confirmation-checkbox">
-                    <input type="checkbox" id="confirmDelete" class="confirmation-input">
-                    <span class="confirmation-label">
-                        I understand that this action is permanent and cannot be undone. I want to delete this custom part.
-                    </span>
-                </label>
-            </div>
-
-            <form id="deleteCustomPartForm" method="POST" action="../controllers/delete_custom_part.php">
-                <input type="hidden" name="equipment_type" value="APPLICATOR">
-                <input type="hidden" name="part_id" value="" id="partIdInput">
-                
-                <div class="button-group">
-                    <button type="submit" class="btn btn-primary" id="deleteBtn" disabled>Delete Part Permanently</button>
-                    <button type="button" class="cancel-btn">Cancel</button>
+                <div class="part-details">
+                    <div class="part-info">
+                        <div class="part-icon">⚙️</div>
+                        <div class="part-content">
+                            <div class="part-name" id="delete_part_name">Custom Part</div>
+                            <div class="part-meta">Part ID: <span id="delete_part_id_display">#CP001</span></div>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="confirmation-section">
+                    <label class="confirmation-checkbox">
+                        <input type="checkbox" id="confirmDelete" class="confirmation-input" onchange="toggleDeleteButton()">
+                        <span class="confirmation-label">
+                            I understand that this action is permanent and cannot be undone. I want to delete this custom part.
+                        </span>
+                    </label>
+                </div>
+                <div class="button-group">
+                    <button type="button" class="cancel-btn" onclick="closeDeleteCustomPartModal()">Cancel</button>
+                    <button type="submit" class="btn delete-btn" id="deleteBtn" disabled>Delete Part Permanently</button>
+                </div>
+            
             </form>
         </div>
     </div>
