@@ -119,38 +119,54 @@ function closeEditCustomPartModal() {
 document.addEventListener('click', function(event) {
     if (event.target.classList.contains('btn-delete')) {
         const partId = event.target.getAttribute('data-part-id');
-        const partType = event.target.getAttribute('data-part-type');
-        confirmDeleteCustomPart(partId, partType);
+        const partName = event.target.getAttribute('data-part-name');
+        confirmDeleteCustomPart(partId, partName);
     }
 });
 
-// Delete confirmation
-function confirmDeleteCustomPart(partId, type) {
-    if (confirm("Are you sure you want to delete this custom part? This action CANNOT be undone!")) {
-        // Create a form dynamically
-        const form = document.createElement("form");
-        form.method = "POST";
-        form.action = "../controllers/delete_custom_part.php";
-
-        // Add hidden input for part_id
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "part_id";
-        input.value = partId;
-
-        // Add hidden input for equipment type
-        const inputType = document.createElement("input");
-        inputType.type = "hidden";
-        inputType.name = "equipment_type";
-        inputType.value = type;
-
-        form.appendChild(input);
-        form.appendChild(inputType);
-        document.body.appendChild(form);
-
-        form.submit();
-    }
+function confirmDeleteCustomPart(partId, partName) {
+    const modal = document.getElementById('deleteCustomPartModalDashboardApplicator');
+    modal.style.display = 'block';
+    
+    // Populate the modal with part information
+    document.getElementById('delete_part_id').value = partId;
+    document.getElementById('delete_part_name').textContent = partName;
+    document.getElementById('delete_part_id_display').textContent = '#' + partId;
+    
+    // Reset the confirmation checkbox and disable delete button
+    document.getElementById('confirmDelete').checked = false;
+    document.getElementById('deleteBtn').disabled = true;
 }
+
+// Close the delete custom part modal
+function closeDeleteCustomPartModal() {
+    const modal = document.getElementById('deleteCustomPartModalDashboardApplicator');
+    modal.style.display = 'none';
+    
+    // Reset form
+    const form = modal.querySelector('form');
+    if (form) form.reset();
+    
+    // Reset confirmation checkbox and disable delete button
+    document.getElementById('confirmDelete').checked = false;
+    document.getElementById('deleteBtn').disabled = true;
+}
+
+// Toggle delete button based on confirmation checkbox
+function toggleDeleteButton() {
+    const confirmCheckbox = document.getElementById('confirmDelete');
+    const deleteBtn = document.getElementById('deleteBtn');
+    
+    deleteBtn.disabled = !confirmCheckbox.checked;
+}
+
+// Close modal when clicking outside of it
+document.addEventListener('click', function(event) {
+    const deleteModal = document.getElementById('deleteCustomPartModalDashboardApplicator');
+    if (event.target === deleteModal) {
+        closeDeleteCustomPartModal();
+    }
+});
 
 // Listen for clicks only on the restore buttons
 document.addEventListener('click', function(event) {
