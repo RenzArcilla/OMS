@@ -171,4 +171,3 @@ function getStatusColor($percentage) {
     if ($percentage < 90) return 'yellow';   // Warning
     return 'red';                            // Replace
 }
-?>

@@ -2,7 +2,7 @@ tableEl.querySelectorAll('tbody tr').forEach(tr => {
     const cells = Array.from(tr.querySelectorAll('td'));
     cells.pop(); // remove last cell (Actions)
     csvRows.push(cells.map(td => csvEscape(td.textContent.trim())).join(','));
-  });
+});
 
 // Export currently visible table to CSV
 function exportData() {
