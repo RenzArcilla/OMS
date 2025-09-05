@@ -20,7 +20,7 @@
             </div>
                 <div class="card">
                     <!-- Profile Overview -->
-                    <div class="card-content">
+                    <!--div class="card-content">
                         <div class="card-title center-content">
                             <div class="card-icon">👤</div>
                             <div>
@@ -48,11 +48,11 @@
                                 💾 Save Changes
                             </button>
                         </div>
-                    </div>
-                </div>
+                    </div-->
+                </div-->
 
                     <!-- Username Settings -->
-                <div class="card">
+                <!--div class="card">
                     <div class="card-content">
                         <div class="card-title center-content">
                             <div class="card-icon">🏷️</div>
@@ -82,7 +82,7 @@
                             
                         </div>
                     </div>
-                </div>
+                </div-->
 
                     <!-- Password Settings -->
                 <div class="card">
@@ -155,12 +155,12 @@
                             <button type="button" class="btn btn-primary" onclick="updatePassword()">
                                 🔒 Update Password
                             </button>
-
                         </div>
                     </div>
                                     
                 </div>
             </div>
     </div>
+    <script src="../../public/assets/js/account_settings.js"></script>
 </body>
 </html>
