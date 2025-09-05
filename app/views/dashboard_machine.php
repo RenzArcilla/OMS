@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/pagination.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/info.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/progress_bars.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/checkbox.css">
 </head>
 <body>
     <?php
@@ -99,11 +100,14 @@
                 <div class="page-header">
                     <h1 class="page-title">📊 Machine Dashboard</h1>
                     <div class="header-actions">
-                        <button type="button" class="modal-btn btn-secondary">
+                    <button type="button" class="modal-btn btn-primary">
+                            <div>Edit Maximum Output</div> 
+                        </button>
+                        <button type="button" class="modal-btn btn-primary">
                             <div>Export</div> 
                             <div>Reset Data</div>
                         </button>   
-                        <button type="button" class="btn-secondary" onclick="exportData()">
+                        <button type="button" class="btn-primary" onclick="exportData()">
                             <div>Export</div> 
                             <div>Output Data</div>
                         </button>
@@ -756,7 +760,10 @@
             </form>
         </div>
     </div>
+    <!-- Recently Reset Modal -->
     <?php include_once __DIR__ . '/machine_recently_reset.php'; ?>
+    <!-- Edit Maximum Output Modal -->
+    <?php include_once __DIR__ . '/machine_edit_maximum_output.php'; ?>
 
     <script src="../../public/assets/js/dashboard_machine.js"></script>
     <script src="../../public/assets/js/dashboard_machine_progress.js"></script>

@@ -31,18 +31,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (event.target.closest('.modal-btn')) {
             // This works even for dynamically added elements
             console.log('Modal button clicked!');
-            const modal6 = document.getElementById('exportModalRecentlyReset');
-            console.log('Modal element:', modal6);
-            if (modal6) {
-                console.log('Showing exportModalRecentlyReset...');
-                modal6.style.display = 'block';
-            } else {
-                console.log('exportModalRecentlyReset not found!');
-            }
-
+            
             // Check button text to show specific modal
             const buttonText = event.target.textContent.trim();
             console.log('Button text:', buttonText);
+            
             if (buttonText === 'Export Applicators') {
                 console.log('Showing exportApplicatorReportModal...');
                 const modal10 = document.getElementById('exportApplicatorReportModal');
@@ -60,6 +53,25 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log('exportMachineReportModal shown successfully');
                 } else {
                     console.log('exportMachineReportModal not found!');
+                }
+            } else if (buttonText === 'Edit Maximum Output') {
+                console.log('Showing editMaxOutputModal...');
+                const editMaxOutputModal = document.getElementById('editMaxOutputModal');
+                if (editMaxOutputModal) {
+                    editMaxOutputModal.style.display = 'block';
+                    console.log('editMaxOutputModal shown successfully');
+                } else {
+                    console.log('editMaxOutputModal not found!');
+                }
+            } else {
+                // Default modal handling for other modal-btn clicks
+                const modal6 = document.getElementById('exportModalRecentlyReset');
+                console.log('Modal element:', modal6);
+                if (modal6) {
+                    console.log('Showing exportModalRecentlyReset...');
+                    modal6.style.display = 'block';
+                } else {
+                    console.log('exportModalRecentlyReset not found!');
                 }
             }
         }
