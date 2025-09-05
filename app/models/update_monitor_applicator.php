@@ -427,3 +427,130 @@ function restoreApplicatorCumulativeOutputs($applicator_id) {
         return "Database error occurred when restoring applicator cumulative outputs: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
     }
 }
+
+
+function applyApplicatorMonitoringAggregates(PDO $pdo, array $agg, array $customTemplate): void {
+    /*
+        Apply aggregated increments to monitor_applicator.
+        Used when recording outputs for machines or applicators in batchLoadData.
+    */
+    
+    // Return if empty
+    if (empty($agg)) return;
+
+    // For each applicator_id => total_output delta, we increment all relevant columns
+    // We also merge custom_parts JSON (fetch existing once per id).
+    // To reduce queries, fetch all existing custom_parts first.
+    $ids = array_keys($agg);
+    $placeholders = implode(',', array_fill(0, count($ids), '?'));
+    $existingStmt = $pdo->prepare("
+        SELECT applicator_id, custom_parts_output 
+        FROM monitor_applicator 
+        WHERE applicator_id IN ($placeholders)
+    ");
+    foreach ($ids as $i => $id) {
+        $existingStmt->bindValue($i + 1, $id, PDO::PARAM_INT);
+    }
+    $existingStmt->execute();
+    $existingMap = [];
+    while ($row = $existingStmt->fetch(PDO::FETCH_ASSOC)) {
+        $existingMap[$row['applicator_id']] = $row['custom_parts_output'];
+    }
+
+    // Upsert one-by-one (still batched logic). 
+    $sqlSide = "
+        INSERT INTO monitor_applicator
+        (applicator_id, total_output, wire_crimper_output, wire_anvil_output,
+            insulation_crimper_output, insulation_anvil_output, slide_cutter_output,
+            cutter_holder_output, custom_parts_output, last_updated)
+        VALUES
+        (:id, :delta, :delta, :delta, :delta, :delta, :delta, :delta, :json, CURRENT_TIMESTAMP)
+        ON DUPLICATE KEY UPDATE
+            total_output = total_output + VALUES(total_output),
+            wire_crimper_output = wire_crimper_output + VALUES(wire_crimper_output),
+            wire_anvil_output = wire_anvil_output + VALUES(wire_anvil_output),
+            insulation_crimper_output = insulation_crimper_output + VALUES(insulation_crimper_output),
+            insulation_anvil_output = insulation_anvil_output + VALUES(insulation_anvil_output),
+            slide_cutter_output = slide_cutter_output + VALUES(slide_cutter_output),
+            cutter_holder_output = cutter_holder_output + VALUES(cutter_holder_output),
+            custom_parts_output = VALUES(custom_parts_output),
+            last_updated = CURRENT_TIMESTAMP
+    ";
+
+    $sqlEnd = "
+        INSERT INTO monitor_applicator
+            (applicator_id, total_output, wire_crimper_output, wire_anvil_output,
+            insulation_crimper_output, insulation_anvil_output, shear_blade_output,
+            cutter_a_output, cutter_b_output, custom_parts_output, last_updated)
+        VALUES
+            (:id, :delta, :delta, :delta, :delta, :delta, :delta, :delta, :delta, :json, CURRENT_TIMESTAMP)
+        ON DUPLICATE KEY UPDATE
+            total_output = total_output + VALUES(total_output),
+            wire_crimper_output = wire_crimper_output + VALUES(wire_crimper_output),
+            wire_anvil_output = wire_anvil_output + VALUES(wire_anvil_output),
+            insulation_crimper_output = insulation_crimper_output + VALUES(insulation_crimper_output),
+            insulation_anvil_output = insulation_anvil_output + VALUES(insulation_anvil_output),
+            shear_blade_output = shear_blade_output + VALUES(shear_blade_output),
+            cutter_a_output = cutter_a_output + VALUES(cutter_a_output),
+            cutter_b_output = cutter_b_output + VALUES(cutter_b_output),
+            custom_parts_output = VALUES(custom_parts_output),
+            last_updated = CURRENT_TIMESTAMP
+    ";
+
+    // Need applicator types to decide which statement to use:
+    $typeStmt = $pdo->prepare("
+        SELECT applicator_id, description
+        FROM applicators
+        WHERE applicator_id IN ($placeholders)
+    ");
+
+    // Bind and execute for each id
+    foreach ($ids as $i => $id) {
+        $typeStmt->bindValue($i + 1, $id, PDO::PARAM_INT);
+    }
+    $typeStmt->execute();
+    $typeMap = [];
+
+    // Map applicator_id => description
+    while ($row = $typeStmt->fetch(PDO::FETCH_ASSOC)) {
+        $typeMap[$row['applicator_id']] = $row['description'];
+    }
+
+    $stmtSide = $pdo->prepare($sqlSide);
+    $stmtEnd  = $pdo->prepare($sqlEnd);
+
+    // Apply each aggregate
+    foreach ($agg as $appId => $delta) {
+        $desc = $typeMap[$appId] ?? null;
+        if ($desc === null) {
+            // Should not happen because we validated earlier
+            continue;
+        }
+
+        // Merge custom parts
+        $existingJson = $existingMap[$appId] ?? null;
+        $existingParts = $existingJson ? json_decode($existingJson, true) : [];
+        if (!is_array($existingParts)) $existingParts = [];
+
+        foreach ($customTemplate as $name) {
+            $existingParts[$name] = ($existingParts[$name] ?? 0) + $delta;
+        }
+        $newJson = json_encode($existingParts);
+
+        if ($desc === 'SIDE') {
+            $stmtSide->execute([
+                ':id' => $appId,
+                ':delta' => $delta,
+                ':json' => $newJson
+            ]);
+        } elseif (in_array($desc, ['END', 'CLAMP', 'STRIP AND CRIMP'], true)) {
+            $stmtEnd->execute([
+                ':id' => $appId,
+                ':delta' => $delta,
+                ':json' => $newJson
+            ]);
+        } else {
+            throw new RuntimeException("Invalid applicator description $desc for monitoring.");
+        }
+    }
+}

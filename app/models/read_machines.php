@@ -346,3 +346,30 @@ function getDisabledMachinesCount($search = null, $description = 'ALL') {
     $stmt->execute();
     return (int)$stmt->fetchColumn();
 }
+
+
+function fetchMachinesByControlNos(array $controlNos, PDO $pdo): array {
+    /*
+        Fetch machines by their control numbers
+        Used when recording outputs for machines or applicators in batchLoadData.
+    */
+    
+    // Return empty if no control numbers
+    if (empty($controlNos)) return [];
+
+    // Execute the query using placeholders
+    $placeholders = implode(',', array_fill(0, count($controlNos), '?'));
+    $sql = "SELECT * FROM machines WHERE control_no IN ($placeholders)";
+    $stmt = $pdo->prepare($sql);
+    foreach ($controlNos as $i => $val) {
+        $stmt->bindValue($i + 1, $val, PDO::PARAM_STR);
+    }
+    $stmt->execute();
+    $out = [];
+
+    // Map by control_no
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $out[$row['control_no']] = $row;
+    }
+    return $out;
+}

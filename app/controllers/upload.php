@@ -5,109 +5,114 @@
 
 
 // Include necessary files
+require_once '../includes/db.php';
 require_once '../includes/auth.php';
-require_once __DIR__ . '/../includes/etl/extract.php';
-require_once __DIR__ . '/../includes/etl/transform.php';
-require_once __DIR__ . '/../includes/etl/load.php';
-require_once __DIR__ . '/../includes/db.php'; 
+require_once '../includes/js_alert.php';
+require_once '../includes/etl/load.php';
+require_once '../includes/etl/extract.php';
+require_once '../includes/etl/transform.php';
 
 // Require Toolkeeper/Admin Privileges
 requireToolkeeper();
 
-$tempDir = __DIR__ . '/../temp/'; // Directory where uploaded files will be temporarily stored
-
-// Redirect url
+$tempDir = __DIR__ . '/../temp/';
 $redirect_url = "../views/file_upload.php";
 
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     jsAlertRedirect("Invalid request method.", $redirect_url);
-    exit();
+    exit;
 }
 
-// Check if the temp dir is empty
-if (!isset($_FILES['dataFiles'])) { 
+// Check if files were uploaded
+if (!isset($_FILES['dataFiles'])) {
     jsAlertRedirect("No files uploaded.", $redirect_url);
-    exit();
+    exit;
 }
-
-$pdo->beginTransaction();
 
 try {
+    // Allow only one file at a time
     $fileCount = count($_FILES['dataFiles']['name']);
-    $totalSize = array_sum($_FILES['dataFiles']['size']);
-
-    // Only 1 file allowed
     if ($fileCount !== 1) {
         jsAlertRedirect("Error: Only one file can be uploaded at a time.", $redirect_url);
-        exit();
+        exit;
     }
 
-    // Delete any existing file in temp dir
+    // Clear old temp files
     foreach (glob($tempDir . "*") as $oldFile) {
         if (is_file($oldFile)) unlink($oldFile);
     }
 
-    $fileName   = basename($_FILES['dataFiles']['name'][0]);
-    $tmpName    = $_FILES['dataFiles']['tmp_name'][0];
-    $fileSize   = $_FILES['dataFiles']['size'][0];
+    $fileName = basename($_FILES['dataFiles']['name'][0]);
+    $tmpName  = $_FILES['dataFiles']['tmp_name'][0];
+    $fileSize = $_FILES['dataFiles']['size'][0];
 
     // Validate file extension
     $allowedExtensions = ['xls', 'xlsx'];
     $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
     if (!in_array($ext, $allowedExtensions)) {
         jsAlertRedirect("Error: Invalid file type. Only XLS and XLSX are allowed.", $redirect_url);
-        exit();
+        exit;
     }
 
-    // Max file size check (10 MB)
-    $maxFileSize = 10 * 1024 * 1024; 
+    // Limit file size to 10MB
+    $maxFileSize = 10 * 1024 * 1024;
     if ($fileSize > $maxFileSize) {
-        jsAlertRedirect("Error: File '$fileName' exceeds the 10MB size limit.", $redirect_url);
-        exit();
+        jsAlertRedirect("Error: File '$fileName' exceeds size limit.", $redirect_url);
+        exit;
     }
 
-    // Define target path
+    // Move uploaded file to a temporary directory
     $targetPath = $tempDir . uniqid() . "_" . $fileName;
-
-    // Moves the uploaded file to the target path.
-    if (move_uploaded_file($tmpName, $targetPath)) { 
-        
-        // Extract from file
-        $rawData = extractData($targetPath); 
-        if (is_string($rawData)) {
-            unlink($targetPath);
-            jsAlertRedirect($rawData, $redirect_url);
-            exit();
-        }
-
-        // Transform data
-        $cleanData = transformData($rawData); 
-        if (is_string($cleanData)) {
-            unlink($targetPath);
-            jsAlertRedirect($cleanData, $redirect_url);
-            exit();
-        }   
-
-        // Load to db`
-        $result = loadData($cleanData); 
-        if ($result === "All outputs recorded successfully!") {
-            $pdo->commit(); // Commit transaction if all operations succeed
-            unlink($targetPath); // Deletes the file after ETL
-            jsAlertRedirect($result, $redirect_url); 
-        } else {
-            $pdo->rollBack(); // Rollback transaction in case of error
-            unlink($targetPath); // Deletes the file if there was an error
-            jsAlertRedirect($result, $redirect_url);
-            exit();
-        }
+    if (!move_uploaded_file($tmpName, $targetPath)) {
+        jsAlertRedirect("Failed to move uploaded file.", $redirect_url);
+        exit;
     }
 
-} catch (Exception $e) {
-    $pdo->rollBack(); // Rollback transaction in case of exception
-    if (isset($targetPath) && file_exists($targetPath)) {
-        unlink($targetPath); // Delete uploaded 
+    // ETL Pipeline
+    // 1. Extract
+    $rawData = extractData($targetPath);
+    if (is_string($rawData)) {
+        unlink($targetPath);
+        jsAlertRedirect($rawData, $redirect_url);
+        exit;
     }
-    jsAlertRedirect("Error processing files: " . $e->getMessage() . " Trashing the uploaded file.", $redirect_url); // Redirect with error message
-    exit();
+
+    // 2. Transform
+    $cleanData = transformData($rawData);
+    if (is_string($cleanData)) {
+        unlink($targetPath);
+        jsAlertRedirect($cleanData, $redirect_url);
+        exit;
+    }
+
+    // 3. Load
+    global $pdo;
+    $pdo->beginTransaction();
+    $result = batchLoadData($cleanData, false); // manageTransaction = false
+
+    if (!$result['success']) {
+        $pdo->rollBack();
+        unlink($targetPath);
+        $msg = $result['message'];
+        if (!empty($result['errors'])) {
+            $extras = implode("\\n", array_slice($result['errors'], 0, 5));
+            $msg .= "\\nErrors:\\n" . $extras;
+        }
+        jsAlertRedirect($msg, $redirect_url);
+        exit;
+    }
+
+    $pdo->commit();
+    unlink($targetPath);
+    jsAlertRedirect($result['message'], $redirect_url);
+    exit;
+
+} catch (Throwable $e) {
+    if (isset($pdo) && $pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+    if (isset($targetPath) && file_exists($targetPath)) unlink($targetPath);
+    jsAlertRedirect("Error processing file: " . $e->getMessage(), $redirect_url);
+    exit;
 }
