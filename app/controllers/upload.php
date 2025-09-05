@@ -82,6 +82,9 @@ try {
 
         // Transform data
         $cleanData = transformData($rawData); 
+        unlink($targetPath); // Deletes the file after ETL
+        echo print_r($cleanData);
+        exit();
         if (is_string($cleanData)) {
             jsAlertRedirect($cleanData, $redirect_url);
             exit();
