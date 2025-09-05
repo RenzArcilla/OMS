@@ -24,9 +24,8 @@
                     <tr>
                         <td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $part['part_name']))) ?></td>
                         <td><?= htmlspecialchars(date('Y-m-d', strtotime($part['created_at']))) ?></td>
-                        <td>
+                        <td class="actions">
                             <?php $partNameTitle = ucwords(str_replace('_', ' ', strtolower($part['part_name']))); ?>
-                            <div class="button-group">
                                 <button class="edit-btn btn btn-edit" 
                                         data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
                                         data-part-name="<?= htmlspecialchars($partNameTitle, ENT_QUOTES) ?>">
