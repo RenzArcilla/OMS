@@ -377,3 +377,17 @@ function buildApplicatorOutputRow(array $appData, int $recordId, int $outputVal,
         throw new RuntimeException("Invalid applicator type: $type");
     }
 }
+
+function bindAllSequential(PDOStatement $stmt, array $params): void {
+    /*
+        Bind all parameters sequentially to a prepared statement.
+        Used for batch inserts with many parameters.
+    */
+
+    foreach ($params as $i => $val) {
+        $type = PDO::PARAM_STR;
+        if (is_int($val)) $type = PDO::PARAM_INT;
+        if ($val === null) $type = PDO::PARAM_NULL;
+        $stmt->bindValue($i + 1, $val, $type);
+    }
+}

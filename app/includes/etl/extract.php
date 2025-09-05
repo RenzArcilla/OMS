@@ -27,7 +27,6 @@ function extractData($filePath) {
         - string error message if row count is insufficient.
     */
 
-<<<<<<< HEAD
     $spreadsheet = IOFactory::load($filePath);     
     $sheet = $spreadsheet->getActiveSheet('Sheet1')->toArray();
 
@@ -40,36 +39,18 @@ function extractData($filePath) {
         if (isset($sheet[$i]) && in_array('Production Date', $sheet[$i]) && in_array('Machine No', $sheet[$i])) {
             $headerRowIndex = $i;
             break;
-=======
-    $spreadsheet = IOFactory::load($filePath);
-    $sheet = $spreadsheet->getActiveSheet()->toArray();
-
-    // Exit if the sheet is too short
-    if (count($sheet) < 10) return "Invalid row count";
-
-    // Build headers from merged header rows 7-9 (indexes 6..8)
-    $headerRows = [];
-    for ($r = 6; $r <= 8; $r++) {
-        $headerRows[$r] = isset($sheet[$r]) ? $sheet[$r] : [];
-    }
-    $headers = [];
-    $maxCols = 0;
-    foreach ($headerRows as $row) {
-        $maxCols = max($maxCols, is_array($row) ? count($row) : 0);
-    }
-    for ($c = 0; $c < $maxCols; $c++) {
-        $parts = [];
-        for ($r = 6; $r <= 8; $r++) {
-            $val = isset($headerRows[$r][$c]) ? trim((string)$headerRows[$r][$c]) : '';
-            if ($val !== '' && !in_array($val, $parts, true)) {
-                $parts[] = $val;
-            }
->>>>>>> 2077c7b3db11484a5bd873db87908affaa062374
         }
-        $headers[$c] = trim(implode(' ', $parts));
     }
 
-    // Columns we care about
+    // Fallback
+    if ($headerRowIndex === -1) {
+        $headerRowIndex = 0; // Assume row 1 (index 0) contains headers
+    }
+
+    // Trim and set headers
+    $headers = array_map('trim', $sheet[$headerRowIndex]);
+
+    // Define only the required columns
     $requiredCols = [
         'Production Date',
         'Machine No',
@@ -78,78 +59,32 @@ function extractData($filePath) {
         'Applicator 1',
         'Applicator 2'
     ];
-<<<<<<< HEAD
 
     // Slice data starting from the index 3 (Excel row 4)
     $rows = array_slice($sheet, 3   );
-=======
->>>>>>> 2077c7b3db11484a5bd873db87908affaa062374
-
-    // Helper to normalize strings (remove special spaces/punct, lowercase)
-    $normalize = function($str) {
-        $s = preg_replace('/\s+/u', ' ', (string)$str);
-        $s = trim($s);
-        // Replace non-breaking spaces
-        $s = str_replace("\xc2\xa0", ' ', $s);
-        // Remove punctuation
-        $s = preg_replace('/[^a-z0-9 ]/i', '', $s);
-        // Collapse spaces and remove them for substring compare
-        $s = strtolower(str_replace(' ', '', $s));
-        return $s;
-    };
-
-    // Build normalized headers once
-    $normalizedHeaders = [];
-    foreach ($headers as $i => $hdr) {
-        $normalizedHeaders[$i] = $normalize($hdr);
-    }
-
-    // Allow synonyms for some columns
-    $synonyms = [
-        'Total Output Qty' => ['Total Output Qty', 'Total Output', 'Output Qty', 'TotalQty', 'Qty']
-    ];
-
-    // Map required header names to their column indexes (allow merged/concatenated headers)
-    $colIndexes = [];
-    foreach ($requiredCols as $col) {
-        $candidates = $synonyms[$col] ?? [$col];
-        $found = false;
-        foreach ($candidates as $cand) {
-            $needle = $normalize($cand);
-            foreach ($normalizedHeaders as $i => $nh) {
-                if ($needle !== '' && strpos($nh, $needle) !== false) {
-                    $colIndexes[$col] = $i;
-                    $found = true;
-                    break 2;
-                }
-            }
-        }
-        if (!$found) {
-            // Log available headers to assist troubleshooting
-            error_log('[ETL extract] Available headers: ' . json_encode($headers));
-            return "Missing required column in header: $col";
-        }
-    }
 
     $data = [];
+    foreach ($rows as $row) {
+        if (count(array_filter($row)) === 0) continue; // Skip blank rows
 
-    // Data starts at row 10 (index 9)
-    for ($i = 9; $i < count($sheet); $i++) {
-        $row = $sheet[$i];
+        // Combine header keys with current row values
+        $combined = array_combine($headers, $row);
 
-        // Skip blank rows
-        if (count(array_filter($row)) === 0) continue;
-
-        // Build associative array with only required columns
-        $entry = [];
-        foreach ($colIndexes as $col => $idx) {
-            $entry[$col] = $row[$idx] ?? null;
+        // Detect repeated header rows mid-sheet (and skip)
+        $isHeaderRow = true;
+        foreach ($headers as $h) {
+            if (trim($combined[$h]) !== $h) {
+                $isHeaderRow = false;
+                break;
+            }
         }
 
-        // Skip rows with missing Applicator 1
-        if (empty(trim($entry['Applicator 1'] ?? ''))) continue;
+        // Skip rows where Applicator1 is missing or empty
+        if (empty(trim($combined['Applicator1'] ?? ''))) continue;
 
-        $data[] = $entry;
+        if (!$isHeaderRow) {
+            $data[] = $combined;
+        }
     }
 
     return $data;
