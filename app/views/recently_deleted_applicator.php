@@ -43,42 +43,42 @@
             </table>
         </div>
     </div>
-</div>
-
-<!-- Pagination Controls -->
-<div class="pagination-container" id="disabled-applicators-pagination" style="display: none;">
-    <div class="pagination-info">
-        <span class="pagination-text" id="pagination-info-text">
-            Showing 0 to 0 of 0 results
-        </span>
-    </div>
     
-    <div class="pagination-controls">
-        <!-- Previous Button -->
-        <a href="#" id="pagination-prev" class="pagination-btn pagination-prev">
-            <span>←</span> Previous
-        </a>
-        
-        <!-- Page Numbers -->
-        <div class="pagination-numbers" id="pagination-numbers">
-            <!-- Page numbers will be dynamically generated -->
+    <!-- Pagination Controls -->
+    <div class="pagination-container" id="disabled-applicators-pagination" style="display: none;">
+        <div class="pagination-info">
+            <span class="pagination-text" id="pagination-info-text">
+                Showing 0 to 0 of 0 results
+            </span>
         </div>
         
-        <!-- Next Button -->
-        <a href="#" id="pagination-next" class="pagination-btn pagination-next">
-            Next <span>→</span>
-        </a>
-    </div>
-    
-    <!-- Items Per Page Selector -->
-    <div class="pagination-items-per-page">
-        <label for="items-per-page-disabled">Show:</label>
-        <select id="items-per-page-disabled" onchange="changeItemsPerPageDisabled(this.value)">
-            <option value="5">5</option>
-            <option value="10" selected>10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-        </select>
-        <span>per page</span>
+        <div class="pagination-controls">
+            <!-- Previous Button -->
+            <a href="#" id="pagination-prev" class="pagination-btn pagination-prev">
+                <span>←</span> Previous
+            </a>
+            
+            <!-- Page Numbers -->
+            <div class="pagination-numbers" id="pagination-numbers">
+                <!-- Page numbers will be dynamically generated -->
+            </div>
+            
+            <!-- Next Button -->
+            <a href="#" id="pagination-next" class="pagination-btn pagination-next">
+                Next <span>→</span>
+            </a>
+        </div>
+        
+        <!-- Items Per Page Selector -->
+        <div class="pagination-items-per-page">
+            <label for="items-per-page-disabled">Show:</label>
+            <select id="items-per-page-disabled" onchange="changeItemsPerPageDisabled(this.value)">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+            </select>
+            <span>per page</span>
+        </div>
     </div>
 </div>
