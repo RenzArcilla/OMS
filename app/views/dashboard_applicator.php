@@ -884,7 +884,7 @@
 
     <!-- Load JavaScript -->
     <script src="../../public/assets/js/dashboard_applicator.js"></script>
-    <script src="../../public/assets/js/dashboard.js"></script>
+    <script src="../../public/assets/js/dashboard_applicator_progress.js"></script>
     <script src="../../public/assets/js/sidebar.js"></script>
     <script src="../../public/assets/js/utils/exit.js"></script>
     <script src="../../public/assets/js/utils/enter.js"></script>

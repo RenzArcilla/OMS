@@ -21,6 +21,12 @@
     align-items: center;
 }
 
+.nav-right-buttons {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
 .logo {
     position: relative;
     left: -5px;
@@ -31,3 +37,5 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+
