@@ -178,24 +178,47 @@ document.addEventListener('click', function(event) {
 
 // Restore confirmation
 function confirmRestoreApplicator(applicatorId) {
-    if (confirm("Are you sure you want to restore this applicator?")) {
-        // Create a form dynamically
-        const form = document.createElement("form");
-        form.method = "POST";
-        form.action = "../controllers/restore_applicator.php";
-
-        // Add hidden input for applicator_id
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "applicator_id";
-        input.value = applicatorId;
-
-        form.appendChild(input);
-        document.body.appendChild(form);
-
-        form.submit();
-    }
+    const modal = document.getElementById('restoreApplicatorModalDashboardApplicator');
+    modal.style.display = 'block';
+    
+    // Populate the modal with applicator information
+    document.getElementById('restore_applicator_id').value = applicatorId;
+    document.getElementById('restore_applicator_id_display').textContent = '#' + applicatorId;
+    
+    // Reset the confirmation checkbox and disable restore button
+    document.getElementById('confirmRestore').checked = false;
+    document.getElementById('restoreBtn').disabled = true;
 }
+
+// Close the restore applicator modal
+function closeRestoreApplicatorModal() {
+    const modal = document.getElementById('restoreApplicatorModalDashboardApplicator');
+    modal.style.display = 'none';
+    
+    // Reset form
+    const form = modal.querySelector('form');
+    if (form) form.reset();
+    
+    // Reset confirmation checkbox and disable restore button
+    document.getElementById('confirmRestore').checked = false;
+    document.getElementById('restoreBtn').disabled = true;
+}
+
+// Toggle restore button based on confirmation checkbox
+function toggleRestoreButton() {
+    const confirmCheckbox = document.getElementById('confirmRestore');
+    const restoreBtn = document.getElementById('restoreBtn');
+    
+    restoreBtn.disabled = !confirmCheckbox.checked;
+}
+
+// Close modal when clicking outside of it
+document.addEventListener('click', function(event) {
+    const restoreModal = document.getElementById('restoreApplicatorModalDashboardApplicator');
+    if (event.target === restoreModal) {
+        closeRestoreApplicatorModal();
+    }
+});
 
 // Open the parts inventory modal
 function openPartsInventoryModal() {

@@ -406,60 +406,6 @@
         </div>
     </div>
 
-    <!-- Parts Inventory Modal -->
-    <div id="partsInventoryModalDashboardApplicator" class="modal-overlay" style="display: none;">
-        <div class="modal">
-            <button class="modal-close-btn" onclick="closePartsInventoryModal()">×</button>
-            
-            <div class="form-header">
-                <h1 class="form-title">📋 Parts Inventory</h1>
-                <p class="form-subtitle">View and manage custom applicator parts</p>
-            </div>
-            
-            <div class="section-content">
-
-                <!-- Data Table -->
-                <div class="table-container">
-                    <table class="data-table" id="partsTable">
-                        <thead>
-                            <tr>
-                                <th>Part Name</th>
-                                <th>Created At</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                            <?php foreach ($custom_applicator_parts as $part): ?>
-                            <!-- Wire Crimper -->
-                            <tr>
-                                <td><?= htmlspecialchars(ucwords(str_replace('_', ' ', $part['part_name']))) ?></td>
-                                <td><?= htmlspecialchars(date('Y-m-d', strtotime($part['created_at']))) ?></td>
-                                <td>
-                                    <?php $partNameTitle = ucwords(str_replace('_', ' ', strtolower($part['part_name']))); ?>
-                                    <button class="btn btn-edit" 
-                                            data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
-                                            data-part-name="<?= htmlspecialchars($partNameTitle, ENT_QUOTES) ?>">
-                                        Edit
-                                    </button>
-                                    <button class="btn btn-delete" 
-                                            data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
-                                            data-part-name="<?= htmlspecialchars($partNameTitle, ENT_QUOTES) ?>">
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                            <?php endforeach; ?>
-                        </tbody>    
-                    </table>
-                </div>
-            </div>
-            
-            <div class="form-actions">
-                <button type="button" class="btn btn-secondary" onclick="closePartsInventoryModal()">Close</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Delete Custom Part Modal -->
     <div id="deleteCustomPartModalDashboardApplicator" class="modal-overlay">
         <div class="form-container">
@@ -502,8 +448,8 @@
                     </label>
                 </div>
                 <div class="button-group">
-                    <button type="submit" class="btn btn-primary" id="deleteBtn" disabled>Delete Part Permanently</button>
                     <button type="button" class="cancel-btn" onclick="closeDeleteCustomPartModal()">Cancel</button>
+                    <button type="submit" class="btn delete-btn" id="deleteBtn" disabled>Delete Part Permanently</button>
                 </div>
             
             </form>
@@ -880,6 +826,8 @@
     <?php include_once __DIR__ . '/applicator_recently_reset.php'; ?>
     <!-- Edit Maximum Output Modal -->
     <?php include_once __DIR__ . '/applicator_edit_maximum_output.php'; ?>
+    <!-- Restore Applicator Modal -->
+    <?php include_once __DIR__ . '/applicator_restore_modal.php'; ?>
 
     <!-- Load JavaScript -->
     <script src="../../public/assets/js/dashboard_applicator.js"></script>

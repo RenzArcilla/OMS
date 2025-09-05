@@ -4,7 +4,7 @@
     <div class="section-header expanded" onclick="toggleSection(this)">
         <div class="section-title">
             <span class="filter-info">
-                📤 Recently Deleted Applicators
+                Restore Deleted Applicators
             </span>
         </div>
         <div class="expand-icon">▼</div>
