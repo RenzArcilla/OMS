@@ -7,12 +7,23 @@ try {
     $applicator_id = $_GET['applicator_id'] ?? null;
     
     // Include the same model that the dashboard uses
-    require_once '../models/read_joins/read_monitor_applicator_and_applicator.php';
     require_once '../models/read_custom_parts.php';
+    require_once '../models/read_applicator_limits.php';
+    require_once '../models/read_joins/read_monitor_applicator_and_applicator.php';
     
     // Get custom parts (same as dashboard)
     $custom_applicator_parts = getCustomParts("APPLICATOR");
     $part_names_array = [];
+
+    // Get all part limits of applicators
+    $part_limits = getPartLimitsOfApplicators("APPLICATOR");
+    $limits = [];
+    foreach ($part_limits as $row) {
+        // join key1 and key2 into one string key
+        $composite_key = $row['applicator_id'] . '|' . $row['applicator_part'];
+        $limits[$composite_key] = $row['part_limit'];
+    }
+
     foreach ($custom_applicator_parts as $part) {
         $part_names_array[] = $part['part_name'];
     }

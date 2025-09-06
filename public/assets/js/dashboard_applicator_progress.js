@@ -159,36 +159,6 @@ class ProgressBarManager {
         }
     }
 
-    // Update specific applicator output
-    async updateOutput(applicatorId, updates) {
-        try {
-            const response = await fetch('/SOMS/app/controllers/update_outputs.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    applicator_id: applicatorId,
-                    updates: updates
-                })
-            });
-
-            const result = await response.json();
-            
-            if (result.success) {
-                // Reload progress data to reflect changes
-                await this.loadProgressData();
-                return true;
-            } else {
-                console.error('Failed to update output:', result.message);
-                return false;
-            }
-        } catch (error) {
-            console.error('Error updating output:', error);
-            return false;
-        }
-    }
-
     // Cleanup
     destroy() {
         if (this.updateInterval) {
