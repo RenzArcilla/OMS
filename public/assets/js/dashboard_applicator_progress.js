@@ -2,7 +2,7 @@
 class ProgressBarManager {
     constructor(options = {}) {
         this.scanDelay = options.scanDelay ?? 50; // Step 2: wait 50ms
-        this.controllerUrl = options.controllerUrl ?? '/SOMS/app/controllers/get_dashboard_outputs.php'; // Step 3: PHP controller
+        this.controllerUrl = options.controllerUrl ?? '/SOMS/app/controllers/get_applicator_output_progress.php'; // Step 3: PHP controller
         this.progressData = [];
         this.init();
     }
@@ -132,5 +132,5 @@ class ProgressBarManager {
 // Initialize with a 50ms scan delay and set the PHP compute endpoint
 window.progressBarManager = new ProgressBarManager({
     scanDelay: 50,
-    controllerUrl: '/SOMS/app/controllers/get_dashboard_outputs.php'
+    controllerUrl: '/SOMS/app/controllers/get_applicator_output_progress.php'
 });
