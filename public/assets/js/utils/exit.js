@@ -55,6 +55,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (modal12) {
                 modal12.style.display = 'none';
             }
+            const modal13 = document.getElementById('restoreOutputModal');
+            if (modal13) {
+                modal13.style.display = 'none';
+            }
             
         }
     });

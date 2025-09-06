@@ -103,6 +103,11 @@
     </div>
     <script src="../../public/assets/js/recently_deleted_outputs_table.js"></script>
     <script src="../../public/assets/js/dashboard_applicator.js"></script>
+    <script src="../../public/assets/js/utils/enter.js"></script>
     <!-- Disabled Records Pagination -->
     <script src="../../public/assets/js/disabled_records_pagination.js"></script>
+    <script src="../../public/assets/js/utils/exit.js"></script>
+    <script src="../../public/assets/js/utils/checkbox.js"></script>
+    <script src="../../public/assets/js/utils/pagination.js"></script>
+
 </body>

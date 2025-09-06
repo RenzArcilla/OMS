@@ -111,14 +111,14 @@
                             <div>Export</div> 
                             <div>Reset Data</div>
                         </button>   
-                        <button type="button" class="btn-primary" onclick="exportData()">
+                        <button type="button" class="btn-primary modal-btn" onclick="exportData()">
                             <div>Export</div> 
                             <div>Output Data</div>
                         </button>
                         <button type="button" class="btn-primary" onclick="refreshPage()">
                             Refresh Data
                         </button>
-                        <button type="button" class="btn-primary" onclick="openAddCustomPartModal()">
+                        <button type="button" class="btn-primary modal-btn " onclick="openAddCustomPartModal()">
                             Add Parts
                         </button>
                     </div>

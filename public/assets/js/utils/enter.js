@@ -1,85 +1,79 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Listen for clicks on the entire document
     document.addEventListener('click', function(event) {
-        // Check if the clicked element has the class we want
+        // Handle edit button
         if (event.target.classList.contains('edit-btn')) {
-            // This works even for dynamically added elements
-            const modal = document.getElementById('editCustomPartModalDashboardApplicator');
-            if (modal) {
-                modal.style.display = 'block';
+            const modalApplicator = document.getElementById('editCustomPartModalDashboardApplicator');
+            if (modalApplicator) {
+                modalApplicator.style.display = 'block';
             }
-            const modal2 = document.getElementById('editCustomPartModalDashboardMachine');
-            if (modal2) {
-                modal2.style.display = 'block';
+            const modalMachine = document.getElementById('editCustomPartModalDashboardMachine');
+            if (modalMachine) {
+                modalMachine.style.display = 'block';
             }
-            const modal3 = document.getElementById('addCustomPartModalDashboardMachine');
-            if (modal3) {
-                modal3.style.display = 'block';
+            const addModalMachine = document.getElementById('addCustomPartModalDashboardMachine');
+            if (addModalMachine) {
+                addModalMachine.style.display = 'block';
             }
         }
+
+        // Handle delete button
         if (event.target.classList.contains('delete-btn')) {
-            // This works even for dynamically added elements
-            const modal4 = document.getElementById('deleteCustomPartModalDashboardApplicator');
-            if (modal4) {
-                modal4.style.display = 'block';
+            const modalApplicator = document.getElementById('deleteCustomPartModalDashboardApplicator');
+            if (modalApplicator) {
+                modalApplicator.style.display = 'block';
             }
-            const modal5 = document.getElementById('deleteCustomPartModalDashboardMachine');
-            if (modal5) {
-                modal5.style.display = 'block';
+            const modalMachine = document.getElementById('deleteCustomPartModalDashboardMachine');
+            if (modalMachine) {
+                modalMachine.style.display = 'block';
             }
         }
+
+        // Handle modal-btn (by text)
         if (event.target.closest('.modal-btn')) {
-            // This works even for dynamically added elements
-            console.log('Modal button clicked!');
-            
-            // Check button text to show specific modal
             const buttonText = event.target.textContent.trim();
-            console.log('Button text:', buttonText);
-            
+
             if (buttonText === 'Export Applicators') {
-                console.log('Showing exportApplicatorReportModal...');
-                const modal10 = document.getElementById('exportApplicatorReportModal');
-                if (modal10) {
-                    modal10.style.display = 'block';
-                    console.log('exportApplicatorReportModal shown successfully');
-                } else {
-                    console.log('exportApplicatorReportModal not found!');
+                const exportApplicatorReportModal = document.getElementById('exportApplicatorReportModal');
+                if (exportApplicatorReportModal) {
+                    exportApplicatorReportModal.style.display = 'block';
                 }
             } else if (buttonText === 'Export Machines') {
-                console.log('Showing exportMachineReportModal...');
-                const modal9 = document.getElementById('exportMachineReportModal');
-                if (modal9) {
-                    modal9.style.display = 'block';
-                    console.log('exportMachineReportModal shown successfully');
-                } else {
-                    console.log('exportMachineReportModal not found!');
+                const exportMachineReportModal = document.getElementById('exportMachineReportModal');
+                if (exportMachineReportModal) {
+                    exportMachineReportModal.style.display = 'block';
                 }
             } else if (buttonText === 'Edit Maximum Output') {
-                console.log('Showing editMaxOutputModal...');
                 const editMaxOutputModal = document.getElementById('editMaxOutputModal');
                 if (editMaxOutputModal) {
                     editMaxOutputModal.style.display = 'block';
-                    console.log('editMaxOutputModal shown successfully');
-                } else {
-                    console.log('editMaxOutputModal not found!');
                 }
             } else {
                 // Default modal handling for other modal-btn clicks
-                const modal6 = document.getElementById('exportModalRecentlyReset');
-                console.log('Modal element:', modal6);
-                if (modal6) {
-                    console.log('Showing exportModalRecentlyReset...');
-                    modal6.style.display = 'block';
-                } else {
-                    console.log('exportModalRecentlyReset not found!');
+                const exportModalRecentlyReset = document.getElementById('exportModalRecentlyReset');
+                if (exportModalRecentlyReset) {
+                    exportModalRecentlyReset.style.display = 'block';
                 }
             }
         }
+
+        // Handle logout button
         if (event.target.classList.contains('logout-btn')) {
-            // This works even for dynamically added elements
-            const logoutModal7 = document.getElementById('logoutModalOverlay');
-            if (logoutModal7) {
-                logoutModal7.style.display = 'block';
+            const logoutModalOverlay = document.getElementById('logoutModalOverlay');
+            if (logoutModalOverlay) {
+                logoutModalOverlay.style.display = 'block';
+            }
+        }
+
+        // Handle export button
+        if (event.target.classList.contains('export-btn')) {
+            const exportMachineModal = document.getElementById('exportMachineModal');
+            if (exportMachineModal) {
+                exportMachineModal.style.display = 'block';
+            }
+            const exportModal = document.getElementById('exportModal');
+            if (exportModal) {
+                exportModal.style.display = 'block';
             }
         }
     });
