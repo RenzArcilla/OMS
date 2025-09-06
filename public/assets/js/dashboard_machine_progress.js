@@ -1,249 +1,134 @@
-// Machine Dashboard Progress Bar Management
+// Dashboard Progress Bar Management for Machines (DOM -> PHP controller -> UI)
 class MachineProgressBarManager {
-    constructor() {
-        this.progressData = {};
-        this.updateInterval = null;
+    constructor(options = {}) {
+        this.scanDelay = options.scanDelay ?? 50; // Step 2: wait 50ms
+        this.controllerUrl = options.controllerUrl ?? '/SOMS/app/controllers/get_machine_output_progress.php'; // Step 3: PHP controller
+        this.progressData = [];
         this.init();
     }
 
     init() {
-        this.loadProgressData();
-        this.setupAutoRefresh();
-        this.setupEventListeners();
+        const start = () => setTimeout(() => this.processFromDOM(), this.scanDelay);
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', start, { once: true });
+        } else {
+            start();
+        }
     }
 
-    // Load progress data from API
-    async loadProgressData() {
+    async processFromDOM() {
         try {
-            console.log('Loading machine progress data...');
-            // Add cache-busting parameter to force fresh data
-            const timestamp = new Date().getTime();
-            const response = await fetch(`/SOMS/app/controllers/get_machine_outputs.php?t=${timestamp}`);
-            const result = await response.json();
-            
-            console.log('Machine progress data response:', result);
-            
-            if (result.success) {
+            const payload = this.buildPayloadFromDOM();      // Step 2: grab per-row data
+            const result = await this.fetchComputedProgress(payload);    // Step 3: compute in PHP
+            if (result?.success && Array.isArray(result.data)) {
                 this.progressData = result.data;
-                console.log('Progress data loaded:', this.progressData);
-                
-                // Log each machine's data for debugging
-                if (Array.isArray(this.progressData)) {
-                    this.progressData.forEach((machine, index) => {
-                        console.log(`Machine ${index + 1}:`, machine);
-                        if (machine.progress) {
-                            console.log(`Machine ${machine.machine_id} progress:`, machine.progress);
-                        }
-                    });
-                } else {
-                    console.log('Single machine data:', this.progressData);
-                }
-                
-                this.updateAllProgressBars();
+                this.applyProgressData(this.progressData);   // Step 4: display progress
             } else {
-                console.error('Failed to load progress data:', result.message);
+                console.error('Controller returned an unexpected response:', result);
             }
-        } catch (error) {
-            console.error('Error loading progress data:', error);
+        } catch (err) {
+            console.error('Failed to compute/apply machine progress:', err);
         }
+
     }
 
-    // Update all progress bars on the page
-    updateAllProgressBars() {
-        console.log('Updating all machine progress bars...');
-        console.log('Progress data type:', Array.isArray(this.progressData) ? 'array' : 'object');
-        
-        if (Array.isArray(this.progressData)) {
-            // Multiple machines
-            console.log(`Updating ${this.progressData.length} machines`);
-            this.progressData.forEach(machine => {
-                this.updateMachineProgress(machine);
+    // Step 2: Build payload from the existing machine table
+    buildPayloadFromDOM() {
+        const machines = [];
+        const rows = document.querySelectorAll('#metricsBody tr');
+
+        rows.forEach(tr => {
+            const firstOutputCell = tr.querySelector('td[data-machine-id]');
+            if (!firstOutputCell) return;
+
+            const machineId = firstOutputCell.getAttribute('data-machine-id');
+            const parts = {};
+
+            tr.querySelectorAll('td[data-machine-id][data-part]').forEach(td => {
+                const partName = td.getAttribute('data-part');
+
+                // Example: "<strong>123,456</strong> / 1.5M"
+                const primaryTextDiv = td.querySelector('div');
+                const rawText = (primaryTextDiv?.textContent || '').trim();
+
+                // Extract current before "/"
+                let current = 0;
+                const beforeSlash = rawText.split('/')[0] || '';
+                const currentMatch = beforeSlash.match(/[\d,]+/);
+                if (currentMatch) current = parseInt(currentMatch[0].replace(/,/g, ''), 10);
+
+                // Extract limit from " / 1.5M"
+                let limit = 0;
+                const limitMatch = rawText.match(/\/\s*([\d,.]+)\s*M/i);
+                if (limitMatch) {
+                    const limitNumber = parseFloat(limitMatch[1].replace(/,/g, ''));
+                    if (!isNaN(limitNumber)) limit = Math.round(limitNumber * 1000000);
+                } else {
+                    // Fallback → always 1.5M
+                    limit = this.getDefaultLimitForPart(partName);
+                }
+
+                parts[partName] = { current, limit };
             });
-        } else {
-            // Single machine
-            console.log('Updating single machine');
-            this.updateMachineProgress(this.progressData);
-        }
+
+            machines.push({
+                machine_id: machineId,
+                parts
+            });
+        });
+
+        return { machines }; // Payload shape expected by PHP controller
     }
 
-    // Update progress bars for a specific machine
-    updateMachineProgress(machine) {
-        const machineId = machine.machine_id;
-        const progress = machine.progress;
+    // Step 3: Send DOM values to PHP to compute percentages/status
+    async fetchComputedProgress(payload) {
+        const res = await fetch(this.controllerUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        return res.json();
+    }
 
-        console.log(`Updating machine ${machineId}:`, machine);
-        console.log(`Progress parts:`, Object.keys(progress));
-
-        // Update each part's progress bar
-        Object.keys(progress).forEach(partName => {
-            const partData = progress[partName];
-            this.updateProgressBar(machineId, partName, partData);
+    // Step 4: Apply computed progress to the UI
+    applyProgressData(machines) {
+        machines.forEach(machine => {
+            const { machine_id, progress } = machine;
+            if (!progress) return;
+            Object.keys(progress).forEach(partName => {
+                this.updateProgressBar(machine_id, partName, progress[partName]);
+            });
         });
     }
 
-    // Update individual progress bar
     updateProgressBar(machineId, partName, partData) {
-        console.log(`=== UPDATING PROGRESS BAR ===`);
-        console.log(`Machine ID: ${machineId}`);
-        console.log(`Part Name: ${partName}`);
-        console.log(`Part Data:`, partData);
-        
-        // Find the progress bar container (td element with both data attributes)
-        const escapedPartName = (window.CSS && CSS.escape) ? CSS.escape(partName) : partName;
-        const container = document.querySelector(`td[data-machine-id="${machineId}"][data-part="${escapedPartName}"]`);
-        const progressBar = container?.querySelector('.progress-fill');
-        const textDisplay = container?.querySelector('div:first-child');
+        const container = document.querySelector(`td[data-machine-id="${machineId}"][data-part="${partName}"]`);
+        if (!container) return;
 
-        console.log(`Container selector: td[data-machine-id="${machineId}"][data-part="${escapedPartName}"]`);
-        console.log(`Found container:`, container);
-        console.log(`Found progress bar:`, progressBar);
-        console.log(`Found text display:`, textDisplay);
+        const progressBar = container.querySelector('.progress-fill');
+        const textDisplay = container.querySelector('div:first-child');
+        if (!progressBar || !textDisplay) return;
 
-        if (progressBar && textDisplay) {
-            // Log current state before update
-            console.log(`Before update - Progress bar width: ${progressBar.style.width}`);
-            console.log(`Before update - Text display: ${textDisplay.innerHTML}`);
-            
-            // Force clear any existing width and set to 0 first if percentage is 0
-            if (partData.percentage === 0) {
-                progressBar.style.width = '0px';
-                progressBar.style.minWidth = '0px';
-            }
-            
-            // Update progress bar width
-            progressBar.style.width = `${partData.percentage}%`;
-            
-            // Update status color
-            progressBar.className = `progress-fill status-${partData.status}`;
-            
-            // Update tooltip with current/limit info
-            progressBar.title = `${partData.current.toLocaleString()} / ${partData.limit.toLocaleString()} (${partData.percentage}%)`;
-            
-            // Add warning class for high percentages
-            if (partData.percentage >= 90) {
-                progressBar.classList.add('warning');
-            }
-            
-            // Update the text display
-            const limitText = (partData.limit / 1000000) + 'M';
-            textDisplay.innerHTML = `<strong>${partData.current.toLocaleString()}</strong> / ${limitText}`;
-            
-            // Log after update
-            console.log(`After update - Progress bar width: ${progressBar.style.width}`);
-            console.log(`After update - Text display: ${textDisplay.innerHTML}`);
-            console.log(`Successfully updated machine progress bar for ${partName}: ${partData.percentage}%`);
-        } else {
-            console.error(`❌ Machine progress bar or text display not found for machine ${machineId}, part ${partName}`);
-            console.error(`Container selector: td[data-machine-id="${machineId}"][data-part="${partName}"]`);
-            console.error(`All td elements with data-machine-id:`, document.querySelectorAll(`td[data-machine-id]`));
-            console.error(`All td elements with data-part:`, document.querySelectorAll(`td[data-part]`));
-            
-            // Try alternative selectors
-            const allContainers = document.querySelectorAll('td[data-machine-id]');
-            console.error(`All containers with data-machine-id:`, allContainers);
-            
-            const allParts = document.querySelectorAll('td[data-part]');
-            console.error(`All containers with data-part:`, allParts);
-        }
+        const pct = Number.isFinite(partData.percentage) ? partData.percentage : 0;
+
+        progressBar.style.width = `${pct}%`;
+        progressBar.className = `progress-fill status-${partData.status || 'green'}`;
+        progressBar.title = `${(partData.current ?? 0).toLocaleString()} / ${(partData.limit ?? 0).toLocaleString()} (${pct}%)`;
+
+        if (pct >= 90) progressBar.classList.add('warning');
+
+        const limitText = partData.limit ? (partData.limit / 1000000) + 'M' : '';
+        textDisplay.innerHTML = `<strong>${(partData.current ?? 0).toLocaleString()}</strong>${limitText ? ` / ${limitText}` : ''}`;
     }
 
-    // Setup auto-refresh every 30 seconds
-    setupAutoRefresh() {
-        this.updateInterval = setInterval(() => {
-            this.loadProgressData();
-        }, 30000); // 30 seconds
-    }
-
-    // Setup event listeners
-    setupEventListeners() {
-        // Manual refresh button
-        const refreshBtn = document.querySelector('[onclick="refreshPage()"]');
-        if (refreshBtn) {
-            refreshBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.loadProgressData();
-            });
-        }
-
-        // Progress bar hover effects
-        document.addEventListener('mouseover', (e) => {
-            if (e.target.classList.contains('progress-fill')) {
-                this.showProgressTooltip(e.target);
-            }
-        });
-
-        document.addEventListener('mouseout', (e) => {
-            if (e.target.classList.contains('progress-fill')) {
-                this.hideProgressTooltip();
-            }
-        });
-    }
-
-    // Show detailed tooltip
-    showProgressTooltip(progressBar) {
-        const tooltip = document.createElement('div');
-        tooltip.className = 'progress-tooltip';
-        tooltip.textContent = progressBar.title;
-        
-        document.body.appendChild(tooltip);
-        
-        // Position tooltip
-        const rect = progressBar.getBoundingClientRect();
-        tooltip.style.left = rect.left + (rect.width / 2) - (tooltip.offsetWidth / 2) + 'px';
-        tooltip.style.top = rect.top - tooltip.offsetHeight - 10 + 'px';
-    }
-
-    // Hide tooltip
-    hideProgressTooltip() {
-        const tooltip = document.querySelector('.progress-tooltip');
-        if (tooltip) {
-            tooltip.remove();
-        }
-    }
-
-    // Cleanup
-    destroy() {
-        if (this.updateInterval) {
-            clearInterval(this.updateInterval);
-        }
+    // Always fallback to 1.5M
+    getDefaultLimitForPart(part) {
+        return 1500000;
     }
 }
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('Dashboard machine progress.js: DOM loaded, initializing MachineProgressBarManager...');
-    window.machineProgressBarManager = new MachineProgressBarManager();
-    console.log('Dashboard machine progress.js: MachineProgressBarManager initialized:', window.machineProgressBarManager);
+// Initialize with a 50ms scan delay and set the PHP compute endpoint
+window.machineProgressBarManager = new MachineProgressBarManager({
+    scanDelay: 50,
+    controllerUrl: '/SOMS/app/controllers/get_machine_output_progress.php'
 });
-
-// Export for global use
-window.MachineProgressBarManager = MachineProgressBarManager;
-
-// Manual refresh function for testing
-window.refreshMachineProgressBars = function() {
-    console.log('Manual machine refresh called');
-    if (window.machineProgressBarManager) {
-        window.machineProgressBarManager.loadProgressData();
-    } else {
-        console.error('MachineProgressBarManager not initialized');
-    }
-};
-
-// Force refresh function to clear cached progress bars
-window.forceRefreshMachineProgressBars = function() {
-    console.log('🔄 Force refreshing machine progress bars...');
-    if (window.machineProgressBarManager) {
-        // Force clear all progress bars first
-        const allProgressBars = document.querySelectorAll('.progress-fill');
-        allProgressBars.forEach(bar => {
-            if (bar.style.width === '0%' || bar.style.width === '0px') {
-                bar.style.width = '0px';
-                bar.style.minWidth = '0px';
-            }
-        });
-        // Then reload data
-        window.machineProgressBarManager.loadProgressData();
-    } else {
-        console.error('Machine progress bar manager not found');
-    }
-};
