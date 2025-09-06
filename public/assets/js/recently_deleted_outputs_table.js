@@ -9,19 +9,15 @@ document.addEventListener('click', function(event) {
 
 // Restore confirmation
 function confirmRestoreOutputRecord(recordId) {
-    if (confirm("Are you sure you want to restore this record?")) {
-        const form = document.createElement("form");
-        form.method = "POST";
-        form.action = "../controllers/restore_record.php";
-
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "record_id";
-        input.value = recordId;
-
-        form.appendChild(input);
-        document.body.appendChild(form);
-        form.submit();
-    }
+    const modal = document.getElementById('restoreOutputModal');
+    modal.style.display = 'block';
+    
+    document.getElementById('restore_record_id').value = recordId;
+    document.getElementById('restore_record_id_display').textContent = '#' + recordId;
+    
+    // Reset the confirmation checkbox and disable restore button
+    document.getElementById('confirmRestore').checked = false;
+    document.getElementById('restoreBtn').disabled = true;
 }
+
 
