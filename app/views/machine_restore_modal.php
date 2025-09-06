@@ -1,15 +1,15 @@
-<!-- Restore Applicator Modal -->
+<!-- Restore Machie Modal -->
 <div id="restoreApplicatorModalDashboardApplicator" class="modal-overlay">
     <div class="form-container">
         <button class="modal-close-btn" onclick="closeRestoreApplicatorModal()">×</button>
         
         <div class="form-header">
             <span class="delete-icon">🗑️</span>
-            <h1 class="form-title">Restore Applicator</h1>
+            <h1 class="form-title">Restore Machine</h1>
             <p class="form-subtitle">Confirm restoration of deleted applicator</p>
         </div>
 
-        <form id="restoreApplicatorForm" method="POST" action="../controllers/restore_applicator.php">
+        <form id="restoreApplicatorForm" method="POST" action="../controllers/restore_machine.php">
             <input type="hidden" name="applicator_id" value="" id="restore_applicator_id">
             
             <div class="warning-section">
