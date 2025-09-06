@@ -7,10 +7,18 @@
 */
 
 // Include the database connection
-require_once __DIR__ . '/../../includes/db.php';
+require_once __DIR__ . '/../includes/db.php';
 
 function getApplicatorPartLimits() {
-    $pdo = getDbConnection();
+    /*
+        Fetch all applicator part limits from the database.
+        Returns an associative array of applicator part limits.
+
+        Used in the applicator dashboard to determine part limits for each applicator.
+    */
+
+    global $pdo;
+
     $stmt = $pdo->prepare("SELECT 
         applicator_id,
         applicator_part,
