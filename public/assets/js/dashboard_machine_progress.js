@@ -19,7 +19,7 @@ class MachineProgressBarManager {
     async processFromDOM() {
         try {
             const payload = this.buildPayloadFromDOM();      // Step 2: grab per-row data
-            const result = await this.fetchComputedProgress(payload); // Step 3: compute in PHP
+            const result = await this.fetchComputedProgress(payload);    // Step 3: compute in PHP
             if (result?.success && Array.isArray(result.data)) {
                 this.progressData = result.data;
                 this.applyProgressData(this.progressData);   // Step 4: display progress
@@ -47,24 +47,24 @@ class MachineProgressBarManager {
             tr.querySelectorAll('td[data-machine-id][data-part]').forEach(td => {
                 const partName = td.getAttribute('data-part');
 
-                // First line looks like: "<strong>123,456</strong> / 1.5M"
+                // Example: "<strong>123,456</strong> / 1.5M"
                 const primaryTextDiv = td.querySelector('div');
                 const rawText = (primaryTextDiv?.textContent || '').trim();
 
-                // Extract current number before "/"
+                // Extract current before "/"
                 let current = 0;
                 const beforeSlash = rawText.split('/')[0] || '';
                 const currentMatch = beforeSlash.match(/[\d,]+/);
                 if (currentMatch) current = parseInt(currentMatch[0].replace(/,/g, ''), 10);
 
-                // Extract limit from " / 2M" or " / 1.5M"
+                // Extract limit from " / 1.5M"
                 let limit = 0;
                 const limitMatch = rawText.match(/\/\s*([\d,.]+)\s*M/i);
                 if (limitMatch) {
                     const limitNumber = parseFloat(limitMatch[1].replace(/,/g, ''));
                     if (!isNaN(limitNumber)) limit = Math.round(limitNumber * 1000000);
                 } else {
-                    // Fallback if not present in text
+                    // Fallback → always 1.5M
                     limit = this.getDefaultLimitForPart(partName);
                 }
 
@@ -121,7 +121,7 @@ class MachineProgressBarManager {
         textDisplay.innerHTML = `<strong>${(partData.current ?? 0).toLocaleString()}</strong>${limitText ? ` / ${limitText}` : ''}`;
     }
 
-    // Default limits (fallback if parsing fails)
+    // Always fallback to 1.5M
     getDefaultLimitForPart(part) {
         return 1500000;
     }
