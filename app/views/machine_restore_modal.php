@@ -3,6 +3,7 @@
     <div class="form-container">
         <button class="modal-close-btn" onclick="closeRestoreApplicatorModal()">×</button>
         
+        
         <div class="form-header">
             <span class="delete-icon">🗑️</span>
             <h1 class="form-title">Restore Machine</h1>
