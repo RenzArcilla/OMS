@@ -1,84 +1,112 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Listen for clicks on the entire document
+    // Universal modal closer - works with any button that has modal-close-btn or cancel-btn class
     document.addEventListener('click', function(event) {
         // Check if the clicked element has the class we want
         if (
             event.target.classList.contains('modal-close-btn') ||
             event.target.classList.contains('cancel-btn')
         ) {
-            // This works even for dynamically added elements
-            const modal = document.getElementById('exportModal');
+            // Find the closest modal overlay and close it
+            const modal = event.target.closest('.modal-overlay');
             if (modal) {
                 modal.style.display = 'none';
             }
-            const modal2 = document.getElementById('deleteCustomPartModalDashboardApplicator');
-            if (modal2) {
-                modal2.style.display = 'none';
-            }
-            const modal3 = document.getElementById('deleteCustomPartModalDashboardMachine');
-            if (modal3) {
-                modal3.style.display = 'none';
-            }
-            const modal4 = document.getElementById('editCustomPartModalDashboardMachine');
-            if (modal4) {
-                modal4.style.display = 'none';
-            }
-            const modal5 = document.getElementById('addCustomPartModalDashboardMachine');
-            if (modal5) {
-                modal5.style.display = 'none';
-            }
-            const modal6 = document.getElementById('editCustomPartModalDashboardMachine');
-            if (modal6) {
-                modal6.style.display = 'none';
-            }
-            const modal7 = document.getElementById('addCustomPartModalDashboardMachine');
-            if (modal7) {
-                modal7.style.display = 'none';
-            }
-            const modal8 = document.getElementById('exportMachineModal');
-            if (modal8) {
-                modal8.style.display = 'none';
-            }
-            const modal9 = document.getElementById('modalOverlay');
-            if (modal9) {
-                modal9.style.display = 'none';
-            }
-            const modal10 = document.getElementById('logoutModalOverlay');
-            if (modal10) {
-                modal10.style.display = 'none';
-            }
-            const modal11 = document.getElementById('exportModalRecentlyReset');
-            if (modal11) {
-                modal11.style.display = 'none';
-            }
-            const modal12 = document.getElementById('editMaxOutputModal');
-            if (modal12) {
-                modal12.style.display = 'none';
-            }
-            const modal13 = document.getElementById('restoreOutputModal');
-            if (modal13) {
-                modal13.style.display = 'none';
-            }
             
+            // Also close any modals that might be open (fallback)
+            const allModals = document.querySelectorAll('.modal-overlay');
+            allModals.forEach(modal => modal.style.display = 'none');
         }
     });
     
-
     // Close modal when clicking outside
     document.addEventListener('click', function(event) {
-        const modal = document.getElementById('exportModal');
-        if (event.target === modal) {
-            closeExportModal();
+        if (event.target.classList.contains('modal-overlay')) {
+            event.target.style.display = 'none';
         }
     });
 
     // Close modal with Escape key
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
-            closeExportModal();
+            const openModals = document.querySelectorAll('.modal-overlay[style*="block"]');
+            openModals.forEach(modal => modal.style.display = 'none');
         }
     });
-
-    
 });
+
+// Universal modal close functions for dashboard modals
+window.closeResetModal = function() {
+    const applicatorModal = document.getElementById('resetModalDashboardApplicator');
+    const machineModal = document.getElementById('resetModalDashboardMachine');
+    
+    if (applicatorModal) {
+        applicatorModal.style.display = 'none';
+        const form = applicatorModal.querySelector('form');
+        if (form) form.reset();
+    }
+    
+    if (machineModal) {
+        machineModal.style.display = 'none';
+        const form = machineModal.querySelector('form');
+        if (form) form.reset();
+    }
+};
+
+window.closeUndoModal = function() {
+    const applicatorModal = document.getElementById('undoModalDashboardApplicator');
+    const machineModal = document.getElementById('undoModalDashboardMachine');
+    
+    if (applicatorModal) {
+        applicatorModal.style.display = 'none';
+        const form = applicatorModal.querySelector('form');
+        if (form) form.reset();
+        const dropdown = applicatorModal.querySelector('#editStatus');
+        if (dropdown) dropdown.innerHTML = '<option value="">Select a part first</option>';
+    }
+    
+    if (machineModal) {
+        machineModal.style.display = 'none';
+        const form = machineModal.querySelector('form');
+        if (form) form.reset();
+        const dropdown = machineModal.querySelector('#editStatus');
+        if (dropdown) dropdown.innerHTML = '<option value="">Select a part first</option>';
+    }
+};
+
+window.closeRestoreApplicatorModal = function() {
+    const modal = document.getElementById('restoreApplicatorModalDashboardApplicator');
+    if (modal) {
+        modal.style.display = 'none';
+        const form = modal.querySelector('form');
+        if (form) form.reset();
+        const checkbox = modal.querySelector('#confirmRestore');
+        const submitBtn = modal.querySelector('#restoreBtn');
+        if (checkbox) checkbox.checked = false;
+        if (submitBtn) submitBtn.disabled = true;
+    }
+};
+
+// Also handle machine restore modal (same modal ID, different context)
+window.closeRestoreMachineModal = function() {
+    const modal = document.getElementById('restoreApplicatorModalDashboardApplicator');
+    if (modal) {
+        modal.style.display = 'none';
+        const form = modal.querySelector('form');
+        if (form) form.reset();
+        const checkbox = modal.querySelector('#confirmRestore');
+        const submitBtn = modal.querySelector('#restoreBtn');
+        if (checkbox) checkbox.checked = false;
+        if (submitBtn) submitBtn.disabled = true;
+    }
+};
+
+// Handle add custom part modal close
+window.closeAddCustomPartModal = function() {
+    const modal = document.getElementById('addCustomPartModalDashboardMachine');
+    if (modal) {
+        modal.style.display = 'none';
+        const form = modal.querySelector('form');
+        if (form) form.reset();
+    }
+};
 
