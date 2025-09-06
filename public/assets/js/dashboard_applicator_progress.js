@@ -30,10 +30,6 @@ class ProgressBarManager {
             console.error('Failed to compute/apply progress:', err);
         }
 
-        // Optional: expose a manual refresh
-        window.refreshProgressFromDOM = async () => {
-            await this.processFromDOM();
-        };
     }
 
     // Step 2: Build payload from the existing table
@@ -128,13 +124,12 @@ class ProgressBarManager {
 
     // Fallback limit mapping (used only if limit isn't parsable from cell text)
     getDefaultLimitForPart(part) {
-        if (['wire_crimper', 'wire_anvil', 'insulation_crimper', 'insulation_anvil', 'slide_cutter'].includes(part)) return 400000;
-        if (['cutter_holder', 'shear_blade'].includes(part)) return 500000;
-        return 600000; // cutter_a, cutter_b, and custom parts
+        // Standardized: all applicator parts fallback to 500k
+        return 500000;
     }
 }
 
-// Initialize with a 50ms scan delay and your PHP compute endpoint
+// Initialize with a 50ms scan delay and set the PHP compute endpoint
 window.progressBarManager = new ProgressBarManager({
     scanDelay: 50,
     controllerUrl: '/SOMS/app/controllers/get_dashboard_outputs.php'
