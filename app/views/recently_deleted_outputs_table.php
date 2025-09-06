@@ -96,10 +96,13 @@
                 </div>
             </div>
         </div>
+        <!-- Restore Output Modal -->
+        <?php include_once __DIR__ . '/recently_deleted_output_modal.php'; ?>
         
         
     </div>
     <script src="../../public/assets/js/recently_deleted_outputs_table.js"></script>
+    <script src="../../public/assets/js/dashboard_applicator.js"></script>
     <!-- Disabled Records Pagination -->
     <script src="../../public/assets/js/disabled_records_pagination.js"></script>
 </body>
