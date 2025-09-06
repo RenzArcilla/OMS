@@ -1,188 +1,141 @@
-// Dashboard Progress Bar Management
+// Dashboard Progress Bar Management (DOM -> PHP controller -> UI)
 class ProgressBarManager {
-    constructor() {
-        this.progressData = {};
-        this.updateInterval = null;
+    constructor(options = {}) {
+        this.scanDelay = options.scanDelay ?? 50; // Step 2: wait 50ms
+        this.controllerUrl = options.controllerUrl ?? '/SOMS/app/controllers/get_dashboard_outputs.php'; // Step 3: PHP controller
+        this.progressData = [];
         this.init();
     }
 
     init() {
-        this.loadProgressData();
-        this.setupAutoRefresh();
-        this.setupEventListeners();
+        const start = () => setTimeout(() => this.processFromDOM(), this.scanDelay);
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', start, { once: true });
+        } else {
+            start();
+        }
     }
 
-    // Load progress data from API
-    async loadProgressData() {
+    async processFromDOM() {
         try {
-            console.log('Loading progress data...');
-            const response = await fetch('/SOMS/app/controllers/get_dashboard_outputs.php');
-            const result = await response.json();
-            
-            console.log('Progress data response:', result);
-            
-            if (result.success) {
+            const payload = this.buildPayloadFromDOM();     // Step 2: grab per-row data
+            const result = await this.fetchComputedProgress(payload); // Step 3: compute in PHP
+            if (result?.success && Array.isArray(result.data)) {
                 this.progressData = result.data;
-                console.log('Progress data loaded:', this.progressData);
-                this.updateAllProgressBars();
+                this.applyProgressData(this.progressData); // Step 4: display progress
             } else {
-                console.error('Failed to load progress data:', result.message);
+                console.error('Controller returned an unexpected response:', result);
             }
-        } catch (error) {
-            console.error('Error loading progress data:', error);
+        } catch (err) {
+            console.error('Failed to compute/apply progress:', err);
         }
+
+        // Optional: expose a manual refresh
+        window.refreshProgressFromDOM = async () => {
+            await this.processFromDOM();
+        };
     }
 
-    // Update all progress bars on the page
-    updateAllProgressBars() {
-        console.log('Updating all progress bars...');
-        console.log('Progress data type:', Array.isArray(this.progressData) ? 'array' : 'object');
-        
-        if (Array.isArray(this.progressData)) {
-            // Multiple applicators
-            console.log(`Updating ${this.progressData.length} applicators`);
-            this.progressData.forEach(applicator => {
-                this.updateApplicatorProgress(applicator);
+    // Step 2: Build payload from the existing table
+    buildPayloadFromDOM() {
+        const applicators = [];
+        const rows = document.querySelectorAll('#metricsBody tr');
+
+        rows.forEach(tr => {
+            const firstOutputCell = tr.querySelector('td[data-applicator-id]');
+            if (!firstOutputCell) return;
+
+            const applicatorId = firstOutputCell.getAttribute('data-applicator-id');
+            const parts = {};
+
+            tr.querySelectorAll('td[data-applicator-id][data-part]').forEach(td => {
+                const partName = td.getAttribute('data-part');
+
+                // First line looks like: "<strong>123,456</strong> / 400K" or "123,456 / 600K"
+                const primaryTextDiv = td.querySelector('div');
+                const rawText = (primaryTextDiv?.textContent || '').trim();
+
+                // Extract current number before "/"
+                let current = 0;
+                const beforeSlash = rawText.split('/')[0] || '';
+                const currentMatch = beforeSlash.match(/[\d,]+/);
+                if (currentMatch) current = parseInt(currentMatch[0].replace(/,/g, ''), 10);
+
+                // Extract limit from " / xxxK "
+                let limit = 0;
+                const limitMatch = rawText.match(/\/\s*([\d,.]+)\s*K/i);
+                if (limitMatch) {
+                    const limitNumber = parseFloat(limitMatch[1].replace(/,/g, ''));
+                    if (!isNaN(limitNumber)) limit = Math.round(limitNumber * 1000);
+                } else {
+                    // Fallback if not present in text (rare)
+                    limit = this.getDefaultLimitForPart(partName);
+                }
+
+                parts[partName] = { current, limit };
             });
-        } else {
-            // Single applicator
-            console.log('Updating single applicator');
-            this.updateApplicatorProgress(this.progressData);
-        }
+
+            applicators.push({
+                applicator_id: applicatorId,
+                parts
+            });
+        });
+
+        // Payload shape expected by PHP controller
+        return { applicators };
     }
 
-    // Update progress bars for a specific applicator
-    updateApplicatorProgress(applicator) {
-        const applicatorId = applicator.applicator_id;
-        const progress = applicator.progress;
+    // Step 3: Send DOM values to PHP to compute percentages/status
+    async fetchComputedProgress(payload) {
+        const res = await fetch(this.controllerUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        return res.json();
+    }
 
-        console.log(`Updating applicator ${applicatorId}:`, applicator);
-        console.log(`Progress parts:`, Object.keys(progress));
-
-        // Update each part's progress bar
-        Object.keys(progress).forEach(partName => {
-            const partData = progress[partName];
-            this.updateProgressBar(applicatorId, partName, partData);
+    // Step 4: Apply computed progress to the UI
+    applyProgressData(applicators) {
+        applicators.forEach(applicator => {
+            const { applicator_id, progress } = applicator;
+            if (!progress) return;
+            Object.keys(progress).forEach(partName => {
+                this.updateProgressBar(applicator_id, partName, progress[partName]);
+            });
         });
     }
 
-    // Update individual progress bar
     updateProgressBar(applicatorId, partName, partData) {
-        // Find the progress bar container (td element with both data attributes)
         const container = document.querySelector(`td[data-applicator-id="${applicatorId}"][data-part="${partName}"]`);
-        const progressBar = container?.querySelector('.progress-fill');
-        const textDisplay = container?.querySelector('div:first-child');
+        if (!container) return;
 
-        console.log(`Looking for progress bar: td[data-applicator-id="${applicatorId}"][data-part="${partName}"]`);
-        console.log(`Found container:`, container);
-        console.log(`Found progress bar:`, progressBar);
-        console.log(`Found text display:`, textDisplay);
-        console.log(`Part data:`, partData);
+        const progressBar = container.querySelector('.progress-fill');
+        const textDisplay = container.querySelector('div:first-child');
+        if (!progressBar || !textDisplay) return;
 
-        if (progressBar && textDisplay) {
-            // Update progress bar width
-            progressBar.style.width = `${partData.percentage}%`;
-            
-            // Update status color
-            progressBar.className = `progress-fill status-${partData.status}`;
-            
-            // Update tooltip with current/limit info
-            progressBar.title = `${partData.current.toLocaleString()} / ${partData.limit.toLocaleString()} (${partData.percentage}%)`;
-            
-            // Add warning class for high percentages
-            if (partData.percentage >= 90) {
-                progressBar.classList.add('warning');
-            }
-            
-            // Update the text display
-            const limitText = (partData.limit / 1000) + 'K';
-            textDisplay.innerHTML = `<strong>${partData.current.toLocaleString()}</strong> / ${limitText}`;
-            
-            console.log(`Updated progress bar for ${partName}: ${partData.percentage}%`);
-            console.log(`Updated text display: ${partData.current.toLocaleString()} / ${limitText}`);
-        } else {
-            console.warn(`Progress bar or text display not found for applicator ${applicatorId}, part ${partName}`);
-        }
+        const pct = Number.isFinite(partData.percentage) ? partData.percentage : 0;
+
+        progressBar.style.width = `${pct}%`;
+        progressBar.className = `progress-fill status-${partData.status || 'green'}`;
+        progressBar.title = `${(partData.current ?? 0).toLocaleString()} / ${(partData.limit ?? 0).toLocaleString()} (${pct}%)`;
+
+        if (pct >= 90) progressBar.classList.add('warning');
+
+        const limitText = partData.limit ? (partData.limit / 1000) + 'K' : '';
+        textDisplay.innerHTML = `<strong>${(partData.current ?? 0).toLocaleString()}</strong>${limitText ? ` / ${limitText}` : ''}`;
     }
 
-    // Setup auto-refresh every 30 seconds
-    setupAutoRefresh() {
-        this.updateInterval = setInterval(() => {
-            this.loadProgressData();
-        }, 30000); // 30 seconds
-    }
-
-    // Setup event listeners
-    setupEventListeners() {
-        // Manual refresh button
-        const refreshBtn = document.querySelector('[onclick="refreshPage()"]');
-        if (refreshBtn) {
-            refreshBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.loadProgressData();
-            });
-        }
-
-        // Progress bar hover effects
-        document.addEventListener('mouseover', (e) => {
-            if (e.target.classList.contains('progress-fill')) {
-                this.showProgressTooltip(e.target);
-            }
-        });
-
-        document.addEventListener('mouseout', (e) => {
-            if (e.target.classList.contains('progress-fill')) {
-                this.hideProgressTooltip();
-            }
-        });
-    }
-
-    // Show detailed tooltip
-    showProgressTooltip(progressBar) {
-        const tooltip = document.createElement('div');
-        tooltip.className = 'progress-tooltip';
-        tooltip.textContent = progressBar.title;
-        
-        document.body.appendChild(tooltip);
-        
-        // Position tooltip
-        const rect = progressBar.getBoundingClientRect();
-        tooltip.style.left = rect.left + (rect.width / 2) - (tooltip.offsetWidth / 2) + 'px';
-        tooltip.style.top = rect.top - tooltip.offsetHeight - 10 + 'px';
-    }
-
-    // Hide tooltip
-    hideProgressTooltip() {
-        const tooltip = document.querySelector('.progress-tooltip');
-        if (tooltip) {
-            tooltip.remove();
-        }
-    }
-
-    // Cleanup
-    destroy() {
-        if (this.updateInterval) {
-            clearInterval(this.updateInterval);
-        }
+    // Fallback limit mapping (used only if limit isn't parsable from cell text)
+    getDefaultLimitForPart(part) {
+        if (['wire_crimper', 'wire_anvil', 'insulation_crimper', 'insulation_anvil', 'slide_cutter'].includes(part)) return 400000;
+        if (['cutter_holder', 'shear_blade'].includes(part)) return 500000;
+        return 600000; // cutter_a, cutter_b, and custom parts
     }
 }
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('Dashboard.js: DOM loaded, initializing ProgressBarManager...');
-    window.progressBarManager = new ProgressBarManager();
-    console.log('Dashboard.js: ProgressBarManager initialized:', window.progressBarManager);
+// Initialize with a 50ms scan delay and your PHP compute endpoint
+window.progressBarManager = new ProgressBarManager({
+    scanDelay: 50,
+    controllerUrl: '/SOMS/app/controllers/get_dashboard_outputs.php'
 });
-
-// Export for global use
-window.ProgressBarManager = ProgressBarManager;
-
-// Manual refresh function for testing
-window.refreshProgressBars = function() {
-    console.log('Manual refresh called');
-    if (window.progressBarManager) {
-        window.progressBarManager.loadProgressData();
-    } else {
-        console.error('ProgressBarManager not initialized');
-    }
-};
