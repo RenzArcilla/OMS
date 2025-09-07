@@ -176,8 +176,8 @@ function updateApplicatorOutput($applicator_data, $applicator_output, $record_id
         
     } catch (PDOException $e) {
         // Log error and return an error message on failure
-        error_log("Database Error: " . $e->getMessage());
-        return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        error_log("Database Error in updateApplicatorOutput: " . $e->getMessage());
+        return "A database error occurred while updating applicator output. Please try again later.";
     }
 }
 
@@ -215,7 +215,7 @@ function disableApplicatorOutputs($applicator_id) {
     } catch (PDOException $e) {
         // Log error and return an error message on failure
         error_log("Database Error in disableApplicatorOutputs: " . $e->getMessage());
-        return "Database error occurred when disabling applicator outputs: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        return "A database error occurred while disabling applicator outputs. Please try again later.";
     }
 }
 
@@ -253,7 +253,7 @@ function restoreApplicatorOutputs($applicator_id) {
     } catch (PDOException $e) {
         // Log error and return an error message on failure
         error_log("Database Error in restoreApplicatorOutputs: " . $e->getMessage());
-        return "Database error occurred when restoring applicator outputs: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        return "A database error occurred while restoring applicator outputs. Please try again later.";
     }
 }
 
@@ -284,6 +284,6 @@ function restoreApplicatorOutputByRecordID($record_id): bool|string {
         return true;
     } catch (PDOException $e) {
         error_log("Database Error in restoreApplicatorOutputByRecordID(): " . $e->getMessage());
-        return "Database error occurred when restoring applicator outputs: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        return "A database error occurred while restoring applicator outputs. Please try again later.";
     }
 }

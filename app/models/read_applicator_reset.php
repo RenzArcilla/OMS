@@ -78,8 +78,8 @@ function getApplicatorResetOnTimeStamp($applicator_id, $part_name, $reset_time) 
 
     } catch (PDOException $e) {
         // Log error and return an error message on failure
-        error_log("Database Error: " . $e->getMessage());
-        return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        error_log("Database Error in getApplicatorResetOnTimeStamp: " . $e->getMessage());
+        return "A database error occurred while fetching applicator reset data. Please try again later.";
     }
 }
 

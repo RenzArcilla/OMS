@@ -49,7 +49,7 @@ function updateCustomPart($part_id, $name, $type) {
     } catch (PDOException $e) {
         // Log error and return an error message on failure
         error_log("Database Error in updateCustomPart: " . $e->getMessage());
-        return "Database error occurred when updating custom part: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        return "A database error occurred while updating custom part. Please try again later.";
     }
 }
 

@@ -80,7 +80,7 @@ function updateMachineOutput($machine_data, $machine_output, $record_id) {
     } catch (PDOException $e) {
         // Log error and return an error message on failure
         error_log("Database Error in updateMachineOutput: " . $e->getMessage());
-        return "Database error occurred in updateMachineOutput: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        return "A database error occurred while updating machine output. Please try again later.";
     }
 }
 
@@ -118,7 +118,7 @@ function disableMachineOutputs($machine_id) {
     } catch (PDOException $e) {
         // Log error and return an error message on failure
         error_log("Database Error in disableMachineOutputs: " . $e->getMessage());
-        return "Database error occurred when disabling machine outputs: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        return "A database error occurred while disabling machine outputs. Please try again later.";
     }
 }
 
@@ -156,7 +156,7 @@ function restoreMachineOutputs($machine_id) {
     } catch (PDOException $e) {
         // Log error and return an error message on failure
         error_log("Database Error in restoreMachineOutputs: " . $e->getMessage());
-        return "Database error occurred when restoring machine outputs: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        return "A database error occurred while restoring machine outputs. Please try again later.";
     }
 }
 
@@ -187,6 +187,6 @@ function restoreMachineOutputByRecordID($record_id): bool|string {
         return true;
     } catch (PDOException $e) {
         error_log("Database Error in restoreMachineOutputByRecordID(): " . $e->getMessage());
-        return "Database error occurred when restoring machine output: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        return "A database error occurred while restoring machine output. Please try again later.";
     }
 }

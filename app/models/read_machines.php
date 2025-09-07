@@ -120,8 +120,8 @@ function machineExists($control_no){
 
     } catch (PDOException $e) {
         // Log error and return an error message on failure
-        error_log("Database Error: " . $e->getMessage());
-        return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        error_log("Database Error in getMachineByControlNo: " . $e->getMessage());
+        return "A database error occurred while fetching machine data. Please try again later.";
     }
 }
 
@@ -163,7 +163,7 @@ function getInactiveMachineByControlNo($control_no) {
     } catch (PDOException $e) {
         // Log error and return an error message on failure
         error_log("Database Error in getInactiveMachineByControlNo: " . $e->getMessage());
-        return "Database error occurred in getInactiveMachineByControlNo: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        return "A database error occurred while checking machine existence. Please try again later.";
     }
 }
 
@@ -206,7 +206,7 @@ function getActiveMachineByControlNo($control_no) {
     } catch (PDOException $e) {
         // Log error and return an error message on failure
         error_log("Database Error in getActiveMachineByControlNo: " . $e->getMessage());
-        return "Database error occurred in getActiveMachineByControlNo: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        return "A database error occurred while checking machine existence. Please try again later.";
     }
 }
 

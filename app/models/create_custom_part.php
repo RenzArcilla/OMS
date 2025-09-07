@@ -43,6 +43,6 @@ function createCustomPart($user_id, $type, $name) {
     } catch (PDOException $e) {
         // Log error and return an error message on failure
         error_log("Database Error in createCustomPart: " . $e->getMessage());
-        return "Database error occurred in createCustomPart: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        return "A database error occurred while creating custom part. Please try again later.";
     }
 }

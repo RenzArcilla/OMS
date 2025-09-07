@@ -417,7 +417,7 @@ function disableMachineCumulativeOutputs($machine_id) {
     } catch (PDOException $e) {
         // Log error and return an error message on failure
         error_log("Database Error in disableMachineCumulativeOutputs: " . $e->getMessage());
-        return "Database error occurred when disabling machine cumulative outputs: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        return "A database error occurred while disabling machine cumulative outputs. Please try again later.";
     }
 }
 
@@ -455,7 +455,7 @@ function restoreMachineCumulativeOutputs($machine_id) {
     } catch (PDOException $e) {
         // Log error and return an error message on failure
         error_log("Database Error in restoreMachineCumulativeOutputs: " . $e->getMessage());
-        return "Database error occurred when restoring machine cumulative outputs: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        return "A database error occurred while restoring machine cumulative outputs. Please try again later.";
     }
 }
 
