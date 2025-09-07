@@ -3,20 +3,18 @@
         <button class="modal-close-btn" onclick="closeEditOutputModal()" aria-label="Close modal">×</button>
         
         <div class="form-header">
-            <h1 class="form-title">⚡ Edit Maximum Output</h1>
-            <p class="form-subtitle">Configure machine maximum output capacity</p>
+            <h1 class="form-title">⚡ Edit Maximum Output Limit</h1>
+            <p class="form-subtitle">Configure machine maximum output limit</p>
         </div>
 
-        <form id="editMaxOutputForm" method="POST" action="../controllers/edit_max_output.php">
-            <input type="hidden" name="machine_id" value="123">
-
+        <form id="editMaxOutputForm" method="POST" action="../controllers/edit_machine_part_max_limit.php">
             <!-- HP Selection Section -->
             <div class="form-section">
                 <div class="section-header">
                     <div class="section-icon">🔧</div>
                     <div class="section-info">
                         <div class="section-title">Maximum Output Configuration</div>
-                        <div class="section-description">Select the maximum output capacity for this machine</div>
+                        <div class="section-description">Select the maximum output limit for this machine</div>
                     </div>
                 </div>
                 <div class="form-grid">
@@ -25,11 +23,10 @@
                             Machine Number
                             <span class="required-badge">Required</span>
                         </label>
-                        <select id="hp_rating" name="hp_rating" class="form-select" required>
-                            <option value="">Select machine number...</option>
-                            <option value="25">HP001</option>
-                            <option value="40">HP002</option>
-                        </select>
+                        <input type="text" 
+                                name="control_number" 
+                                class="form-input" 
+                                placeholder="Enter a machine control number...">
                     </div>
                 </div>
             </div>
@@ -39,24 +36,45 @@
                 <div class="section-header">
                     <div class="section-icon">⚙️</div>
                     <div class="section-info">
-                        <div class="section-title">Applicator Parts</div>
-                        <div class="section-description">Select all parts included in this applicator configuration</div>
+                        <div class="section-title">machine Parts</div>
+                        <div class="section-description">Select all parts included in this machine configuration</div>
                     </div>
                 </div>
                 <div class="checkbox-grid">
-                    <label class="checkbox-item" for="part_pump">
-                        <input type="checkbox" id="part_pump" name="parts[]" value="pump" class="checkbox-input">
-                        <div>
-                            <div class="checkbox-label">Wire Crimper</div>
-                        </div>
-                    </label>
+                    <?php 
+                    $standard_parts = ['cut_blade', 'strip_blade_a', 'strip_blade_b'];
                     
-                    <label class="checkbox-item" for="part_hoses">
-                        <input type="checkbox" id="part_hoses" name="parts[]" value="hoses" class="checkbox-input">
-                        <div>
-                            <div class="checkbox-label">Wire Anvil</div>
-                        </div>
-                    </label>
+                    // Fetch custom parts from the database
+                    require_once '../models/read_custom_parts.php';
+                    $custom_parts = [];
+                    $custom_parts = getCustomParts("MACHINE");
+
+                    foreach ($standard_parts as $part): ?>
+                        <label class="checkbox-item" for="<?php echo htmlspecialchars($part); ?>">
+                            <input 
+                                type="checkbox" 
+                                id="<?php echo htmlspecialchars($part); ?>" 
+                                name="parts[]" 
+                                value="<?php echo htmlspecialchars($part); ?>" 
+                                class="checkbox-input">
+                            <div>
+                                <div class="checkbox-label"><?php echo htmlspecialchars(ucwords(str_replace('_', ' ', $part))); ?></div>
+                            </div>
+                        </label>
+                    <?php endforeach; ?>
+                    <?php foreach ($custom_parts as $custom_part): ?>
+                        <label class="checkbox-item" for="<?php echo htmlspecialchars($custom_part['part_name']); ?>">
+                            <input 
+                                type="checkbox" 
+                                id="<?php echo htmlspecialchars($custom_part['part_name']); ?>" 
+                                name="parts[]" 
+                                value="<?php echo htmlspecialchars($custom_part['part_name']); ?>" 
+                                class="checkbox-input">
+                            <div>
+                                <div class="checkbox-label"><?php echo htmlspecialchars(ucwords(str_replace('_', ' ', $custom_part['part_name']))); ?></div>
+                            </div>
+                        </label>
+                    <?php endforeach; ?>
                 </div>
             </div>
 
@@ -65,14 +83,14 @@
                 <div class="section-header">
                     <div class="section-icon">📊</div>
                     <div class="section-info">
-                        <div class="section-title">Maximum Output Capacity</div>
-                        <div class="section-description">Specify the maximum application rate for this configuration</div>
+                        <div class="section-title">Maximum Output limit</div>
+                        <div class="section-description">Specify the maximum output limit of the machine parts for this configuration</div>
                     </div>
                 </div>
                 <div class="form-grid">
                     <div class="form-group">
                         <label class="form-label" for="max_output">
-                            Maximum Output Rate
+                            Maximum Output Limit
                             <span class="required-badge">Required</span>
                         </label>
                         <div class="output-input-group">
@@ -80,14 +98,12 @@
                                 <input 
                                     type="number" 
                                     id="max_output" 
-                                    name="max_output" 
+                                    name="output_limit" 
                                     class="form-input" 
-                                    placeholder="Enter maximum rate..." 
+                                    placeholder="Enter maximum output limit..." 
                                     required
-                                    min="1"
-                                    max="5000"
-                                    step="0.1"
-                                >
+                                    min="0"
+                                    step="100000">
                             </div>
                         </div>
                     </div>
@@ -97,7 +113,7 @@
             <div class="button-group">
                 <button type="button" class="cancel-btn" onclick="closeEditOutputModal()">
                     Cancel
-                </button>   
+                </button>
                 <button type="submit" class="submit-btn" id="submitBtn">
                     💾 Save Configuration
                 </button>
