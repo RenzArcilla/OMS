@@ -96,8 +96,8 @@ try {
         unlink($targetPath);
         $msg = $result['message'];
         if (!empty($result['errors'])) {
-            $extras = implode("\\n", array_slice($result['errors'], 0, 5));
-            $msg .= "\\nErrors:\\n" . $extras;
+            $extras = implode("\n", array_slice($result['errors'], 0, 5));
+            $msg .= "\nErrors:\n" . $extras;
         }
         jsAlertRedirect($msg, $redirect_url);
         exit;
