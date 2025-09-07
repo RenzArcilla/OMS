@@ -6,18 +6,18 @@
 
 
 // Include necessary files
-require_once '../includes/auth.php';
-require_once '../includes/db.php';
-require_once '../includes/js_alert.php';
-require_once '../models/create_applicator_output.php';
-require_once '../models/read_machines.php';
-require_once '../models/read_applicators.php';
-require_once '../models/update_record.php';
-require_once '../models/update_applicator_output.php';
-require_once '../models/update_machine_output.php';
-require_once '../models/update_monitor_applicator.php';
-require_once '../models/update_monitor_machine.php';
-require_once '../models/delete_applicator_output.php';
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/js_alert.php';
+require_once __DIR__ . '/../models/create_applicator_output.php';
+require_once __DIR__ . '/../models/read_machines.php';
+require_once __DIR__ . '/../models/read_applicators.php';
+require_once __DIR__ . '/../models/update_record.php';
+require_once __DIR__ . '/../models/update_applicator_output.php';
+require_once __DIR__ . '/../models/update_machine_output.php';
+require_once __DIR__ . '/../models/update_monitor_applicator.php';
+require_once __DIR__ . '/../models/update_monitor_machine.php';
+require_once __DIR__ . '/../models/delete_applicator_output.php';
 
 // Require Toolkeeper/Admin Privileges
 requireToolkeeper();

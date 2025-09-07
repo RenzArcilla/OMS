@@ -17,7 +17,7 @@ try {
 } catch (PDOException $e) {
     // Show alert if connection fails
     $error = "Connection failed: " . $e->getMessage();
-    require_once 'js_alert.php';
+    require_once __DIR__ . '/js_alert.php';
     jsAlertRedirect($error, "../views/home.php");
     exit;
 }

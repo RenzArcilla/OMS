@@ -5,12 +5,12 @@
 
 
 // Include necessary files
-require_once '../includes/db.php';
-require_once '../includes/auth.php';
-require_once '../includes/js_alert.php';
-require_once '../includes/etl/load.php';
-require_once '../includes/etl/extract.php';
-require_once '../includes/etl/transform.php';
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/js_alert.php';
+require_once __DIR__ . '/../includes/etl/load.php';
+require_once __DIR__ . '/../includes/etl/extract.php';
+require_once __DIR__ . '/../includes/etl/transform.php';
 
 // Require Toolkeeper/Admin Privileges
 requireToolkeeper();

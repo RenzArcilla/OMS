@@ -4,14 +4,14 @@
 */
 
 // Include error handling and set max memory limits and execution time
-require_once '../includes/error_handler.php';
+require_once __DIR__ . '/../includes/error_handler.php';
 ini_set('memory_limit', '512M');
 set_time_limit(300);
 
-require_once '../../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-require_once '../models/read_applicator_reset.php';
+require_once __DIR__ . '/../models/read_applicator_reset.php';
 
 /*
     Export applicator resets to Excel, splitting into multiple sheets if > 5000 rows.

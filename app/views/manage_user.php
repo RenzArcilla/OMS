@@ -26,7 +26,7 @@
         include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/header.php';
 
         // Require admin priveledge to view this page 
-        require_once '../includes/auth.php';
+        require_once __DIR__ . '/../includes/auth.php';
         //requireAdmin(); 
     ?>
     <div class="container">

@@ -17,7 +17,7 @@ error_reporting(E_ALL);
 header('Content-Type: application/json');
 
 // Include dependencies
-require_once '../models/read_machine_limits.php';
+require_once __DIR__ . '/../models/read_machine_limits.php';
 
 try {
     /*

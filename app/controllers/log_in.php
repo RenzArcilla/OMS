@@ -7,9 +7,9 @@
 
 session_start(); 
 
-require_once '../includes/js_alert.php';
-require_once '../includes/db.php';
-require_once '../models/read_user.php';
+require_once __DIR__ . '/../includes/js_alert.php';
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../models/read_user.php';
 
 // Get the form data
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

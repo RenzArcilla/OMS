@@ -7,7 +7,7 @@
     <link rel="icon" href="/SOMS/public/assets/images/favicon.ico">
     <link rel="stylesheet" href="../../public/assets/css/base/typography.css">
     <link rel="stylesheet" href="../../public/assets/css/login.css">
-    <?php require_once "../controllers/log_in.php"; ?>
+    <?php require_once __DIR__ . '/../controllers/log_in.php'; ?>
 </head>
 <body>
     <div class="container">

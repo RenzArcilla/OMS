@@ -6,11 +6,11 @@
 
 
 // Include necessary files
-require_once '../includes/auth.php';
-require_once '../includes/js_alert.php';
-require_once '../includes/export_helpers/export_machine_output_helper.php';
-require_once '../models/read_joins/read_monitor_machine_and_machine.php';
-require_once '../models/read_custom_parts.php';
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/js_alert.php';
+require_once __DIR__ . '/../includes/export_helpers/export_machine_output_helper.php';
+require_once __DIR__ . '/../models/read_joins/read_monitor_machine_and_machine.php';
+require_once __DIR__ . '/../models/read_custom_parts.php';
 
 
 // Require Toolkeeper/Admin Privileges

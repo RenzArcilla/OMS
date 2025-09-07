@@ -6,10 +6,10 @@
 
 
 // Include necessary files
-require_once '../includes/auth.php';
-require_once '../includes/js_alert.php';
-require_once '../includes/export_helpers/export_applicator_reset_helper.php';
-require_once '../models/read_applicator_reset.php';
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/js_alert.php';
+require_once __DIR__ . '/../includes/export_helpers/export_applicator_reset_helper.php';
+require_once __DIR__ . '/../models/read_applicator_reset.php';
 
 // Require Toolkeeper/Admin Privileges
 requireToolkeeper();

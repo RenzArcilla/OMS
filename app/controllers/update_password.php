@@ -5,10 +5,10 @@
 */
 
 // Include necessary files
-require_once '../includes/auth.php'; // Authentication
-require_once '../includes/db.php'; // Database connection
-require_once '../includes/js_alert.php'; // JavaScript alert function
-require_once '../models/update_password.php'; // Update password model
+require_once __DIR__ . '/../includes/auth.php'; // Authentication
+require_once __DIR__ . '/../includes/db.php'; // Database connection
+require_once __DIR__ . '/../includes/js_alert.php'; // JavaScript alert function
+require_once __DIR__ . '/../models/update_password.php'; // Update password model
 
 // Require user to be logged in
 requireDefault();

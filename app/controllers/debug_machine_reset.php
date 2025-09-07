@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require_once '../includes/db.php';
+require_once __DIR__ . '/../includes/db.php';
 
 $machine_id = $_GET['machine_id'] ?? null;
 $part_name = $_GET['part_name'] ?? null;
@@ -12,7 +12,7 @@ if (!$machine_id) {
 }
 
 if ($action === 'reset' && $part_name) {
-    require_once '../models/update_monitor_machine.php';
+    require_once __DIR__ . '/../models/update_monitor_machine.php';
     $result = resetMachinePartOutput($machine_id, $part_name);
     echo json_encode(['success' => $result === true, 'message' => $result]);
     exit;

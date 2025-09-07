@@ -6,7 +6,7 @@
     and returns the results in JSON format with pagination metadata.
 */
 
-require_once "../models/read_joins/record_and_outputs.php";
+require_once __DIR__ . '/../models/read_joins/record_and_outputs.php';
 
 header('Content-Type: application/json; charset=utf-8');
 

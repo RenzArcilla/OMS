@@ -27,7 +27,7 @@
     include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/sidebar.php';
     include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/header.php';
     // First, get custom parts
-    require_once "../models/read_custom_parts.php";
+    require_once __DIR__ . '/../models/read_custom_parts.php';
     $custom_machine_parts = getCustomParts("MACHINE");
 
     // Initialize part names array

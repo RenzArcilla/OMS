@@ -6,11 +6,11 @@
 
 
 // Include necessary files
-require_once '../includes/auth.php';
-require_once '../includes/db.php'; // Database connection
-require_once '../includes/js_alert.php'; // JavaScript alert function
-require_once '../models/read_custom_parts.php'; // Read custom part model
-require_once '../models/update_custom_part.php'; // Update custom part model
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/db.php'; // Database connection
+require_once __DIR__ . '/../includes/js_alert.php'; // JavaScript alert function
+require_once __DIR__ . '/../models/read_custom_parts.php'; // Read custom part model
+require_once __DIR__ . '/../models/update_custom_part.php'; // Update custom part model
 
 // Require Toolkeeper/Admin Privileges
 requireToolkeeper();

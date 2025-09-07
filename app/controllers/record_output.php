@@ -6,13 +6,13 @@
 
 
 // Include necessary files
-require_once '../includes/auth.php';
-require_once '../includes/js_alert.php';
-require_once '../models/read_applicators.php';
-require_once '../models/read_machines.php';
-require_once '../models/create_record.php';
-require_once '../models/create_applicator_output.php';
-require_once '../models/create_machine_output.php';
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/js_alert.php';
+require_once __DIR__ . '/../models/read_applicators.php';
+require_once __DIR__ . '/../models/read_machines.php';
+require_once __DIR__ . '/../models/create_record.php';
+require_once __DIR__ . '/../models/create_applicator_output.php';
+require_once __DIR__ . '/../models/create_machine_output.php';
 
 // Require Toolkeeper/Admin Privileges
 requireToolkeeper();
@@ -125,7 +125,7 @@ if (is_string($machine_status)) {
 }
 
 // Upodate monitoring tables
-require_once '../models/update_monitor_applicator.php';
+require_once __DIR__ . '/../models/update_monitor_applicator.php';
 $app1_monitor_status = monitorApplicatorOutput($app1_data, $app1_out);
 if (is_string($app1_monitor_status)) {
     $pdo->rollBack();
@@ -143,7 +143,7 @@ if ($app2_data) {
     }
 }
 
-require_once '../models/update_monitor_machine.php';
+require_once __DIR__ . '/../models/update_monitor_machine.php';
 $machine_monitor_status = monitorMachineOutput($machine_data, $machine_out);
 if (is_string($machine_monitor_status)) {
     $pdo->rollBack();

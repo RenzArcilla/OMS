@@ -5,7 +5,7 @@
 */
 
 // Include necessary files
-require_once '../models/read_machines.php';
+require_once __DIR__ . '/../models/read_machines.php';
 
 try {
     $result = countActiveMachines();
