@@ -75,18 +75,21 @@ if (session_status() === PHP_SESSION_NONE) {
                         </div>
 
                         <div class="dashboard-content">
+                            <?php $active_applicators = require '../controllers/count_active_applicators.php'; ?>
                             <!-- Status Cards -->
                             <div class="summary-cards">
                                 <div class="summary-card">
                                     <div class="summary-value">24</div>
                                     <div class="summary-label">Active Machines</div>
-                                    <div class="summary-change positive">+12.5%</div>
+                                    <div class="summary-change positive"></div>
                                 </div>
-                                <div class="summary-card">
-                                    <div class="summary-value">16</div>
-                                    <div class="summary-label">Operational Units</div>
-                                    <div class="summary-change positive">+23.1%</div>
-                                </div>
+                                    <?php $active_applicators = require '../controllers/count_active_applicators.php'; ?>
+
+                                    <div class="summary-card">
+                                        <div class="summary-value"><?php echo $active_applicators; ?></div>
+                                        <div class="summary-label">Active Applicators</div>
+                                        <div class="summary-change positive"></div>
+                                    </div>
                             </div>
 
                             <?php include __DIR__ . '/applicator_table.php'; ?>

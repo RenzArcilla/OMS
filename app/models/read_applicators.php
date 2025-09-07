@@ -385,3 +385,18 @@ function fetchApplicatorsByHpNos(array $hpNos, PDO $pdo): array {
     }
     return $out;
 }
+
+function countActiveApplicators() {
+    /*
+        Count the total number of active applicators in the database.
+
+        Args:
+        - $pdo (PDO): PDO database connection object.
+
+        Returns:
+        - int: Total number of active applicators.
+    */
+    global $pdo;
+    $stmt = $pdo->query("SELECT COUNT(*) FROM applicators WHERE is_active = 1");
+    return (int) $stmt->fetchColumn();
+}
