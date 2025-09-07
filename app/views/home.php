@@ -37,12 +37,12 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="hero-badge">
                         <span class="hero-text">
                             <?php 
-                                echo htmlspecialchars(
-                                    (($_SESSION['user_type'] ?? '') !== "DEFAULT")
-                                        ? 'Welcome, ' . ucwords(strtolower(htmlspecialchars($_SESSION['user_type']))) . "!"
-                                        : 'Welcome!'
-                                ); 
-                            ?>
+                            $user_type = $_SESSION['user_type'] ?? null;
+                            echo htmlspecialchars(
+                                ($user_type && $user_type !== "DEFAULT")
+                                    ? 'Welcome, ' . ucwords(strtolower(htmlspecialchars($user_type))) . "!"
+                                    : 'Welcome!'
+                            ); ?>
                         </span>
                     </div>
                     
