@@ -82,7 +82,7 @@ function getMachineResetOnTimeStamp($machine_id, $part_name, $reset_time) {
     } catch (PDOException $e) {
         // Log error and return an error message on failure
         error_log("Database Error in getMachineResetOnTimeStamp: " . $e->getMessage());
-        return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        return "A database error occurred while fetching machine reset data. Please try again later.";
     }
 }
 

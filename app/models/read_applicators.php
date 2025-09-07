@@ -111,8 +111,8 @@ function applicatorExists($hp_no){
 
     } catch (PDOException $e) {
         // Log error and return an error message on failure
-        error_log("Database Error: " . $e->getMessage());
-        return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        error_log("Database Error in applicatorExists: " . $e->getMessage());
+        return "A database error occurred while checking applicator existence. Please try again later.";
     }
 }
 
@@ -154,8 +154,8 @@ function getInactiveApplicatorByHpNo($hp_no) {
 
     } catch (PDOException $e) {
         // Log error and return an error message on failure
-        error_log("Database Error: " . $e->getMessage());
-        return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        error_log("Database Error in getInactiveApplicatorByHpNo: " . $e->getMessage());
+        return "A database error occurred while checking applicator existence. Please try again later.";
     }
 }
 
@@ -197,8 +197,8 @@ function getActiveApplicatorByHpNo($hp_no) {
 
     } catch (PDOException $e) {
         // Log error and return an error message on failure
-        error_log("Database Error: " . $e->getMessage());
-        return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        error_log("Database Error in getActiveApplicatorByHpNo: " . $e->getMessage());
+        return "A database error occurred while checking applicator existence. Please try again later.";
     }
 }
 

@@ -98,7 +98,7 @@ function submitApplicatorOutput($applicator_data, $applicator_output, $record_id
         
     } catch (PDOException $e) {
         // Log error and return an error message on failure
-        error_log("Database Error: " . $e->getMessage());
-        return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        error_log("Database Error in submitApplicatorOutput: " . $e->getMessage());
+        return "A database error occurred while submitting applicator output. Please try again later.";
     }
 }

@@ -45,8 +45,8 @@ function getCustomParts($type){
         
     } catch (PDOException $e) {
         // Log error and return an error message on failure
-        error_log("Database Error: " . $e->getMessage());
-        return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        error_log("Database Error in getCustomParts: " . $e->getMessage());
+        return "A database error occurred while fetching custom parts. Please try again later.";
     }
 }
 
@@ -87,6 +87,6 @@ function getCustomPartByName($name) {
     } catch (PDOException $e) {
         // Log error and return an error message on failure
         error_log("Database Error in getCustomPartByName: " . $e->getMessage());
-        return "Database error occurred when fetching custom part by name: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        return "A database error occurred while fetching custom part. Please try again later.";
     }
 }

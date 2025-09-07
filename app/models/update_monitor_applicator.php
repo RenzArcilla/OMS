@@ -386,7 +386,7 @@ function disableApplicatorCumulativeOutputs($applicator_id) {
     } catch (PDOException $e) {
         // Log error and return an error message on failure
         error_log("Database Error in disableApplicatorCumulativeOutputs: " . $e->getMessage());
-        return "Database error occurred when disabling applicator cumulative outputs: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        return "A database error occurred while disabling applicator cumulative outputs. Please try again later.";
     }
 }
 
@@ -424,7 +424,7 @@ function restoreApplicatorCumulativeOutputs($applicator_id) {
     } catch (PDOException $e) {
         // Log error and return an error message on failure
         error_log("Database Error in restoreApplicatorCumulativeOutputs: " . $e->getMessage());
-        return "Database error occurred when restoring applicator cumulative outputs: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        return "A database error occurred while restoring applicator cumulative outputs. Please try again later.";
     }
 }
 

@@ -61,7 +61,7 @@ function createApplicator($control_no, $terminal_no, $description,
         }
     } catch (PDOException $e) {
         // Log error and return an error message on failure
-        error_log("Database Error: " . $e->getMessage());
-        return "Database error occurred: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        error_log("Database Error in createApplicator: " . $e->getMessage());
+        return "A database error occurred while creating applicator. Please try again later.";
     }
 }
