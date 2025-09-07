@@ -373,3 +373,19 @@ function fetchMachinesByControlNos(array $controlNos, PDO $pdo): array {
     }
     return $out;
 }
+
+
+function countActiveMachines() {
+    /*
+        Count the total number of active machines in the database.
+
+        Args:
+        - $pdo (PDO): PDO database connection object.
+
+        Returns:
+        - int: Total number of active machines.
+    */
+    global $pdo;
+    $stmt = $pdo->query("SELECT COUNT(*) FROM machines WHERE is_active = 1");
+    return (int) $stmt->fetchColumn();
+}
