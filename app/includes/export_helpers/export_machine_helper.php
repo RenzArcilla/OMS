@@ -25,6 +25,7 @@ function exportMachineToExcel($include_headers) {
 
     if (!$records) {
         jsAlertRedirect("No records found for export.", '../views/dashboard_machine.php');
+        exit;
     }
 
     $spreadsheet = new Spreadsheet();

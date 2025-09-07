@@ -57,7 +57,7 @@
         // CHECK FOR SEARCH RESULT AND REDIRECT IMMEDIATELY IF NOT FOUND
         if (empty($search_results)) {
             jsAlertRedirect("Machine not found!", $_SERVER['PHP_SELF']);
-            exit();
+            exit;
         }
         
         // If searching, use search result instead of all records

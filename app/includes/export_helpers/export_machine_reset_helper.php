@@ -28,6 +28,7 @@ function exportMachineResetsToExcel($include_headers, $date_range, $start_date =
 
     if (!$records) {
         jsAlertRedirect("No machine reset records found for export.", '../views/dashboard_machine.php');
+        exit;
     }
 
     $spreadsheet = new Spreadsheet();

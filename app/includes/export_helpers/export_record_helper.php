@@ -25,6 +25,7 @@ function exportRecordsToExcel($include_headers, $date_range, $start_date = null,
 
     if (!$records) {
         jsAlertRedirect("No records found for export.", '../views/record_output.php');
+        exit;
     }
 
     $spreadsheet = new Spreadsheet();

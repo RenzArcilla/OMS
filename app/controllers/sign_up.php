@@ -81,6 +81,7 @@ if (is_array($result)) {
     $pdo->commit();
     if (isset($_POST['admin_create_user'])) {
         jsAlertRedirect("User created successfully.", $redirect_url);
+        exit;
     } elseif ($user_type == 'TOOLKEEPER') {
         $_SESSION['user_id'] = $result['user_id'];
         $_SESSION['username'] = $result['username'];

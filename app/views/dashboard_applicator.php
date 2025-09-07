@@ -59,7 +59,7 @@
         // CHECK FOR SEARCH RESULT AND REDIRECT IMMEDIATELY IF NOT FOUND
         if (empty($search_result)) {
             jsAlertRedirect("Applicator not found!", $_SERVER['PHP_SELF']);
-            exit();
+            exit;
         }
 
         $search_result = searchApplicatorByHpNo(trim($search_hp), $part_names_array);

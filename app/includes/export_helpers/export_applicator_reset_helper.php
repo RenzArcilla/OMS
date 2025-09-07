@@ -28,6 +28,7 @@ function exportApplicatorResetsToExcel($include_headers, $date_range, $start_dat
 
     if (!$records) {
         jsAlertRedirect("No applicator reset records found for export.", '../views/applicator_reset.php');
+        exit;
     }
 
     $spreadsheet = new Spreadsheet();
