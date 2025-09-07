@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 28, 2025 at 06:23 AM
+-- Generation Time: Sep 07, 2025 at 02:52 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -346,7 +346,31 @@ INSERT INTO `applicator_outputs` (`applicator_output_id`, `record_id`, `applicat
 (350, 265, 3, 1, 344, 344, 344, 344, 344, 344, 344, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
 (351, 265, 13, 1, 344, 344, 344, 344, 344, 344, 344, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":344},{\"name\":\"tension_spring\",\"value\":344},{\"name\":\"alignment_pin\",\"value\":344},{\"name\":\"pressure_pad\",\"value\":344}]'),
 (352, 266, 3, 1, 1500, 1500, 1500, 1500, 1500, 1500, 1500, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":1500},{\"name\":\"tension_spring\",\"value\":1500},{\"name\":\"alignment_pin\",\"value\":1500},{\"name\":\"pressure_pad\",\"value\":1500}]'),
-(353, 266, 2, 1, 346, 346, 346, 346, 346, NULL, NULL, 346, 346, 346, '[{\"name\":\"special_guide_plate\",\"value\":346},{\"name\":\"tension_spring\",\"value\":346},{\"name\":\"alignment_pin\",\"value\":346},{\"name\":\"pressure_pad\",\"value\":346}]');
+(353, 266, 2, 1, 346, 346, 346, 346, 346, NULL, NULL, 346, 346, 346, '[{\"name\":\"special_guide_plate\",\"value\":346},{\"name\":\"tension_spring\",\"value\":346},{\"name\":\"alignment_pin\",\"value\":346},{\"name\":\"pressure_pad\",\"value\":346}]'),
+(354, 284, 1, 1, 9, 9, 9, 9, 9, 9, 9, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":9},{\"name\":\"tension_spring\",\"value\":9},{\"name\":\"alignment_pin\",\"value\":9},{\"name\":\"pressure_pad\",\"value\":9}]'),
+(355, 285, 1, 1, 9, 9, 9, 9, 9, 9, 9, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":9},{\"name\":\"tension_spring\",\"value\":9},{\"name\":\"alignment_pin\",\"value\":9},{\"name\":\"pressure_pad\",\"value\":9}]'),
+(356, 286, 1, 1, 300000, 300000, 300000, 300000, 300000, 300000, 300000, NULL, NULL, NULL, '[{\"name\":\"special_guide_plate\",\"value\":300000},{\"name\":\"tension_spring\",\"value\":300000},{\"name\":\"alignment_pin\",\"value\":300000},{\"name\":\"pressure_pad\",\"value\":300000}]');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `applicator_part_limits`
+--
+
+CREATE TABLE `applicator_part_limits` (
+  `applicator_limit_id` int(11) NOT NULL,
+  `applicator_id` int(11) NOT NULL,
+  `applicator_part` varchar(50) NOT NULL,
+  `part_limit` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `applicator_part_limits`
+--
+
+INSERT INTO `applicator_part_limits` (`applicator_limit_id`, `applicator_id`, `applicator_part`, `part_limit`) VALUES
+(1, 1, 'wire_crimper', 100000),
+(2, 1, 'pressure_pad', 100000);
 
 -- --------------------------------------------------------
 
@@ -475,7 +499,9 @@ INSERT INTO `machines` (`machine_id`, `control_no`, `description`, `model`, `mak
 (20, 'CTRL020', 'SEMI-AUTOMATIC', 'WPU-1300', 'SCHLEUNIGER', 'MSN020', 'MINV020', '2024-02-03 10:15:00', 0),
 (21, 'FASASF', 'AUTOMATIC', 'ASDFASDF', 'ASDFSADF', 'ASDFSADF', 'ASDFSDAF', NULL, 0),
 (33, 'EYEBOLLORD', 'AUTOMATIC', 'ASDFASDF', 'ASDFSADF', 'ASDFSADF', 'ASDFSDAF', NULL, 0),
-(34, 'DIGITIDOG', 'SEMI-AUTOMATIC', 'ASDFASDF', 'ASDFSADF', 'ASDFSADF', 'ASDFSDAF', NULL, 1);
+(34, 'TIGIDIDOG', 'SEMI-AUTOMATIC', 'ASDFASDF', 'ASDFSADF', 'ASDFSADF', 'ASDFSDAF', NULL, 1),
+(38, 'GADASFD', 'AUTOMATIC', 'GADASFD', 'GADASFD', NULL, NULL, '2025-08-31 14:19:46', 1),
+(39, 'FGSHADSFADFD', 'AUTOMATIC', 'FGSHADSFADFD', 'FGSHADSFADFD', NULL, NULL, '2025-08-31 14:40:02', 1);
 
 -- --------------------------------------------------------
 
@@ -644,7 +670,23 @@ INSERT INTO `machine_outputs` (`machine_output_id`, `record_id`, `machine_id`, `
 (238, 263, 5, 1, 344, 344, 344, 344, '[{\"name\":\"feed_roller\",\"value\":344},{\"name\":\"guide_tube\",\"value\":344},{\"name\":\"sensor_bracket\",\"value\":344},{\"name\":\"cooling_fan\",\"value\":344}]'),
 (239, 264, 6, 1, 344, 344, 344, 344, '[{\"name\":\"feed_roller\",\"value\":344},{\"name\":\"guide_tube\",\"value\":344},{\"name\":\"sensor_bracket\",\"value\":344},{\"name\":\"cooling_fan\",\"value\":344}]'),
 (240, 265, 7, 1, 344, 344, 344, 344, '[{\"name\":\"feed_roller\",\"value\":344},{\"name\":\"guide_tube\",\"value\":344},{\"name\":\"sensor_bracket\",\"value\":344},{\"name\":\"cooling_fan\",\"value\":344}]'),
-(241, 266, 1, 1, 3000, 3000, 3000, 3000, '[{\"name\":\"feed_roller\",\"value\":3000},{\"name\":\"guide_tube\",\"value\":3000},{\"name\":\"sensor_bracket\",\"value\":3000},{\"name\":\"cooling_fan\",\"value\":3000}]');
+(241, 266, 1, 1, 3000, 3000, 3000, 3000, '[{\"name\":\"feed_roller\",\"value\":3000},{\"name\":\"guide_tube\",\"value\":3000},{\"name\":\"sensor_bracket\",\"value\":3000},{\"name\":\"cooling_fan\",\"value\":3000}]'),
+(242, 284, 1, 1, 9, 9, 9, 9, '[{\"name\":\"feed_roller\",\"value\":9},{\"name\":\"guide_tube\",\"value\":9},{\"name\":\"sensor_bracket\",\"value\":9},{\"name\":\"cooling_fan\",\"value\":9}]'),
+(243, 285, 1, 1, 1000000, 1000000, 1000000, 1000000, '[{\"name\":\"feed_roller\",\"value\":1000000},{\"name\":\"guide_tube\",\"value\":1000000},{\"name\":\"sensor_bracket\",\"value\":1000000},{\"name\":\"cooling_fan\",\"value\":1000000}]'),
+(244, 286, 1, 1, 1, 1, 1, 1, '[{\"name\":\"feed_roller\",\"value\":1},{\"name\":\"guide_tube\",\"value\":1},{\"name\":\"sensor_bracket\",\"value\":1},{\"name\":\"cooling_fan\",\"value\":1}]');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `machine_part_limits`
+--
+
+CREATE TABLE `machine_part_limits` (
+  `machine_limit_id` int(11) NOT NULL,
+  `machine_id` int(11) NOT NULL,
+  `machine_part` varchar(50) NOT NULL,
+  `part_limit` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -725,7 +767,7 @@ CREATE TABLE `monitor_applicator` (
 --
 
 INSERT INTO `monitor_applicator` (`monitor_id`, `applicator_id`, `total_output`, `wire_crimper_output`, `wire_anvil_output`, `insulation_crimper_output`, `insulation_anvil_output`, `slide_cutter_output`, `cutter_holder_output`, `shear_blade_output`, `cutter_a_output`, `cutter_b_output`, `is_active`, `custom_parts_output`, `last_updated`) VALUES
-(1, 1, 2141, 9868, 9718, 9518, 9493, 9368, 9318, 650, 0, 550, 1, '{\"special_guide_plate\":8843,\"tension_spring\":8793,\"alignment_pin\":8618,\"pressure_pad\":8618}', '2025-08-27 14:38:00'),
+(1, 1, 302159, 309886, 309736, 309536, 309511, 309386, 309336, 650, 0, 550, 1, '{\"special_guide_plate\":308861,\"tension_spring\":308811,\"alignment_pin\":308636,\"pressure_pad\":308636}', '2025-09-06 19:01:23'),
 (2, 2, 15359, 9559, 9409, 9209, 829, 725, 675, 629, 8934, 8884, 1, '{\"alignment_pin\":8484,\"pressure_pad\":8559,\"special_guide_plate\":8359,\"tension_spring\":8359}', '2025-08-27 14:36:53'),
 (3, 3, 16065, 9365, 9215, 9015, 8990, 8865, 8815, 700, 650, 600, 1, '{\"special_guide_plate\":8315,\"tension_spring\":8215,\"alignment_pin\":8065,\"pressure_pad\":8065}', '2025-08-27 14:38:00'),
 (4, 4, 7767, 1292, 1142, 942, 900, 775, 725, 675, 642, 592, 1, '{\"alignment_pin\":157,\"pressure_pad\":227,\"special_guide_plate\":17,\"tension_spring\":17}', '2025-08-26 14:01:19'),
@@ -769,7 +811,7 @@ CREATE TABLE `monitor_machine` (
 --
 
 INSERT INTO `monitor_machine` (`monitor_id`, `machine_id`, `total_machine_output`, `cut_blade_output`, `strip_blade_a_output`, `strip_blade_b_output`, `is_active`, `custom_parts_output`, `last_updated`) VALUES
-(1, 1, 31359, 18859, 18609, 18359, 1, '{\"feed_roller\":16734,\"guide_tube\":16659,\"sensor_bracket\":16359,\"cooling_fan\":16359}', '2025-08-27 14:36:53'),
+(1, 1, 1031369, 1018869, 1018619, 1018369, 1, '{\"feed_roller\":1016744,\"guide_tube\":1016669,\"sensor_bracket\":1016369,\"cooling_fan\":1016369}', '2025-09-06 19:01:23'),
 (2, 2, 15494, 3894, 3644, 3394, 1, '{\"sensor_bracket\":1769,\"cooling_fan\":1694,\"feed_roller\":1494,\"guide_tube\":1494}', '2025-08-26 14:01:19'),
 (3, 3, 18752, 5352, 5102, 4852, 1, '{\"feed_roller\":3152,\"guide_tube\":3077,\"sensor_bracket\":2752,\"cooling_fan\":2752}', '2025-08-26 14:01:19'),
 (4, 4, 16880, 3930, 3680, 3430, 1, '{\"sensor_bracket\":1670,\"cooling_fan\":1590,\"feed_roller\":1380,\"guide_tube\":1380}', '2025-08-26 14:01:19'),
@@ -962,7 +1004,10 @@ INSERT INTO `records` (`record_id`, `shift`, `machine_id`, `applicator1_id`, `ap
 (263, 'NIGHT', 5, 1, 11, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
 (264, 'NIGHT', 6, 2, 12, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
 (265, 'NIGHT', 7, 3, 13, 21, '2025-07-01', '2025-08-26 14:01:19', 1, '2025-08-26 14:01:19'),
-(266, '2nd', 1, 3, 2, 21, '2025-08-27', '2025-08-27 14:36:53', 1, '2025-08-27 14:38:00');
+(266, '2nd', 1, 3, 2, 21, '2025-08-27', '2025-08-27 14:36:53', 1, '2025-08-27 14:38:00'),
+(284, '1st', 1, 1, NULL, 21, '2025-09-06', '2025-09-06 18:05:16', 1, '2025-09-06 18:05:16'),
+(285, '1st', 1, 1, NULL, 21, '2025-09-06', '2025-09-06 18:55:29', 1, '2025-09-06 18:55:29'),
+(286, '1st', 1, 1, NULL, 21, '2025-09-06', '2025-09-06 19:01:23', 1, '2025-09-06 19:01:23');
 
 -- --------------------------------------------------------
 
@@ -1009,44 +1054,9 @@ INSERT INTO `users` (`user_id`, `username`, `password`, `first_name`, `last_name
 (23, 'ASDFHASHGFHAGASFHASD HGF', '$2y$10$9feeeU9gjOd.cSxH7602TuuWtHCl2ZJDjcwdp/o36Aivh5Kpjv4LO', 'asdfsadfsda', 'asdfsadgafsdhdaf', 'DEFAULT'),
 (24, 'eyeballord01234', '$2y$10$KTdcjYPy2imQMd/Y.fiMme08eKqY19vRS9ZS91CKOI.yOGeXCKfLW', 'DSAFSADFSAD', 'FASDFSADF', 'DEFAULT');
 
-
 --
 -- Indexes for dumped tables
 --
--- Table structure for table `applicator_outputs_progress
-CREATE OR REPLACE VIEW v_applicator_progress AS
-SELECT 
-  ao.applicator_output_id,
-  ao.applicator_id,
-  ao.total_output,
-
-  -- 400k group
-  LEAST(100, ROUND((ao.wire_crimper        / 400000.0) * 100, 2)) AS wire_crimper_progress,
-  LEAST(100, ROUND((ao.wire_anvil          / 400000.0) * 100, 2)) AS wire_anvil_progress,
-  LEAST(100, ROUND((ao.insulation_crimper  / 400000.0) * 100, 2)) AS insulation_crimper_progress,
-  LEAST(100, ROUND((ao.insulation_anvil    / 400000.0) * 100, 2)) AS insulation_anvil_progress,
-  LEAST(100, ROUND(((COALESCE(ao.slide_cutter,0)) / 400000.0) * 100, 2)) AS slide_cutter_progress,
-
-  -- 500k group
-  LEAST(100, ROUND(((COALESCE(ao.cutter_holder,0)) / 500000.0) * 100, 2)) AS cutter_holder_progress,
-  LEAST(100, ROUND(((COALESCE(ao.shear_blade ,0)) / 500000.0) * 100, 2)) AS shear_blade_progress,
-
-  -- 600k group
-  LEAST(100, ROUND(((COALESCE(ao.cutter_a,0)) / 600000.0) * 100, 2)) AS cutter_a_progress,
-  LEAST(100, ROUND(((COALESCE(ao.cutter_b,0)) / 600000.0) * 100, 2)) AS cutter_b_progress,
-
-  -- Custom parts JSON { "output": 123456 }
-  LEAST(
-    100,
-    ROUND((
-      CAST(COALESCE(JSON_UNQUOTE(JSON_EXTRACT(ao.custom_parts, '$.output')), '0') AS UNSIGNED) 
-      / 600000.0
-    ) * 100, 2)
-  ) AS custom_parts_progress
-
-FROM applicator_outputs ao
-WHERE ao.is_active = 1;
-
 
 --
 -- Indexes for table `applicators`
@@ -1067,6 +1077,14 @@ ALTER TABLE `applicator_outputs`
   ADD KEY `idx_record_id` (`record_id`),
   ADD KEY `idx_applicator_id` (`applicator_id`),
   ADD KEY `idx_is_active` (`is_active`);
+
+--
+-- Indexes for table `applicator_part_limits`
+--
+ALTER TABLE `applicator_part_limits`
+  ADD PRIMARY KEY (`applicator_limit_id`),
+  ADD UNIQUE KEY `unique_applicator_part` (`applicator_id`,`applicator_part`),
+  ADD KEY `idx_applicator_id` (`applicator_id`);
 
 --
 -- Indexes for table `applicator_reset`
@@ -1107,6 +1125,14 @@ ALTER TABLE `machine_outputs`
   ADD KEY `idx_record_id` (`record_id`),
   ADD KEY `idx_machine_id` (`machine_id`),
   ADD KEY `idx_is_active` (`is_active`);
+
+--
+-- Indexes for table `machine_part_limits`
+--
+ALTER TABLE `machine_part_limits`
+  ADD PRIMARY KEY (`machine_limit_id`),
+  ADD UNIQUE KEY `unique_machine_part` (`machine_id`,`machine_part`),
+  ADD KEY `idx_machine_id` (`machine_id`);
 
 --
 -- Indexes for table `machine_reset`
@@ -1174,7 +1200,13 @@ ALTER TABLE `applicators`
 -- AUTO_INCREMENT for table `applicator_outputs`
 --
 ALTER TABLE `applicator_outputs`
-  MODIFY `applicator_output_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=354;
+  MODIFY `applicator_output_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=357;
+
+--
+-- AUTO_INCREMENT for table `applicator_part_limits`
+--
+ALTER TABLE `applicator_part_limits`
+  MODIFY `applicator_limit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `applicator_reset`
@@ -1192,13 +1224,19 @@ ALTER TABLE `custom_part_definitions`
 -- AUTO_INCREMENT for table `machines`
 --
 ALTER TABLE `machines`
-  MODIFY `machine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `machine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `machine_outputs`
 --
 ALTER TABLE `machine_outputs`
-  MODIFY `machine_output_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=242;
+  MODIFY `machine_output_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=245;
+
+--
+-- AUTO_INCREMENT for table `machine_part_limits`
+--
+ALTER TABLE `machine_part_limits`
+  MODIFY `machine_limit_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `machine_reset`
@@ -1210,19 +1248,19 @@ ALTER TABLE `machine_reset`
 -- AUTO_INCREMENT for table `monitor_applicator`
 --
 ALTER TABLE `monitor_applicator`
-  MODIFY `monitor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=360;
+  MODIFY `monitor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=363;
 
 --
 -- AUTO_INCREMENT for table `monitor_machine`
 --
 ALTER TABLE `monitor_machine`
-  MODIFY `monitor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=235;
+  MODIFY `monitor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=238;
 
 --
 -- AUTO_INCREMENT for table `records`
 --
 ALTER TABLE `records`
-  MODIFY `record_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=267;
+  MODIFY `record_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=287;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -1240,6 +1278,12 @@ ALTER TABLE `users`
 ALTER TABLE `applicator_outputs`
   ADD CONSTRAINT `applicator_outputs_ibfk_1` FOREIGN KEY (`record_id`) REFERENCES `records` (`record_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `applicator_outputs_ibfk_2` FOREIGN KEY (`applicator_id`) REFERENCES `applicators` (`applicator_id`);
+
+--
+-- Constraints for table `applicator_part_limits`
+--
+ALTER TABLE `applicator_part_limits`
+  ADD CONSTRAINT `fk_applicator_part_limits_applicator` FOREIGN KEY (`applicator_id`) REFERENCES `applicators` (`applicator_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `applicator_reset`
@@ -1261,6 +1305,12 @@ ALTER TABLE `custom_part_definitions`
 ALTER TABLE `machine_outputs`
   ADD CONSTRAINT `machine_outputs_ibfk_1` FOREIGN KEY (`record_id`) REFERENCES `records` (`record_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `machine_outputs_ibfk_2` FOREIGN KEY (`machine_id`) REFERENCES `machines` (`machine_id`);
+
+--
+-- Constraints for table `machine_part_limits`
+--
+ALTER TABLE `machine_part_limits`
+  ADD CONSTRAINT `fk_machine_part_limits_machine` FOREIGN KEY (`machine_id`) REFERENCES `machines` (`machine_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `machine_reset`
@@ -1295,15 +1345,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
-
-/* Add PRIMARY KEY and AUTO_INCREMENT to applicator_outputs */
-ALTER TABLE applicator_outputs
-  ADD PRIMARY KEY (applicator_output_id);
-
-ALTER TABLE applicator_outputs
-  MODIFY applicator_output_id INT(11) NOT NULL AUTO_INCREMENT;
-
-CREATE INDEX idx_applicator_active
-  ON applicator_outputs (applicator_id, is_active);

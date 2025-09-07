@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 05, 2025 at 08:01 AM
+-- Generation Time: Sep 07, 2025 at 02:54 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -23,12 +23,12 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
+CREATE DATABASE IF NOT EXISTS `machine_and_applicator`;
+USE `machine_and_applicator`;
+
 --
 -- Table structure for table `applicators`
 --
-
-CREATE DATABASE IF NOT EXISTS `machine_and_applicator`;
-USE `machine_and_applicator`;
 
 CREATE TABLE `applicators` (
   `applicator_id` int(11) NOT NULL,
@@ -79,7 +79,7 @@ CREATE TABLE `applicator_part_limits` (
   `applicator_id` int(11) NOT NULL,
   `applicator_part` varchar(50) NOT NULL,
   `part_limit` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -160,7 +160,7 @@ CREATE TABLE `machine_part_limits` (
   `machine_id` int(11) NOT NULL,
   `machine_part` varchar(50) NOT NULL,
   `part_limit` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -284,6 +284,7 @@ ALTER TABLE `applicator_outputs`
 --
 ALTER TABLE `applicator_part_limits`
   ADD PRIMARY KEY (`applicator_limit_id`),
+  ADD UNIQUE KEY `unique_applicator_part` (`applicator_id`,`applicator_part`),
   ADD KEY `idx_applicator_id` (`applicator_id`);
 
 --
@@ -331,6 +332,7 @@ ALTER TABLE `machine_outputs`
 --
 ALTER TABLE `machine_part_limits`
   ADD PRIMARY KEY (`machine_limit_id`),
+  ADD UNIQUE KEY `unique_machine_part` (`machine_id`,`machine_part`),
   ADD KEY `idx_machine_id` (`machine_id`);
 
 --
