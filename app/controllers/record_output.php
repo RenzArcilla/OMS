@@ -154,3 +154,4 @@ if (is_string($machine_monitor_status)) {
 // If all operations were successful, redirect to the record output page with success message
 $pdo->commit();
 jsAlertRedirect("All outputs recorded successfully!", $redirect);
+exit;

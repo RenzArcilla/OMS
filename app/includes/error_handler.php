@@ -12,6 +12,7 @@ register_shutdown_function(function () {
         // You can customize this message for exports only if needed
         if (php_sapi_name() !== 'cli') {
             jsAlertRedirect("Export failed due to system limits. Please try again with a smaller date range.", '../views/home.php');
+            exit;
         }
     }
 });

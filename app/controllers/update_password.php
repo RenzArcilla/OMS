@@ -75,4 +75,3 @@ if ($result === true) {
     jsAlertRedirect($result, $redirect_url);
     exit;
 }
-?>

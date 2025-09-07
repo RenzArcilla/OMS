@@ -25,6 +25,7 @@ function exportMachineOutputToExcel($include_headers) {
 
     if (!$records) {
         jsAlertRedirect("No records found for export.", '../views/dashboard_applicator.php');
+        exit;
     }
 
     // Extract only the part_name values from custom MACHINE parts 
