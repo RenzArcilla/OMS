@@ -276,6 +276,7 @@ This database system is designed to track machine and applicator usage in a manu
 | `part_limit` | INT | NOT NULL | Value before reset |
 
 **Indexes**: `idx_applicator_id`
+**Unique Key**: `unique_applicator_part` - unique key of (applicator_id, applicator_part);
 
 ### 13. `machine_part_limits`
 **Purpose**: Keep track of part limits for machines.
@@ -288,6 +289,7 @@ This database system is designed to track machine and applicator usage in a manu
 | `part_limit` | INT | NOT NULL | Value before reset |
 
 **Indexes**: `idx_machine_id`
+**Unique Key**: `unique_machine_part` - unique key of (machine_id, machine_part);
 
 ---
 
