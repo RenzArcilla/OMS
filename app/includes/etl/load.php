@@ -85,40 +85,40 @@ function batchLoadData(array $rows): array {
             $outputVal = (int)($r['Output'] ?? 0);
 
             if ($app1No === '') {
-                $errors[] = "Row $line: Applicator1 is required.";
+                $errors[] = "Row " . ($line + 4) . ": Applicator1 is required.";
                 continue;
             }
             if (!isset($applicatorsMap[$app1No])) {
-                $errors[] = "Row $line: Applicator1 $app1No not found.";
+                $errors[] = "Row " . ($line + 4) . ": Applicator1 $app1No not found.";
                 continue;
             }
             if ($app2No !== '') {
                 if ($app2No === $app1No) {
-                    $errors[] = "Row $line: Duplicate applicator entry ($app1No).";
+                    $errors[] = "Row " . ($line + 4) . ": Duplicate applicator entry ($app1No).";
                     continue;
                 }
                 if (!isset($applicatorsMap[$app2No])) {
-                    $errors[] = "Row $line: Applicator2 $app2No not found.";
+                    $errors[] = "Row " . ($line + 4) . ": Applicator2 $app2No not found.";
                     continue;
                 }
             }
             if ($machineNo === '') {
-                $errors[] = "Row $line: Machine No is required.";
+                $errors[] = "Row " . ($line + 4) . ": Machine No is required.";
                 continue;
             }
             if (!isset($machinesMap[$machineNo])) {
-                $errors[] = "Row $line: Machine $machineNo not found.";
+                $errors[] = "Row " . ($line + 4) . ": Machine $machineNo not found.";
                 continue;
             }
 
             $shiftFormatted = formatShift($shiftRaw);
             if ($shiftFormatted === null) {
-                $errors[] = "Row $line: Invalid shift '$shiftRaw'.";
+                $errors[] = "Row " . ($line + 4) . ": Invalid shift '$shiftRaw'.";
                 continue;
             }
 
             if ($date === '' || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
-                $errors[] = "Row $line: Invalid or missing Date (expect YYYY-MM-DD).";
+                $errors[] = "Row " . ($line + 4) . ": Invalid or missing Date (expect YYYY-MM-DD).";
                 continue;
             }
 
