@@ -5,7 +5,7 @@
 */
 
 require_once __DIR__ . '/../includes/db.php';
-require_once "read_custom_parts.php";
+require_once __DIR__ . '/read_custom_parts.php';
 
 function getMonitorMachinePartOutput($machine_id, $part_name) {
     /*

@@ -5,7 +5,7 @@
     calls the model function to fetch the paginated disabled-machines,
     and returns the results in JSON format with pagination metadata.
 */
-require_once "../models/read_machines.php";
+require_once __DIR__ . '/../models/read_machines.php';
 header('Content-Type: application/json; charset=utf-8');
 
 try {

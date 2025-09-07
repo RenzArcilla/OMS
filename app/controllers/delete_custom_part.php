@@ -6,10 +6,10 @@
 
 
 // Include necessary files
-require_once '../includes/auth.php';
-require_once '../includes/js_alert.php';
-require_once '../includes/db.php'; 
-require_once '../models/delete_custom_part.php';
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/js_alert.php';
+require_once __DIR__ . '/../includes/db.php'; 
+require_once __DIR__ . '/../models/delete_custom_part.php';
 
 // Require Admin Privileges
 requireAdmin();

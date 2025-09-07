@@ -172,7 +172,7 @@ function resetApplicatorPartOutput($applicator_id, $part_name) {
     ];
     
     // Get custom applicator parts 
-    require_once "read_custom_parts.php";
+    require_once __DIR__ . '/read_custom_parts.php';
     $custom_parts = getCustomParts("APPLICATOR");
 
     if (is_string($custom_parts)) {
@@ -276,7 +276,7 @@ function editApplicatorPartOutputValue($applicator_id, $part_name, $value) {
     ];
     
     // Get custom applicator parts 
-    require_once "read_custom_parts.php";
+    require_once __DIR__ . '/read_custom_parts.php';
     $custom_parts = getCustomParts("APPLICATOR");
 
     if (is_string($custom_parts)) {

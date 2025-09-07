@@ -4,8 +4,8 @@
 */
 
 
-require_once '../includes/auth.php';
-require_once '../models/read_applicator_reset.php';
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../models/read_applicator_reset.php';
 
 // Require Default Privileges
 requireDefault();

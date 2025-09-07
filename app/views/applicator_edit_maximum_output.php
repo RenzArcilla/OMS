@@ -47,7 +47,7 @@
                                         'cutter_holder','shear_blade', 'cutter_a', 'cutter_b'];
                     
                     // Fetch custom parts from the database
-                    require_once '../models/read_custom_parts.php';
+                    require_once __DIR__ . '/../models/read_custom_parts.php';
                     $custom_parts = [];
                     $custom_parts = getCustomParts("APPLICATOR");
 

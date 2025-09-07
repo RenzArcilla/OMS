@@ -6,16 +6,16 @@
 
 
 // Include necessary files
-require_once '../includes/auth.php';
-require_once '../includes/js_alert.php';
-require_once '../includes/db.php';
-require_once '../models/read_applicator_reset.php';
-require_once '../models/update_applicator_reset.php';
-require_once '../models/update_monitor_applicator.php';
-require_once '../models/delete_record.php';
-require_once '../models/read_records.php';
-require_once '../models/delete_applicator_output.php';
-require_once '../models/delete_machine_output.php';
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/js_alert.php';
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../models/read_applicator_reset.php';
+require_once __DIR__ . '/../models/update_applicator_reset.php';
+require_once __DIR__ . '/../models/update_monitor_applicator.php';
+require_once __DIR__ . '/../models/delete_record.php';
+require_once __DIR__ . '/../models/read_records.php';
+require_once __DIR__ . '/../models/delete_applicator_output.php';
+require_once __DIR__ . '/../models/delete_machine_output.php';
 
 // Require Toolkeeper/Admin Privileges
 requireToolkeeper();

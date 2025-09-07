@@ -5,7 +5,7 @@
 */
 
 // Include necessary files
-require_once '../models/read_applicators.php';
+require_once __DIR__ . '/../models/read_applicators.php';
 
 try {
     $result = countActiveApplicators();

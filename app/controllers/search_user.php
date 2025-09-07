@@ -7,7 +7,7 @@
 */
 
 // Include the model for fetching users
-require_once '../models/read_user.php';
+require_once __DIR__ . '/../models/read_user.php';
 
 // Always set JSON header first
 header('Content-Type: application/json; charset=utf-8');

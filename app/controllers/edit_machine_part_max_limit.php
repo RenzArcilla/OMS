@@ -6,11 +6,11 @@
 */
 
 // Include necessary files
-require_once '../includes/db.php';
-require_once '../includes/auth.php';
-require_once '../includes/js_alert.php';
-require_once '../models/read_machines.php';
-require_once '../models/update_machine_part_limits.php';
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/js_alert.php';
+require_once __DIR__ . '/../models/read_machines.php';
+require_once __DIR__ . '/../models/update_machine_part_limits.php';
 
 // Require Toolkeeper/Admin Privileges
 requireToolkeeper();

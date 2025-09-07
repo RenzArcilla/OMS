@@ -6,11 +6,11 @@
 
 
 // Include necessary files
-require_once '../includes/auth.php'; // Authentication
-require_once '../includes/db.php'; // Database connection
-require_once '../includes/js_alert.php'; // JavaScript alert function
-require_once '../models/read_user.php'; // Read user model
-require_once '../models/update_user.php'; // Update user model
+require_once __DIR__ . '/../includes/auth.php'; // Authentication
+require_once __DIR__ . '/../includes/db.php'; // Database connection
+require_once __DIR__ . '/../includes/js_alert.php'; // JavaScript alert function
+require_once __DIR__ . '/../models/read_user.php'; // Read user model
+require_once __DIR__ . '/../models/update_user.php'; // Update user model
 
 // Require Admin Privileges
 requireAdmin();

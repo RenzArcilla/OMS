@@ -10,11 +10,11 @@
 */
 
 // Get custom parts.
-require_once '../models/read_custom_parts.php';
-require_once '../models/read_machines.php';
-require_once '../models/read_applicators.php';
-require_once '../models/update_monitor_machine.php';
-require_once '../models/update_monitor_applicator.php';
+require_once __DIR__ . '/../../models/read_custom_parts.php';
+require_once __DIR__ . '/../../models/read_machines.php';
+require_once __DIR__ . '/../../models/read_applicators.php';
+require_once __DIR__ . '/../../models/update_monitor_machine.php';
+require_once __DIR__ . '/../../models/update_monitor_applicator.php';
 
 function batchLoadData(array $rows): array {
     /*

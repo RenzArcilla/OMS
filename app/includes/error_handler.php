@@ -1,6 +1,6 @@
 <?php
 // Includes fatal error handling functions
-require_once 'js_alert.php';
+require_once __DIR__ . '/js_alert.php';
 
 
 // Register a global shutdown function to handle fatal errors gracefully

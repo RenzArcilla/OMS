@@ -9,11 +9,11 @@
 
 
 // Include necessary files
-require_once '../includes/auth.php';
-require_once '../includes/js_alert.php';
-require_once '../models/delete_machines.php';
-require_once '../models/update_machine_output.php';
-require_once '../models/update_monitor_machine.php';
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/js_alert.php';
+require_once __DIR__ . '/../models/delete_machines.php';
+require_once __DIR__ . '/../models/update_machine_output.php';
+require_once __DIR__ . '/../models/update_monitor_machine.php';
 
 // Require Toolkeeper/Admin Privileges
 requireToolkeeper();

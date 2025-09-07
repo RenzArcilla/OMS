@@ -6,11 +6,11 @@
 
 
 // Include necessary files
-require_once '../includes/auth.php';
-require_once '../includes/js_alert.php';
-require_once '../models/update_record.php';
-require_once '../models/update_applicator_output.php';
-require_once '../models/update_machine_output.php';
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/js_alert.php';
+require_once __DIR__ . '/../models/update_record.php';
+require_once __DIR__ . '/../models/update_applicator_output.php';
+require_once __DIR__ . '/../models/update_machine_output.php';
 
 // Require Admin Privileges
 requireAdmin();

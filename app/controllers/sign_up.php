@@ -4,8 +4,8 @@
     It includes the database connection and processes the signin/signup form submission.
 */
 
-require_once '../includes/js_alert.php'; // Include the JavaScript alert function
-require_once '../includes/db.php'; // Include the database connection
+require_once __DIR__ . '/../includes/js_alert.php'; // Include the JavaScript alert function
+require_once __DIR__ . '/../includes/db.php'; // Include the database connection
 
 // Redirect URL
 $redirect_url = "../views/signup.php";

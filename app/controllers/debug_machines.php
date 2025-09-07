@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require_once '../includes/db.php';
+require_once __DIR__ . '/../includes/db.php';
 
 try {
     // Check which machines have records in monitor_machine table
