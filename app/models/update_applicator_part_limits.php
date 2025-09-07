@@ -31,9 +31,9 @@ function updateApplicatorPartLimits($applicator_id, $part, $limit) {
 
 
         // Bind parameters
-        $stmt->bindParam(':applicator_id', $applicator_id);
-        $stmt->bindParam(':applicator_part', $part);
-        $stmt->bindParam(':part_limit', $limit);
+        $stmt->bindParam(':applicator_id', $applicator_id, PDO::PARAM_INT);
+        $stmt->bindParam(':applicator_part', $part, PDO::PARAM_STR);
+        $stmt->bindParam(':part_limit', $limit, PDO::PARAM_STR);
 
         // Execute the statement
         $stmt->execute();
@@ -43,6 +43,6 @@ function updateApplicatorPartLimits($applicator_id, $part, $limit) {
     } catch (PDOException $e) {
         // Log error and return an error message on failure
         error_log("Database Error in updateApplicatorPartLimits: " . $e->getMessage());
-        return "Database error in updateApplicatorPartLimits: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+        return "Failed to update applicator part limits. Please try again.";
     }
 }

@@ -104,7 +104,7 @@
                                     class="form-input" 
                                     placeholder="Enter maximum output limit..." 
                                     required
-                                    min="50000"
+                                    min="0"
                                     step="100000">
                             </div>
                         </div>
