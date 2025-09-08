@@ -32,9 +32,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['username'] = $result['username'];
         $_SESSION['first_name'] = $result['first_name'];
         $_SESSION['user_type'] = $result['user_type'];
-        
-        header("Location: ../views/home.php");
-        exit();
+        if ($result['user_type'] === 'TOOLKEEPER') {
+            jsAlertRedirect("Welcome back, Toolkeeper!", "../views/record_output.php");
+            exit;
+        } elseif ($result['user_type'] === 'ADMIN') {
+            jsAlertRedirect("Welcome back, Admin!", "../views/manage_user.php");    
+            exit;
+        } else {
+            jsAlertRedirect("Welcome back, " . htmlspecialchars($result['first_name']) . "!", "../views/home.php");
+            exit;
+        }
     } elseif (is_string($result)) {
         $pdo->rollBack(); // Rollback transaction in case of error
         jsAlertRedirect($result, "../views/login.php");
