@@ -3,22 +3,7 @@
     This section is for adding a new applicator or machine to the system.
     It includes a form for entering details and submitting them to the server.
 */
-
-
-// Start session and check if user is logged in
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit();
-}
-
-
-//include_once __DIR__ . '/../includes/header.php'; // Include the header file for the navigation and logo
 ?>
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
