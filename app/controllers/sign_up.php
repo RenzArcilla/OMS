@@ -123,19 +123,21 @@ if (is_array($result)) {
         $_SESSION['username'] = $result['username'];
         $_SESSION['first_name'] = $result['first_name'];
         $_SESSION['user_type'] = $result['user_type'];
-        header("Location: ../views/record_output.php");
+        jsAlertRedirect("Welcome back, Toolkeeper!", "../views/home.php");
     } elseif ($user_type == 'ADMIN') {
         $_SESSION['user_id'] = $result['user_id'];
         $_SESSION['username'] = $result['username'];
         $_SESSION['first_name'] = $result['first_name'];
         $_SESSION['user_type'] = $result['user_type'];
-        header("Location: ../views/manage_user.php");
+        jsAlertRedirect("Welcome back, Admin!", "../views/manage_user.php");
+        exit;
     } else {
         $_SESSION['user_id'] = $result['user_id'];
         $_SESSION['username'] = $result['username'];
         $_SESSION['first_name'] = $result['first_name'];
         $_SESSION['user_type'] = $result['user_type'];
-        header("Location: ../views/dashboard_applicator.php");
+        jsAlertRedirect("Welcome to SOMS!", "../views/home.php");
+        exit;
     }
     exit();
 } elseif (is_string($result)) {
