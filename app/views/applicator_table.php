@@ -1,14 +1,12 @@
-    
-    <?php 
+<?php 
+// Include the read join function and the alert function
+require_once __DIR__ . '/../models/read_joins/read_monitor_applicator_and_applicator.php';
+require_once __DIR__ . '/../includes/js_alert.php';
 
-    
-    // Include the read join function and the alert function
-    require_once __DIR__ . '/../models/read_joins/read_monitor_applicator_and_applicator.php';
-    require_once __DIR__ . '/../includes/js_alert.php';
+// Get applicator data - using a simple approach without custom parts
+$applicator_total_outputs = getApplicatorRecordsAndOutputs(10, 0, []);
+?>
 
-    // Get applicator data - using a simple approach without custom parts
-    $applicator_total_outputs = getApplicatorRecordsAndOutputs(10, 0, []);
-    ?>
 
 <!-- Applicator Status Section -->
 <div class="data-section">
