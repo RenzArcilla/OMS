@@ -6,10 +6,11 @@
 
 
 // Include necessary files
+require_once __DIR__ . '/../includes/db.php'; 
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/js_alert.php';
-require_once __DIR__ . '/../includes/db.php'; 
 require_once __DIR__ . '/../models/create_applicator.php';
+require_once __DIR__ . '/../models/read_applicators.php';
 
 // Require Toolkeeper/Admin Privileges
 requireToolkeeper();
@@ -51,6 +52,48 @@ if ($wire_type !== 'BIG' && $wire_type !== 'SMALL') {
     jsAlertRedirect("Invalid selection for wire type.", $redirect_url);
     exit;
 } 
+
+// Helper: Extract multiple columns from a list of applicators
+function extractColumnValues($applicators, $keys) {
+    /*
+        Extract specified columns from a list of applicators.
+        Returns an associative array where keys are column names and values are arrays of column values.
+    */
+    $columns = [];
+    foreach ($keys as $key) {
+        // array_column pulls out all values for a given field from the applicator list
+        $columns[$key] = array_column($applicators, $key);
+    }
+    return $columns;
+}
+
+// Alias for clarity in duplicate checks
+$hp_no = $control_no;
+
+// Define which fields we want to check for duplicates
+$keys = ['hp_no', 'terminal_no', 'serial_no', 'invoice_no'];
+
+// Fetch active and inactive applicators
+$active_applicators = fetchAllApplicators(1);
+$inactive_applicators = fetchAllApplicators(0);
+
+// Extract hp_no, terminal_no, serial_no, invoice_no arrays for active/inactive
+$active   = extractColumnValues($active_applicators, $keys);
+$inactive = extractColumnValues($inactive_applicators, $keys);
+
+// Loop through each field and check if the new value already exists
+foreach ($keys as $key) {
+    // Variable-variable syntax $$key → $hp_no, $terminal_no, $serial_no, $invoice_no
+    if (in_array($$key, $active[$key])) {
+        jsAlertRedirect(ucwords(str_replace('_', ' ', $key)) . " already exists for an active applicator.", $redirect_url);
+        exit;
+    }
+    if (in_array($$key, $inactive[$key])) {
+        jsAlertRedirect(ucwords(str_replace('_', ' ', $key)) . " already exists for an inactive applicator.", $redirect_url);
+        exit;
+    }
+}
+
 
 // 3. Database operation
 $pdo->beginTransaction();

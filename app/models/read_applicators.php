@@ -400,3 +400,23 @@ function countActiveApplicators() {
     $stmt = $pdo->query("SELECT COUNT(*) FROM applicators WHERE is_active = 1");
     return (int) $stmt->fetchColumn();
 }
+
+
+function fetchAllApplicators($is_active = 1) {
+    /*
+        Fetch all applicators from the database.
+        Supports filtering by active status.
+        Used in the validation when adding a new applicator to check for duplicates.
+
+        Args:
+        - $is_active (int): Filter by active status (1 for active, 0 for inactive). Default is 1.
+
+        Returns:
+        - array: Array of applicators (associative arrays).
+    */
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT * FROM applicators WHERE is_active = :is_active");
+    $stmt->bindValue(':is_active', $is_active, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
