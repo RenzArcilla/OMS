@@ -1,3 +1,9 @@
+<?php
+// Require admin privileges
+require_once __DIR__ . '/../includes/auth.php';
+requireAdmin();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
