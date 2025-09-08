@@ -67,7 +67,7 @@ $result = updateMachine($machine_id, $control_no, $description, $model,
 // Check if machine update was successful
 if ($result === true) {
     $pdo->commit();
-    jsAlertRedirect("machine updated successfully!", $redirect_url);
+    jsAlertRedirect("Machine updated successfully!", $redirect_url);
     exit;
 } elseif (is_string($result)) {
     $pdo->rollBack(); // Rollback transaction in case of error
