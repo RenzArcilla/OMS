@@ -435,7 +435,7 @@
             <div class="form-header">
                 <span class="delete-icon">🗑️</span>
                 <h1 class="form-title">Delete Custom Part</h1>
-                <p class="form-subtitle">Permanently remove this custom part</p>
+                <p class="form-subtitle">Permanently remove this custom machine part</p>
             </div>
 
             <form id="deleteCustomPartForm" method="POST" action="../controllers/delete_custom_part.php">
@@ -446,7 +446,7 @@
                     <span class="warning-icon">⚠️</span>
                     <div class="warning-title">Permanent Action</div>
                     <div class="warning-text">
-                        This custom part will be permanently removed from this machine. This action cannot be undone.
+                        This action will permanently remove this custom part for machines. This action cannot be undone.
                     </div>
                 </div>
 
