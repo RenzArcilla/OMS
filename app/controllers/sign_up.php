@@ -25,6 +25,32 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     failRedirect("Invalid request.");
 }
 
+// Validation Helpers: Username
+function validateUsername($username) {
+    if (preg_match('/\s/', $username)) {
+        failRedirect("Username cannot contain spaces.");
+    }
+    if (strlen($username) < 5 || strlen($username) > 20) {
+        failRedirect("Username must be between 5 and 20 characters long.");
+    }
+    if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
+        failRedirect("Username can only contain letters, numbers, and underscores.");
+    }
+}
+
+// Validation Helpers: Password
+function validatePassword($password) {
+    if (strlen($password) < 8) {
+        failRedirect("Password must be at least 8 characters long.");
+    }
+    if (!preg_match('/[0-9]/', $password)) {
+        failRedirect("Password must contain at least one number.");
+    }
+    if (!preg_match('/[\W_]/', $password)) {
+        failRedirect("Password must contain at least one special character.");
+    }
+}
+
 // 1. Sanitize input
 $firstname = isset($_POST['firstname']) ? trim($_POST['firstname']) : null;
 $lastname = isset($_POST['lastname']) ? trim($_POST['lastname']) : null;
@@ -39,14 +65,24 @@ if (isset($_POST['admin_create_user'])) {
     if (empty($firstname) || empty($lastname) || empty($username) || empty($password) || empty($role)) {
         failRedirect("Please fill in all required fields.");
     }
+
+    // Run validations
+    validateUsername($username);
+    validatePassword($password);
+
 } else {
     // Regular signup: require confirm_password
     if (empty($firstname) || empty($lastname) || empty($username) || empty($password) || empty($confirm_password)) {
         failRedirect("Please fill in all required fields.");
     }
+
+    // Run validations
+    validateUsername($username);
+    validatePassword($password);
+
     // Password confirmation check
     if ($password !== $confirm_password) {
-        failRedirect("Password Mismatch!");
+        failRedirect("Error! Password Mismatch!");
     }
 }
 
