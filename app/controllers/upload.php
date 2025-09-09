@@ -16,7 +16,7 @@ require_once __DIR__ . '/../includes/etl/transform.php';
 requireToolkeeper();
 
 $tempDir = __DIR__ . '/../temp/';
-$redirect_url = "../views/file_upload.php";
+$redirect_url = "../views/record_output.php";
 
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -27,6 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // Check if files were uploaded
 if (!isset($_FILES['dataFiles'])) {
     jsAlertRedirect("No files uploaded.", $redirect_url);
+    exit;
+}
+
+// Check if the uploaded file has a name (not empty)
+if (empty($_FILES['dataFiles']['name'][0])) {
+    jsAlertRedirect("No file selected. Please choose a file to upload.", $redirect_url);
     exit;
 }
 
