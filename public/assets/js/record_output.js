@@ -150,6 +150,7 @@ function openExportModal() {
     }
 }
 
+
 // Close export modal
 function closeExportModal() {
     const modal = document.getElementById('exportModal');
