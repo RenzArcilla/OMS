@@ -1,3 +1,12 @@
+// Refresh the page
+function refreshPage(btn) {
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '⏳ Refreshing...';
+    btn.disabled = true;
+    window.location.href = '/OMS/app/views/add_entry.php';
+}
+
+
 // Switch between machines and applicators tabs
 function switchTab(tab) {
     currentTab = tab;
@@ -118,13 +127,6 @@ function clearFilters() {
     
     machineRows.forEach(row => row.style.display = '');
     applicatorRows.forEach(row => row.style.display = '');
-}
-
-
-
-// Refresh functionality
-function refreshData() {
-    location.reload();
 }
 
 // Edit modal functions
