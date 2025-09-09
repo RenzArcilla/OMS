@@ -63,9 +63,11 @@ if (session_status() === PHP_SESSION_NONE) {
                         <button class="dashboard-btn" onclick="window.location.href='dashboard_machine.php'">
                             Machine Dashboard
                         </button>
-                        <button class="login-btn" onclick="window.location.href='login.php'">
-                            Log In
-                        </button>
+                        <?php if (empty($_SESSION['user_type'])): ?>
+                            <button class="login-btn" onclick="window.location.href='login.php'">
+                                Log In
+                            </button>
+                        <?php endif; ?>
                     </div>
                 </div>
 
