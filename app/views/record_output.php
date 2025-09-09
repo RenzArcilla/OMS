@@ -47,11 +47,11 @@ if (!isset($_SESSION['user_id'])) {
             <div class="page-header">
                 <h1 class="page-title">📊 Production Records</h1>
                 <div class="header-actions">
-                    <button type="button" class="btn-secondary" onclick="exportData()">
+                    <button type="button" class="btn-secondary modal-btn">
                         Export Report
                     </button>
-                    <button type="button" class="btn-primary" onclick="openModal()">
-                        ➕ Add New Record
+                    <button type="button" class="btn-primary modal-btn">
+                        Add New Record
                     </button>
                 </div>
             </div>
@@ -257,12 +257,13 @@ if (!isset($_SESSION['user_id'])) {
 
             <!-- Submit -->
             <div class="button-group">
-                <button type="submit" class="submit-btn">
-                    Submit Record
-                </button>
                 <button type="button" class="cancel-btn">
                     Cancel
                 </button>
+                <button type="submit" class="submit-btn">
+                    Submit Record
+                </button>
+
             </div>
         </form>
     </div>
