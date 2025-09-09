@@ -94,5 +94,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 modal.style.display = 'block';
             }
         }
+
+        
+
+// Record Output
+        if (event.target.classList.contains('export-btn')) {
+            const modal = document.getElementById('exportModal');
+            if (modal) {
+                modal.style.display = 'block';
+            }
+        }
+        if (event.target.classList.contains('add-record-btn')) {
+            const modal = document.getElementById('addRecordModal');
+            if (modal) {
+                modal.style.display = 'block';
+            }
+        }
     });
 });

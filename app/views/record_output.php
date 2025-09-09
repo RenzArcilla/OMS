@@ -83,7 +83,7 @@ if (!empty(trim($search))) {
                     <button type="button" class="btn-secondary export-btn">
                         Export Report
                     </button>
-                    <button type="button" class="btn-primary modal-btn">
+                    <button type="button" class="btn-primary add-record-btn">
                         Add New Record
                     </button>
                 </div>
@@ -319,8 +319,8 @@ if (!empty(trim($search))) {
             </div>
         </div>
     </div>
-<!-- Modal Overlay -->
-<div class="modal-overlay" id="modalOverlay">
+<!-- Add Record Modal Overlay -->
+<div class="modal-overlay" id="addRecordModal">
     <div class="form-container">
         <button class="modal-close-btn" onclick="closeModal()">×</button>
         <div class="form-header">
