@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!partName || !machineId) return;
 
             // Fetch reset history for the selected part and machine
-            fetch("../controllers/get_reset_dates_machine.php", {
+            fetch("/SOMS/app/controllers/get_reset_dates_machine.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: `part_name=${encodeURIComponent(partName)}&machine_id=${encodeURIComponent(machineId)}`
@@ -377,12 +377,12 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // State variables
-let selectedFormat = 'csv';
-let selectedDateRange = 'all';
-let customStartDate = '';
-let customEndDate = '';
-let includeHeaders = true;
-let isExporting = false;
+selectedFormat = 'csv';
+selectedDateRange = 'all';
+customStartDate = '';
+customEndDate = '';
+includeHeaders = true;
+isExporting = false;
 
 // Format selection
 function initializeFormatOptions() {
