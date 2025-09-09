@@ -108,12 +108,10 @@
                             <div>Edit Maximum Output</div> 
                         </button> 
                         <button type="button" class="modal-btn btn-primary">
-                            <div>Export</div> 
-                            <div>Reset Data</div>
+                            <div>Export Reset Data</div>
                         </button>   
                         <button type="button" class="btn-primary modal-btn" onclick="exportData()">
-                            <div>Export</div> 
-                            <div>Output Data</div>
+                            <div>Export Output Data</div>
                         </button>
                         <button type="button" class="btn-primary" onclick="refreshPage()">
                             Refresh Data

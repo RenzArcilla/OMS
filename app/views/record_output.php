@@ -425,7 +425,6 @@ if (!isset($_SESSION['user_id'])) {
                         </div>
                     </div>
                 </div>
- 
 
             <!-- Date Range Section -->
                 <div class="section-header">
