@@ -1,4 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Expose logout modal opener for inline onclick in header
+    window.openLogoutModal = function() {
+        const modal = document.getElementById('logoutModalOverlay');
+        if (modal) {
+            modal.style.display = 'block';
+            const focusable = modal.querySelector('button, [tabindex]:not([tabindex="-1"])');
+            if (focusable) focusable.focus();
+        }
+    };
+
     // Universal modal opener - works with any button that has data-modal attribute
     document.addEventListener('click', function(event) {
         // Helper function to find the closest element with a specific class
@@ -24,10 +34,13 @@ document.addEventListener('DOMContentLoaded', function() {
                       findClosestWithClass(event.target, 'edit-maximum-output-machine') ||
                       findClosestWithClass(event.target, 'restore-machine-btn') ||
                       findClosestWithClass(event.target, 'export-btn') ||
-                      findClosestWithClass(event.target, 'add-record-btn');
+                      findClosestWithClass(event.target, 'add-record-btn') ||
+                      findClosestWithClass(event.target, 'logout-button');
+
 
         if (!button) return;
 
+// Logout
 // Dashboard Applicator
         if (button.classList.contains('add-parts')) {
             const modal = document.getElementById('addCustomPartModalDashboardApplicator');

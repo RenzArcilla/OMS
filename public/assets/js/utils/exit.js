@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.addEventListener('click', function(event) {
-        if (button.classList.contains('cancel-btn')) {
+        if (event.target.classList.contains('cancel-btn')) {
             const modal = event.target.closest('.modal-overlay');
             if (modal) {
                 modal.style.display = 'none';
