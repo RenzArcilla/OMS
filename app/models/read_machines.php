@@ -306,6 +306,38 @@ function getMachinesForExport() {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function getMachinesCount($search = null, $description = 'ALL') {
+    /*
+        Function to get the total count of active machines for pagination.
+        Supports search and description filtering.
+
+        Parameters:
+            string $search        - Optional search keyword for multiple fields.
+            string $description   - Optional filter for machine description (default = 'ALL').
+
+        Returns:
+            int - Total count of active machines matching the criteria.
+    */
+    
+    global $pdo;
+    $query = "SELECT COUNT(*) FROM machines WHERE is_active = 1";
+    $params = [];
+    
+    if (!empty($search)) {
+        $query .= " AND (control_no LIKE :search OR model LIKE :search OR maker LIKE :search OR serial_no LIKE :search OR invoice_no LIKE :search)";
+        $params[':search'] = "%$search%";
+    }
+    
+    if ($description !== 'ALL') {
+        $query .= " AND description = :description";
+        $params[':description'] = $description;
+    }
+    
+    $stmt = $pdo->prepare($query);
+    $stmt->execute($params);
+    return (int) $stmt->fetchColumn();
+}
+
 function getDisabledMachinesCount($search = null, $description = 'ALL') {
     /*
         Function to get the total count of disabled machines for pagination.
