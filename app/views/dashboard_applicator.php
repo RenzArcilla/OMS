@@ -104,10 +104,10 @@
                 <div class="page-header">
                     <h1 class="page-title">📊 Applicator Dashboard</h1>
                     <div class="header-actions"> 
-                        <button type="button" class="modal-btn btn-primary">
+                        <button type="button" class="btn-primary edit-maximum-output">
                             <div>Edit Maximum Output</div> 
                         </button> 
-                        <button type="button" class="modal-btn btn-primary">
+                        <button type="button" class="btn-primary export-reset-data">
                             <div>Export Reset Data</div> 
                         </button>   
                         <button type="button" class="btn-primary export-output-data">

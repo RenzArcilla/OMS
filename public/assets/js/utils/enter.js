@@ -14,5 +14,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 modal.style.display = 'block';
             }
         }
+        if (event.target.classList.contains('export-reset-data')) {
+            const modal = document.getElementById('exportModalRecentlyReset');
+            if (modal) {
+                modal.style.display = 'block';
+            }
+        }
+        if (event.target.classList.contains('edit-maximum-output')) {
+            const modal = document.getElementById('editMaximumOutputModalDashboardApplicator');
+            if (modal) {
+                modal.style.display = 'block';
+            }
+        }
     });
 });
