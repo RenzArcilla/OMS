@@ -57,13 +57,15 @@ if (session_status() === PHP_SESSION_NONE) {
                     </p>
                     
                     <div class="buttons-group">
-                        <button class="dashboard-btn">
-                            <a href="dashboard_applicator.php">Applicator Dashboard</a>
+                        <button class="dashboard-btn" onclick="window.location.href='dashboard_applicator.php'">
+                            Applicator Dashboard
                         </button>
-                        <button class="dashboard-btn">
-                            <a href="dashboard_machine.php">Machine Dashboard</a>
+                        <button class="dashboard-btn" onclick="window.location.href='dashboard_machine.php'">
+                            Machine Dashboard
                         </button>
-                        <button class="login-btn"><a href="login.php">Log In</a></button>
+                        <button class="login-btn" onclick="window.location.href='login.php'">
+                            Log In
+                        </button>
                     </div>
                 </div>
 
@@ -102,5 +104,7 @@ if (session_status() === PHP_SESSION_NONE) {
         </section>
     <script src="../../public/assets/js/sidebar.js"></script>
     <script src="../../public/assets/js/home.js"></script>
+    <script src="../../public/assets/js/utils/enter.js"></script>
+    <script src="../../public/assets/js/utils/exit.js"></script>
 </body>
 </html>
