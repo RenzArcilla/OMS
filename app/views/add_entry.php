@@ -3,6 +3,13 @@
     This section is for adding a new applicator or machine to the system.
     It includes a form for entering details and submitting them to the server.
 */
+
+// Start session and check if user is logged in
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+
 ?>
 
 <!DOCTYPE html>

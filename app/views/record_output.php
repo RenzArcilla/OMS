@@ -4,14 +4,17 @@
     It includes a form for entering details and submitting them to the server.
 */
 
-/*
+
 // Start session and check if user is logged in
 session_start();
+if (session_status() === PHP_SESSION_NONE) {
+}
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
 }
-*/
+
+
 
 // Pagination settings
 $items_per_page = isset($_GET['items_per_page']) ? max(5, min(50, (int)$_GET['items_per_page'])) : 10;
