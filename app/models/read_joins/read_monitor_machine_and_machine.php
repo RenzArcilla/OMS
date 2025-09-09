@@ -294,8 +294,7 @@ function getMachineOutputsForExport() {
 
     // Build the SQL query
     $sql = "
-        SELECT m.machine_id,
-                mm.last_updated,
+        SELECT mm.last_updated,
                 m.control_no,
                 m.description,
                 m.model,
