@@ -1,6 +1,9 @@
 // Refresh functionality
-function refreshData() {
-    location.reload();
+function refreshPage(btn) {
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '⏳ Refreshing...';
+    btn.disabled = true;
+    window.location.href = '/OMS/app/views/record_output.php';
 }
 
 // Modal functions
