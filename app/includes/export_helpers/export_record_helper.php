@@ -48,6 +48,18 @@ function exportRecordsToExcel($include_headers, $date_range, $start_date = null,
         if ($include_headers && isset($chunk[0])) {
             $col = 1;
             foreach (array_keys($chunk[0]) as $header) {
+                // Replace 'hp1_no' with 'Applicator 1 (hp1_no)'
+                if ($header === 'hp1_no') {
+                    $header = 'Applicator 1 (hp1_no)';
+                }
+                // Replace 'hp2_no' with 'Applicator 2 (hp2_no)'
+                if ($header === 'hp2_no') {
+                    $header = 'Applicator 2 (hp2_no)';
+                }
+                // Replace 'control_no' with 'Machine Number (control_no)'
+                if ($header === 'control_no') {
+                    $header = 'Machine Number (control_no)';
+                }
                 $cell = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($col) . $rowNum;
                 $sheet->setCellValue($cell, ucfirst(str_replace("_", " ", $header)));
                 $sheet->getStyle($cell)->getFont()->setBold(true);
