@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (buttonText === 'Add Parts' && event.target.hasAttribute('onclick')) {
                 return; // Let the onclick handler work
             }
-
             if (buttonText === 'Export Applicators') {
                 const modal = document.getElementById('exportApplicatorReportModal');
                 if (modal) modal.style.display = 'block';
@@ -44,7 +43,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Default modal handling for other modal-btn clicks
                 const modal = document.getElementById('exportModalRecentlyReset');
                 if (modal) modal.style.display = 'block';
-            }
+            } 
+
+
+        }
+
+        if (event.target.classList.contains('modal-btn')) {
+            const modal = document.getElementById('modalOverlay');
+            if (modal) modal.style.display = 'block';
         }
 
         // Handle logout button
