@@ -536,7 +536,7 @@
                 </div>
                 
                 <div class="button-group">
-                    <button type="button" class="btn btn-secondary" onclick="closeAddCustomPartModal()">
+                    <button type="button" class="btn btn-secondary cancel-btn" onclick="closeAddCustomPartModal()">
                         Cancel
                     </button>
                     <button type="submit" class="btn btn-primary" id="submitBtn">

@@ -50,4 +50,4 @@
 <script src="../../public/assets/js/utils/logout.js"></script>
 <script src="../../public/assets/js/utils/checkbox.js"></script>
 
-<script src="../../public/assets/js/logout.js"></script>no,n the 
+<script src="../../public/assets/js/logout.js"></script>
