@@ -105,7 +105,7 @@
                                     placeholder="Enter maximum output limit..." 
                                     required
                                     min="0"
-                                    step="100000">
+                                    step="10000">
                             </div>
                         </div>
                     </div>
