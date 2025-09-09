@@ -19,6 +19,56 @@ document.getElementById('modalOverlay').addEventListener('click', function(e) {
     }
 });
 
+function openDeleteRecordModal(recordId) {
+    console.log('Opening delete modal for record ID:', recordId);
+    const modal = document.getElementById('deleteRecordModal');
+    const recordIdInput = document.getElementById('delete_record_id');
+    
+    if (!modal) {
+        console.error('Delete modal not found!');
+        return;
+    }
+    
+    if (!recordIdInput) {
+        console.error('Delete record ID input not found!');
+        return;
+    }
+    
+    recordIdInput.value = recordId;
+    
+    // Use the same approach as the working edit modal
+    modal.style.display = 'block';
+    
+    // Debug: Check if modal is actually visible
+    setTimeout(() => {
+        const computedStyle = window.getComputedStyle(modal);
+        console.log('Modal computed display:', computedStyle.display);
+        console.log('Modal computed visibility:', computedStyle.visibility);
+        console.log('Modal computed opacity:', computedStyle.opacity);
+        console.log('Modal computed position:', computedStyle.position);
+        console.log('Modal computed z-index:', computedStyle.zIndex);
+        console.log('Modal offsetParent:', modal.offsetParent);
+        console.log('Modal parent element:', modal.parentElement);
+    }, 100);
+    
+    console.log('Modal should now be visible with display: block');
+}
+function closeDeleteRecordModal() {
+    const modal = document.getElementById('deleteRecordModal');
+    if (modal) {
+        modal.style.display = 'none';
+        modal.classList.remove('active');
+    }
+}
+// Optional: Close modal on overlay click
+document.addEventListener('DOMContentLoaded', function() {
+    var modal = document.getElementById('deleteRecordModal');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) closeDeleteRecordModal();
+        });
+    }
+});
 
 // Open the export modal
 // Listen for clicks on the "Export Data" button to open the export modal
