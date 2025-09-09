@@ -128,3 +128,11 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeCheckbox();
 });
 
+downloadFileUploadFormat = () => {
+    const link = document.createElement('a');
+    link.href = '/OMS/app//dl/oms_file_upload_format.xlsx';
+    link.download = 'oms_file_upload_format.xlsx';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
