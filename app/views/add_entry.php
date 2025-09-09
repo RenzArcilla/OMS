@@ -78,16 +78,10 @@
                                     onchange="applyMachineFilters()"
                                     required
                                 >  
-                                    <option value="ALL">All</option>
+                                    <option value="ALL">All Types</option>
                                     <option value="AUTOMATIC">Automatic</option>
                                     <option value="SEMI-AUTOMATIC">Semi-Automatic</option>
                                 </select>
-                                <button 
-                                    type="button" 
-                                    class="tab-btn" 
-                                    id="refreshMachineTableBtn"
-                                    onclick="refreshData()"
-                                >Refresh</button>
                             </form>
                         </div>
                         <div class="table-container">
@@ -134,7 +128,6 @@
                                 <option value="SMALL">Small</option>
                                 <option value="BIG">Big</option>
                             </select>
-                            <button type="button" class="tab-btn" onclick="refreshData()" style="min-width: 90px;">Refresh</button>
                         </div>
 
                         <div class="table-container">
