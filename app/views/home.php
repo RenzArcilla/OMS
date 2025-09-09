@@ -74,8 +74,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 <div class="dashboard-container">
                     <div class="dashboard-main">
                         <div class="dashboard-header">
-                            <h3 class="dashboard-title">CONTROL CENTER</h3>
-                            
+                            <h3 class="dashboard-title">CONTROL CENTER              <div style="font-size: 17px; color: #888;" id="dashboardTime"></div></h3>
                         </div>
 
                         <div class="dashboard-content">
