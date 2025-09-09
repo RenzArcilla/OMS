@@ -69,7 +69,6 @@ requireAdmin();
                             class="search-input" 
                             id="userSearchInput"
                             placeholder="Search here..." 
-                            onkeyup="applyUserFilters(this.value)"
                             autocomplete="off"
                         >
                         <select 
