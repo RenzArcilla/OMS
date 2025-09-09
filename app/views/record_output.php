@@ -614,7 +614,6 @@ if (!empty(trim($search))) {
                         </div>
                     </div>
                 </div>
- 
 
             <!-- Date Range Section -->
                 <div class="section-header">

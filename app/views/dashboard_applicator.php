@@ -107,11 +107,13 @@
                         <button type="button" class="btn-primary edit-maximum-output">
                             <div>Edit Maximum Output</div> 
                         </button> 
+
                         <button type="button" class="btn-primary export-reset-data">
                             <div>Export Reset Data</div> 
                         </button>   
                         <button type="button" class="btn-primary export-output-data">
                             <div>Export Output Data</div> 
+
                         </button>
                         <button type="button" class="btn-primary" onclick="refreshPage()">
                             Refresh Data
