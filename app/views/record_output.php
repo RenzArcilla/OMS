@@ -401,7 +401,7 @@ if (!empty(trim($search))) {
                             Applicator 1 Output
                             <span class="required-badge">Required</span>
                         </label>
-                        <input type="text" id="app1_output" name="app1_output" class="form-input" required>
+                        <input type="number" id="app1_output" name="app1_output" class="form-input" required>
                     </div>
 
                     <div class="form-group">
@@ -417,7 +417,7 @@ if (!empty(trim($search))) {
                             Applicator 2 Output
                             <span class="optional-badge">Optional</span>
                         </label>
-                        <input type="text" id="app2_output" name="app2_output" class="form-input">
+                        <input type="number" id="app2_output" name="app2_output" class="form-input">
                     </div>
                 </div>
             </div>
@@ -445,7 +445,7 @@ if (!empty(trim($search))) {
                             Machine Output
                             <span class="required-badge">Required</span>
                         </label>
-                        <input type="text" id="machine_output" name="machine_output" class="form-input" required>
+                        <input type="number" id="machine_output" name="machine_output" class="form-input" required>
                     </div>
                 </div>
             </div>
