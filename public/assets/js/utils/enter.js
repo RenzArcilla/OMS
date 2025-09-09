@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         if (event.target.classList.contains('edit-maximum-output')) {
-            const modal = document.getElementById('editMaximumOutputModalDashboardApplicator');
+            const modal = document.getElementById('editMaxOutputModal');
             if (modal) {
                 modal.style.display = 'block';
             }
