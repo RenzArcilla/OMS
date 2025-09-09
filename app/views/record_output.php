@@ -135,7 +135,7 @@ if (!empty(trim($search))) {
                     </button>
                 </div>
 
-                <div class="section-content expanded" id="table-container" style="height: 500px; overflow-y: auto;">
+                <div class="section-content expanded" id="table-container">
                     <div class="table-container">
                         <table class="data-table" id="data-table">
                             <thead>
