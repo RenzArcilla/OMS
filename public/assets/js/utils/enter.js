@@ -26,5 +26,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 modal.style.display = 'block';
             }
         }
+
+// Dashboard Machine 
+        if (event.target.classList.contains('add-parts-machine')) {
+            const modal = document.getElementById('addCustomPartModalDashboardMachine');
+            if (modal) {
+                modal.style.display = 'block';
+            }
+        }
+        if (event.target.classList.contains('export-output-data-machine')) {
+            const modal = document.getElementById('exportMachineModal');
+            if (modal) {
+                modal.style.display = 'block';
+            }
+        }
+        if (event.target.classList.contains('export-reset-data-machine')) {
+            const modal = document.getElementById('exportModalRecentlyReset');
+            if (modal) {
+                modal.style.display = 'block';
+            }
+        }
+        if (event.target.classList.contains('edit-maximum-output-machine')) {
+            const modal = document.getElementById('editMaxOutputModal');
+            if (modal) {
+                modal.style.display = 'block';
+            }
+        }
     });
 });
