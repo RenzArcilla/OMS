@@ -35,6 +35,7 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/export_modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/search_filter.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/info.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/file_upload.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -54,6 +55,9 @@ if (!isset($_SESSION['user_id'])) {
                     </button>
                 </div>
             </div>
+            <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/views/file_upload.php'; ?>
+
+
             <!-- Scrollable container for infinite scrolling -->
             <div class="data-section">
                 <div class="section-header expanded" onclick="toggleSection(this)">
@@ -63,6 +67,7 @@ if (!isset($_SESSION['user_id'])) {
                         </span>
                     </div>
                 </div>
+
 
                 <!-- Filters -->
                 <div class="search-filter">
