@@ -50,6 +50,10 @@
                             Add Applicator
                         </button>
 
+                        <button type="button" class="btn-primary" onclick="refreshPage(this)">
+                            Refresh Data
+                        </button>
+
                     </div>
                 </div>
                 <!-- Tab Section -->

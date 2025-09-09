@@ -89,6 +89,9 @@ if (!empty(trim($search))) {
                     <button type="button" class="btn-primary export-reset-data-btn" onclick="downloadFileUploadFormat()">
                         <div>Download File Upload Format</div> 
                     </button> 
+                    <button type="button" class="btn-primary" onclick="refreshPage(this)">
+                            Refresh Data
+                    </button>
                 </div>
             </div>
             <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/OMS/app/views/file_upload.php'; ?>

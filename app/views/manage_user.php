@@ -46,7 +46,7 @@ requireAdmin();
                         <button type="button" class="btn btn-secondary" onclick="exportData()">
                             Export Report
                         </button>
-                        <button type="button" class="btn btn-primary" onclick="refreshData()">
+                        <button type="button" class="btn btn-primary" onclick="refreshPage(this)">
                             Refresh Data
                         </button>
                         <button type="button" class="btn btn-primary" onclick="openAddUserModal()">

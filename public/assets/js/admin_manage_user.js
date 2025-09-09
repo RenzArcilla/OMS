@@ -1,3 +1,12 @@
+// Refresh the page
+function refreshPage(btn) {
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '⏳ Refreshing...';
+    btn.disabled = true;
+    window.location.href = '/OMS/app/views/manage_user.php';
+}
+
+
 // Open the add user modal
 function openAddUserModal() {
     document.getElementById("addUserModal").style.display = "block";
@@ -45,17 +54,6 @@ function closeEditUserModal() {
     document.getElementById('edit_last_name').value = '';
     document.getElementById('edit_role').value = '';
     document.getElementById('editUserModal').style.display = 'none';
-}
-
-// Refresh the page
-function refreshData() {
-    const btn = event.target;
-    const originalText = btn.innerHTML;
-    btn.innerHTML = '⏳ Refreshing...';
-    btn.disabled = true;
-    setTimeout(() => {
-        window.location.reload();
-    }, 1000);
 }
 
 

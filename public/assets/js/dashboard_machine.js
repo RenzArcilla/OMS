@@ -3,7 +3,7 @@ function refreshPage(btn) {
     const originalText = btn.innerHTML;
     btn.innerHTML = '⏳ Refreshing...';
     btn.disabled = true;
-    window.location.reload();
+    window.location.href = '/OMS/app/views/dashboard_machine.php';
 }
 
 // Open the reset modal
