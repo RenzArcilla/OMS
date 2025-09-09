@@ -90,6 +90,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 const submitBtn = modal.querySelector('#restoreBtn');
                 if (checkbox) checkbox.checked = false;
                 if (submitBtn) submitBtn.disabled = true;
+
+                // Also populate hidden machine_id
+                const machineIdInput = document.getElementById('machine_id');
+                if (machineIdInput) {
+                    machineIdInput.value = machineId;
+                }
                 
                 modal.style.display = 'block';
             }
