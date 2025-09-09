@@ -329,8 +329,7 @@ function getApplicatorOutputsForExport() {
 
     // Build the SQL query
     $sql = "
-        SELECT a.applicator_id,
-                ma.last_updated,
+        SELECT ma.last_updated,
                 a.hp_no,
                 a.terminal_no,
                 a.description,
