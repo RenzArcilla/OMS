@@ -177,10 +177,53 @@ if (!empty(trim($search))) {
                                                         title="Edit Record"
                                                     >Edit</button>
 
-                                                    <form action="/OMS/app/controllers/disable_record.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this record?');">
-                                                        <input type="hidden" name="record_id" value="<?= htmlspecialchars($row['record_id']) ?>">
-                                                        <button type="submit" title="Delete Record" class="delete-btn">Delete</button>
-                                                    </form>
+                                                    <!-- Delete Record Modal Trigger -->
+                                                    <button type="button" title="Delete Record" class="delete-btn" onclick="openDeleteRecordModal('<?= htmlspecialchars($row['record_id']) ?>')">Delete</button>
+
+                                                    <!-- Delete Record Modal (one instance, outside the loop, but included here for clarity; move to bottom of file in production) -->
+                                                    <div id="deleteRecordModal" class="modal-overlay" style="display:none;">
+                                                        <div class="form-container">
+                                                            <button class="modal-close-btn" onclick="closeDeleteRecordModal()">×</button>
+                                                            
+                                                            <div class="form-header">
+                                                                <span class="delete-icon">🗑️</span>
+                                                                <h1 class="form-title">Delete Record</h1>
+                                                                <p class="form-subtitle">Are you sure you want to delete this record?</p>
+                                                            </div>
+                                                            <form id="deleteRecordForm" method="POST" action="/OMS/app/controllers/disable_record.php">
+                                                                <input type="hidden" name="record_id" id="delete_record_id" value="">
+                                                                <div class="warning-section">
+                                                                    <span class="warning-icon">⚠️</span>
+                                                                    <div class="warning-title">This action cannot be undone.</div>
+                                                                    <div class="warning-text">
+                                                                        Deleting this record will remove it from the system. This action is irreversible.
+                                                                    </div>
+                                                                </div>
+                                                                <div class="button-group">
+                                                                    <button type="button" class="cancel-btn" onclick="closeDeleteRecordModal()">Cancel</button>
+                                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <script>
+                                                        function openDeleteRecordModal(recordId) {
+                                                            document.getElementById('delete_record_id').value = recordId;
+                                                            document.getElementById('deleteRecordModal').style.display = 'flex';
+                                                        }
+                                                        function closeDeleteRecordModal() {
+                                                            document.getElementById('deleteRecordModal').style.display = 'none';
+                                                        }
+                                                        // Optional: Close modal on overlay click
+                                                        document.addEventListener('DOMContentLoaded', function() {
+                                                            var modal = document.getElementById('deleteRecordModal');
+                                                            if (modal) {
+                                                                modal.addEventListener('click', function(e) {
+                                                                    if (e.target === modal) closeDeleteRecordModal();
+                                                                });
+                                                            }
+                                                        });
+                                                    </script>
                                                 </div>
                                             </td>
                                             <td><?= htmlspecialchars($row['record_id']) ?></td>
