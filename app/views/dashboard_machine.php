@@ -100,35 +100,24 @@
                 <div class="page-header">
                     <h1 class="page-title">📊 Machine Dashboard</h1>
                     <div class="header-actions">
-                    <button type="button" class="modal-btn btn-primary">
+                    <button type="button" class="btn-primary edit-maximum-output-machine">
                             <div>Edit Maximum Output</div> 
                         </button>
-                        <button type="button" class="modal-btn btn-primary ">
+                        <button type="button" class="btn-primary export-reset-data-machine">
                             <div>Export Reset Data</div>
                         </button>   
-                        <button type="button" class="btn-primary modal-btn" onclick="exportData()">
+                        <button type="button" class="btn-primary export-output-data-machine">
                             <div>Export Output Data</div>
                         </button>
                         <button type="button" class="btn-primary" onclick="refreshPage(this)">
                             Refresh Data
                         </button>
-                        <button type="button" class="modal-btn btn-primary " onclick="openAddPartsModal()">
+                        <button type="button" class="btn-primary add-parts-machine">
                             Add Parts
                         </button>
                     </div>
                 </div>
                 
-                <div class="stats-overview">
-                    <div class="stat-card status-good" onclick="openMachineModal()">
-                        <div class="stat-value">12,847</div>
-                        <div class="stat-label">HP-001</div>
-                    </div>
-                    <div class="stat-card status-good" onclick="openMachineModal()">
-                        <div class="stat-value">12,847</div>
-                        <div class="stat-label">HP-001</div>
-                    </div>
-                </div>
-
                 <!-- Machine Status Section -->
                 <div class="data-section">
                     <div class="section-header expanded" onclick="toggleSection(this)">
