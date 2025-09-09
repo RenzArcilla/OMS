@@ -26,7 +26,7 @@ async function applyDisabledMachineFilters() {
 
         try {
             const res = await fetch(
-                `/SOMS/app/controllers/search_disabled_machines.php?q=${encodeURIComponent(search)}&description=${encodeURIComponent(description)}`
+                `/OMS/app/controllers/search_disabled_machines.php?q=${encodeURIComponent(search)}&description=${encodeURIComponent(description)}`
             );
             const result = await res.json();
 

@@ -102,7 +102,7 @@ async function loadDisabledApplicators() {
             type: currentType
         });
 
-        const response = await fetch(`/SOMS/app/controllers/get_disabled_applicators.php?${params}`);
+        const response = await fetch(`/OMS/app/controllers/get_disabled_applicators.php?${params}`);
         const result = await response.json();
 
         if (!result.success) {

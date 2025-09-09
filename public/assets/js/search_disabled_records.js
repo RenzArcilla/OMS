@@ -25,7 +25,7 @@ async function applyDisabledRecordFilters(searchValue = '') {
 
         try {
             const response = await fetch(
-                `/SOMS/app/controllers/search_disabled_records.php?q=${encodeURIComponent(search)}&shift=${encodeURIComponent(shift)}`
+                `/OMS/app/controllers/search_disabled_records.php?q=${encodeURIComponent(search)}&shift=${encodeURIComponent(shift)}`
             );
             const result = await response.json();
 

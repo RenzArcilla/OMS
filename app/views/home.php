@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOMS - Home</title>
+    <title>OMS - Home</title>
     <link rel="stylesheet" href="../../public/assets/css/base/base.css">
     <link rel="stylesheet" href="../../public/assets/css/home.css">
     <link rel="stylesheet" href="../../public/assets/css/components/sidebar.css">
@@ -19,8 +19,8 @@ if (session_status() === PHP_SESSION_NONE) {
 <body>
     
     <?php 
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/sidebar.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/header.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/OMS/app/includes/sidebar.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/OMS/app/includes/header.php';
     ?>
     
 <!-- Animated Background -->
@@ -53,7 +53,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     </h1>
                     
                     <p class="hero-subtitle">
-                        Monitor and control your storage and output devices with ease.
+                        Monitor and control your output devices with ease.
                     </p>
                     
                     <div class="buttons-group">

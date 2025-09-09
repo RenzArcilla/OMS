@@ -245,7 +245,7 @@ document.getElementById("editWireType").addEventListener("change", function() {
     if (!partName) return;
 
     // Send request to server to fetch reset dates for this part + applicator
-    fetch("/SOMS/app/controllers/get_reset_dates_applicator.php", {
+    fetch("/OMS/app/controllers/get_reset_dates_applicator.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: "part_name=" + encodeURIComponent(partName) +

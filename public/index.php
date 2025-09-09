@@ -16,8 +16,8 @@
     <link rel="stylesheet" href="../assets/css/hero.css">
 </head>
 <body>
-    <p>Storage and Output Monitoring System</p>
-    <h2>Welcome to the SOMS System! Please log in to continue.</h2>
+    <p>Output Monitoring System</p>
+    <h2>Welcome to the OMS System! Please log in to continue.</h2>
     <a href="../app/views/login.php">Log In</a>
     <a href="../app/views/signup.php">Sign In</a>
 </body>

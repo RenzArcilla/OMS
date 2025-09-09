@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOMS - Dashboard</title>
+    <title>OMS - Dashboard</title>
     <link rel="stylesheet" href="../assets/css/dashboard.css">
     <link rel="stylesheet" href="../assets/css/base.css">
 </head>
@@ -12,7 +12,7 @@
         <div class="header">
             <div class="logo">
                 <div class="logo-icon">S</div>
-                <span>           SOMS</span>
+                <span>           OMS</span>
             </div>
             <h1 class="dashboard-title">Dashboard</h1>
         </div>

@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!partName || !machineId) return;
 
             // Fetch reset history for the selected part and machine
-            fetch("/SOMS/app/controllers/get_reset_dates_machine.php", {
+            fetch("/OMS/app/controllers/get_reset_dates_machine.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: `part_name=${encodeURIComponent(partName)}&machine_id=${encodeURIComponent(machineId)}`
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add function to check current data
     window.checkMachineData = function() {
         console.log('Checking current machine data...');
-        fetch('/SOMS/app/controllers/get_machine_outputs.php')
+        fetch('/OMS/app/controllers/get_machine_outputs.php')
             .then(response => response.json())
             .then(data => {
                 console.log('Current machine data:', data);

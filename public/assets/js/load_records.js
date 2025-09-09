@@ -13,7 +13,7 @@ function loadRecords() {
     if (recordLoading) return;
     recordLoading = true;
 
-    fetch('/SOMS/public/ajax/get_records.php?offset=' + recordOffset + '&limit=' + recordLimit)
+    fetch('/OMS/public/ajax/get_records.php?offset=' + recordOffset + '&limit=' + recordLimit)
         .then(response => response.json())
         .then(data => {
             const tbody = document.getElementById('recordsTableBody');

@@ -13,7 +13,7 @@ function loadMachines() {
     if (machineLoading) return;
     machineLoading = true;
 
-    fetch('/SOMS/public/ajax/get_machines.php?offset=' + machineOffset + '&limit=' + machineLimit)
+    fetch('/OMS/public/ajax/get_machines.php?offset=' + machineOffset + '&limit=' + machineLimit)
         .then(response => response.json())
         .then(data => {
             const tbody = document.getElementById('machine-body');
@@ -54,7 +54,7 @@ function loadMachines() {
                 // Delete form
                     const deleteForm = document.createElement('form');
                     deleteForm.method = 'POST';
-                    deleteForm.action = '/SOMS/app/controllers/disable_machine.php';
+                    deleteForm.action = '/OMS/app/controllers/disable_machine.php';
                     deleteForm.name = 'deleteForm'; 
                     deleteForm.style.display = 'inline';
                     deleteForm.onsubmit = () => confirm('Are you sure you want to delete this machine?');

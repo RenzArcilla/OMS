@@ -23,7 +23,7 @@ function confirmLogout() {
         
         // Simulate logout process
         setTimeout(() => {
-            window.location.href = '/SOMS/app/controllers/log_out.php';
+            window.location.href = '/OMS/app/controllers/log_out.php';
         }, 1000);
     } else {
         // Shake animation for checkbox

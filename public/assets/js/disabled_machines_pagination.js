@@ -72,7 +72,7 @@ async function loadDisabledMachines() {
             description: currentDescriptionMachines
         });
         
-        const response = await fetch(`/SOMS/app/controllers/get_disabled_machines.php?${params}`);
+        const response = await fetch(`/OMS/app/controllers/get_disabled_machines.php?${params}`);
         const result = await response.json();
         
         if (!result.success) {

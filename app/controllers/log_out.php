@@ -8,6 +8,6 @@ $_SESSION = array();
 session_destroy();
 
 // Redirect to login page
-header("Location: /SOMS/app/views/login.php");
+header("Location: /OMS/app/views/login.php");
 exit();
 ?>
