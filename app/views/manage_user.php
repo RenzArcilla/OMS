@@ -43,14 +43,14 @@ requireAdmin();
                 <div class="page-header">
                     <h1 class="page-title">Manage Users</h1>
                     <div class="header-actions">    
-                        <button type="button" class="btn btn-secondary" onclick="exportData()">
-                            Export Report
-                        </button>
                         <button type="button" class="btn btn-primary" onclick="refreshPage(this)">
                             Refresh Data
                         </button>
                         <button type="button" class="btn btn-primary" onclick="openAddUserModal()">
-                            + Add New User
+                            Add New User
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="exportData()">
+                            Export Report
                         </button>
                     </div>
                 </div>

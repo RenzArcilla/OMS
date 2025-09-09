@@ -36,24 +36,21 @@
                 <div class="page-header">
                     <h1 class="page-title">Manage Entries</h1>
                     <div class="header-actions">
-                        <button type="button" class="btn-primary" onclick="showExportApplicatorModal()">
-                            Export Applicators
-                        </button>
-                        <button type="button" class="btn-primary" onclick="showExportMachineModal()">
-                            Export Machines
+                        <button type="button" class="btn-primary" onclick="refreshPage(this)">
+                            Refresh Data
                         </button>
                         <button class="btn-primary" onclick="openMachineModal()">
                             Add Machine
                         </button>
-
                         <button class="btn-primary" onclick="openApplicatorModal()">
                             Add Applicator
                         </button>
-
-                        <button type="button" class="btn-primary" onclick="refreshPage(this)">
-                            Refresh Data
+                        <button type="button" class="btn-primary" onclick="showExportMachineModal()">
+                            Export Machines
                         </button>
-
+                        <button type="button" class="btn-primary" onclick="showExportApplicatorModal()">
+                            Export Applicators
+                        </button>
                     </div>
                 </div>
                 <!-- Tab Section -->
