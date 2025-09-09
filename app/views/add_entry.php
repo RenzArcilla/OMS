@@ -59,7 +59,7 @@
                 </div>  
                 <!-- Machine Table -->
                 <div class="data-section">
-                    <div id="machine-table" class="section-content expanded" style="height: 600px; overflow-y: auto;">
+                    <div id="machine-table" class="section-content expanded">
                         <!-- Filters -->
                         <div class="search-filter" style="display: flex; gap: 10px; align-items: center;">
                             <form id="machineFilterForm" onsubmit="return false;">

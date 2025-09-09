@@ -53,6 +53,12 @@ document.addEventListener('DOMContentLoaded', function() {
             if (modal) modal.style.display = 'block';
         }
 
+        
+        if (event.target.classList.contains('export-btn')) {
+            const modal = document.getElementById('exportModal');
+            if (modal) modal.style.display = 'block';
+        }
+
         // Handle logout button
         if (event.target.classList.contains('logout-btn')) {
             const modal = document.getElementById('logoutModalOverlay');
