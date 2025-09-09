@@ -1,4 +1,3 @@
-
 /* Data Section */
 .data-section {
     background: linear-gradient(135deg, #FFFFFF 0%, #F9FAFB 100%);
@@ -16,7 +15,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 28px 32px;
-    background: linear-gradienth(135deg, #F8FAFC, #F1F5F9);
+    background: linear-gradient(135deg, #F8FAFC, #F1F5F9); /* Fixed typo */
     border-bottom: 1px solid rgba(229, 231, 235, 0.8);
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -69,12 +68,20 @@
     max-height: 800px;
 }
 
+.table-container {
+    overflow-x: auto; /* Added horizontal scroll for responsive design */
+    max-height: 600px; /* Set reasonable max height for vertical scroll */
+    overflow-y: auto;
+}
+
 .table-container::-webkit-scrollbar {
-    height: 400px;
+    height: 8px; /* Fixed: changed from 400px to 8px */
+    width: 8px; /* Added width for vertical scrollbar */
 }
 
 .table-container::-webkit-scrollbar-track {
     background: #f1f5f9;
+    border-radius: 4px;
 }
 
 .table-container::-webkit-scrollbar-thumb {
@@ -82,18 +89,23 @@
     border-radius: 4px;
 }
 
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
 .data-table {
     width: 100%;
+    min-width: 600px; /* Ensures table doesn't compress too much on small screens */
     border-collapse: separate;
     border-spacing: 0;
-    font-size: 16px; /* Increased from 14px to 16px */
+    font-size: 16px;
 }
 
 .data-table .half-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    font-size: 14px;
+    font-size: 16px; /* Made consistent with main table */
 }
 
 .data-table thead {
@@ -114,10 +126,15 @@
     border-bottom: 2px solid #e2e8f0;
     white-space: nowrap;
     position: relative;
+    min-width: 120px; /* Added minimum width to prevent cramping */
 }
 
 .data-table th:first-child {
     border-top-left-radius: 0;
+    position: sticky; /* Make first column sticky if needed */
+    left: 0;
+    z-index: 11;
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
 }
 
 .data-table th:last-child {
@@ -125,12 +142,22 @@
 }
 
 .data-table td {
-    padding: 24px 28px; /* Increased from 20px 24px to 24px 28px */
+    padding: 24px 28px;
     color: #334155;
     border-bottom: 1px solid #f1f5f9;
     background: white;
     transition: all 0.2s ease;
     font-weight: 500;
+    min-width: 120px; /* Added minimum width to prevent cramping */
+    word-wrap: break-word; /* Handle long content */
+}
+
+.data-table td:first-child {
+    position: sticky; /* Make first column sticky if needed */
+    left: 0;
+    z-index: 9;
+    background: white;
+    border-right: 1px solid #f1f5f9;
 }
 
 .data-table tbody tr {
@@ -147,15 +174,48 @@
     color: #1e293b;
 }
 
+.data-table tbody tr:hover td:first-child {
+    background: rgba(59, 130, 246, 0.02); /* Maintain sticky column background on hover */
+}
+
 .status-badge {
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
+    display: inline-block;
+    white-space: nowrap;
 }
 
-.status-good { background: #d1fae5; color: #065f46; }
-.status-warning { background: #fef3c7; color: #92400e; }
-.status-critical { background: #fee2e2; color: #991b1b; }
+.status-good { 
+    background: #d1fae5; 
+    color: #065f46; 
+}
 
+.status-warning { 
+    background: #fef3c7; 
+    color: #92400e; 
+}
+
+.status-critical { 
+    background: #fee2e2; 
+    color: #991b1b; 
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .data-table th,
+    .data-table td {
+        padding: 16px 20px;
+        font-size: 14px;
+    }
+    
+    .section-header {
+        padding: 20px 24px;
+    }
+    
+    .section-title {
+        font-size: 18px;
+    }
+}

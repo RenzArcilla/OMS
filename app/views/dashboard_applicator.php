@@ -104,35 +104,26 @@
                 <div class="page-header">
                     <h1 class="page-title">📊 Applicator Dashboard</h1>
                     <div class="header-actions"> 
-                        <button type="button" class="modal-btn btn-primary">
+                        <button type="button" class="btn-primary edit-maximum-output">
                             <div>Edit Maximum Output</div> 
                         </button> 
-                        <button type="button" class="modal-btn btn-primary">
-                            <div>Export Reset Data</div>
+
+                        <button type="button" class="btn-primary export-reset-data">
+                            <div>Export Reset Data</div> 
                         </button>   
-                        <button type="button" class="btn-primary modal-btn" onclick="exportData()">
-                            <div>Export Output Data</div>
+                        <button type="button" class="btn-primary export-output-data">
+                            <div>Export Output Data</div> 
+
                         </button>
                         <button type="button" class="btn-primary" onclick="refreshPage()">
                             Refresh Data
                         </button>
-                        <button type="button" class="btn-primary modal-btn " onclick="openAddCustomPartModal()">
+                        <button type="button" class="btn-primary add-parts">
                             Add Parts
                         </button>
                     </div>
                 </div>
                 
-                <div class="stats-overview">
-                    <div class="stat-card status-good" onclick="openApplicatorModal()">
-                        <div class="stat-value">12,847</div>
-                        <div class="stat-label">HP-001</div>
-                    </div>
-                    <div class="stat-card status-good" onclick="openApplicatorModal()">
-                        <div class="stat-value">12,847</div>
-                        <div class="stat-label">HP-001</div>
-                    </div>
-                </div>
-
                 <!-- Applicator Status Section -->
                 <div class="data-section">
                     <div class="section-header expanded" onclick="toggleSection(this)">
