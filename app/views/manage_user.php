@@ -24,6 +24,7 @@ requireAdmin();
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/export_modal.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/search_filter.css">
     <link rel="stylesheet" href="/SOMS/public/assets/css/components/info.css">
+    <link rel="stylesheet" href="/SOMS/public/assets/css/components/pagination.css">
 </head>
 <body>
     <?php 
@@ -106,6 +107,7 @@ requireAdmin();
                             </table>
                         </div>
                     </div>
+                    <div class="pagination-container" id="usersPaginationContainer"></div>
                 </div>
             </div>
         </div>

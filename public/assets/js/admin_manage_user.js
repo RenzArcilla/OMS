@@ -209,6 +209,11 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
+// Close the export modal
+function closeExportModal() {
+    document.getElementById('exportModal').style.display = 'none';
+}
+
 // Initialize all functionality when page loads
 document.addEventListener('DOMContentLoaded', function() {
     initializeFormatOptions();
@@ -331,16 +336,21 @@ function updateUsersTable(users) {
     The search input will wait 500ms after the user stops typing before
     sending a request. The role filter triggers immediately on change.
 */
-document.querySelector('.search-input')
-    .addEventListener('input', debounce(applyUserFilters, 500));
-
-document.getElementById('roleFilter')
-    .addEventListener('change', applyUserFilters);
-
-
-// Fetch initial users when the page loads
-document.addEventListener("DOMContentLoaded", () => {
-    applyUserFilters(); // this will load page 1 with default filters
+document.addEventListener('DOMContentLoaded', function() {
+    // Add event listeners for search and filter
+    const searchInput = document.querySelector('.search-input');
+    const roleFilter = document.getElementById('roleFilter');
+    
+    if (searchInput) {
+        searchInput.addEventListener('input', debounce(applyUserFilters, 500));
+    }
+    
+    if (roleFilter) {
+        roleFilter.addEventListener('change', applyUserFilters);
+    }
+    
+    // Load initial data
+    applyUserFilters();
 });
 
 // Show loading indicator
@@ -392,7 +402,7 @@ function renderUsersPagination(pagination) {
         <div class="pagination-info">
             <span class="pagination-text">Page ${page} of ${total_pages} • ${total.toLocaleString()} users</span>
         </div>
-        <div class="pagination-controls">
+        <div class="pagination-controls" style="position: relative; right: 300px;">
             ${makeBtn('← Previous', page - 1, prevDisabled)}
             <div class="pagination-numbers">${numbers}</div>
             ${makeBtn('Next →', page + 1, nextDisabled)}
