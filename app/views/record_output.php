@@ -80,7 +80,7 @@ if (!empty(trim($search))) {
             <div class="page-header">
                 <h1 class="page-title">📊 Production Records</h1>
                 <div class="header-actions">
-                    <button type="button" class="btn-secondary export-btn">
+                    <button type="button" class="btn-primary export-btn">
                         Export Report
                     </button>
                     <button type="button" class="btn-primary add-record-btn">
