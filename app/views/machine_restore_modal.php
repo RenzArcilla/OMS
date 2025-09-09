@@ -31,6 +31,9 @@
                 </div>
             </div>
 
+            <!-- Hidden input to pass the machine_id -->
+            <input type="hidden" name="machine_id" id="machine_id" value="">
+
             <div class="confirmation-section">
                 <label class="confirmation-checkbox">
                     <input type="checkbox" id="confirmRestore" class="confirmation-input" onchange="toggleRestoreButton()">
