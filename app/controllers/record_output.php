@@ -69,19 +69,31 @@ try {
 }
 
 // 3. Check Existence
-$app1_data = applicatorExists($app1);
-if (!$app1_data) fail("Applicator 1 not found.");
+$app1_data = getInactiveApplicatorByHpNo($app1);
+if (!$app1_data) fail("Applicator 1 is inactive!");
 if (is_string($app1_data)) fail($app1_data);
+
+$app1_data = getActiveApplicatorByHpNo($app1);
+if (!$app1_data) fail("Applicator 1 not found!");
+if (is_string($app1_data)) fail($app1_data);
+
+
 
 $app2_data = null;
 if (!empty($app2)) {
-    $app2_data = applicatorExists($app2);
-    if (!$app2_data) fail("Applicator 2 not found.");
+    $app2_data = getInactiveApplicatorByHpNo($app2);
+    if (!$app2_data) fail("Applicator 2 is inactive!");
+    if (is_string($app2_data)) fail($app2_data);
+    $app2_data = getActiveApplicatorByHpNo($app2);
+    if (!$app2_data) fail("Applicator 2 not found!");
     if (is_string($app2_data)) fail($app2_data);
 }
 
-$machine_data = machineExists($machine);
-if (!$machine_data) fail("Machine not found.");
+$machine_data = getInactiveMachineByControlNo($machine);
+if (!$machine_data) fail("Machine is inactive!");
+if (is_string($machine_data)) fail($machine_data);
+$machine_data = getActiveMachineByControlNo($machine);
+if (!$machine_data) fail("Machine not found!");
 if (is_string($machine_data)) fail($machine_data);
 
 // 4. Database operation
