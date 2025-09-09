@@ -245,7 +245,7 @@ document.getElementById("editWireType").addEventListener("change", function() {
     if (!partName) return;
 
     // Send request to server to fetch reset dates for this part + applicator
-    fetch("../controllers/get_reset_dates_applicator.php", {
+    fetch("/SOMS/app/controllers/get_reset_dates_applicator.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: "part_name=" + encodeURIComponent(partName) +
@@ -308,12 +308,12 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // State variables
-let selectedFormat = 'csv';
-let selectedDateRange = 'all';
-let customStartDate = '';
-let customEndDate = '';
-let includeHeaders = true;
-let isExporting = false;
+selectedFormat = 'csv';
+selectedDateRange = 'all';
+customStartDate = '';
+customEndDate = '';
+includeHeaders = true;
+isExporting = false;
 
 // Format selection
 function initializeFormatOptions() {
