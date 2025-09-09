@@ -17,6 +17,10 @@ try {
         $search = null;
     }
 
+    $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+    $limit = isset($_GET['limit']) ? max(1, (int)$_GET['limit']) : 20;
+    $offset = ($page - 1) * $limit;
+
     $description = isset($_GET['description']) ? strtoupper(trim($_GET['description'])) : 'ALL';
     $allowedDescriptions = ['ALL', 'SIDE', 'END', 'CLAMP', 'STRIP AND CRIMP'];
     if (!in_array($description, $allowedDescriptions, true)) {
@@ -29,16 +33,33 @@ try {
         $type = 'ALL';
     }
 
-        // Fetch filtered results
-    $applicators = getFilteredApplicators(20, 0, $search, $description, $type);
+    // Debug: Log the request
+    error_log("Search applicators request: search=$search, page=$page, limit=$limit, description=$description, type=$type");
+
+    // Fetch filtered results with pagination
+    $applicators = getFilteredApplicators($limit, $offset, $search, $description, $type);
+    
+    // Get total count for pagination
+    $totalCount = getApplicatorsCount($search, $description, $type);
+    $totalPages = ceil($totalCount / $limit);
+
+    // Debug: Log the results
+    error_log("Applicators found: " . count($applicators) . ", Total count: $totalCount");
 
     // Determine empty database
-    $emptyDb = empty($applicators) && $search === null && $description === 'ALL' && $type === 'ALL';
+    $emptyDb = empty($applicators) && $page === 1 && $search === null && $description === 'ALL' && $type === 'ALL';
 
     echo json_encode([
         'success' => true,
         'data' => $applicators,
-        'empty_db' => $emptyDb
+        'empty_db' => $emptyDb,
+        'pagination' => [
+            'current_page' => $page,
+            'total_pages' => $totalPages,
+            'total_count' => $totalCount,
+            'limit' => $limit,
+            'offset' => $offset
+        ]
     ]);
 
 } catch (Exception $e) {
