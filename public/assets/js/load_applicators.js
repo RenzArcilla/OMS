@@ -13,7 +13,7 @@ function loadApplicators() {
     if (applicatorLoading) return;
     applicatorLoading = true;
 
-    fetch('/SOMS/public/ajax/get_applicators.php?offset=' + applicatorOffset + '&limit=' + applicatorLimit)
+    fetch('/OMS/public/ajax/get_applicators.php?offset=' + applicatorOffset + '&limit=' + applicatorLimit)
         .then(response => response.json())
         .then(data => {
             const tbody = document.getElementById('applicator-body');
@@ -53,7 +53,7 @@ function loadApplicators() {
                     // Delete form
                         const deleteForm = document.createElement('form');
                         deleteForm.method = 'POST';
-                        deleteForm.action = '/SOMS/app/controllers/disable_applicator.php';
+                        deleteForm.action = '/OMS/app/controllers/disable_applicator.php';
                         deleteForm.style.display = 'inline';
                         deleteForm.onsubmit = () => confirm('Are you sure you want to delete this applicator?');
 

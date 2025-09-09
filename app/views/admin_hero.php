@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Hero</title>
-    <link rel="icon" href="/SOMS/public/assets/images/favicon.ico">
+    <link rel="icon" href="/OMS/public/assets/images/favicon.ico">
     <link rel="stylesheet" href="../../public/assets/css/base.css">
     <link rel="stylesheet" href="public/assets/css/admin_hero.css">
 </head>
@@ -19,7 +19,7 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">SOMS</div>
+            <div class="logo">OMS</div>
             <div class="admin-badge">Admin Panel</div>
         </div>
     </nav>

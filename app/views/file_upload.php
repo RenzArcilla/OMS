@@ -2,13 +2,13 @@
 <!-- File Upload Section - Scoped to prevent layout conflicts -->
 <div class="file-upload-section">
     <div class="card-title">
-        <h1>From NOAH to SOMS</h1>
+        <h1>From NOAH to OMS</h1>
         <p class="subtitle">Upload your files here</p>
     </div>
     <div class="upload-container">
         <div class="upload-grid">
             <div class="upload-area">
-                <form id="uploadForm" action="/SOMS/app/controllers/upload.php" method="POST" enctype="multipart/form-data">
+                <form id="uploadForm" action="/OMS/app/controllers/upload.php" method="POST" enctype="multipart/form-data">
                     <div class="upload-box" id="uploadBox">
                         <div class="upload-icon">📁</div>
                         <h3>Drop files here or click to browse</h3>

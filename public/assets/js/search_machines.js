@@ -83,7 +83,7 @@ function updateMachineTable(machines, emptyDb = false) {
                             data-serial="${machine.serial_no}"
                             data-invoice="${machine.invoice_no}"
                         >Edit</button>
-                        <form action="/SOMS/app/controllers/disable_machine.php" method="POST" style="display:inline;">
+                        <form action="/OMS/app/controllers/disable_machine.php" method="POST" style="display:inline;">
                             <input type="hidden" name="machine_id" value="${machine.machine_id}">
                             <button class="delete-btn" type="button" onclick="openMachineDeleteModal(this)">Delete</button>
                         </form>

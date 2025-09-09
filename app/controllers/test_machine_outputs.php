@@ -4,7 +4,7 @@ require_once __DIR__ . '/../includes/db.php';
 
 try {
     // Test the get_machine_outputs.php endpoint
-    $response = file_get_contents('http://localhost/SOMS/app/controllers/get_machine_outputs.php');
+    $response = file_get_contents('http://localhost/OMS/app/controllers/get_machine_outputs.php');
     $data = json_decode($response, true);
     
     echo json_encode([

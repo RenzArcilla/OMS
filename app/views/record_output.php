@@ -53,27 +53,27 @@ if (!empty(trim($search))) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" href="/SOMS/public/assets/images/favicon.ico">
+    <link rel="icon" href="/OMS/public/assets/images/favicon.ico">
     <title>Record Output</title>
     <link rel="stylesheet" href="../../public/assets/css/base/base.css">
     <link rel="stylesheet" href="../../public/assets/css/base/header.css">
     <link rel="stylesheet" href="../../public/assets/css/record_output.css">
     <link rel="stylesheet" href="../../public/assets/css/add_entry.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/layout/grid.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/export_modal.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/search_filter.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/info.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/file_upload.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/modal.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/header.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/tables.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/buttons.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/sidebar.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/layout/grid.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/export_modal.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/search_filter.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/info.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/file_upload.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/sidebar.php'; ?>
-    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/header.php'; ?>
+    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/OMS/app/includes/sidebar.php'; ?>
+    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/OMS/app/includes/header.php'; ?>
     <div class="container">
         <!-- Page Header -->
         <div class="main-content">
@@ -88,7 +88,7 @@ if (!empty(trim($search))) {
                     </button>
                 </div>
             </div>
-            <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/views/file_upload.php'; ?>
+            <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/OMS/app/views/file_upload.php'; ?>
 
 
             <!-- Scrollable container for infinite scrolling -->
@@ -174,7 +174,7 @@ if (!empty(trim($search))) {
                                                         title="Edit Record"
                                                     >Edit</button>
 
-                                                    <form action="/SOMS/app/controllers/disable_record.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this record?');">
+                                                    <form action="/OMS/app/controllers/disable_record.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this record?');">
                                                         <input type="hidden" name="record_id" value="<?= htmlspecialchars($row['record_id']) ?>">
                                                         <button type="submit" title="Delete Record" class="delete-btn">Delete</button>
                                                     </form>

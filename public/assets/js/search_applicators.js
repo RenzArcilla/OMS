@@ -25,7 +25,7 @@ async function applyApplicatorFilters(searchQuery = '') {
         try {
             // Fetch filtered applicators from controller
             const response = await fetch(
-                `/SOMS/app/controllers/search_applicators.php?q=${encodeURIComponent(searchQuery)}&description=${encodeURIComponent(description)}&type=${encodeURIComponent(type)}`
+                `/OMS/app/controllers/search_applicators.php?q=${encodeURIComponent(searchQuery)}&description=${encodeURIComponent(description)}&type=${encodeURIComponent(type)}`
             );
             const data = await response.json();
 
@@ -78,7 +78,7 @@ function updateApplicatorTable(applicators, emptyDb = false) {
                         data-invoice="${row.invoice_no}"
                     >Edit</button>
 
-                    <form action="/SOMS/app/controllers/disable_applicator.php" method="POST" style="display:inline;">
+                    <form action="/OMS/app/controllers/disable_applicator.php" method="POST" style="display:inline;">
                         <input type="hidden" name="applicator_id" value="${row.applicator_id}">
                         <button 
                             type="button"

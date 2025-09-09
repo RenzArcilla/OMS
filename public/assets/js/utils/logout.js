@@ -4,7 +4,7 @@ function confirmLogout() {
     const confirmCheckbox = document.getElementById('confirmLogout');
     if (confirmCheckbox && confirmCheckbox.checked) {
         // Perform logout action
-        window.location.href = '/SOMS/app/controllers/log_out.php';
+        window.location.href = '/OMS/app/controllers/log_out.php';
     } else {
         alert('Please confirm that you want to log out by checking the checkbox.');
     }

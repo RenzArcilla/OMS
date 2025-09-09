@@ -100,7 +100,7 @@ function initializeNavigation() {
                 if (mainContent) {
                     mainContent.innerHTML = `
                         <div class="welcome-message">
-                            <h1>Welcome to SOMS</h1>
+                            <h1>Welcome to OMS</h1>
                             <p>Select a menu item from the sidebar to get started.</p>
                         </div>
                     `;

@@ -24,7 +24,7 @@ async function applyRecordFilters(searchQuery = '', page = 1, limit = 20) {
 
         try {
             const response = await fetch(
-                `/SOMS/app/controllers/search_records.php?q=${encodeURIComponent(searchQuery)}&shift=${encodeURIComponent(shift)}&page=${page}&limit=${limit}`
+                `/OMS/app/controllers/search_records.php?q=${encodeURIComponent(searchQuery)}&shift=${encodeURIComponent(shift)}&page=${page}&limit=${limit}`
             );
             const data = await response.json();
 
@@ -85,7 +85,7 @@ function updateRecordsTable(records, emptyDb) {
                         title="Edit Record"
                     >Edit</button>
 
-                    <form action="/SOMS/app/controllers/disable_record.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this record?');">
+                    <form action="/OMS/app/controllers/disable_record.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this record?');">
                         <input type="hidden" name="record_id" value="${row.record_id}">
                         <button type="submit" title="Delete Record" class="delete-btn">Delete</button>
                     </form>

@@ -1,20 +1,20 @@
-# Storage and Output Monitoring System
+# Output Monitoring System (OMS)
 
-This repository will serve as the code base version control repo for the Storage and Output Monitoring System for machines and applicators...
+This repository will serve as the code base version control repo for the Output Monitoring System (OMS) for machines and applicators...
 
 ---
 
 ## Setup Guide 
 
-This guide will help you set up the SOMS app on your local machine.
+This guide will help you set up the OMS app on your local machine.
 
 ---
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/SOMS.git
-cd SOMS
+git clone https://github.com/your-username/OMS.git
+cd OMS
 Replace your-username with your actual GitHub username.
 ```
 
@@ -37,7 +37,7 @@ This will install all required packages, including PhpSpreadsheet.
 ### 3. Run the App
 Start your local server (e.g., XAMPP) and navigate to:
 ```bash
-http://localhost/SOMS/public/index.php
+http://localhost/OMS/public/index.php
 ```
 
 ---

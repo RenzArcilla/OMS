@@ -1,7 +1,7 @@
-<link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
-<link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
-<link rel="stylesheet" href="/SOMS/public/assets/css/components/checkbox.css">
-<link rel="stylesheet" href="/SOMS/public/assets/css/logout.css">
+<link rel="stylesheet" href="/OMS/public/assets/css/components/modal.css">
+<link rel="stylesheet" href="/OMS/public/assets/css/components/buttons.css">
+<link rel="stylesheet" href="/OMS/public/assets/css/components/checkbox.css">
+<link rel="stylesheet" href="/OMS/public/assets/css/logout.css">
 
 <!-- Enhanced Logout Modal -->
 <div class="logout-modal-overlay" id="logoutModalOverlay">

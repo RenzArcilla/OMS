@@ -136,7 +136,7 @@ if (is_array($result)) {
         $_SESSION['username'] = $result['username'];
         $_SESSION['first_name'] = $result['first_name'];
         $_SESSION['user_type'] = $result['user_type'];
-        jsAlertRedirect("Welcome to SOMS!", "../views/home.php");
+        jsAlertRedirect("Welcome to OMS!", "../views/home.php");
         exit;
     }
     exit();

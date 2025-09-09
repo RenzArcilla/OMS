@@ -31,7 +31,7 @@ async function applyDisabledApplicatorFilters() {
 
         try {
             const res = await fetch(
-                `/SOMS/app/controllers/search_disabled_applicators.php?q=${encodeURIComponent(search)}&description=${encodeURIComponent(description)}&type=${encodeURIComponent(type)}`
+                `/OMS/app/controllers/search_disabled_applicators.php?q=${encodeURIComponent(search)}&description=${encodeURIComponent(description)}&type=${encodeURIComponent(type)}`
             );
             const result = await res.json();
 

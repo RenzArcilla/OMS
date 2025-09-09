@@ -10,24 +10,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Machine or Applicator</title>
-    <link rel="icon" href="/SOMS/public/assets/images/favicon.ico">
+    <link rel="icon" href="/OMS/public/assets/images/favicon.ico">
     <link rel="stylesheet" href="../../public/assets/css/base/base.css">
     <link rel="stylesheet" href="../../public/assets/css/add_entry.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/delete_modal.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/layout/grid.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/export_modal.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/base/header.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/search_filter.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/info.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/modal.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/header.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/tables.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/delete_modal.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/buttons.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/sidebar.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/layout/grid.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/export_modal.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/base/header.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/search_filter.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/info.css">
 </head>
 <body>
-    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/sidebar.php'; ?>
-    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/header.php'; ?>
+    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/OMS/app/includes/sidebar.php'; ?>
+    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/OMS/app/includes/header.php'; ?>
     <div class="container">
         <div class="main-content">
             <!-- Dashboard Tab -->

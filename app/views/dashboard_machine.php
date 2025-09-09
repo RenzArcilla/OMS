@@ -5,27 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Machine Dashboard</title>
     <link rel="stylesheet" href="../../public/assets/css/base/header.css">
-    <link rel="icon" href="/SOMS/public/assets/images/favicon.ico">
+    <link rel="icon" href="/OMS/public/assets/images/favicon.ico">
     <link rel="stylesheet" href="../../public/assets/css/base/base.css">
     <link rel="stylesheet" href="../../public/assets/css/dashboard_machine.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/header.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/modal.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/tables.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/buttons.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/layout/grid.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/sidebar.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/export_modal.css">
-    <!--<link rel="stylesheet" href="/SOMS/public/assets/css/components/stats_modal.css">-->
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/search_filter.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/pagination.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/info.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/progress_bars.css">
-    <link rel="stylesheet" href="/SOMS/public/assets/css/components/checkbox.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/header.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/modal.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/tables.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/buttons.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/layout/grid.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/sidebar.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/export_modal.css">
+    <!--<link rel="stylesheet" href="/OMS/public/assets/css/components/stats_modal.css">-->
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/search_filter.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/pagination.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/info.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/progress_bars.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/checkbox.css">
 </head>
 <body>
     <?php
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/sidebar.php';
-    include_once $_SERVER['DOCUMENT_ROOT'] . '/SOMS/app/includes/header.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/OMS/app/includes/sidebar.php';
+    include_once $_SERVER['DOCUMENT_ROOT'] . '/OMS/app/includes/header.php';
     // First, get custom parts
     require_once __DIR__ . '/../models/read_custom_parts.php';
     $custom_machine_parts = getCustomParts("MACHINE");
