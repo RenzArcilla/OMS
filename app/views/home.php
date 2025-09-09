@@ -47,9 +47,9 @@ if (session_status() === PHP_SESSION_NONE) {
                     </div>
                     
                     <h1 class="hero-title">
-                        Storage and <br>
-                        <span class="gradient-text">Output</span> <br>
-                        Monitoring System
+                        Output <br>
+                        <span class="gradient-text">Monitoring</span> <br>
+                        System
                     </h1>
                     
                     <p class="hero-subtitle">
