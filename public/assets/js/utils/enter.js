@@ -8,5 +8,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 modal.style.display = 'block';
             }
         }
+        if (event.target.classList.contains('export-output-data')) {
+            const modal = document.getElementById('exportModal');
+            if (modal) {
+                modal.style.display = 'block';
+            }
+        }
     });
 });

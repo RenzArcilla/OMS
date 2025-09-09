@@ -110,7 +110,7 @@
                         <button type="button" class="modal-btn btn-primary">
                             <div>Export Reset Data</div> 
                         </button>   
-                        <button type="button" class="btn-primary modal-btn">
+                        <button type="button" class="btn-primary export-output-data">
                             <div>Export Output Data</div> 
                         </button>
                         <button type="button" class="btn-primary" onclick="refreshPage()">
