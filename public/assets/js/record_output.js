@@ -162,9 +162,10 @@ function closeExportModal() {
     }
 }
 
-downloadFileUploadFormat = () => {
+// Funtion to download the file upload format
+function downloadFileUploadFormat() {
     const link = document.createElement('a');
-    link.href = '/OMS/app//dl/oms_file_upload_format.xlsx';
+    link.href = '/OMS/app/dl/oms_file_upload_format.xlsx';
     link.download = 'oms_file_upload_format.xlsx';
     document.body.appendChild(link);
     link.click();
