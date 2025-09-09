@@ -125,9 +125,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Record Output
         if (button.classList.contains('export-btn')) {
-            const modal = document.getElementById('exportModal');
-            if (modal) {
-                modal.style.display = 'block';
+            if (typeof openExportModal === 'function') {
+                openExportModal();
+            } else {
+                const modal = document.getElementById('exportModal');
+                if (modal) {
+                    modal.style.display = 'block';
+                }
             }
         }
         if (button.classList.contains('add-record-btn')) {

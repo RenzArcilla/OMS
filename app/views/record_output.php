@@ -628,25 +628,24 @@ if (!empty(trim($search))) {
                 </div>
                 
                 <div class="form-group">
-                    <select id="dateRange" class="form-select" name="dateRange">
+                    <select id="dateRange" class="form-select" name="dateRange" onchange="toggleCustomDates(this)">
                         <option value="today">Today</option>
                         <option value="week">This Week</option>
                         <option value="month">This Month</option>
                         <option value="quarter">This Quarter</option>
-                        <option value="custom">Custom Date Range</option>
+                        <option value="custom">Custom Date Range</option>  <!-- This triggers the show/hide -->
                     </select>
-                </div>
 
-                <div id="customDates" class="date-inputs hidden">
-                    <div class="form-group">
-                        <label class="form-label" style="font-size: 12px; color: #6B7280;">Start Date</label>
-                        <input type="date" id="startDate" name="startDate" class="form-input">
+                    <div id="customDates" class="date-inputs hidden">  <!-- This gets shown/hidden -->
+                        <div class="form-group">
+                            <label class="form-label">Start Date</label>
+                            <input type="date" id="startDate" name="startDate" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">End Date</label>
+                            <input type="date" id="endDate" name="endDate" class="form-input">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label" style="font-size: 12px; color: #6B7280;">End Date</label>
-                        <input type="date" id="endDate" name="endDate" class="form-input">
-                    </div>
-                </div>
             </div>
 
             <!-- Additional Options Section -->

@@ -61,7 +61,7 @@
             <div class="button-group">
                 <button type="button" class="cancel-btn" onclick="closeExportModal()">Cancel</button>
                 <button type="submit" class="export-btn">
-                    📊 Generate Export
+                    Generate Export
                 </button>
             </div>
         </form>
