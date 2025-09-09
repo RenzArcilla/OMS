@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // --- Helper: Fail during error ---
 function fail($msg) {
+    global $redirect;
     jsAlertRedirect($msg, $redirect);
     exit;
 }
