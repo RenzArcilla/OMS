@@ -52,5 +52,47 @@ document.addEventListener('DOMContentLoaded', function() {
                 modal.style.display = 'block';
             }
         }
+        if (event.target.classList.contains('restore-machine-btn')) {
+            const modal = document.getElementById('disabled-machines-section');
+            if (modal) {
+                modal.style.display = 'block';
+            }
+        }
+        
+        // Handle restore machine button
+        if (event.target.classList.contains('restore-machine-btn')) {
+            const button = event.target;
+            const machineId = button.getAttribute("data-machine-id");
+            
+            // Open the machine restore modal (using existing modal ID)
+            const modal = document.getElementById('restoreApplicatorModalDashboardApplicator');
+            if (modal && machineId) {
+                // Set the machine ID in the form (using existing field name)
+                const machineIdField = document.getElementById('restore_applicator_id');
+                if (machineIdField) {
+                    machineIdField.value = machineId;
+                }
+                
+                // Update the display
+                const displayField = document.getElementById('restore_applicator_id_display');
+                if (displayField) {
+                    displayField.textContent = '#' + machineId;
+                }
+                
+                // Reset checkbox and button state
+                const checkbox = modal.querySelector('#confirmRestore');
+                const submitBtn = modal.querySelector('#restoreBtn');
+                if (checkbox) checkbox.checked = false;
+                if (submitBtn) submitBtn.disabled = true;
+
+                // Also populate hidden machine_id
+                const machineIdInput = document.getElementById('machine_id');
+                if (machineIdInput) {
+                    machineIdInput.value = machineId;
+                }
+                
+                modal.style.display = 'block';
+            }
+        }
     });
 });
