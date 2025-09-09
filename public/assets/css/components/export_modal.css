@@ -222,7 +222,24 @@
 }
 
 .hidden {
-    display: none;
+    display: none !important;
+}
+
+/* More specific rule to ensure hidden works */
+#customDates.hidden {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
+
+/* Ensure visible when not hidden */
+#customDates:not(.hidden) {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
 }
 
 @keyframes spin {
