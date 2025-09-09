@@ -274,6 +274,66 @@ function getFilteredRecordsForExport($date_range = 'today', $start_date = null, 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function getRecordsCount($search = null, $shift = 'ALL') {
+    /*
+        Function to count active records from the database with optional search and filters.
+        Used for pagination calculations.
+
+        Parameters:
+            string $search    - Optional search keyword for multiple fields.
+            string $shift     - Optional filter for shift (default = 'ALL').
+
+        Returns:
+            int - Count of active records matching the search and filter criteria.
+    */
+
+    global $pdo;
+
+    $query = "SELECT COUNT(*) FROM records r
+        LEFT JOIN applicator_outputs ao1 
+            ON r.record_id = ao1.record_id 
+            AND r.applicator1_id = ao1.applicator_id
+
+        LEFT JOIN applicator_outputs ao2 
+            ON r.record_id = ao2.record_id 
+            AND r.applicator2_id = ao2.applicator_id
+
+        LEFT JOIN machine_outputs mo 
+            ON r.record_id = mo.record_id 
+            AND r.machine_id = mo.machine_id
+
+        WHERE r.is_active = 1";
+
+    $params = [];
+
+    // Add shift filter
+    if ($shift !== 'ALL') {
+        $query .= " AND r.shift = :shift";
+        $params[':shift'] = $shift;
+    }
+
+    // Add search filter
+    if ($search !== null) {
+        $query .= " AND (
+            UPPER(r.record_id) LIKE :search OR
+            UPPER(r.date_inspected) LIKE :search OR
+            UPPER(r.shift) LIKE :search OR
+            UPPER(r.hp1_no) LIKE :search OR
+            UPPER(r.hp2_no) LIKE :search OR
+            UPPER(r.control_no) LIKE :search OR
+            UPPER(ao1.output) LIKE :search OR
+            UPPER(ao2.output) LIKE :search OR
+            UPPER(mo.output) LIKE :search
+        )";
+        $params[':search'] = '%' . $search . '%';
+    }
+
+    $stmt = $pdo->prepare($query);
+    $stmt->execute($params);
+
+    return (int) $stmt->fetchColumn();
+}
+
 function getDisabledRecordsCount($search = null, $shift = 'ALL') {
     /*
         Function to count disabled records from the database with optional search and filters.

@@ -12,6 +12,39 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 */
+
+// Pagination settings
+$items_per_page = isset($_GET['items_per_page']) ? max(5, min(50, (int)$_GET['items_per_page'])) : 10;
+$current_page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+$offset = ($current_page - 1) * $items_per_page;
+
+// Handle search and shift filter
+$search = $_GET['search'] ?? '';
+$shift = $_GET['shift'] ?? 'ALL';
+$search_result = null;
+$is_searching = false;
+
+if (!empty(trim($search))) {
+    $is_searching = true;
+    // Include the model for searching records
+    require_once __DIR__ . '/../models/read_joins/record_and_outputs.php';
+    $search_result = getFilteredRecords(1000, 0, strtoupper(trim($search)), $shift); // Get all search results
+    
+    // If searching, use search result instead of all records
+    $records = $search_result;
+    $total_records = count($search_result);
+    $total_pages = 1;
+} else {
+    // Include the model for fetching records
+    require_once __DIR__ . '/../models/read_joins/record_and_outputs.php';
+    
+    // Get total count for pagination
+    $total_records = getRecordsCount(null, $shift);
+    $total_pages = ceil($total_records / $items_per_page);
+    
+    // Use existing logic for all records with pagination
+    $records = getFilteredRecords($items_per_page, $offset, null, $shift);
+}
 ?>
 
 
@@ -71,33 +104,35 @@ if (!isset($_SESSION['user_id'])) {
 
                 <!-- Filters -->
                 <div class="search-filter">
-                    <form id="recordFilterForm" onsubmit="return false;" style="display: flex; gap: 10px; align-items: center;">
-                        <input 
-                            type="text" 
-                            class="search-input" 
-                            id="recordSearchInput"
-                            placeholder="Search here..." 
-                            onkeyup="applyRecordFilters(this.value)"
-                            autocomplete="off"
-                        >
+                    <form method="GET" style="display: flex; gap: 10px; align-items: center;">
+                        <?php if (isset($_GET['items_per_page']) && !$is_searching): ?>
+                            <input type="hidden" name="items_per_page" value="<?= htmlspecialchars($_GET['items_per_page']) ?>">
+                        <?php endif; ?>
+                        
+                        <input type="text" 
+                                name="search" 
+                                class="search-input" 
+                                placeholder="Search here..." 
+                                value="<?= htmlspecialchars($search) ?>"
+                                onkeyup="if(event.key==='Enter') this.form.submit()"
+                                autocomplete="off">
                         <select 
-                            id="recordShift" 
+                            name="shift" 
                             class="filter-select" 
-                            onchange="applyRecordFilters()"
+                            onchange="this.form.submit()"
                             required
                         >  
-                            <option value="ALL">All</option>
-                            <option value="1st">1st</option>
-                            <option value="2nd">2nd</option>    
-                            <option value="NIGHT">Night</option>
+                            <option value="ALL" <?= $shift === 'ALL' ? 'selected' : '' ?>>All</option>
+                            <option value="1st" <?= $shift === '1st' ? 'selected' : '' ?>>1st</option>
+                            <option value="2nd" <?= $shift === '2nd' ? 'selected' : '' ?>>2nd</option>    
+                            <option value="NIGHT" <?= $shift === 'NIGHT' ? 'selected' : '' ?>>Night</option>
                         </select>
-                        <button 
-                            type="button" 
-                            class="tab-btn" 
-                            id="refreshRecordTableBtn"
-                            onclick="refreshData()"
-                        >Refresh</button>
+                        <button type="submit" class="filter-btn">Search</button>
                     </form>
+                    
+                    <button style="position: relative; left: -10px;" class="tab-btn" onclick="window.location.href = window.location.pathname;">
+                        Clear
+                    </button>
                 </div>
 
                 <div class="section-content expanded" id="table-container" style="height: 500px; overflow-y: auto;">
@@ -119,11 +154,165 @@ if (!isset($_SESSION['user_id'])) {
                                     <th>Machine Output</th>
                             </thead>
                             <tbody id="recordsTableBody">
-                                <!-- Render fetched machine data as table rows through AJAX -->
+                                <?php if (empty($records)): ?>
+                                    <tr><td colspan="12" style="text-align:center;">No records found.</td></tr>
+                                <?php else: ?>
+                                    <?php foreach ($records as $row): ?>
+                                        <tr>
+                                            <td>
+                                                <div class="actions">
+                                                    <button class="edit-btn" onclick="openRecordEditModalSafe(this); return false;"
+                                                        data-id="<?= htmlspecialchars($row['record_id']) ?>"
+                                                        data-date-inspected="<?= htmlspecialchars($row['date_inspected']) ?>"
+                                                        data-shift="<?= htmlspecialchars($row['shift']) ?>"
+                                                        data-hp1-no="<?= htmlspecialchars($row['hp1_no'] ?? '') ?>"
+                                                        data-app1-output="<?= htmlspecialchars($row['app1_output'] ?? '') ?>"
+                                                        data-hp2-no="<?= htmlspecialchars($row['hp2_no'] ?? '') ?>"
+                                                        data-app2-output="<?= htmlspecialchars($row['app2_output'] ?? '') ?>"
+                                                        data-control-no="<?= htmlspecialchars($row['control_no'] ?? '') ?>"
+                                                        data-machine-output="<?= htmlspecialchars($row['machine_output'] ?? '') ?>"
+                                                        title="Edit Record"
+                                                    >Edit</button>
+
+                                                    <form action="/SOMS/app/controllers/disable_record.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this record?');">
+                                                        <input type="hidden" name="record_id" value="<?= htmlspecialchars($row['record_id']) ?>">
+                                                        <button type="submit" title="Delete Record" class="delete-btn">Delete</button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                            <td><?= htmlspecialchars($row['record_id']) ?></td>
+                                            <td><?= htmlspecialchars($row['date_inspected']) ?></td>
+                                            <td><?= htmlspecialchars($row['date_encoded'] ? explode(' ', $row['date_encoded'])[0] : '') ?></td>
+                                            <td><?= htmlspecialchars($row['last_updated'] ? explode(' ', $row['last_updated'])[0] : '') ?></td>
+                                            <td><?= htmlspecialchars($row['shift']) ?></td>
+                                            <td><?= htmlspecialchars($row['hp1_no'] ?? '') ?></td>
+                                            <td><?= htmlspecialchars($row['app1_output'] ?? '') ?></td>
+                                            <td><?= htmlspecialchars($row['hp2_no'] ?? '') ?></td>
+                                            <td><?= htmlspecialchars($row['app2_output'] ?? '') ?></td>
+                                            <td><?= htmlspecialchars($row['control_no'] ?? '') ?></td>
+                                            <td><?= htmlspecialchars($row['machine_output'] ?? '') ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
                 </div>
+                <!-- Pagination Controls -->
+                <?php if (!$is_searching && $total_pages > 1): ?>
+                <div class="pagination-container">
+                    <div class="pagination-info">
+                        <span class="pagination-text">
+                            Showing <?= ($offset + 1) ?> to <?= min($offset + $items_per_page, $total_records) ?> of <?= number_format($total_records) ?> results
+                        </span>
+                    </div>
+                    
+                    <div class="pagination-controls">
+                        <!-- Previous Button -->
+                        <?php if ($current_page > 1): ?>
+                            <a href="?page=<?= $current_page - 1 ?><?= !empty($search) ? '&search=' . urlencode($search) : '' ?><?= $shift !== 'ALL' ? '&shift=' . urlencode($shift) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                class="pagination-btn pagination-prev">
+                                <span>←</span> Previous
+                            </a>
+                        <?php else: ?>
+                            <span class="pagination-btn pagination-prev disabled">
+                                <span>←</span> Previous
+                            </span>
+                        <?php endif; ?>
+                        
+                        <!-- Page Numbers -->
+                        <div class="pagination-numbers">
+                            <?php
+                            $start_page = max(1, $current_page - 2);
+                            $end_page = min($total_pages, $current_page + 2);
+                            
+                            // Show first page if not in range
+                            if ($start_page > 1): ?>
+                                <a href="?page=1<?= !empty($search) ? '&search=' . urlencode($search) : '' ?><?= $shift !== 'ALL' ? '&shift=' . urlencode($shift) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                    class="pagination-btn">1</a>
+                                <?php if ($start_page > 2): ?>
+                                    <span class="pagination-ellipsis">...</span>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            
+                            <?php for ($i = $start_page; $i <= $end_page; $i++): ?>
+                                <?php if ($i == $current_page): ?>
+                                    <span class="pagination-btn pagination-current"><?= $i ?></span>
+                                <?php else: ?>
+                                    <a href="?page=<?= $i ?><?= !empty($search) ? '&search=' . urlencode($search) : '' ?><?= $shift !== 'ALL' ? '&shift=' . urlencode($shift) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                        class="pagination-btn"><?= $i ?></a>
+                                <?php endif; ?>
+                            <?php endfor; ?>
+                            
+                            <?php if ($end_page < $total_pages): ?>
+                                <?php if ($end_page < $total_pages - 1): ?>
+                                    <span class="pagination-ellipsis">...</span>
+                                <?php endif; ?>
+                                <a href="?page=<?= $total_pages ?><?= !empty($search) ? '&search=' . urlencode($search) : '' ?><?= $shift !== 'ALL' ? '&shift=' . urlencode($shift) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                    class="pagination-btn"><?= $total_pages ?></a>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <!-- Next Button -->
+                        <?php if ($current_page < $total_pages): ?>
+                            <a href="?page=<?= $current_page + 1 ?><?= !empty($search) ? '&search=' . urlencode($search) : '' ?><?= $shift !== 'ALL' ? '&shift=' . urlencode($shift) : '' ?><?= isset($_GET['items_per_page']) ? '&items_per_page=' . htmlspecialchars($_GET['items_per_page']) : '' ?>" 
+                                class="pagination-btn pagination-next">
+                                Next <span>→</span>
+                            </a>
+                        <?php else: ?>
+                            <span class="pagination-btn pagination-next disabled">
+                                Next <span>→</span>
+                            </span>
+                        <?php endif; ?>
+                    </div>
+                    
+                    <!-- Items Per Page Selector -->
+                    <div class="pagination-items-per-page" style="display: flex; align-items: center; gap: 24px;">
+                        <form id="items-per-page-form" method="get" style="display: flex; align-items: center; gap: 8px;">
+                            <?php
+                                // Preserve other GET parameters except items_per_page and page
+                                $query_params = $_GET;
+                                unset($query_params['items_per_page'], $query_params['page']);
+                                foreach ($query_params as $key => $value) {
+                                    echo '<input type="hidden" name="' . htmlspecialchars($key) . '" value="' . htmlspecialchars($value) . '">';
+                                }
+                            ?>
+                            <label for="items-per-page">Show:</label>
+                            <select id="items-per-page" name="items_per_page" onchange="document.getElementById('items-per-page-form').submit()">
+                                <option value="5" <?= $items_per_page == 5 ? 'selected' : '' ?>>5</option>
+                                <option value="10" <?= $items_per_page == 10 ? 'selected' : '' ?>>10</option>
+                                <option value="20" <?= $items_per_page == 20 ? 'selected' : '' ?>>20</option>
+                                <option value="50" <?= $items_per_page == 50 ? 'selected' : '' ?>>50</option>
+                            </select>
+                            <span>per page</span>
+                        </form>
+                        <!-- Go to Page Form -->
+                        <form id="go-to-page-form" method="get" style="display: flex; align-items: center; gap: 8px;">
+                            <?php
+                                // Preserve other GET parameters except page
+                                $query_params = $_GET;
+                                unset($query_params['page']);
+                                foreach ($query_params as $key => $value) {
+                                    echo '<input type="hidden" name="' . htmlspecialchars($key) . '" value="' . htmlspecialchars($value) . '">';
+                                }
+                            ?>
+                            <label for="go-to-page-input">Go to page:</label>
+                            <input 
+                                type="number" 
+                                id="go-to-page-input" 
+                                name="page" 
+                                min="1" 
+                                max="<?= $total_pages ?>" 
+                                value="<?= $current_page ?>" 
+                                style="width: 60px; padding: 2px 6px;"
+                                required
+                            >
+                            <button type="submit" class="btn btn-secondary" style="padding: 2px 10px;">Go</button>
+                        </form>
+                    </div>
+                </div>
+                <?php endif; ?>
+
             </div>
             <div class="full-width-table">
                 <?php include_once __DIR__ . '/recently_deleted_outputs_table.php'; ?>

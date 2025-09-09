@@ -31,6 +31,10 @@ try {
 
     // Fetch filtered results
     $records = getFilteredRecords($limit, $offset, $search, $shift);
+    
+    // Get total count for pagination
+    $total = getRecordsCount($search, $shift);
+    $total_pages = max(1, (int)ceil($total / $limit));
 
     // Simplest efficient check:
     // If nothing is returned AND page=1 AND no filters applied
@@ -42,7 +46,11 @@ try {
     echo json_encode([
         'success' => true,
         'data' => $records,
-        'empty_db' => $emptyDb
+        'empty_db' => $emptyDb,
+        'total' => $total,
+        'page' => $page,
+        'limit' => $limit,
+        'total_pages' => $total_pages
     ]);
 
 } catch (Exception $e) {
