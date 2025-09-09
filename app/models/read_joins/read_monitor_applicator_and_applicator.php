@@ -364,7 +364,7 @@ function getApplicatorOutputsForExport() {
     $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Get the custom part names of applicators
-    require_once __DIR__ . '/../models/read_custom_parts.php';
+    require_once __DIR__ . '/../../models/read_custom_parts.php';
     $custom_parts = getCustomParts("APPLICATOR");
 
     // Process custom parts output
