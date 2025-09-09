@@ -53,9 +53,9 @@ function batchLoadData(array $rows): array {
 
     try {
         // 2. Fetch all machines
-        $machinesMap = fetchMachinesByControlNos($uniqueMachines, $pdo);
+        $machinesMap = fetchMachinesByControlNos($uniqueMachines);
         // 3. Fetch all applicators
-        $applicatorsMap = fetchApplicatorsByHpNos($uniqueApplicators, $pdo);
+        $applicatorsMap = fetchApplicatorsByHpNos($uniqueApplicators);
 
         // 4. Load custom parts for machines and applicators once
         $customApplicatorDefs = getCustomParts('APPLICATOR');
@@ -92,6 +92,10 @@ function batchLoadData(array $rows): array {
                 $errors[] = "Row " . ($line + 4) . ": Applicator1 $app1No not found.";
                 continue;
             }
+            if ((int)$applicatorsMap[$app1No]['is_active'] !== 1) {
+                $errors[] = "Row " . ($line + 4) . ": Applicator1 $app1No is inactive.";
+                continue;
+            }
             if ($app2No !== '') {
                 if ($app2No === $app1No) {
                     $errors[] = "Row " . ($line + 4) . ": Duplicate applicator entry ($app1No).";
@@ -101,6 +105,10 @@ function batchLoadData(array $rows): array {
                     $errors[] = "Row " . ($line + 4) . ": Applicator2 $app2No not found.";
                     continue;
                 }
+                if ((int)$applicatorsMap[$app2No]['is_active'] !== 1) {
+                    $errors[] = "Row " . ($line + 4) . ": Applicator2 $app2No is inactive.";
+                    continue;
+                }
             }
             if ($machineNo === '') {
                 $errors[] = "Row " . ($line + 4) . ": Machine No is required.";
@@ -108,6 +116,10 @@ function batchLoadData(array $rows): array {
             }
             if (!isset($machinesMap[$machineNo])) {
                 $errors[] = "Row " . ($line + 4) . ": Machine $machineNo not found.";
+                continue;
+            }
+            if ((int)$machinesMap[$machineNo]['is_active'] !== 1) {
+                $errors[] = "Row " . ($line + 4) . ": Machine $machineNo is inactive.";
                 continue;
             }
 

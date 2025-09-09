@@ -360,12 +360,14 @@ function getDisabledApplicatorsCount($search = null, $description = 'ALL', $type
     return (int)$stmt->fetchColumn();
 }
 
-function fetchApplicatorsByHpNos(array $hpNos, PDO $pdo): array {
+function fetchApplicatorsByHpNos(array $hpNos): array {
     /*
         Fetch applicators by their HP numbers
         Used when recording outputs for machines or applicators in batchLoadData.
     */
-    
+
+    global $pdo;
+
     // Return empty if no HP numbers
     if (empty($hpNos)) return [];
 
