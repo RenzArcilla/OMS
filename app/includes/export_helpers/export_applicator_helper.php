@@ -48,6 +48,11 @@ function exportApplicatorToExcel($include_headers) {
         if ($include_headers && isset($chunk[0])) {
             $col = 1;
             foreach (array_keys($chunk[0]) as $header) {
+                // Replace 'last_encoded' with 'date_encoded'
+                if ($header === 'last_encoded') {
+                    $header = 'date_encoded';
+                }
+
                 $cell = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($col) . $rowNum;
                 $sheet->setCellValue($cell, ucfirst(str_replace("_", " ", $header)));
                 $sheet->getStyle($cell)->getFont()->setBold(true);
