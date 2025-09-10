@@ -764,5 +764,7 @@
     <script src="../../public/assets/js/utils/exit.js"></script>
     <script src="../../public/assets/js/utils/checkbox.js"></script>
     <script src="../../public/assets/js/utils/pagination.js"></script>
+    <!-- Edit maximum output script -->
+    <script src="../../public/assets/js/maximum_output.js"></script>
 </body>
 </html>
