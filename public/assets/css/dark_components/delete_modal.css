@@ -1,17 +1,30 @@
-* Modal Styles */
+/* Modal Styles */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(17, 24, 39, 0.8);
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(12px);
     animation: fadeInBackdrop 0.3s ease-out;
+}
+
+.modal-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 30% 70%, rgba(249, 250, 251, 0.02) 0%, transparent 50%),
+        radial-gradient(circle at 70% 30%, rgba(243, 244, 246, 0.03) 0%, transparent 50%);
+    pointer-events: none;
 }
 
 .modal-overlay.active {
@@ -19,21 +32,23 @@
 }
 
 .delete-modal-container {
-    background: linear-gradient(135deg, #FFFFFF 0%, #F9FAFB 100%);
+    background: linear-gradient(135deg, rgba(31, 41, 55, 0.95) 0%, rgba(55, 65, 81, 0.9) 100%);
     border-radius: 24px;
-    box-shadow: 0 32px 64px rgba(0, 0, 0, 0.2), 0 16px 32px rgba(239, 68, 68, 0.1);
+    box-shadow: 
+        0 32px 64px rgba(17, 24, 39, 0.4), 
+        0 16px 32px rgba(55, 65, 81, 0.2),
+        0 0 80px rgba(243, 244, 246, 0.05);
     max-width: 500px;
     width: 100%;
     padding: 40px;
     position: relative;
     overflow: hidden;
-    animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba(229, 231, 235, 0.8);
+    animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1), modalGlow 3s ease-in-out infinite alternate;
+    border: 1px solid rgba(249, 250, 251, 0.1);
     text-align: center;
+    backdrop-filter: blur(20px);
 }
 
-
-/* Delete Modal Specific Styles */
 .delete-modal-container::before {
     content: '';
     position: absolute;
@@ -41,56 +56,85 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #EF4444 0%, #DC2626 100%);
+    background: linear-gradient(90deg, rgba(243, 244, 246, 0.6) 0%, rgba(249, 250, 251, 0.8) 50%, rgba(243, 244, 246, 0.6) 100%);
+    animation: topBarScan 2s linear infinite;
 }
 
+.delete-modal-container::after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    background: linear-gradient(45deg, 
+        rgba(249, 250, 251, 0.1), 
+        rgba(243, 244, 246, 0.05), 
+        rgba(55, 65, 81, 0.3),
+        rgba(31, 41, 55, 0.2)
+    );
+    border-radius: 24px;
+    z-index: -1;
+    animation: borderPulse 4s ease-in-out infinite;
+}
+
+/* Delete Modal Specific Styles */
 .delete-icon {
     width: 80px;
     height: 80px;
     margin: 0 auto 24px;
-    background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
-    border: 3px solid #FCA5A5;
+    background: linear-gradient(135deg, rgba(55, 65, 81, 0.6) 0%, rgba(31, 41, 55, 0.8) 100%);
+    border: 3px solid rgba(243, 244, 246, 0.3);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 2.5rem;
-    animation: pulse 2s infinite;
+    color: #F9FAFB;
+    animation: pulse 2s infinite, iconGlow 3s ease-in-out infinite alternate;
+    box-shadow: 
+        0 0 30px rgba(243, 244, 246, 0.1),
+        inset 0 2px 0 rgba(249, 250, 251, 0.1);
 }
 
 .delete-title {
     font-size: 1.8rem;
     font-weight: 800;
-    color: #DC2626;
+    color: #F9FAFB;
     margin-bottom: 12px;
     letter-spacing: -0.5px;
+    text-shadow: 0 0 20px rgba(243, 244, 246, 0.3);
 }
 
 .delete-message {
-    color: #6B7280;
+    color: #F3F4F6;
     font-size: 1.1rem;
     font-weight: 500;
     margin-bottom: 24px;
     line-height: 1.5;
+    opacity: 0.9;
 }
 
 .delete-details {
-    background: linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%);
-    border: 1px solid #FECACA;
+    background: linear-gradient(135deg, rgba(55, 65, 81, 0.4) 0%, rgba(31, 41, 55, 0.6) 100%);
+    border: 1px solid rgba(249, 250, 251, 0.1);
     border-radius: 12px;
     padding: 20px;
     margin-bottom: 32px;
     text-align: left;
+    backdrop-filter: blur(10px);
+    box-shadow: inset 0 1px 0 rgba(249, 250, 251, 0.05);
 }
 
 .delete-details h4 {
-    color: #DC2626;
+    color: #F9FAFB;
     font-size: 1rem;
     font-weight: 600;
     margin-bottom: 12px;
     display: flex;
     align-items: center;
     gap: 8px;
+    text-shadow: 0 0 10px rgba(243, 244, 246, 0.2);
 }
 
 .detail-item {
@@ -98,7 +142,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 8px 0;
-    border-bottom: 1px solid #FCA5A5;
+    border-bottom: 1px solid rgba(243, 244, 246, 0.1);
     font-size: 0.9rem;
 }
 
@@ -107,43 +151,49 @@
 }
 
 .detail-label {
-    color: #7C2D12;
+    color: #F3F4F6;
     font-weight: 600;
 }
 
 .detail-value {
-    color: #DC2626;
+    color: #F9FAFB;
     font-weight: 500;
-    background: #FEE2E2;
+    background: rgba(55, 65, 81, 0.6);
     padding: 4px 8px;
     border-radius: 6px;
     font-family: monospace;
+    border: 1px solid rgba(249, 250, 251, 0.1);
+    box-shadow: 0 0 10px rgba(243, 244, 246, 0.1);
 }
 
 .warning-section {
-    background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
-    border: 1px solid #FCD34D;
+    background: linear-gradient(135deg, rgba(55, 65, 81, 0.3) 0%, rgba(31, 41, 55, 0.5) 100%);
+    border: 1px solid rgba(243, 244, 246, 0.15);
     border-radius: 12px;
     padding: 16px;
     margin-bottom: 32px;
     text-align: left;
+    backdrop-filter: blur(10px);
+    animation: warningGlow 4s ease-in-out infinite alternate;
 }
 
 .warning-section h4 {
-    color: #D97706;
+    color: #F3F4F6;
     font-size: 0.95rem;
     font-weight: 600;
     margin-bottom: 8px;
     display: flex;
     align-items: center;
     gap: 8px;
+    text-shadow: 0 0 10px rgba(243, 244, 246, 0.2);
 }
 
 .warning-section p {
-    color: #92400E;
+    color: #F9FAFB;
     font-size: 0.85rem;
     line-height: 1.4;
     margin: 0;
+    opacity: 0.8;
 }
 
 .confirmation-input {
@@ -155,52 +205,61 @@
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
-    color: #374151;
+    color: #F9FAFB;
     font-size: 0.95rem;
 }
 
 .confirmation-text {
-    background: #FEF2F2;
-    color: #DC2626;
+    background: rgba(55, 65, 81, 0.6);
+    color: #F9FAFB;
     padding: 8px 12px;
     border-radius: 6px;
     font-family: monospace;
     font-weight: 600;
-    border: 1px solid #FECACA;
+    border: 1px solid rgba(249, 250, 251, 0.2);
     margin-bottom: 8px;
     display: inline-block;
+    box-shadow: 0 0 10px rgba(243, 244, 246, 0.1);
 }
 
 .form-input {
     width: 100%;
     padding: 12px 16px;
-    border: 2px solid #E5E7EB;
+    border: 2px solid rgba(249, 250, 251, 0.2);
     border-radius: 8px;
     font-size: 1rem;
     font-family: monospace;
-    background: #FFFFFF;
-    color: #111827;
+    background: rgba(55, 65, 81, 0.4);
+    color: #F9FAFB;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-sizing: border-box;
+    backdrop-filter: blur(10px);
+}
+
+.form-input::placeholder {
+    color: rgba(243, 244, 246, 0.5);
 }
 
 .form-input:focus {
     outline: none;
-    border-color: #DC2626;
-    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+    border-color: rgba(249, 250, 251, 0.6);
+    box-shadow: 
+        0 0 0 4px rgba(243, 244, 246, 0.1),
+        0 0 20px rgba(249, 250, 251, 0.1);
+    background: rgba(55, 65, 81, 0.6);
 }
 
 .form-input.invalid {
-    border-color: #EF4444;
-    background: #FEF2F2;
+    border-color: rgba(243, 244, 246, 0.4);
+    background: rgba(55, 65, 81, 0.3);
+    box-shadow: 0 0 10px rgba(243, 244, 246, 0.1);
 }
 
 .form-input.valid {
-    border-color: #10B981;
-    background: #ECFDF5;
+    border-color: rgba(249, 250, 251, 0.6);
+    background: rgba(31, 41, 55, 0.6);
+    box-shadow: 0 0 15px rgba(243, 244, 246, 0.15);
 }
-
-
 
 /* Animations */
 @keyframes fadeInBackdrop {
@@ -222,6 +281,68 @@
 @keyframes pulse {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.05); }
+}
+
+@keyframes modalGlow {
+    0% {
+        box-shadow: 
+            0 32px 64px rgba(17, 24, 39, 0.4), 
+            0 16px 32px rgba(55, 65, 81, 0.2),
+            0 0 80px rgba(243, 244, 246, 0.05);
+    }
+    100% {
+        box-shadow: 
+            0 32px 64px rgba(17, 24, 39, 0.6), 
+            0 16px 32px rgba(55, 65, 81, 0.3),
+            0 0 120px rgba(243, 244, 246, 0.1),
+            0 0 200px rgba(249, 250, 251, 0.03);
+    }
+}
+
+@keyframes topBarScan {
+    0% {
+        background: linear-gradient(90deg, rgba(243, 244, 246, 0.6) 0%, rgba(249, 250, 251, 0.8) 0%, rgba(243, 244, 246, 0.6) 0%);
+    }
+    50% {
+        background: linear-gradient(90deg, rgba(243, 244, 246, 0.3) 0%, rgba(249, 250, 251, 1) 50%, rgba(243, 244, 246, 0.3) 100%);
+    }
+    100% {
+        background: linear-gradient(90deg, rgba(243, 244, 246, 0.6) 100%, rgba(249, 250, 251, 0.8) 100%, rgba(243, 244, 246, 0.6) 100%);
+    }
+}
+
+@keyframes borderPulse {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 0.9;
+    }
+}
+
+@keyframes iconGlow {
+    0% {
+        box-shadow: 
+            0 0 30px rgba(243, 244, 246, 0.1),
+            inset 0 2px 0 rgba(249, 250, 251, 0.1);
+    }
+    100% {
+        box-shadow: 
+            0 0 50px rgba(243, 244, 246, 0.2),
+            0 0 80px rgba(249, 250, 251, 0.05),
+            inset 0 2px 0 rgba(249, 250, 251, 0.2);
+    }
+}
+
+@keyframes warningGlow {
+    0% {
+        box-shadow: inset 0 0 20px rgba(243, 244, 246, 0.05);
+    }
+    100% {
+        box-shadow: 
+            inset 0 0 30px rgba(243, 244, 246, 0.1),
+            0 0 20px rgba(249, 250, 251, 0.03);
+    }
 }
 
 /* Hidden by default */
