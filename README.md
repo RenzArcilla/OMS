@@ -13,9 +13,8 @@ This guide will help you set up the OMS app on your local machine.
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/OMS.git
+git clone https://github.com/RenzArcilla/OMS.git
 cd OMS
-Replace your-username with your actual GitHub username.
 ```
 
 ### 2. Install Dependencies (Composer)
