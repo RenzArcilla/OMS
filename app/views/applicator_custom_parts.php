@@ -15,7 +15,7 @@
                     <tr>
                         <th>Part Name</th>
                         <th>Created At</th>
-                        <th>Actions</th>
+                        <th style="position: relative; left: 30px;">Actions</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
@@ -26,11 +26,6 @@
                         <td><?= htmlspecialchars(date('Y-m-d', strtotime($part['created_at']))) ?></td>
                         <td class="actions">
                             <?php $partNameTitle = ucwords(str_replace('_', ' ', strtolower($part['part_name']))); ?>
-                                <button class="edit-btn btn btn-edit" 
-                                        data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
-                                        data-part-name="<?= htmlspecialchars($partNameTitle, ENT_QUOTES) ?>">
-                                    Edit
-                                </button>
                                 <button class="delete-btn btn btn-delete" 
                                         data-part-id="<?= htmlspecialchars($part['part_id']) ?>" 
                                         data-part-type="MACHINE">
