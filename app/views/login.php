@@ -7,6 +7,7 @@
     <link rel="icon" href="/OMS/public/assets/images/favicon.ico">
     <link rel="stylesheet" href="../../public/assets/css/base/typography.css">
     <link rel="stylesheet" href="../../public/assets/css/login.css">
+    <script src="../../public/assets/js/theme-switcher.js"></script>
     <?php require_once __DIR__ . '/../controllers/log_in.php'; ?>
 </head>
 <body>

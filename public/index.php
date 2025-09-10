@@ -14,6 +14,7 @@
     <title>HEPC - Hero</title>
     <link rel="stylesheet" href="../assets/css/base.css">
     <link rel="stylesheet" href="../assets/css/hero.css">
+    <script src="../assets/js/theme-switcher.js"></script>
 </head>
 <body>
     <p>Output Monitoring System</p>

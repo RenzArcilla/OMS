@@ -15,6 +15,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <link rel="stylesheet" href="../../public/assets/css/components/sidebar.css">
     <link rel="stylesheet" href="../../public/assets/css/base/header.css">
     <link rel="stylesheet" href="../../public/assets/css/components/buttons.css">
+    <script src="../../public/assets/js/theme-switcher.js"></script>
 </head>
 <body>
     

@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/OMS/public/assets/css/components/buttons.css">
+<script src="/OMS/public/assets/js/theme-switcher.js"></script>
 <nav class="navbar">
     <div class="nav-container">
 
