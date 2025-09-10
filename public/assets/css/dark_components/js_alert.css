@@ -1,0 +1,22 @@
+.js-alert-modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: linear-gradient(135deg, rgba(220, 20, 60, 0.7) 0%, rgba(139, 0, 0, 0.8) 50%, rgba(178, 34, 34, 0.7) 100%); 
+    z-index: 9999; display: flex; align-items: center; justify-content: center;
+}
+.js-alert-modal {
+    background: rgba(255, 255, 255, 0.95); padding: 2em 2.5em; border-radius: 20px; 
+    box-shadow: 0 25px 50px rgba(220, 20, 60, 0.3), 0 10px 30px rgba(139, 0, 0, 0.2);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; min-width: 300px;
+    backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #374151;
+}
+.js-alert-modal button {
+    margin-top: 1.5em; padding: 0.5em 2em; border: none; border-radius: 12px;
+    background: linear-gradient(135deg, #DC143C, #B22222); color: #fff; font-size: 1em; cursor: pointer;
+    font-weight: 600; box-shadow: 0 4px 12px rgba(220, 20, 60, 0.25);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.js-alert-modal button:hover {
+    background: linear-gradient(135deg, #B22222, #8B0000); transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(220, 20, 60, 0.35);
+}

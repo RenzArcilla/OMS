@@ -32,6 +32,15 @@ document.addEventListener('DOMContentLoaded', function() {
             openModals.forEach(modal => modal.style.display = 'none');
         }
     });
+
+    document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('cancel-btn')) {
+            const modal = event.target.closest('.modal-overlay');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+    });
 });
 
 // Universal modal close functions for dashboard modals

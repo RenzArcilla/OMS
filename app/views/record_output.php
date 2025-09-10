@@ -4,14 +4,17 @@
     It includes a form for entering details and submitting them to the server.
 */
 
-/*
+
 // Start session and check if user is logged in
 session_start();
+if (session_status() === PHP_SESSION_NONE) {
+}
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
 }
-*/
+
+
 
 // Pagination settings
 $items_per_page = isset($_GET['items_per_page']) ? max(5, min(50, (int)$_GET['items_per_page'])) : 10;
@@ -181,10 +184,9 @@ if (!empty(trim($search))) {
                                                         title="Edit Record"
                                                     >Edit</button>
 
-                                                    <form action="/OMS/app/controllers/disable_record.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this record?');">
-                                                        <input type="hidden" name="record_id" value="<?= htmlspecialchars($row['record_id']) ?>">
-                                                        <button type="submit" title="Delete Record" class="delete-btn">Delete</button>
-                                                    </form>
+                                                    <!-- Delete Record Modal Trigger -->
+                                                    <button type="button" title="Delete Record" class="delete-btn" onclick="openDeleteRecordModal('<?= htmlspecialchars($row['record_id']) ?>')">Delete</button>
+
                                                 </div>
                                             </td>
                                             <td><?= htmlspecialchars($row['record_id']) ?></td>
@@ -599,6 +601,9 @@ if (!empty(trim($search))) {
     </div>
 </div>
 
+<!-- Include Delete Record Modal -->
+<?php include_once __DIR__ . '/record_output_delete_modal.php'; ?>
+
 <!-- Export Modal -->
 <div id="exportModal" class="modal-overlay">
     <div class="form-container">
@@ -685,8 +690,19 @@ if (!empty(trim($search))) {
         </form>
     </div>
 </div>
-<script src="../../public/assets/js/utils/exit.js"></script>
-<script src="../../public/assets/js/utils/enter.js"></script>
+
+<!-- Debug: Test if modal is loaded -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('deleteRecordModal');
+    if (modal) {
+        console.log('✅ Delete modal found in DOM');
+    } else {
+        console.error('❌ Delete modal NOT found in DOM');
+    }
+});
+</script>
+
 <!-- Load modal logic for editing records -->
 <script src="../../public/assets/js/edit_record_modal.js" defer></script>
 <!-- Load modal logic for editing records -->

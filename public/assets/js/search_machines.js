@@ -1,6 +1,12 @@
 // Timer for debouncing search input to reduce number of fetch requests
 let machineSearchTimeout = null;
 
+// Pagination state
+let machineCurrentPage = 1;
+let machineTotalPages = 1;
+let machineTotalCount = 0;
+let machineLimit = 20;
+
 /*
     Apply search and description filters to the machine table.
     Debounced to prevent too many requests.
@@ -30,10 +36,13 @@ async function applyMachineFilters(searchValue = '', page = 1, limit = 20) {
 
         try {
             // Fetch filtered machine data from the controller
-            const response = await fetch(
-                `../controllers/search_machines.php?q=${encodeURIComponent(search)}&description=${encodeURIComponent(description)}&page=${page}&limit=${limit}`
-            );
+            const url = `../controllers/search_machines.php?q=${encodeURIComponent(search)}&description=${encodeURIComponent(description)}&page=${page}&limit=${limit}`;
+            console.log('Fetching machines from:', url);
+            
+            const response = await fetch(url);
             const result = await response.json();
+            
+            console.log('Machines response:', result);
 
             // If fetch failed or controller returned error
             if (!result.success) {
@@ -44,6 +53,11 @@ async function applyMachineFilters(searchValue = '', page = 1, limit = 20) {
 
             // Update table with fetched data and emptyDb info
             updateMachineTable(result.data, result.empty_db);
+            
+            // Update pagination if available
+            if (result.pagination) {
+                updateMachinePagination(result.pagination);
+            }
         } catch (err) {
             // Log network or unexpected errors
             console.error("Machine search failed:", err);
@@ -101,7 +115,139 @@ function updateMachineTable(machines, emptyDb = false) {
     });
 }
 
+// Update pagination UI
+function updateMachinePagination(pagination) {
+    machineCurrentPage = pagination.current_page;
+    machineTotalPages = pagination.total_pages;
+    machineTotalCount = pagination.total_count;
+    machineLimit = pagination.limit;
+    
+    const paginationContainer = document.getElementById('machine-pagination');
+    const paginationInfo = document.getElementById('machine-pagination-info');
+    const prevBtn = document.getElementById('machine-prev-btn');
+    const nextBtn = document.getElementById('machine-next-btn');
+    const paginationNumbers = document.getElementById('machine-pagination-numbers');
+    
+    if (!paginationContainer) return;
+    
+    // Show pagination if there are multiple pages
+    if (machineTotalPages > 1) {
+        paginationContainer.style.display = 'block';
+    } else {
+        paginationContainer.style.display = 'none';
+        return;
+    }
+    
+    // Update pagination info
+    const startItem = pagination.offset + 1;
+    const endItem = Math.min(pagination.offset + pagination.limit, pagination.total_count);
+    paginationInfo.textContent = `Showing ${startItem} to ${endItem} of ${pagination.total_count} results`;
+    
+    // Update prev/next buttons
+    prevBtn.disabled = machineCurrentPage <= 1;
+    prevBtn.classList.toggle('disabled', machineCurrentPage <= 1);
+    
+    nextBtn.disabled = machineCurrentPage >= machineTotalPages;
+    nextBtn.classList.toggle('disabled', machineCurrentPage >= machineTotalPages);
+    
+    // Generate page numbers
+    generateMachinePageNumbers(paginationNumbers, machineCurrentPage, machineTotalPages);
+}
+
+// Generate page number buttons
+function generateMachinePageNumbers(container, currentPage, totalPages) {
+    container.innerHTML = '';
+    
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    
+    // Adjust start page if we're near the end
+    if (endPage - startPage + 1 < maxVisiblePages) {
+        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+    
+    // Add first page and ellipsis if needed
+    if (startPage > 1) {
+        addPageButton(container, 1, currentPage);
+        if (startPage > 2) {
+            addEllipsis(container);
+        }
+    }
+    
+    // Add page numbers
+    for (let i = startPage; i <= endPage; i++) {
+        addPageButton(container, i, currentPage);
+    }
+    
+    // Add ellipsis and last page if needed
+    if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+            addEllipsis(container);
+        }
+        addPageButton(container, totalPages, currentPage);
+    }
+}
+
+// Add a page button
+function addPageButton(container, pageNum, currentPage) {
+    const button = document.createElement('button');
+    button.className = `pagination-btn ${pageNum === currentPage ? 'pagination-current' : ''}`;
+    button.textContent = pageNum;
+    button.onclick = () => goToMachinePage(pageNum);
+    container.appendChild(button);
+}
+
+// Add ellipsis
+function addEllipsis(container) {
+    const ellipsis = document.createElement('span');
+    ellipsis.className = 'pagination-ellipsis';
+    ellipsis.textContent = '...';
+    container.appendChild(ellipsis);
+}
+
+// Go to specific page
+function goToMachinePage(page) {
+    if (page >= 1 && page <= machineTotalPages && page !== machineCurrentPage) {
+        machineCurrentPage = page;
+        applyMachineFilters('', page, machineLimit);
+    }
+}
+
+// Go to previous page
+function goToMachinePrevPage() {
+    if (machineCurrentPage > 1) {
+        goToMachinePage(machineCurrentPage - 1);
+    }
+}
+
+// Go to next page
+function goToMachineNextPage() {
+    if (machineCurrentPage < machineTotalPages) {
+        goToMachinePage(machineCurrentPage + 1);
+    }
+}
+
+// Change items per page
+function changeMachineItemsPerPage() {
+    const select = document.getElementById('machine-items-per-page');
+    if (select) {
+        machineLimit = parseInt(select.value);
+        machineCurrentPage = 1; // Reset to first page
+        applyMachineFilters('', 1, machineLimit);
+    }
+}
+
 // Load initial machine data on page load
 document.addEventListener("DOMContentLoaded", () => {
     applyMachineFilters(); // Initial fetch without filters
+    
+    // Add event listeners for pagination
+    const prevBtn = document.getElementById('machine-prev-btn');
+    const nextBtn = document.getElementById('machine-next-btn');
+    const itemsPerPageSelect = document.getElementById('machine-items-per-page');
+    
+    if (prevBtn) prevBtn.onclick = goToMachinePrevPage;
+    if (nextBtn) nextBtn.onclick = goToMachineNextPage;
+    if (itemsPerPageSelect) itemsPerPageSelect.onchange = changeMachineItemsPerPage;
 });

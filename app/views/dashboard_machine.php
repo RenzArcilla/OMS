@@ -1,3 +1,10 @@
+<?php
+// Start session and check if user is logged in
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -764,7 +771,5 @@
     <script src="../../public/assets/js/utils/exit.js"></script>
     <script src="../../public/assets/js/utils/checkbox.js"></script>
     <script src="../../public/assets/js/utils/pagination.js"></script>
-    <!-- Edit maximum output script -->
-    <script src="../../public/assets/js/maximum_output.js"></script>
 </body>
 </html>

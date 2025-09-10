@@ -3,6 +3,13 @@
     This section is for adding a new applicator or machine to the system.
     It includes a form for entering details and submitting them to the server.
 */
+
+// Start session and check if user is logged in
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -24,6 +31,7 @@
     <link rel="stylesheet" href="/OMS/public/assets/css/base/header.css">
     <link rel="stylesheet" href="/OMS/public/assets/css/components/search_filter.css">
     <link rel="stylesheet" href="/OMS/public/assets/css/components/info.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/pagination.css">
 </head>
 <body>
     <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/OMS/app/includes/sidebar.php'; ?>
@@ -102,6 +110,42 @@
                                 </tbody>
                             </table>
                         </div>
+                        
+                        <!-- Machine Pagination -->
+                        <div id="machine-pagination" class="pagination-container" style="display: none;">
+                            <div class="pagination-info">
+                                <span class="pagination-text" id="machine-pagination-info">
+                                    Showing 0 to 0 of 0 results
+                                </span>
+                            </div>
+                            
+                            <div class="pagination-controls">
+                                <button id="machine-prev-btn" class="pagination-btn pagination-prev disabled" disabled>
+                                    <span>←</span> Previous
+                                </button>
+                                
+                                <div class="pagination-numbers" id="machine-pagination-numbers">
+                                    <!-- Page numbers will be generated here -->
+                                </div>
+                                
+                                <button id="machine-next-btn" class="pagination-btn pagination-next disabled" disabled>
+                                    Next <span>→</span>
+                                </button>
+                            </div>
+                            
+                            <div class="pagination-items-per-page">
+                                <form id="machine-items-per-page-form" style="display: flex; align-items: center; gap: 8px;">
+                                    <label for="machine-items-per-page">Show:</label>
+                                    <select id="machine-items-per-page" name="limit">
+                                        <option value="10">10</option>
+                                        <option value="20" selected>20</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                    <span>per page</span>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                     
 
@@ -150,6 +194,42 @@
                                     <!-- Fetch applicator data as table rows via AJAX-->
                                 </tbody>
                             </table>
+                        </div>
+                        
+                        <!-- Applicator Pagination -->
+                        <div id="applicator-pagination" class="pagination-container" style="display: none;">
+                            <div class="pagination-info">
+                                <span class="pagination-text" id="applicator-pagination-info">
+                                    Showing 0 to 0 of 0 results
+                                </span>
+                            </div>
+                            
+                            <div class="pagination-controls">
+                                <button id="applicator-prev-btn" class="pagination-btn pagination-prev disabled" disabled>
+                                    <span>←</span> Previous
+                                </button>
+                                
+                                <div class="pagination-numbers" id="applicator-pagination-numbers">
+                                    <!-- Page numbers will be generated here -->
+                                </div>
+                                
+                                <button id="applicator-next-btn" class="pagination-btn pagination-next disabled" disabled>
+                                    Next <span>→</span>
+                                </button>
+                            </div>
+                            
+                            <div class="pagination-items-per-page">
+                                <form id="applicator-items-per-page-form" style="display: flex; align-items: center; gap: 8px;">
+                                    <label for="applicator-items-per-page">Show:</label>
+                                    <select id="applicator-items-per-page" name="limit">
+                                        <option value="10">10</option>
+                                        <option value="20" selected>20</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                    <span>per page</span>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 <div>
