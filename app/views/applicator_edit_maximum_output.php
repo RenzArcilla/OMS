@@ -123,5 +123,3 @@
         </form>
     </div>
 </div>
-
-<script src="../assets/js/maximum_output.js"></script>

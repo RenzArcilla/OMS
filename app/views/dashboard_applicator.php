@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Applicator Dashboard</title>
-    <link rel="stylesheet" href="../../public/assets/css/base/header.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/base/header.css">
     <link rel="icon" href="/OMS/public/assets/images/favicon.ico">
-    <link rel="stylesheet" href="../../public/assets/css/base/base.css">
-    <link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/base/base.css">
     <link rel="stylesheet" href="/OMS/public/assets/css/components/header.css">
     <link rel="stylesheet" href="/OMS/public/assets/css/components/modal.css">
     <link rel="stylesheet" href="/OMS/public/assets/css/components/tables.css">
@@ -830,5 +829,7 @@
     <!-- Disabled Records Pagination -->
     <script src="../../public/assets/js/disabled_records_pagination.js"></script>
     <script src="../../public/assets/js/utils/pagination.js"></script>
+    <!-- Edit maximum output script -->
+    <script src="../../public/assets/js/maximum_output.js"></script>
 </body>
 </html>
