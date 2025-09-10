@@ -107,8 +107,11 @@ if (session_status() === PHP_SESSION_NONE) {
                 <div class="page-header">
                     <h1 class="page-title">📊 Machine Dashboard</h1>
                     <div class="header-actions">
-                    <button type="button" class="btn-primary edit-maximum-output-machine">
-                            <div>Edit Maximum Output</div> 
+                        <button type="button" class="btn-primary" onclick="refreshPage(this)">
+                            Refresh Data
+                        </button>
+                        <button type="button" class="btn-primary add-parts-machine">
+                            Add Parts
                         </button>
                         <button type="button" class="btn-primary export-reset-data-machine">
                             <div>Export Reset Data</div>
@@ -116,11 +119,8 @@ if (session_status() === PHP_SESSION_NONE) {
                         <button type="button" class="btn-primary export-output-data-machine">
                             <div>Export Output Data</div>
                         </button>
-                        <button type="button" class="btn-primary" onclick="refreshPage(this)">
-                            Refresh Data
-                        </button>
-                        <button type="button" class="btn-primary add-parts-machine">
-                            Add Parts
+                        <button type="button" class="btn-primary edit-maximum-output-machine">
+                            <div>Edit Maximum Output</div> 
                         </button>
                     </div>
                 </div>

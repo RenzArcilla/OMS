@@ -5,8 +5,8 @@ function refreshPage() {
     const originalText = btn.innerHTML;
     btn.innerHTML = '⏳ Refreshing...';
     btn.disabled = true;
-    
-    window.location.reload();
+
+    window.location.href = '/OMS/app/views/dashboard_applicator.php';
 }
 
 // Open the reset modal

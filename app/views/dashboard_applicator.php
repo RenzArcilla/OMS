@@ -111,23 +111,22 @@ if (session_status() === PHP_SESSION_NONE) {
                 <div class="page-header">
                     <h1 class="page-title">📊 Applicator Dashboard</h1>
                     <div class="header-actions"> 
-                        <button type="button" class="btn-primary edit-maximum-output">
-                            <div>Edit Maximum Output</div> 
-                        </button> 
-
-                        <button type="button" class="btn-primary export-reset-data">
-                            <div>Export Reset Data</div> 
-                        </button>   
-                        <button type="button" class="btn-primary export-output-data">
-                            <div>Export Output Data</div> 
-
-                        </button>
                         <button type="button" class="btn-primary" onclick="refreshPage()">
                             Refresh Data
                         </button>
                         <button type="button" class="btn-primary add-parts">
                             Add Parts
                         </button>
+                        <button type="button" class="btn-primary export-reset-data">
+                            <div>Export Reset Data</div> 
+                        </button>   
+                        <button type="button" class="btn-primary export-output-data">
+                            <div>Export Output Data</div> 
+                        </button>
+                        <button type="button" class="btn-primary edit-maximum-output">
+                            <div>Edit Maximum Output</div> 
+                        </button> 
+
                     </div>
                 </div>
                 

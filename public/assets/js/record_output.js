@@ -1,6 +1,9 @@
 // Refresh functionality
-function refreshData() {
-    location.reload();
+function refreshPage(btn) {
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '⏳ Refreshing...';
+    btn.disabled = true;
+    window.location.href = '/OMS/app/views/record_output.php';
 }
 
 // Modal functions
@@ -209,9 +212,10 @@ function closeExportModal() {
     }
 }
 
-downloadFileUploadFormat = () => {
+// Funtion to download the file upload format
+function downloadFileUploadFormat() {
     const link = document.createElement('a');
-    link.href = '/OMS/app//dl/oms_file_upload_format.xlsx';
+    link.href = '/OMS/app/dl/oms_file_upload_format.xlsx';
     link.download = 'oms_file_upload_format.xlsx';
     document.body.appendChild(link);
     link.click();

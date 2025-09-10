@@ -380,12 +380,13 @@ function getDisabledMachinesCount($search = null, $description = 'ALL') {
 }
 
 
-function fetchMachinesByControlNos(array $controlNos, PDO $pdo): array {
+function fetchMachinesByControlNos(array $controlNos): array {
     /*
         Fetch machines by their control numbers
         Used when recording outputs for machines or applicators in batchLoadData.
     */
-    
+    global $pdo;
+
     // Return empty if no control numbers
     if (empty($controlNos)) return [];
 
