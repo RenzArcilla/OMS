@@ -42,11 +42,11 @@ function getInput($key) {
 $date = trim($_POST['date_inspected'] ?? '');
 $shift = getInput('shift');
 $app1 = getInput('app1');
-$app1_out = (int)(getInput('app1_output') ?? 0);
 $app2 = getInput('app2');
-$app2_out = (int)(getInput('app2_output') ?? 0);
 $machine = getInput('machine');
 $machine_out = (int)(getInput('machine_output') ?? 0);
+$app1_out = $machine_out;
+$app2_out = $machine_out;
 
 // 2. Validation
 if (!$date || !$shift || !$app1 || !$app1_out || !$machine || !$machine_out) {
@@ -71,7 +71,7 @@ try {
 
 // 3. Check Existence
 $app1_data = getInactiveApplicatorByHpNo($app1);
-if (!$app1_data) fail("Applicator 1 is inactive!");
+if ($app1_data) fail("Applicator 1 is inactive!");
 if (is_string($app1_data)) fail($app1_data);
 
 $app1_data = getActiveApplicatorByHpNo($app1);
@@ -83,7 +83,7 @@ if (is_string($app1_data)) fail($app1_data);
 $app2_data = null;
 if (!empty($app2)) {
     $app2_data = getInactiveApplicatorByHpNo($app2);
-    if (!$app2_data) fail("Applicator 2 is inactive!");
+    if ($app2_data) fail("Applicator 2 is inactive!");
     if (is_string($app2_data)) fail($app2_data);
     $app2_data = getActiveApplicatorByHpNo($app2);
     if (!$app2_data) fail("Applicator 2 not found!");
@@ -91,7 +91,7 @@ if (!empty($app2)) {
 }
 
 $machine_data = getInactiveMachineByControlNo($machine);
-if (!$machine_data) fail("Machine is inactive!");
+if ($machine_data) fail("Machine is inactive!");
 if (is_string($machine_data)) fail($machine_data);
 $machine_data = getActiveMachineByControlNo($machine);
 if (!$machine_data) fail("Machine not found!");

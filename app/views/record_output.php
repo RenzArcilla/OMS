@@ -400,14 +400,6 @@ if (!empty(trim($search))) {
                     </div>
 
                     <div class="form-group">
-                        <label for="app1_output" class="form-label">
-                            Applicator 1 Output
-                            <span class="required-badge">Required</span>
-                        </label>
-                        <input type="number" min="0" id="app1_output" name="app1_output" class="form-input" required>
-                    </div>
-
-                    <div class="form-group">
                         <label for="app2" class="form-label">
                             Applicator 2
                             <span class="optional-badge">Optional</span>
@@ -415,13 +407,6 @@ if (!empty(trim($search))) {
                         <input type="text" id="app2" name="app2" class="form-input">
                     </div>
 
-                    <div class="form-group">
-                        <label for="app2_output" class="form-label">
-                            Applicator 2 Output
-                            <span class="optional-badge">Optional</span>
-                        </label>
-                        <input type="number" min="0" id="app2_output" name="app2_output" class="form-input">
-                    </div>
                 </div>
             </div>
 
