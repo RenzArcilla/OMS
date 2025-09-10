@@ -1,0 +1,159 @@
+
+.users-table-card {
+    background: white;
+    border-radius: 0.75rem;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 8px 30px rgba(47, 128, 237, 0.1);
+    overflow: hidden;
+}
+
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.users-table thead {
+    background-color: #F9FAFB;
+}
+
+.users-table th, .users-table td {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.users-table th {
+    font-weight: bold;
+    color: #111827;
+    font-size: 0.875rem;
+}
+
+.users-table tbody tr:hover {
+    background-color: #F9FAFB;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    font-size: 2rem;
+    margin-right: 0.75rem;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 0.25rem;
+}
+
+.user-email {
+    font-size: 0.875rem;
+    color: #6B7280;
+}
+
+.role-info {
+    display: flex;
+    align-items: center;
+}
+
+.role-icon {
+    margin-right: 0.5rem;
+}
+
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: 1px solid;
+}
+
+.status-active {
+    background-color: #DCFCE7;
+    color: #16A34A;
+    border-color: #16A34A;
+}
+
+.status-inactive {
+    background-color: #FEF3C7;
+    color: #D97706;
+    border-color: #D97706;
+}
+
+.status-pending {
+    background-color: #DBEAFE;
+    color: #2563EB;
+    border-color: #2563EB;
+}
+
+.status-suspended {
+    background-color: #FEE2E2;
+    color: #DC2626;
+    border-color: #DC2626;
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: transparent;
+    font-size: 1.1rem;
+}
+
+.action-btn:hover {
+    transform: scale(1.1);
+}
+
+.view-btn:hover { background: #EFF6FF; }
+.edit-btn:hover { background: #F0FDF4; }
+.activate-btn:hover { background: #F0FDF4; }
+.suspend-btn:hover { background: #FFFBEB; }
+.delete-btn:hover { background: #FEF2F2; }
+
+.pagination {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #E5E7EB;
+    background-color: #F9FAFB;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pagination-info {
+    font-size: 0.875rem;
+    color: #6B7280;
+}
+
+.pagination-controls {
+    display: flex;
+    gap: 0.5rem;
+}j
+
+.pagination-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.5rem;
+    background: white;
+    color: #6B7280;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background: #F3F4F6;
+}
+
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

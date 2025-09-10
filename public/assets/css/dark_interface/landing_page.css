@@ -1,0 +1,223 @@
+
+.gate {
+    position: fixed;
+    top: 0;
+    width: 50%;
+    height: 100vh;
+    background: #FFFFFF;
+    z-index: 1000;
+    transition: transform 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 25px 50px rgba(220, 20, 60, 0.3),
+        0 10px 30px rgba(139, 0, 0, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.gate::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(
+        to bottom, 
+        transparent 0%,
+        rgba(220, 20, 60, 0.4) 25%,
+        rgba(178, 34, 34, 0.5) 50%,
+        rgba(139, 0, 0, 0.6) 75%,
+        transparent 100%
+    );
+    box-shadow: 0 0 12px rgba(220, 20, 60, 0.3);
+}
+
+.left {
+    left: 0;
+    transform: translateX(0);
+}
+
+.left::before {
+    right: 0;
+}
+
+.right {
+    right: 0;
+    transform: translateX(0);
+}
+
+.right::before {
+    left: 0;
+}
+
+body.loaded .left {
+    transform: translateX(-100%);
+}
+
+body.loaded .right {
+    transform: translateX(100%);
+}
+
+.logo-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logo-container:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.logo-container:active {
+    transform: translate(-50%, -50%) scale(0.98);
+}
+
+body.loaded .logo-container {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+    transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logo-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 48px 64px;
+    border-radius: 20px;
+    box-shadow: 
+        0 25px 50px rgba(220, 20, 60, 0.3),
+        0 10px 30px rgba(139, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.logo-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #DC143C, #B22222);
+}
+
+.logo-title {
+    position: relative;
+    top: 15px;
+    font-size: 4rem;
+    font-weight: 800;
+    letter-spacing: 4px;
+    margin: 0 0 16px 0;
+    background: linear-gradient(135deg, #DC143C, #B22222);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 4px 12px rgba(220, 20, 60, 0.25);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    zoom: 1.5;
+}
+
+.logo-title:hover {
+    transform: scale(1.08);
+}
+
+.logo-title:active {
+    transform: scale(0.97);
+}
+
+.logo-subtitle {
+    color: #6B7280;
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 24px;
+    letter-spacing: 1px;
+}
+
+.click-button {
+    background: linear-gradient(135deg, #DC143C, #B22222);
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(220, 20, 60, 0.25);
+}
+
+.click-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(220, 20, 60, 0.35);
+}
+
+.click-button:active {
+    transform: translateY(0);
+}
+
+/* Crimson floating elements */
+.floating-element {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: linear-gradient(135deg, rgba(220, 20, 60, 0.2) 0%, rgba(139, 0, 0, 0.1) 100%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: float 8s ease-in-out infinite;
+    box-shadow: 0 0 8px rgba(220, 20, 60, 0.1);
+}
+
+@keyframes float {
+    0%, 100% { 
+        transform: translateY(0) translateX(0) rotate(0deg); 
+        opacity: 0; 
+    }
+    25% { opacity: 0.8; }
+    50% { 
+        opacity: 1; 
+        transform: translateY(-30px) translateX(15px) rotate(180deg); 
+    }
+    75% { opacity: 0.6; }
+    100% { 
+        transform: translateY(-100vh) translateX(-15px) rotate(360deg); 
+        opacity: 0; 
+    }
+}
+
+/* Additional crimson accents */
+.logo-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(220, 20, 60, 0.3), transparent);
+    border-radius: 1px;
+}
+
+/* Enhanced glow effects */
+.gate::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 200px;
+    background: rgba(220, 20, 60, 0.6);
+    box-shadow: 0 0 20px rgba(220, 20, 60, 0.4);
+    filter: blur(1px);
+}
+
+.left::after {
+    right: 0;
+}
+
+.right::after {
+    left: 0;
+}

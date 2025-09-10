@@ -3,8 +3,8 @@
     display: flex;
     gap: 16px;
     padding: 24px 32px;
-    background: linear-gradient(135deg, #F9FAFB, #F3F4F6);
-    border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+    background: linear-gradient(135deg, #1F2937, #111827);
+    border-bottom: 1px solid rgba(55, 65, 81, 0.6);
     backdrop-filter: blur(10px);
 }
 
@@ -12,27 +12,28 @@
     width: 1000px;
     max-width: 100%;
     padding: 12px 20px;
-    border: 1.5px solid #E5E7EB;
+    border: 1.5px solid #374151;
     border-radius: 12px;
     font-size: 15px;
-    background: #fff;
+    background: #1F2937;
     transition: border-color 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 8px rgba(47, 128, 237, 0.04);
-    color: #1e293b;
+    box-shadow: 0 2px 8px rgba(17, 24, 39, 0.2);
+    color: #F9FAFB;
 }
 
 .search-input:focus {
     outline: none;
-    border-color: #2F80ED;
-    box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.12);
+    border-color: #F9FAFB;
+    box-shadow: 0 0 0 3px rgba(249, 250, 251, 0.2);
 }
 
 .filter-select {
     padding: 0.75rem;
-    border: 1px solid #E5E7EB;
+    border: 1px solid #374151;
     border-radius: 0.75rem;
     font-size: 0.875rem;
-    color: #111827;
+    color: #F9FAFB;
+    background: #1F2937;
     transition: all 0.2s;
     min-width: 150px;
 }
@@ -40,8 +41,8 @@
 
 .filter-select:focus {
     outline: none;
-    border-color: #2F80ED;
-    box-shadow: 0 0 0 4px rgba(47, 128, 237, 0.1);
+    border-color: #F9FAFB;
+    box-shadow: 0 0 0 4px rgba(249, 250, 251, 0.2);
 }
 
 
