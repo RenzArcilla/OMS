@@ -1,0 +1,122 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 32px 80px;
+    height: 100%;
+ }
+ 
+ .card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;
+    min-width: 320px;
+    background: rgba(31, 41, 55, 0.6);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(243, 244, 246, 0.1), 
+                0 10px 30px rgba(55, 65, 81, 0.3);   
+    position: relative;
+    border: 2px solid rgba(249, 250, 251, 0.1);
+    backdrop-filter: blur(20px);
+    animation: cardGlow 4s ease-in-out infinite alternate;
+ }
+ 
+ .card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, 
+        rgba(249, 250, 251, 0.2), 
+        rgba(243, 244, 246, 0.1), 
+        rgba(55, 65, 81, 0.3),
+        rgba(31, 41, 55, 0.2)
+    );
+    border-radius: 20px;
+    z-index: -1;
+    animation: cardBorderGlow 3s ease-in-out infinite;
+ }
+ 
+ .center-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    left: -10px;
+ }
+ 
+ .card-content {
+    background: rgba(55, 65, 81, 0.3);
+    padding: 40px 32px;
+    border-radius: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-height: fit-content;
+    border: 1px solid rgba(249, 250, 251, 0.05);
+    backdrop-filter: blur(10px);
+ }
+ 
+ /* Header Styles */
+ .card-title h1 {
+    font-size: 32px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #F9FAFB, #F3F4F6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    margin-bottom: 2px;
+    filter: drop-shadow(0 0 10px rgba(249, 250, 251, 0.3));
+    animation: titlePulse 3s ease-in-out infinite alternate;
+ }
+ 
+ .subtitle {
+    color: #F3F4F6;
+    font-size: 15px;
+    font-weight: 400;
+    text-align: center;
+    line-height: 1.6;
+    opacity: 0.8;
+    margin-bottom: 10px;
+ }
+ 
+ @keyframes cardGlow {
+    0% {
+        box-shadow: 0 25px 50px rgba(243, 244, 246, 0.1), 
+                    0 10px 30px rgba(55, 65, 81, 0.3);
+    }
+    100% {
+        box-shadow: 0 25px 60px rgba(243, 244, 246, 0.15), 
+                    0 10px 40px rgba(55, 65, 81, 0.4),
+                    0 0 80px rgba(249, 250, 251, 0.05);
+    }
+ }
+ 
+ @keyframes cardBorderGlow {
+    0%, 100% {
+        opacity: 0.6;
+        filter: blur(1px);
+    }
+    50% {
+        opacity: 0.9;
+        filter: blur(0px);
+    }
+ }
+ 
+ @keyframes titlePulse {
+    0% {
+        filter: drop-shadow(0 0 10px rgba(249, 250, 251, 0.3));
+    }
+    100% {
+        filter: drop-shadow(0 0 20px rgba(249, 250, 251, 0.6)) 
+                drop-shadow(0 0 40px rgba(243, 244, 246, 0.2));
+    }
+ }
