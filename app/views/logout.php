@@ -6,7 +6,7 @@
 <!-- Enhanced Logout Modal -->
 <div class="logout-modal-overlay" id="logoutModalOverlay">
     <div class="logout-container">
-        <button class="modal-close-btn">×</button>
+        <button class="modal-close-btn" onclick="closeLogoutModal()">×</button>
         
         <!-- Enhanced Logout Header -->
         <div class="logout-header">

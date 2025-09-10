@@ -49,10 +49,7 @@
 
 
                     <div class="forgot-password">
-                        
-                        <p style="display: inline; margin: 0 0 0 0px; position: relative; left: -85px;"> Log in as </p>
-                        <a onclick="location.href='../controllers/login_as_guest.php'" style="font-size: 17px; position: relative; left: -93px; top: 1px">Guest</a>
-                        <a href="forgot_password.php">Forgot your password?</a>
+                        <a href="../controllers/login_as_guest.php">Log-in as Guest</a>
                     </div>
 
                     <button type="submit" class="login-btn">

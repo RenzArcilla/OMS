@@ -11,6 +11,15 @@ function toggleLogoutButton() {
 }
 
 
+function closeLogoutModal() {
+    const modal = document.getElementById('logoutModalOverlay');
+    if (modal) {
+        modal.style.display = 'none';
+        const form = modal.querySelector('form');
+        if (form) form.reset();
+    }
+}
+
 // Enhanced confirm logout function
 function confirmLogout() {
     const checkbox = document.getElementById('confirmLogout');
