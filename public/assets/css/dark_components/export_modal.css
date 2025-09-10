@@ -1,0 +1,276 @@
+/* New styles for export modal functionality */
+.export-body {
+    min-height: 100vh;
+    padding: 32px;
+    background: linear-gradient(135deg, #DC143C 0%, #8B0000 50%, #B22222 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.demo-button {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 32px;
+}
+
+.export-trigger-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 32px;
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #DC143C, #B22222);
+    box-shadow: 0 8px 20px rgba(220, 20, 60, 0.35);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.export-trigger-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Form Select Styles */
+.form-select {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    background-color: white;
+    border: 2px solid #E5E7EB;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 12px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+.form-select:hover {
+    border-color: #D1D5DB;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-select:focus {
+    outline: none;
+    border-color: #DC143C;
+    box-shadow: 0 0 0 3px rgba(220, 20, 60, 0.1);
+    background-color: white;
+}
+
+.form-select:active {
+    transform: translateY(1px);
+}
+
+/* Form Select Options Styling */
+.form-select option {
+    padding: 12px 16px;
+    font-size: 14px;
+    color: #374151;
+    background-color: white;
+    border: none;
+}
+
+.form-select option:hover {
+    background-color: #F3F4F6;
+}
+
+.form-select option:checked {
+    background-color: #DC143C;
+    color: white;
+}
+
+/* Form Select Disabled State */
+.form-select:disabled {
+    background-color: #F9FAFB;
+    color: #9CA3AF;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.form-select:disabled:hover {
+    border-color: #E5E7EB;
+    box-shadow: none;
+}
+
+.format-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.format-option {
+    padding: 16px;
+    border-radius: 12px;
+    border: 2px solid #E5E7EB;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+}
+
+.format-option:hover {
+    border-color: #D1D5DB;
+}
+
+.format-option.selected {
+    border-color: #DC143C;
+    background: rgba(220, 20, 60, 0.05);
+}
+
+.format-option-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.format-icon {
+    color: #6B7280;
+    transition: color 0.3s ease;
+}
+
+.format-option.selected .format-icon {
+    color: #DC143C;
+}
+
+.format-details {
+    flex: 1;
+}
+
+.format-label {
+    font-weight: 500;
+    font-size: 14px;
+    color: #374151;
+    margin-bottom: 4px;
+}
+
+.format-description {
+    font-size: 12px;
+    color: #6B7280;
+}
+
+.date-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.checkbox-group {
+    margin-top: 16px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.checkbox-input {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 2px solid #E5E7EB;
+    accent-color: #DC143C;
+}
+
+.checkbox-label {
+    font-size: 14px;
+    color: #374151;
+}
+
+.export-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 32px;
+    color: white;
+    font-weight: 600;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #DC143C, #B22222);
+    box-shadow: 0 4px 12px rgba(220, 20, 60, 0.25);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.export-btn:hover:not(:disabled) {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(220, 20, 60, 0.35);
+}
+
+.export-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.loading-spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid white;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* More specific rule to ensure hidden works */
+#customDates.hidden {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
+
+/* Ensure visible when not hidden */
+#customDates:not(.hidden) {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (min-width: 640px) {
+    .button-group {
+        flex-direction: row;
+    }
+}
+
+@media (min-width: 768px) {
+    .date-inputs {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Responsive Form Select */
+@media (max-width: 640px) {
+    .form-select {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 14px 16px;
+    }
+    
+    .form-select.small {
+        padding: 10px 12px;
+    }
+    
+    .form-select.large {
+        padding: 18px 20px;
+    }
+}

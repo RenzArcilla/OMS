@@ -22,8 +22,18 @@ try {
     $allowedDescriptions = ['ALL', 'AUTOMATIC', 'SEMI-AUTOMATIC'];
     if (!in_array($description, $allowedDescriptions, true)) $description = 'ALL';
 
+    // Debug: Log the request
+    error_log("Search machines request: search=$search, page=$page, limit=$limit, description=$description");
+
     // Fetch filtered results
     $machines = getFilteredMachines($limit, $offset, $search, $description);
+    
+    // Get total count for pagination
+    $totalCount = getMachinesCount($search, $description);
+    $totalPages = ceil($totalCount / $limit);
+
+    // Debug: Log the results
+    error_log("Machines found: " . count($machines) . ", Total count: $totalCount");
 
     // Determine if DB is empty (initial fetch)
     $emptyDb = empty($machines) && $page === 1 && $search === null && $description === 'ALL';
@@ -31,7 +41,14 @@ try {
     echo json_encode([
         'success' => true,
         'data' => $machines,
-        'empty_db' => $emptyDb
+        'empty_db' => $emptyDb,
+        'pagination' => [
+            'current_page' => $page,
+            'total_pages' => $totalPages,
+            'total_count' => $totalCount,
+            'limit' => $limit,
+            'offset' => $offset
+        ]
     ]);
 
 } catch (Exception $e) {
