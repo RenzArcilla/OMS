@@ -1,0 +1,117 @@
+/* Navigation */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(17, 24, 39, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(249, 250, 251, 0.1);
+    z-index: 1000;
+    padding: 20px 0;
+    box-shadow: 0 1px 3px rgba(55, 65, 81, 0.3), 0 0 20px rgba(243, 244, 246, 0.05);
+    animation: navGlow 4s ease-in-out infinite alternate;
+}
+
+.navbar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        rgba(249, 250, 251, 0.02) 0%, 
+        rgba(243, 244, 246, 0.05) 50%, 
+        rgba(249, 250, 251, 0.02) 100%
+    );
+    animation: navScan 3s linear infinite;
+    pointer-events: none;
+}
+
+.nav-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 50px 0 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.nav-right-buttons {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.logo {
+    position: relative;
+    left: -5px;
+    top: -5px;
+    font-size: 45px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 10px rgba(249, 250, 251, 0.3));
+    animation: logoGlow 2s ease-in-out infinite alternate;
+}
+
+.logo::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(243, 244, 246, 0.1) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    animation: logoHalo 3s ease-in-out infinite;
+}
+
+@keyframes navGlow {
+    0% {
+        box-shadow: 
+            0 1px 3px rgba(55, 65, 81, 0.3), 
+            0 0 20px rgba(243, 244, 246, 0.05);
+    }
+    100% {
+        box-shadow: 
+            0 1px 3px rgba(55, 65, 81, 0.5), 
+            0 0 40px rgba(243, 244, 246, 0.1),
+            0 0 80px rgba(249, 250, 251, 0.03);
+    }
+}
+
+@keyframes navScan {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes logoGlow {
+    0% {
+        filter: drop-shadow(0 0 10px rgba(249, 250, 251, 0.3));
+    }
+    100% {
+        filter: drop-shadow(0 0 20px rgba(249, 250, 251, 0.6)) 
+                drop-shadow(0 0 40px rgba(243, 244, 246, 0.2));
+    }
+}
+
+@keyframes logoHalo {
+    0%, 100% {
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
