@@ -33,13 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['first_name'] = $result['first_name'];
         $_SESSION['user_type'] = $result['user_type'];
         if ($result['user_type'] === 'TOOLKEEPER') {
-            jsAlertRedirect("Welcome back, Toolkeeper!", "../views/record_output.php");
+            header("Location: ../views/record_output.php");
             exit;
         } elseif ($result['user_type'] === 'ADMIN') {
-            jsAlertRedirect("Welcome back, Admin!", "../views/manage_user.php");    
+            header("Location: ../views/manage_user.php");
             exit;
         } else {
-            jsAlertRedirect("Welcome back, " . htmlspecialchars($result['first_name']) . "!", "../views/home.php");
+            header("Location: ../views/home.php");
             exit;
         }
     } elseif (is_string($result)) {
