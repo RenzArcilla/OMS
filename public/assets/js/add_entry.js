@@ -1,3 +1,84 @@
+// Initialize listeners
+document.addEventListener("DOMContentLoaded", () => {
+    // Close modal when clicking outside of it
+    document.addEventListener('click', function(event) {
+        const modals = document.querySelectorAll('.modal-overlay');
+        modals.forEach(modal => {
+            if (event.target === modal) {
+                closeAddApplicatorModal();
+                closeAddMachineModal();
+                closeApplicatorModal();
+                closeMachineModal();
+            }
+        });
+    }); 
+
+    // Close modal when pressing Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeAddApplicatorModal();
+            closeAddMachineModal();
+            closeApplicatorModal();
+            closeMachineModal();
+        }
+    });
+
+    // Listen for clicks on the "Export Data" button to open the export modal
+    document.querySelectorAll('[onclick="exportData()"]').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            // Prevent default if button is inside a form
+            e.preventDefault();
+            document.getElementById('exportModal').style.display = 'block';
+        });
+    });
+
+    // Listen for clicks on the close button or outside the modal to close it
+    document.addEventListener('DOMContentLoaded', function() {
+        // Close button
+        var closeBtn = document.querySelector('#exportModal .modal-close-btn');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function() {
+                document.getElementById('exportModal').style.display = 'none';
+            });
+        }
+
+        // Click outside modal content
+        var exportModal = document.getElementById('exportModal');
+        if (exportModal) {
+            exportModal.addEventListener('click', function(event) {
+                if (event.target === exportModal) {
+                    exportModal.style.display = 'none';
+                }
+            });
+        }
+    });
+
+    // Close modal when clicking outside
+    const exportModal = document.getElementById('exportModal');
+    if (exportModal) {
+        exportModal.addEventListener('click', function(e) {
+            if (e.target === exportModal) {
+                closeExportModal();
+            }
+        });
+    }
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeExportModal();
+        }
+    });
+
+    // Initialize all functionality when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeFormatOptions();
+        initializeDateRange();
+        initializeCheckbox();
+    });
+});
+
+
 // Refresh the page
 function refreshPage(btn) {
     const originalText = btn.innerHTML;
@@ -48,29 +129,6 @@ function openApplicatorModal() {
 function closeAddMachineModal() {
     document.getElementById('addMachineModal').style.display = 'none';
 }
-
-// Close modal when clicking outside of it
-document.addEventListener('click', function(event) {
-    const modals = document.querySelectorAll('.modal-overlay');
-    modals.forEach(modal => {
-        if (event.target === modal) {
-            closeAddApplicatorModal();
-            closeAddMachineModal();
-            closeApplicatorModal();
-            closeMachineModal();
-        }
-    });
-});
-
-// Close modal when pressing Escape key
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        closeAddApplicatorModal();
-        closeAddMachineModal();
-        closeApplicatorModal();
-        closeMachineModal();
-    }
-});
 
 // Filter functionality
 function applyFilters() {
@@ -215,11 +273,6 @@ function confirmDelete() {
     }
 }
 
-
-
-
-
-
 function openApplicatorDeleteModal(button) {
     // Store the form reference for later use
     window.currentDeleteForm = button.closest('form');
@@ -241,38 +294,6 @@ function confirmDelete() {
         window.currentDeleteForm.submit();
     }
 }
-
-
-// Open the export modal
-// Listen for clicks on the "Export Data" button to open the export modal
-document.querySelectorAll('[onclick="exportData()"]').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-        // Prevent default if button is inside a form
-        e.preventDefault();
-        document.getElementById('exportModal').style.display = 'block';
-    });
-});
-
-// Listen for clicks on the close button or outside the modal to close it
-document.addEventListener('DOMContentLoaded', function() {
-    // Close button
-    var closeBtn = document.querySelector('#exportModal .modal-close-btn');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', function() {
-            document.getElementById('exportModal').style.display = 'none';
-        });
-    }
-
-    // Click outside modal content
-    var exportModal = document.getElementById('exportModal');
-    if (exportModal) {
-        exportModal.addEventListener('click', function(event) {
-            if (event.target === exportModal) {
-                exportModal.style.display = 'none';
-            }
-        });
-    }
-});
 
 // State variables
 let selectedFormat = 'csv';
@@ -330,65 +351,35 @@ function initializeCheckbox() {
     });
 }
 
-
-// Close modal when clicking outside
-document.getElementById('exportModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeExportModal();
-    }
-});
-
-// Close modal on Escape key
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        closeExportModal();
-    }
-});
-
-// Initialize all functionality when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    initializeFormatOptions();
-    initializeDateRange();
-    initializeCheckbox();
-});
-
 // Export modal functions
 function showExportApplicatorModal() {
-    console.log('Showing exportApplicatorReportModal...');
     const modal = document.getElementById('exportApplicatorReportModal');
     if (modal) {
         modal.style.display = 'block';
-        console.log('exportApplicatorReportModal shown successfully');
     } else {
         console.log('exportApplicatorReportModal not found!');
     }
 }
 
 function showExportMachineModal() {
-    console.log('Showing exportMachineReportModal...');
     const modal = document.getElementById('exportMachineReportModal');
     if (modal) {
         modal.style.display = 'block';
-        console.log('exportMachineReportModal shown successfully');
     } else {
         console.log('exportMachineReportModal not found!');
     }
 }
 
 function closeExportApplicatorModal() {
-    console.log('Closing exportApplicatorReportModal...');
     const modal = document.getElementById('exportApplicatorReportModal');
     if (modal) {
         modal.style.display = 'none';
-        console.log('exportApplicatorReportModal closed successfully');
     }
 }
 
 function closeExportMachineModal() {
-    console.log('Closing exportMachineReportModal...');
     const modal = document.getElementById('exportMachineReportModal');
     if (modal) {
         modal.style.display = 'none';
-        console.log('exportMachineReportModal closed successfully');
     }
 }

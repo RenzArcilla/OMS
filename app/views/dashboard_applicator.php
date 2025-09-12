@@ -11,12 +11,11 @@ if (session_status() === PHP_SESSION_NONE) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Applicator Dashboard</title>
-    <link rel="stylesheet" href="../../public/assets/css/base/header.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/base/header.css">
     <link rel="icon" href="/OMS/public/assets/images/favicon.ico">
-    <link rel="stylesheet" href="../../public/assets/css/base/base.css">
-    <link rel="stylesheet" href="../../public/assets/css/dashboard_applicator.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/base/base.css">
     <link rel="stylesheet" href="/OMS/public/assets/css/components/header.css">
-    <link rel="stylesheet" href="/OMS/public/assets/css/components/modal.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/modal.css">  
     <link rel="stylesheet" href="/OMS/public/assets/css/components/tables.css">
     <link rel="stylesheet" href="/OMS/public/assets/css/components/buttons.css">
     <link rel="stylesheet" href="/OMS/public/assets/css/layout/grid.css">
@@ -218,31 +217,31 @@ if (session_status() === PHP_SESSION_NONE) {
                                             <td><strong><?= htmlspecialchars(explode(' ', $row['last_updated'])[0]) ?></strong></td>
                                             <td><strong><?= htmlspecialchars($row['total_output']) ?></strong></td>
                                             <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="wire_crimper">
-                                                <div><strong><?= htmlspecialchars($row['wire_crimper_output']) ?></strong> / 400K</div>
+                                                <div><strong><?= htmlspecialchars($row['wire_crimper_output']) ?></strong> / 500K</div>
                                                 <div class="progress-bar">
                                                     <div class="progress-fill" style="width: 0%;"></div>
                                                 </div>
                                             </td>
                                             <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="wire_anvil">
-                                                <div><strong><?= htmlspecialchars($row['wire_anvil_output']) ?></strong> / 400K</div>
+                                                <div><strong><?= htmlspecialchars($row['wire_anvil_output']) ?></strong> / 500K</div>
                                                 <div class="progress-bar">
                                                     <div class="progress-fill" style="width: 0%;"></div>
                                                 </div>
                                             </td>
                                             <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="insulation_crimper">
-                                                <div><strong><?= htmlspecialchars($row['insulation_crimper_output']) ?></strong> / 400K</div>
+                                                <div><strong><?= htmlspecialchars($row['insulation_crimper_output']) ?></strong> / 500K</div>
                                                 <div class="progress-bar">
                                                     <div class="progress-fill" style="width: 0%;"></div>
                                                 </div>
                                             </td>
                                             <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="insulation_anvil">
-                                                <div><strong><?= htmlspecialchars($row['insulation_anvil_output']) ?></strong> / 400K</div>
+                                                <div><strong><?= htmlspecialchars($row['insulation_anvil_output']) ?></strong> / 500K</div>
                                                 <div class="progress-bar">
                                                     <div class="progress-fill" style="width: 0%;"></div>
                                                 </div>
                                             </td>
                                             <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="slide_cutter">
-                                                <div><strong><?= htmlspecialchars($row['slide_cutter_output']) ?></strong> / 400K</div>
+                                                <div><strong><?= htmlspecialchars($row['slide_cutter_output']) ?></strong> / 500K</div>
                                                 <div class="progress-bar">
                                                     <div class="progress-fill" style="width: 0%;"></div>
                                                 </div>
@@ -260,20 +259,20 @@ if (session_status() === PHP_SESSION_NONE) {
                                                 </div>
                                             </td>
                                             <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="cutter_a">
-                                                <div><?= htmlspecialchars($row['cutter_a_output']) ?> / 600K</div>
+                                                <div><strong><?= htmlspecialchars($row['cutter_a_output']) ?></strong> / 500K</div>
                                                 <div class="progress-bar">
-                                                    <div class="progress-fill" style="width: 0%;"></div>
+                                                    <div class="progress-fill"  style="width: 0%;"></div>
                                                 </div>
                                             </td>
                                             <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="cutter_b">
-                                                <div><strong><?= htmlspecialchars($row['cutter_b_output']) ?></strong> / 600K</div>
+                                                <div><strong><?= htmlspecialchars($row['cutter_b_output']) ?></strong> / 500K</div>
                                                 <div class="progress-bar">
                                                     <div class="progress-fill" style="width: 0%;"></div>
                                                 </div>
                                             </td>
                                             <?php foreach ($part_names_array as $part_name): ?>
                                                 <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="custom_parts_<?= $part_name ?>">
-                                                    <div><strong><?= htmlspecialchars($row['custom_parts_output'][$part_name] ?? 0) ?></strong> / 600K</div>
+                                                    <div><strong><?= htmlspecialchars($row['custom_parts_output'][$part_name] ?? 0) ?></strong> / 500K</div>
                                                     <div class="progress-bar">
                                                         <div class="progress-fill" style="width: 0%;"></div>
                                                     </div>

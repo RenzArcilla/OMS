@@ -1,12 +1,12 @@
 // Global variables for pagination state
-let currentPageRecords = 1;
-let itemsPerPageRecords = 10;
-let totalPagesRecords = 1;
-let totalRecordsCount = 0;
-let currentSearchRecords = '';
-let currentShiftRecords = 'ALL';
+currentPageRecords = 1;
+itemsPerPageRecords = 10;
+totalPagesRecords = 1;
+totalRecordsCount = 0;
+currentSearchRecords = '';
+currentShiftRecords = 'ALL';
 
-let disabledRecordSearchTimeout = null;
+disabledRecordSearchTimeout = null;
 
 // Initialize pagination on page load
 document.addEventListener("DOMContentLoaded", () => {

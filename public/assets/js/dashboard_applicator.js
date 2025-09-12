@@ -1,3 +1,146 @@
+// Initialize listeners
+document.addEventListener("DOMContentLoaded", () => {
+    // Close modal when clicking outside of it
+    document.addEventListener('click', function(event) {
+        const restoreModal = document.getElementById('restoreApplicatorModalDashboardApplicator');
+        if (event.target === restoreModal) {
+            closeRestoreApplicatorModal();
+        }
+    });
+
+    // Listen for clicks on delete buttons in the custom parts table
+    document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('btn-delete')) {
+            const partId = event.target.getAttribute('data-part-id');
+            const partName = event.target.getAttribute('data-part-name');
+            confirmDeleteCustomPart(partId, partName);
+        }
+    });
+
+    // Listen for clicks on edit buttons in the custom parts table
+    document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('btn-edit')) {
+            const partId = event.target.getAttribute('data-part-id');
+            const partName = event.target.getAttribute('data-part-name');
+            openEditCustomPartModal(partId, partName);
+        }
+    });
+
+    // Close export modal when clicking outside
+    const exportModal = document.getElementById('exportModal');
+    if (exportModal) {
+        exportModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeExportModal();
+            }
+        });
+    }
+
+    // Close export recently reset modal when clicking outside
+    document.addEventListener('click', function(e) {
+        const modal = document.getElementById('exportModalRecentlyReset');
+        if (modal && e.target === modal) {
+            closeExportRecentlyResetModal();
+        }
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeExportModal();
+        }
+    });
+
+    // Initialize all functionality when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeFormatOptions();
+        initializeDateRange();
+        initializeCheckbox();
+
+        
+        // Add event listener for reset form submission
+        const resetForm = document.getElementById('resetForm');
+        if (resetForm) {
+            resetForm.addEventListener('submit', function() {
+                // After successful reset, refresh progress bars
+                setTimeout(function() {
+                    refreshProgressBarsAfterReset();
+                }, 1000); // Wait 1 second for the reset to complete
+            });
+        }
+    });
+
+    // Listen for clicks on the "Export Data" button to open the export modal
+    document.querySelectorAll('[onclick="exportData()"]').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            // Prevent default if button is inside a form
+            e.preventDefault();
+            document.getElementById('exportModal').style.display = 'block';
+        });
+    });
+
+    // Listen for clicks on the close button or outside the modal to close it
+    document.addEventListener('DOMContentLoaded', function() {
+        // Close button
+        var closeBtn = document.querySelector('#exportModal .modal-close-btn');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function() {
+                document.getElementById('exportModal').style.display = 'none';
+            });
+        }
+
+        // Click outside modal content
+        var exportModal = document.getElementById('exportModal');
+        if (exportModal) {
+            exportModal.addEventListener('click', function(event) {
+                if (event.target === exportModal) {
+                    exportModal.style.display = 'none';
+                }
+            });
+        }
+    });
+
+    // Listen for changes in the "part" dropdown
+    const editWireType = document.getElementById("editWireType");
+    if (editWireType) {
+        editWireType.addEventListener("change", function() {
+            const partName = this.value; // selected part
+            const applicatorInput = document.getElementById("undo_applicator_id");
+            if (!applicatorInput) return;
+
+            const applicatorId = applicatorInput.value;
+
+            // Do nothing if no part is selected
+            if (!partName) return;
+
+            // Send request to server to fetch reset dates
+            fetch("/OMS/app/controllers/get_reset_dates_applicator.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({
+                    part_name: partName,
+                    applicator_id: applicatorId
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                const dropdown = document.getElementById("editStatus");
+                if (!dropdown) return;
+                dropdown.innerHTML = ""; // clear old options
+
+                if (data.length > 0) {
+                    data.forEach(row => {
+                        dropdown.appendChild(new Option(row.reset_time, row.reset_time));
+                    });
+                } else {
+                    dropdown.appendChild(new Option("No reset history", ""));
+                }
+            })
+            .catch(console.error);
+        });
+    }
+});
+
 // Refresh the page
 function refreshPage() {
     // Add loading state
@@ -89,15 +232,6 @@ function closeAddCustomPartModal() {
     document.getElementById('addCustomPartModalDashboardApplicator').style.display = 'none';
 }
 
-// Listen for clicks on edit buttons in the custom parts table
-document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('btn-edit')) {
-        const partId = event.target.getAttribute('data-part-id');
-        const partName = event.target.getAttribute('data-part-name');
-        openEditCustomPartModal(partId, partName);
-    }
-});
-
 // Open the edit custom part modal
 function openEditCustomPartModal(partId, partName) {
     document.getElementById('editCustomPartModalDashboardApplicator').style.display = 'block';
@@ -115,14 +249,6 @@ function closeEditCustomPartModal() {
     document.getElementById('editCustomPartModalDashboardApplicator').style.display = 'none';
 }
 
-// Listen for clicks on delete buttons in the custom parts table
-document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('btn-delete')) {
-        const partId = event.target.getAttribute('data-part-id');
-        const partName = event.target.getAttribute('data-part-name');
-        confirmDeleteCustomPart(partId, partName);
-    }
-});
 
 function confirmDeleteCustomPart(partId, partName) {
     const modal = document.getElementById('deleteCustomPartModalDashboardApplicator');
@@ -212,13 +338,6 @@ function toggleRestoreButton() {
     restoreBtn.disabled = !confirmCheckbox.checked;
 }
 
-// Close modal when clicking outside of it
-document.addEventListener('click', function(event) {
-    const restoreModal = document.getElementById('restoreApplicatorModalDashboardApplicator');
-    if (event.target === restoreModal) {
-        closeRestoreApplicatorModal();
-    }
-});
 
 // Open the parts inventory modal
 function openPartsInventoryModal() {
@@ -235,77 +354,6 @@ function closePartsInventoryModal() {
     document.getElementById('partsInventoryModalDashboardApplicator').style.display = 'none';
 }
 
-
-// Listen for changes in the "part" dropdown
-document.getElementById("editWireType").addEventListener("change", function() {
-    let partName = this.value; // selected part
-    let applicatorId = document.getElementById("undo_applicator_id").value; // hidden input
-
-    // Do nothing if no part is selected
-    if (!partName) return;
-
-    // Send request to server to fetch reset dates for this part + applicator
-    fetch("/OMS/app/controllers/get_reset_dates_applicator.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: "part_name=" + encodeURIComponent(partName) +
-            "&applicator_id=" + encodeURIComponent(applicatorId)
-    })
-    .then(res => res.json()) // parse JSON response
-    .then(data => {
-        let dropdown = document.getElementById("editStatus");
-        dropdown.innerHTML = ""; // clear old options
-
-        if (data.length > 0) {
-            // Populate dropdown with reset timestamps
-            data.forEach(row => {
-                let option = document.createElement("option");
-                option.value = row.reset_time;
-                option.textContent = row.reset_time;
-                dropdown.appendChild(option);
-            });
-        } else {
-            // If no records found, show fallback option
-            let option = document.createElement("option");
-            option.value = "";
-            option.textContent = "No reset history";
-            dropdown.appendChild(option);
-        }
-    })
-    .catch(err => console.error(err)); // log any errors
-});
-
-
-// Open the export modal
-// Listen for clicks on the "Export Data" button to open the export modal
-document.querySelectorAll('[onclick="exportData()"]').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-        // Prevent default if button is inside a form
-        e.preventDefault();
-        document.getElementById('exportModal').style.display = 'block';
-    });
-});
-
-// Listen for clicks on the close button or outside the modal to close it
-document.addEventListener('DOMContentLoaded', function() {
-    // Close button
-    var closeBtn = document.querySelector('#exportModal .modal-close-btn');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', function() {
-            document.getElementById('exportModal').style.display = 'none';
-        });
-    }
-
-    // Click outside modal content
-    var exportModal = document.getElementById('exportModal');
-    if (exportModal) {
-        exportModal.addEventListener('click', function(event) {
-            if (event.target === exportModal) {
-                exportModal.style.display = 'none';
-            }
-        });
-    }
-});
 
 // State variables
 selectedFormat = 'csv';
@@ -380,15 +428,6 @@ async function handleExport() {
     try {
         // Simulate export process
         await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        // Here you would normally make an API call or generate the file
-        console.log('Export configuration:', {
-            format: selectedFormat,
-            dateRange: selectedDateRange,
-            customStartDate,
-            customEndDate,
-            includeHeaders
-        });
 
         // Show success message (you could add a toast notification here)
         alert('Export completed successfully!');
@@ -412,39 +451,6 @@ async function handleExport() {
     }
 }
 
-// Close modal when clicking outside
-document.getElementById('exportModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeExportModal();
-    }
-});
-
-// Close modal on Escape key
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        closeExportModal();
-    }
-});
-
-// Initialize all functionality when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    initializeFormatOptions();
-    initializeDateRange();
-    initializeCheckbox();
-
-    
-    // Add event listener for reset form submission
-    const resetForm = document.getElementById('resetForm');
-    if (resetForm) {
-        resetForm.addEventListener('submit', function() {
-            // After successful reset, refresh progress bars
-            setTimeout(function() {
-                refreshProgressBarsAfterReset();
-            }, 1000); // Wait 1 second for the reset to complete
-        });
-    }
-});
-
 // Export Recently Reset Modal functions
 function exportRecentlyResetModal() {
     const modal = document.getElementById('exportModalRecentlyReset');
@@ -459,11 +465,3 @@ function closeExportRecentlyResetModal() {
         modal.style.display = 'none';
     }
 }
-
-// Close modal when clicking outside
-document.addEventListener('click', function(e) {
-    const modal = document.getElementById('exportModalRecentlyReset');
-    if (modal && e.target === modal) {
-        closeExportRecentlyResetModal();
-    }
-});
