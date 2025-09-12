@@ -16,9 +16,12 @@ if (session_status() === PHP_SESSION_NONE) {
     <link rel="stylesheet" href="../../public/assets/css/base/typography.css">
     <link rel="stylesheet" href="../../public/assets/css/account_settings.css">
     <link rel="stylesheet" href="../../public/assets/css/components/cards.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/components/sidebar.css">
 </head>
 <body>
-    <?php include_once $_SERVER['DOCUMENT_ROOT'] . '/OMS/app/includes/header.php'; ?>
+    <?php 
+        include_once $_SERVER['DOCUMENT_ROOT'] . '/OMS/app/includes/sidebar.php';
+        include_once $_SERVER['DOCUMENT_ROOT'] . '/OMS/app/includes/header.php'; ?>
     <div class="container">
         <div class="account-settings-container">
             <div class="card-title">
@@ -169,5 +172,6 @@ if (session_status() === PHP_SESSION_NONE) {
             </div>
     </div>
     <script src="../../public/assets/js/account_settings.js"></script>
+    <script src="../../public/assets/js/sidebar.js"></script>
 </body>
 </html>
