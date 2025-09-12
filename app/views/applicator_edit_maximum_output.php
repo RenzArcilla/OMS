@@ -43,7 +43,7 @@
                 </div>
                 <div class="checkbox-grid">
                     <?php 
-                    $standard_parts = ['wire_cimper', 'wire_anvil', 'insulation_crimper', 'insulation_anvil', 'slide_cutter',
+                    $standard_parts = ['wire_crimper', 'wire_anvil', 'insulation_crimper', 'insulation_anvil', 'slide_cutter',
                                         'cutter_holder','shear_blade', 'cutter_a', 'cutter_b'];
                     
                     // Fetch custom parts from the database
@@ -123,5 +123,3 @@
         </form>
     </div>
 </div>
-
-<script src="../assets/js/maximum_output.js"></script>
