@@ -31,13 +31,10 @@ async function applyApplicatorFilters(searchQuery = '', page = 1, limit = 20) {
         try {
             // Fetch filtered applicators from controller
             const url = `/OMS/app/controllers/search_applicators.php?q=${encodeURIComponent(searchQuery)}&description=${encodeURIComponent(description)}&type=${encodeURIComponent(type)}&page=${page}&limit=${limit}`;
-            console.log('Fetching applicators from:', url);
             
             const response = await fetch(url);
             const data = await response.json();
             
-            console.log('Applicators response:', data);
-
             if (!data.success) {
                 console.error("Applicator search failed:", data.error);
                 updateApplicatorTable([]); // Show empty table if search fails

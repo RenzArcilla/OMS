@@ -9,10 +9,6 @@
     - Returns JSON response with computed progress per machine.
 */
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 // Output JSON
 header('Content-Type: application/json');
 

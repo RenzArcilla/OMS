@@ -37,13 +37,9 @@ async function applyMachineFilters(searchValue = '', page = 1, limit = 20) {
         try {
             // Fetch filtered machine data from the controller
             const url = `../controllers/search_machines.php?q=${encodeURIComponent(search)}&description=${encodeURIComponent(description)}&page=${page}&limit=${limit}`;
-            console.log('Fetching machines from:', url);
-            
             const response = await fetch(url);
             const result = await response.json();
             
-            console.log('Machines response:', result);
-
             // If fetch failed or controller returned error
             if (!result.success) {
                 console.error("Machine search failed:", result.error);

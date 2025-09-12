@@ -1,3 +1,13 @@
+<?php
+/*
+    This is the landing page for the OMS application.
+    This is the main entry point when users access the application.
+*/
+
+
+error_reporting(E_ERROR | E_PARSE); // only show fatal errors & parse errors
+ini_set('display_errors', 1);
+?>
 
 <!DOCTYPE html>
 <html lang="en">

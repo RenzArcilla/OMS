@@ -161,15 +161,6 @@ async function handleExport() {
     try {
         // Simulate export process
         await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        // Here you would normally make an API call or generate the file
-        console.log('Export configuration:', {
-            format: selectedFormat,
-            dateRange: selectedDateRange,
-            customStartDate,
-            customEndDate,
-            includeHeaders
-        });
 
         // Show success message (you could add a toast notification here)
         alert('Export completed successfully!');

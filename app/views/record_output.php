@@ -676,18 +676,6 @@ if (!empty(trim($search))) {
     </div>
 </div>
 
-<!-- Debug: Test if modal is loaded -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const modal = document.getElementById('deleteRecordModal');
-    if (modal) {
-        console.log('✅ Delete modal found in DOM');
-    } else {
-        console.error('❌ Delete modal NOT found in DOM');
-    }
-});
-</script>
-
 <!-- Load modal logic for editing records -->
 <script src="../../public/assets/js/edit_record_modal.js" defer></script>
 <!-- Load modal logic for editing records -->

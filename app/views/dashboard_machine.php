@@ -11,10 +11,10 @@ if (session_status() === PHP_SESSION_NONE) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEPC - Machine Dashboard</title>
-    <link rel="stylesheet" href="../../public/assets/css/base/header.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/base/header.css">
     <link rel="icon" href="/OMS/public/assets/images/favicon.ico">
-    <link rel="stylesheet" href="../../public/assets/css/base/base.css">
-    <link rel="stylesheet" href="../../public/assets/css/dashboard_machine.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/base/base.css">
+    <link rel="stylesheet" href="/OMS/public/assets/css/dashboard_machine.css">
     <link rel="stylesheet" href="/OMS/public/assets/css/components/header.css">
     <link rel="stylesheet" href="/OMS/public/assets/css/components/modal.css">
     <link rel="stylesheet" href="/OMS/public/assets/css/components/tables.css">
