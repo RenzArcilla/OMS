@@ -384,6 +384,13 @@ function fetchMachinesByControlNos(array $controlNos): array {
     /*
         Fetch machines by their control numbers
         Used when recording outputs for machines or applicators in batchLoadData.
+
+        Return Sample
+        [
+            'CTRL001' => ['control_no' => 'CTRL001', 'machine_name' => 'Machine A', ...],
+            'CTRL002' => ['control_no' => 'CTRL002', 'machine_name' => 'Machine B', ...],
+            ...
+        ]
     */
     global $pdo;
 
@@ -404,6 +411,7 @@ function fetchMachinesByControlNos(array $controlNos): array {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $out[$row['control_no']] = $row;
     }
+
     return $out;
 }
 
