@@ -1,18 +1,18 @@
 # Output Monitoring System (OMS)
 
-This repository will serve as the code base version control repo for the Output Monitoring System (OMS) for machines and applicators...
+This repository serves as the version-controlled codebase for the Output Monitoring System (OMS) — a web-based application for monitoring and managing machine and applicator part outputs in a production environment.
 
 ---
 
 ## Setup Guide 
 
-This guide will help you set up the OMS app on your local machine.
+Follow these steps to set up and run OMS locally using XAMPP.
 
 ---
 
-### 1. Clone the Repository
-
+### 1. Clone the Repository in the htdocs dir (xampp)
 ```bash
+cd htdocs
 git clone https://github.com/RenzArcilla/OMS.git
 cd OMS
 ```
@@ -33,13 +33,23 @@ composer install
 ```
 This will install all required packages, including PhpSpreadsheet.
 
-### 3. Run the App
-Start your local server (e.g., XAMPP) and navigate to:
+### 3. Setup the database
+1. Open app/sql/database.sql and copy its contents.
+2. Launch the XAMPP Control Panel and start Apache and MySQL.
+3. Go to [phpMyAdmin](http://localhost/phpmyadmin/index.php).
+4. Run the database.sql script
+5. Add an admin user manually via phpMyAdmin.
+
+### 4. Run the App
+Once the server is running, access the app through your browser:
 ```bash
-http://localhost/OMS/public/index.php
+http://localhost/OMS/public/app.php
 ```
 
 ---
 
-## Notes
-If you encounter any issues, check that all required PHP extensions are enabled in php.ini (ensure PHP extensions ext-gd and ext-zip are enabled).
+## Notes & Troubleshooting
+- Ensure required PHP extensions are enabled in php.ini:
+    - ext-gd
+    - ext-zip
+- Restart Apache after making changes.
