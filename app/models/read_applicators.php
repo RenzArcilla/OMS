@@ -404,6 +404,13 @@ function fetchApplicatorsByHpNos(array $hpNos): array {
     /*
         Fetch applicators by their HP numbers
         Used when recording outputs for machines or applicators in batchLoadData.
+
+        Return sample
+        [
+            'HP001' => ['hp_no' => 'HP001', 'model' => 'XYZ', ...],
+            'HP002' => ['hp_no' => 'HP002', 'model' => 'ABC', ...],
+            ...
+        ]
     */
 
     global $pdo;
@@ -425,6 +432,7 @@ function fetchApplicatorsByHpNos(array $hpNos): array {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $out[$row['hp_no']] = $row;
     }
+
     return $out;
 }
 

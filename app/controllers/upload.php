@@ -95,16 +95,27 @@ try {
     // 3. Load
     global $pdo;
     $pdo->beginTransaction();
-    $result = batchLoadData($cleanData, false); // manageTransaction = false
+    $result = LoadData($cleanData); 
 
     if (!$result['success']) {
         $pdo->rollBack();
         unlink($targetPath);
+
+        // Build error message for display
         $msg = $result['message'];
         if (!empty($result['errors'])) {
+            // Show only the first 5 errors (separated by '\n') to not overwhelm users
             $extras = implode("\n", array_slice($result['errors'], 0, 5));
             $msg .= "\nErrors:\n" . $extras;
         }
+
+        // Prepare error log data
+        $errorsToLog = isset($result['errors']) && is_array($result['errors'])
+            ? array_slice($result['errors'], 0, 5)
+            : [];
+
+        // Log and display errors
+        error_log("LoadData failed: {$result['message']} | Errors: " . implode(" | ", $errorsToLog));
         jsAlertRedirect($msg, $redirect_url);
         exit;
     }
@@ -115,6 +126,7 @@ try {
     exit;
 
 } catch (Throwable $e) {
+    error_log("OMS batch load error: " . $e->getMessage()); // Log error
     if (isset($pdo) && $pdo->inTransaction()) {
         $pdo->rollBack();
     }
