@@ -117,8 +117,26 @@ class MachineProgressBarManager {
 
         if (pct >= 90) progressBar.classList.add('warning');
 
-        const limitText = partData.limit ? (partData.limit / 1000000) + 'M' : '';
+        // Format limit: use "M" for millions, "K" for thousands
+        const limitText = partData.limit ? this.formatLimit(partData.limit) : '';
         textDisplay.innerHTML = `<strong>${(partData.current ?? 0).toLocaleString()}</strong>${limitText ? ` / ${limitText}` : ''}`;
+    }
+
+    // Format limit value: 1,500,000 → "1.5M", 500,000 → "500K", etc.
+    formatLimit(limit) {
+        if (limit >= 1000000) {
+            // Format as millions with one decimal place
+            const millions = limit / 1000000;
+            // Round to 1 decimal place, but remove trailing zero if it's a whole number
+            const rounded = Math.round(millions * 10) / 10;
+            return rounded % 1 === 0 ? rounded + 'M' : rounded.toFixed(1) + 'M';
+        } else if (limit >= 1000) {
+            // Format as thousands
+            return (limit / 1000) + 'K';
+        } else {
+            // For values less than 1000, just return the number
+            return limit.toString();
+        }
     }
 
     // Always fallback to 1.5M

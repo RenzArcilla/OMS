@@ -57,15 +57,23 @@ class ProgressBarManager {
                 const currentMatch = beforeSlash.match(/[\d,]+/);
                 if (currentMatch) current = parseInt(currentMatch[0].replace(/,/g, ''), 10);
 
-                // Extract limit from " / xxxK "
+                // Extract limit from " / xxxK " or " / x.xM "
                 let limit = 0;
-                const limitMatch = rawText.match(/\/\s*([\d,.]+)\s*K/i);
-                if (limitMatch) {
-                    const limitNumber = parseFloat(limitMatch[1].replace(/,/g, ''));
-                    if (!isNaN(limitNumber)) limit = Math.round(limitNumber * 1000);
+                // Try to match "M" format first (millions)
+                const limitMatchM = rawText.match(/\/\s*([\d,.]+)\s*M/i);
+                if (limitMatchM) {
+                    const limitNumber = parseFloat(limitMatchM[1].replace(/,/g, ''));
+                    if (!isNaN(limitNumber)) limit = Math.round(limitNumber * 1000000);
                 } else {
-                    // Fallback if not present in text (rare)
-                    limit = this.getDefaultLimitForPart(partName);
+                    // Try to match "K" format (thousands)
+                    const limitMatchK = rawText.match(/\/\s*([\d,.]+)\s*K/i);
+                    if (limitMatchK) {
+                        const limitNumber = parseFloat(limitMatchK[1].replace(/,/g, ''));
+                        if (!isNaN(limitNumber)) limit = Math.round(limitNumber * 1000);
+                    } else {
+                        // Fallback if not present in text (rare)
+                        limit = this.getDefaultLimitForPart(partName);
+                    }
                 }
 
                 parts[partName] = { current, limit };
@@ -118,8 +126,26 @@ class ProgressBarManager {
 
         if (pct >= 90) progressBar.classList.add('warning');
 
-        const limitText = partData.limit ? (partData.limit / 1000) + 'K' : '';
+        // Format limit: use "M" for millions, "K" for thousands
+        const limitText = partData.limit ? this.formatLimit(partData.limit) : '';
         textDisplay.innerHTML = `<strong>${(partData.current ?? 0).toLocaleString()}</strong>${limitText ? ` / ${limitText}` : ''}`;
+    }
+
+    // Format limit value: 1,500,000 → "1.5M", 500,000 → "500K", etc.
+    formatLimit(limit) {
+        if (limit >= 1000000) {
+            // Format as millions with one decimal place
+            const millions = limit / 1000000;
+            // Round to 1 decimal place, but remove trailing zero if it's a whole number
+            const rounded = Math.round(millions * 10) / 10;
+            return rounded % 1 === 0 ? rounded + 'M' : rounded.toFixed(1) + 'M';
+        } else if (limit >= 1000) {
+            // Format as thousands
+            return (limit / 1000) + 'K';
+        } else {
+            // For values less than 1000, just return the number
+            return limit.toString();
+        }
     }
 
     // Fallback limit mapping (used only if limit isn't parsable from cell text)
