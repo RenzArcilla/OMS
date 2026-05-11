@@ -29,8 +29,15 @@ $control_no = isset($_POST['control_no']) ? strtoupper(trim($_POST['control_no']
 $description = isset($_POST['description']) ? strtoupper(trim($_POST['description'])) : null;
 $model = isset($_POST['model']) ? strtoupper(trim($_POST['model'])) : null;
 $machine_maker = isset($_POST['machine_maker']) ? strtoupper(trim($_POST['machine_maker'])) : null;
-$serial_no = empty($_POST['serial_no']) ? 'NO RECORD' : strtoupper(trim($_POST['serial_no']));
-$invoice_no = empty($_POST['invoice_no']) ? 'NO RECORD' : strtoupper(trim($_POST['invoice_no']));
+
+// Optional fields: keep NULL when left blank so they truly behave as "not provided"
+// and do NOT participate in duplicate checks.
+$serial_no = isset($_POST['serial_no']) && $_POST['serial_no'] !== ''
+    ? strtoupper(trim($_POST['serial_no']))
+    : null;
+$invoice_no = isset($_POST['invoice_no']) && $_POST['invoice_no'] !== ''
+    ? strtoupper(trim($_POST['invoice_no']))
+    : null;
 
 
 // 2. Validation
@@ -59,6 +66,8 @@ function extractColumnValues($machines, $keys) {
 }
 
 // Define which fields we want to check for duplicates
+// Note: serial_no and invoice_no are OPTIONAL. We only check them for duplicates
+// when the user actually provides a value (non-null).
 $keys = ['control_no', 'serial_no', 'invoice_no'];
 
 // Fetch active and inactive machines
@@ -71,12 +80,17 @@ $inactive = extractColumnValues($inactive_machines, $keys);
 
 // Loop through each field and check if the new value already exists
 foreach ($keys as $key) {
+    // Skip duplicate checks for optional fields if the user left them blank
+    if (in_array($key, ['serial_no', 'invoice_no'], true) && ($$key === null || $$key === '')) {
+        continue;
+    }
+
     // Variable-variable syntax $$key → $control_no, $serial_no, $invoice_no
-    if (in_array($$key, $active[$key])) {
+    if (in_array($$key, $active[$key], true)) {
         jsAlertRedirect(ucwords(str_replace('_', ' ', $key)) . " already exists for an active machine.", $redirect_url);
         exit;
     }
-    if (in_array($$key, $inactive[$key])) {
+    if (in_array($$key, $inactive[$key], true)) {
         jsAlertRedirect(ucwords(str_replace('_', ' ', $key)) . " already exists for an inactive machine.", $redirect_url);
         exit;
     }
