@@ -5,6 +5,7 @@
 */
 
 
+
 error_reporting(E_ERROR | E_PARSE); // only show fatal errors & parse errors
 ini_set('display_errors', 1);
 ?>
