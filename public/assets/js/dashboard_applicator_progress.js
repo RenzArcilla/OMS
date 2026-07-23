@@ -16,6 +16,10 @@ class ProgressBarManager {
         }
     }
 
+    loadProgressData() {
+        return this.processFromDOM();
+    }
+
     async processFromDOM() {
         try {
             const payload = this.buildPayloadFromDOM();     // Step 2: grab per-row data
@@ -57,14 +61,12 @@ class ProgressBarManager {
                 const currentMatch = beforeSlash.match(/[\d,]+/);
                 if (currentMatch) current = parseInt(currentMatch[0].replace(/,/g, ''), 10);
 
-                // Extract limit from " / xxxK "
-                let limit = 0;
-                const limitMatch = rawText.match(/\/\s*([\d,.]+)\s*K/i);
-                if (limitMatch) {
-                    const limitNumber = parseFloat(limitMatch[1].replace(/,/g, ''));
-                    if (!isNaN(limitNumber)) limit = Math.round(limitNumber * 1000);
-                } else {
-                    // Fallback if not present in text (rare)
+                const dataLimit = parseInt(td.getAttribute('data-limit') || '', 10);
+                let limit = Number.isFinite(dataLimit) && dataLimit > 0
+                    ? dataLimit
+                    : this.parseLimitFromText(rawText);
+
+                if (!limit) {
                     limit = this.getDefaultLimitForPart(partName);
                 }
 
@@ -79,6 +81,36 @@ class ProgressBarManager {
 
         // Payload shape expected by PHP controller
         return { applicators };
+    }
+
+    parseLimitFromText(rawText) {
+        const millionMatch = rawText.match(/\/\s*([\d,.]+)\s*M/i);
+        if (millionMatch) {
+            const limitNumber = parseFloat(millionMatch[1].replace(/,/g, ''));
+            if (!isNaN(limitNumber)) return Math.round(limitNumber * 1000000);
+        }
+
+        const thousandMatch = rawText.match(/\/\s*([\d,.]+)\s*K/i);
+        if (thousandMatch) {
+            const limitNumber = parseFloat(thousandMatch[1].replace(/,/g, ''));
+            if (!isNaN(limitNumber)) return Math.round(limitNumber * 1000);
+        }
+
+        return 0;
+    }
+
+    formatLimitForDisplay(limit) {
+        if (!limit) return '';
+
+        if (limit >= 1000000) {
+            const millions = limit / 1000000;
+            if (limit % 1000000 === 0) {
+                return `${millions}M`;
+            }
+            return `${millions.toFixed(1).replace(/\.0$/, '')}M`;
+        }
+
+        return `${limit / 1000}K`;
     }
 
     // Step 3: Send DOM values to PHP to compute percentages/status
@@ -111,20 +143,21 @@ class ProgressBarManager {
         if (!progressBar || !textDisplay) return;
 
         const pct = Number.isFinite(partData.percentage) ? partData.percentage : 0;
+        const limit = partData.limit ?? 0;
 
         progressBar.style.width = `${pct}%`;
         progressBar.className = `progress-fill status-${partData.status || 'green'}`;
-        progressBar.title = `${(partData.current ?? 0).toLocaleString()} / ${(partData.limit ?? 0).toLocaleString()} (${pct}%)`;
+        progressBar.title = `${(partData.current ?? 0).toLocaleString()} / ${limit.toLocaleString()} (${pct}%)`;
 
         if (pct >= 90) progressBar.classList.add('warning');
 
-        const limitText = partData.limit ? (partData.limit / 1000) + 'K' : '';
+        const limitText = this.formatLimitForDisplay(limit);
         textDisplay.innerHTML = `<strong>${(partData.current ?? 0).toLocaleString()}</strong>${limitText ? ` / ${limitText}` : ''}`;
+        container.setAttribute('data-limit', String(limit));
     }
 
-    // Fallback limit mapping (used only if limit isn't parsable from cell text)
+    // Fallback limit mapping (used only if limit isn't available from the cell)
     getDefaultLimitForPart(part) {
-        // Standardized: all applicator parts fallback to 500k
         return 500000;
     }
 }

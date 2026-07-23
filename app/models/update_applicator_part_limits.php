@@ -25,15 +25,15 @@ function updateApplicatorPartLimits($applicator_id, $part, $limit) {
         // Prepare the SQL statement for inserting or updating part limits
         $stmt = $pdo->prepare("
             INSERT INTO applicator_part_limits (applicator_id, applicator_part, part_limit)
-            VALUES (:applicator_id, :applicator_part, :part_limit)
-            ON DUPLICATE KEY UPDATE part_limit = :part_limit
+            VALUES (:applicator_id, :applicator_part, :part_limit_insert)
+            ON DUPLICATE KEY UPDATE part_limit = :part_limit_update
         ");
 
-
-        // Bind parameters
+        // Bind parameters (PDO requires unique placeholders for INSERT ... ON DUPLICATE KEY UPDATE)
         $stmt->bindParam(':applicator_id', $applicator_id, PDO::PARAM_INT);
         $stmt->bindParam(':applicator_part', $part, PDO::PARAM_STR);
-        $stmt->bindParam(':part_limit', $limit, PDO::PARAM_STR);
+        $stmt->bindParam(':part_limit_insert', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':part_limit_update', $limit, PDO::PARAM_INT);
 
         // Execute the statement
         $stmt->execute();
