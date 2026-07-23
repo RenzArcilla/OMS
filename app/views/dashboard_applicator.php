@@ -44,7 +44,22 @@ if (session_status() === PHP_SESSION_NONE) {
     
     // Include the read join function and the alert function
     require_once __DIR__ . '/../models/read_joins/read_monitor_applicator_and_applicator.php';
+    require_once __DIR__ . '/../models/read_applicator_limits.php';
+    require_once __DIR__ . '/../includes/part_limit_helpers.php';
     require_once __DIR__ . '/../includes/js_alert.php';
+
+    $applicator_limits_map = buildApplicatorLimitsMap(getApplicatorPartLimits());
+    $standard_applicator_parts = [
+        'wire_crimper' => 'wire_crimper_output',
+        'wire_anvil' => 'wire_anvil_output',
+        'insulation_crimper' => 'insulation_crimper_output',
+        'insulation_anvil' => 'insulation_anvil_output',
+        'slide_cutter' => 'slide_cutter_output',
+        'cutter_holder' => 'cutter_holder_output',
+        'shear_blade' => 'shear_blade_output',
+        'cutter_a' => 'cutter_a_output',
+        'cutter_b' => 'cutter_b_output',
+    ];
 
 
     // Pagination settings
@@ -216,63 +231,25 @@ if (session_status() === PHP_SESSION_NONE) {
                                             <td><?= htmlspecialchars($row['hp_no']) ?></td>
                                             <td><strong><?= htmlspecialchars(explode(' ', $row['last_updated'])[0]) ?></strong></td>
                                             <td><strong><?= htmlspecialchars($row['total_output']) ?></strong></td>
-                                            <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="wire_crimper">
-                                                <div><strong><?= htmlspecialchars($row['wire_crimper_output']) ?></strong> / 500K</div>
-                                                <div class="progress-bar">
-                                                    <div class="progress-fill" style="width: 0%;"></div>
-                                                </div>
-                                            </td>
-                                            <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="wire_anvil">
-                                                <div><strong><?= htmlspecialchars($row['wire_anvil_output']) ?></strong> / 500K</div>
-                                                <div class="progress-bar">
-                                                    <div class="progress-fill" style="width: 0%;"></div>
-                                                </div>
-                                            </td>
-                                            <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="insulation_crimper">
-                                                <div><strong><?= htmlspecialchars($row['insulation_crimper_output']) ?></strong> / 500K</div>
-                                                <div class="progress-bar">
-                                                    <div class="progress-fill" style="width: 0%;"></div>
-                                                </div>
-                                            </td>
-                                            <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="insulation_anvil">
-                                                <div><strong><?= htmlspecialchars($row['insulation_anvil_output']) ?></strong> / 500K</div>
-                                                <div class="progress-bar">
-                                                    <div class="progress-fill" style="width: 0%;"></div>
-                                                </div>
-                                            </td>
-                                            <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="slide_cutter">
-                                                <div><strong><?= htmlspecialchars($row['slide_cutter_output']) ?></strong> / 500K</div>
-                                                <div class="progress-bar">
-                                                    <div class="progress-fill" style="width: 0%;"></div>
-                                                </div>
-                                            </td>
-                                            <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="cutter_holder">
-                                                <div><strong><?= htmlspecialchars($row['cutter_holder_output']) ?></strong> / 500K</div>
-                                                <div class="progress-bar">
-                                                    <div class="progress-fill" style="width: 0%;"></div>
-                                                </div>
-                                            </td>
-                                            <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="shear_blade">
-                                                <div><strong><?= htmlspecialchars($row['shear_blade_output']) ?></strong> / 500K</div>
-                                                <div class="progress-bar">
-                                                    <div class="progress-fill" style="width: 0%;"></div>
-                                                </div>
-                                            </td>
-                                            <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="cutter_a">
-                                                <div><strong><?= htmlspecialchars($row['cutter_a_output']) ?></strong> / 500K</div>
-                                                <div class="progress-bar">
-                                                    <div class="progress-fill"  style="width: 0%;"></div>
-                                                </div>
-                                            </td>
-                                            <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="cutter_b">
-                                                <div><strong><?= htmlspecialchars($row['cutter_b_output']) ?></strong> / 500K</div>
-                                                <div class="progress-bar">
-                                                    <div class="progress-fill" style="width: 0%;"></div>
-                                                </div>
-                                            </td>
+                                            <?php foreach ($standard_applicator_parts as $part_key => $output_column): ?>
+                                                <?php
+                                                    $part_limit = getApplicatorPartLimit($row['applicator_id'], $part_key, $applicator_limits_map);
+                                                    $part_limit_label = formatPartLimitLabel($part_limit);
+                                                ?>
+                                                <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="<?= $part_key ?>" data-limit="<?= $part_limit ?>">
+                                                    <div><strong><?= htmlspecialchars($row[$output_column]) ?></strong> / <?= $part_limit_label ?></div>
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill" style="width: 0%;"></div>
+                                                    </div>
+                                                </td>
+                                            <?php endforeach; ?>
                                             <?php foreach ($part_names_array as $part_name): ?>
-                                                <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="custom_parts_<?= $part_name ?>">
-                                                    <div><strong><?= htmlspecialchars($row['custom_parts_output'][$part_name] ?? 0) ?></strong> / 500K</div>
+                                                <?php
+                                                    $custom_part_limit = getApplicatorPartLimit($row['applicator_id'], $part_name, $applicator_limits_map);
+                                                    $custom_part_limit_label = formatPartLimitLabel($custom_part_limit);
+                                                ?>
+                                                <td data-applicator-id="<?= $row['applicator_id'] ?>" data-part="custom_parts_<?= $part_name ?>" data-limit="<?= $custom_part_limit ?>">
+                                                    <div><strong><?= htmlspecialchars($row['custom_parts_output'][$part_name] ?? 0) ?></strong> / <?= $custom_part_limit_label ?></div>
                                                     <div class="progress-bar">
                                                         <div class="progress-fill" style="width: 0%;"></div>
                                                     </div>
@@ -827,6 +804,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <!-- Load JavaScript -->
     <script src="../../public/assets/js/dashboard_applicator.js"></script>
     <script src="../../public/assets/js/dashboard_applicator_progress.js"></script>
+    <script src="../../public/assets/js/maximum_output.js"></script>
     <script src="../../public/assets/js/sidebar.js"></script>
     <script src="../../public/assets/js/utils/exit.js"></script>
     <script src="../../public/assets/js/utils/enter.js"></script>

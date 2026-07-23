@@ -50,8 +50,8 @@ try {
     $part_limits = getApplicatorPartLimits();
     $limits = [];
     foreach ($part_limits as $row) {
-        $composite_key = $row['applicator_id'] . '|' . $row['applicator_part'];
-        $limits[$composite_key] = $row['part_limit'];
+        $composite_key = (int) $row['applicator_id'] . '|' . $row['applicator_part'];
+        $limits[$composite_key] = (int) $row['part_limit'];
     }
 
     /*
@@ -79,8 +79,8 @@ try {
         $normalizedPart = preg_replace('/^custom_parts_/', '', $partName);
 
         // Lookup applicator-specific override, else fallback
-        $composite_key = $applicatorId . '|' . $normalizedPart;
-        $limit = $limits[$composite_key] 
+        $composite_key = (int) $applicatorId . '|' . $normalizedPart;
+        $limit = $limits[$composite_key]
             ?? getDefaultLimitForPart($normalizedPart) 
             ?? 500000;
 
